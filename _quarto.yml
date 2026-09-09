@@ -12,7 +12,7 @@ book:
   title: "Bioinformatics Tools"
   subtitle: "A hands-on course for MSc biology students"
   # cover-image: src/ico/unine_FS_couleur_ENG.svg
-  favicon: src/ico/logo.png
+  favicon: src/ico/logo.svg
   back-to-top-navigation: true
   author:
     - name: Corentin Maslard
