@@ -9,11 +9,9 @@ bibliography: references.bib
 
 **Contributors:** [Corentin Maslard](https://cmaslard.xyz), postdoctoral researcher in [Joop E.M Vermeer lab team](https://www.unine.ch/biographie/joop-vermeer)
 
-**Advisor:** [Thomas Badet](https://www.unine.ch/sciences/biographie/thomas-badet)
+This website is the course support for **Bioinformatics Tools**, a practical course for MSc biology students at the [University of Neuchâtel](https://www.unine.ch/). 
 
-This website is the course support for **Bioinformatics Tools**, a practical course for MSc biology students at the [University of Neuchâtel](https://www.unine.ch/). It builds on the material developed by [Thomas Badet](https://github.com/tbadet/teaching/tree/main/Bioinformatic_tools) and reworks it into a simpler, progressive path with prepared datasets and no long installations.
-
-The course uses examples from genomics, microbial ecology, and plant biology, and introduces machine learning as a tool for answering biological questions rather than as a programming topic in isolation.
+The course uses examples from genomics, microbial ecology, and plant biology, and introduces machine learning or deep learning as a tool for answering biological questions.
 
 ::: callout-tip
 ## Please feel free to contact me for:
@@ -52,7 +50,7 @@ The course uses examples from genomics, microbial ecology, and plant biology, an
 
 This site collects the written supports for the **nine sessions** of the course. Each session has its own `practical.qmd` chapter with the exact steps to follow during the practical.
 
--   **Format:** nine sessions, 14:15–17:00 — about 45 min of theory, 1 h 50 of practice, 10 min break.
+-   **Format:** nine sessions, 14:15-17:00 - about 45 min of theory, 1 h 50 of practice, 10 min break.
 -   **Level:** deliberately simple and progressive; no prior programming experience is assumed.
 -   **Language:** all written supports are in English.
 -   **Data:** small teaching datasets are prepared in advance; no long installation or large download during class.
@@ -72,7 +70,7 @@ This site collects the written supports for the **nine sessions** of the course.
 ::: callout-important
 ## Assessment
 
-A short individual Moodle quiz (about 15 minutes) at the end of each session, based on the results actually obtained during the practical. Nine assessments of 10 points; the final project is spread over the last two sessions.
+Sessions 1 and 2 are practice: they are **not graded**. The continuous assessment starts at **Session 3**: a short individual Moodle quiz (about 15 minutes) at the end of each session, based on the results actually obtained during the practical. The guided project (Sessions 8 and 9) is assessed separately.
 :::
 
 ## Licence {.unnumbered}
