@@ -1,0 +1,2434 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; Session 1: Initial diagnostic and essential commands – Bioinformatics Tools</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../references.html" rel="next">
+<link href="../index.html" rel="prev">
+<link href="../src/ico/logo.svg" rel="icon" type="image/svg+xml">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2a60771e7ed6aab2ebaee62b14f6e658.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-695dda69a25d09ae5e7d70e737080628.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-2a60771e7ed6aab2ebaee62b14f6e658.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../sessions/01_diagnostic_and_essential_commands.html">Foundations</a></li><li class="breadcrumb-item"><a href="../sessions/01_diagnostic_and_essential_commands.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Session 1: Initial diagnostic and essential commands</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../src/ico/unine_FS_couleur_ENG.svg" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../src/ico/unine_FS_couleur_ENG.svg" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Bioinformatics Tools</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/cmaslard/bioinformatics-tools-course" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../bioinformatics_tools_pdf.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+    <div id="quarto-search" class="quarto-navigation-tool px-1" title="Search"></div>
+</div>
+    </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sessions/01_diagnostic_and_essential_commands.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Session 1: Initial diagnostic and essential commands</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1.1</span> Overview</a>
+  <ul class="collapse">
+  <li><a href="#learning-outcomes" id="toc-learning-outcomes" class="nav-link" data-scroll-target="#learning-outcomes"><span class="header-section-number">1.1.1</span> Learning outcomes</a></li>
+  <li><a href="#session-plan" id="toc-session-plan" class="nav-link" data-scroll-target="#session-plan"><span class="header-section-number">1.1.2</span> Session plan</a></li>
+  </ul></li>
+  <li><a href="#theory-45-min" id="toc-theory-45-min" class="nav-link" data-scroll-target="#theory-45-min"><span class="header-section-number">1.2</span> Theory (≈45 min)</a>
+  <ul class="collapse">
+  <li><a href="#bioinformatics-and-the-data-it-works-on" id="toc-bioinformatics-and-the-data-it-works-on" class="nav-link" data-scroll-target="#bioinformatics-and-the-data-it-works-on"><span class="header-section-number">1.2.1</span> 1. Bioinformatics and the data it works on</a></li>
+  <li><a href="#how-a-computer-works" id="toc-how-a-computer-works" class="nav-link" data-scroll-target="#how-a-computer-works"><span class="header-section-number">1.2.2</span> 2. How a computer works</a></li>
+  <li><a href="#from-your-laptop-to-a-compute-cluster" id="toc-from-your-laptop-to-a-compute-cluster" class="nav-link" data-scroll-target="#from-your-laptop-to-a-compute-cluster"><span class="header-section-number">1.2.3</span> 3. From your laptop to a compute cluster</a></li>
+  <li><a href="#the-fasta-format" id="toc-the-fasta-format" class="nav-link" data-scroll-target="#the-fasta-format"><span class="header-section-number">1.2.4</span> 4. The FASTA format</a></li>
+  <li><a href="#practical-briefing" id="toc-practical-briefing" class="nav-link" data-scroll-target="#practical-briefing"><span class="header-section-number">1.2.5</span> Practical briefing</a></li>
+  </ul></li>
+  <li><a href="#practical-1-h-50" id="toc-practical-1-h-50" class="nav-link" data-scroll-target="#practical-1-h-50"><span class="header-section-number">1.3</span> Practical (≈1 h 50)</a>
+  <ul class="collapse">
+  <li><a href="#essential-commands-for-today" id="toc-essential-commands-for-today" class="nav-link" data-scroll-target="#essential-commands-for-today"><span class="header-section-number">1.3.1</span> Essential commands for today</a></li>
+  <li><a href="#a.-connect-and-get-oriented-1500-1515" id="toc-a.-connect-and-get-oriented-1500-1515" class="nav-link" data-scroll-target="#a.-connect-and-get-oriented-1500-1515"><span class="header-section-number">1.3.2</span> A. Connect and get oriented (15:00-15:15)</a></li>
+  <li><a href="#b.-where-am-i-navigating-folders-1515-1535" id="toc-b.-where-am-i-navigating-folders-1515-1535" class="nav-link" data-scroll-target="#b.-where-am-i-navigating-folders-1515-1535"><span class="header-section-number">1.3.3</span> B. Where am I? Navigating folders (15:15-15:35)</a></li>
+  <li><a href="#c.-get-the-data-and-take-a-first-look-1535-1550" id="toc-c.-get-the-data-and-take-a-first-look-1535-1550" class="nav-link" data-scroll-target="#c.-get-the-data-and-take-a-first-look-1535-1550"><span class="header-section-number">1.3.4</span> C. Get the data and take a first look (15:35-15:50)</a></li>
+  <li><a href="#checkpoint-and-short-break" id="toc-checkpoint-and-short-break" class="nav-link" data-scroll-target="#checkpoint-and-short-break"><span class="header-section-number">1.3.5</span> 15:50-16:00: Checkpoint and short break</a></li>
+  <li><a href="#d.-the-investigation-in-pairs-1600-1622" id="toc-d.-the-investigation-in-pairs-1600-1622" class="nav-link" data-scroll-target="#d.-the-investigation-in-pairs-1600-1622"><span class="header-section-number">1.3.6</span> D. The investigation, in pairs (16:00-16:22)</a></li>
+  <li><a href="#e.-break-it-and-diagnose-in-pairs-1622-1640" id="toc-e.-break-it-and-diagnose-in-pairs-1622-1640" class="nav-link" data-scroll-target="#e.-break-it-and-diagnose-in-pairs-1622-1640"><span class="header-section-number">1.3.7</span> E. Break it and diagnose, in pairs (16:22-16:40)</a></li>
+  <li><a href="#f.-reproduce-it-1640-1650" id="toc-f.-reproduce-it-1640-1650" class="nav-link" data-scroll-target="#f.-reproduce-it-1640-1650"><span class="header-section-number">1.3.8</span> F. Reproduce it (16:40-16:50)</a></li>
+  <li><a href="#g.-individual-wrap-up-1650-1700" id="toc-g.-individual-wrap-up-1650-1700" class="nav-link" data-scroll-target="#g.-individual-wrap-up-1650-1700"><span class="header-section-number">1.3.9</span> G. Individual wrap-up (16:50-17:00)</a></li>
+  </ul></li>
+  <li><a href="#checkpoint-2" id="toc-checkpoint-2" class="nav-link" data-scroll-target="#checkpoint-2"><span class="header-section-number">1.4</span> Checkpoint</a></li>
+  <li><a href="#optional-challenge" id="toc-optional-challenge" class="nav-link" data-scroll-target="#optional-challenge"><span class="header-section-number">1.5</span> Optional challenge</a></li>
+  <li><a href="#before-the-next-session" id="toc-before-the-next-session" class="nav-link" data-scroll-target="#before-the-next-session"><span class="header-section-number">1.6</span> Before the next session</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/cmaslard/bioinformatics-tools-course/blob/main/sessions/01_diagnostic_and_essential_commands.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/cmaslard/bioinformatics-tools-course/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../sessions/01_diagnostic_and_essential_commands.html">Foundations</a></li><li class="breadcrumb-item"><a href="../sessions/01_diagnostic_and_essential_commands.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Session 1: Initial diagnostic and essential commands</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Session 1: Initial diagnostic and essential commands</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1.1</span> Overview</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Biological question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What information can we recover from an unfamiliar sequence file?</p>
+</div>
+</div>
+<p>This first session has two jobs. It gives everyone a shared mental model of <strong>how a computer works</strong> and <strong>what a compute cluster is</strong>, and it runs a short <strong>diagnostic</strong> so the rest of the course can be adjusted to the group. No prior experience is assumed. If you have used a terminal before, help the person next to you.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Starting-point survey (about 4 min)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before the lecture, fill in the short survey: <a href="https://forms.gle/au3JoYFokMEEzbqx7">starting-point survey</a>, or scan the code below.</p>
+<p><a href="img/01/survey_qr.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="img/01/survey_qr.png" class="img-fluid" width="140"></a></p>
+<p>It asks about your background, the tools you have already met, and the data you care about. Your name is <strong>optional</strong> and the survey is <strong>not graded</strong>: the answers are used to weight the examples for the rest of the course, and the class summary is shown back to you a few minutes later so you can see how mixed the starting levels are.</p>
+<p>This is separate from Section 1 of your worksheet, a self-assessment you fill in at the end of the practical (block G). Nothing in Sessions 1 and 2 is graded.</p>
+</div>
+</div>
+<section id="learning-outcomes" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="learning-outcomes"><span class="header-section-number">1.1.1</span> Learning outcomes</h3>
+<p>By the end of this session, you should be able to:</p>
+<ul>
+<li>name a few common types of biological data and say roughly how each is produced;</li>
+<li>name the main parts of a computer and say what each one does;</li>
+<li>explain what a compute cluster is and why we use one;</li>
+<li>connect to the university cluster through RStudio Server (and know that <code>ssh</code> exists);</li>
+<li>distinguish the RStudio <strong>Console</strong> from the <strong>Terminal</strong>;</li>
+<li>identify your current folder and list its contents;</li>
+<li>create and enter a folder;</li>
+<li>copy a file and look inside it with <code>head</code>, <code>tail</code>, <code>grep</code>, and <code>wc</code>;</li>
+<li>recognise <strong>FASTA</strong> records, count them reliably, and spot one that is not DNA or was truncated;</li>
+<li>read an error message and correct the command;</li>
+<li>keep a command log that another person can rerun from a clean start.</li>
+</ul>
+</section>
+<section id="session-plan" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="session-plan"><span class="header-section-number">1.1.2</span> Session plan</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 30%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Time</th>
+<th>Block</th>
+<th>What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">14:15-14:20</td>
+<td>Welcome</td>
+<td>Anonymous starting-point survey (Form).</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14:20-14:32</td>
+<td>Theory 1</td>
+<td>What bioinformatics is, and where biological data comes from.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14:32-14:45</td>
+<td>Theory 2</td>
+<td>How a computer works (live teardown).</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14:45-15:00</td>
+<td>Theory 3-4</td>
+<td>From your laptop to a cluster. The FASTA format. Practical briefing.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15:00-15:15</td>
+<td>Practical A</td>
+<td>Connect to RStudio Server. Console vs Terminal. Start a command log.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15:15-15:35</td>
+<td>Practical B</td>
+<td>Navigate folders: predict each line, then run it.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15:35-15:50</td>
+<td>Practical C</td>
+<td>Copy the file. Four ways to look inside it.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15:50-16:00</td>
+<td>Checkpoint</td>
+<td>Save your work. Short break.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16:00-16:22</td>
+<td>Practical D</td>
+<td>The investigation: what is wrong with <code>mystery.fasta</code>? (pairs)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16:22-16:40</td>
+<td>Practical E</td>
+<td>Break it and diagnose: six failures, six causes. (pairs)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16:40-16:50</td>
+<td>Practical F</td>
+<td>Reproduce a partner’s script from an empty folder.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16:50-17:00</td>
+<td>Practical G</td>
+<td>Individual wrap-up (not graded).</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="theory-45-min" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="theory-45-min"><span class="header-section-number">1.2</span> Theory (≈45 min)</h2>
+<section id="bioinformatics-and-the-data-it-works-on" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="bioinformatics-and-the-data-it-works-on"><span class="header-section-number">1.2.1</span> 1. Bioinformatics and the data it works on</h3>
+<p>Bioinformatics connects a <strong>biological question</strong> to <strong>data</strong> and to a <strong>reproducible analysis</strong> that produces a result you can explain.</p>
+<div class="cell" data-layout-align="default">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>flowchart LR</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  Q["Biological question&lt;br/&gt;(e.g. which genes respond to stress in this organism?)"] --&gt; D["Data&lt;br/&gt;(files: FASTA, FASTQ, tables…)"]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  D --&gt; A["Analysis&lt;br/&gt;(a few commands, run in order)"]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  A --&gt; R["Result&lt;br/&gt;(a number, a table, a figure)"]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  R --&gt; I["Interpretation&lt;br/&gt;(answer + one limitation)"]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  Q["Biological question&lt;br/&gt;(e.g. which genes respond to stress in this organism?)"] --&gt; D["Data&lt;br/&gt;(files: FASTA, FASTQ, tables…)"]
+  D --&gt; A["Analysis&lt;br/&gt;(a few commands, run in order)"]
+  A --&gt; R["Result&lt;br/&gt;(a number, a table, a figure)"]
+  R --&gt; I["Interpretation&lt;br/&gt;(answer + one limitation)"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The analysis is just a <strong>list of commands run in a defined order</strong>. If you write the commands down, another person (including future you) can run them again and get the same result. That is what “reproducible” means, and it is the habit this course builds.</p>
+<section id="where-does-biological-data-come-from" class="level4" data-number="1.2.1.1">
+<h4 data-number="1.2.1.1" class="anchored" data-anchor-id="where-does-biological-data-come-from"><span class="header-section-number">1.2.1.1</span> Where does biological data come from?</h4>
+<p>Different instruments answer different questions. You do not need to master any of these today: the goal is to recognise the main families and the kind of file each one lands in.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Data type</th>
+<th>How it is produced</th>
+<th>Typical files</th>
+<th>Example question</th>
+<th>In this course</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Genome / amplicon sequencing</td>
+<td>High-throughput sequencers (Illumina, Oxford Nanopore) read DNA fragments</td>
+<td>FASTA, FASTQ</td>
+<td>Which species are in this soil sample?</td>
+<td>Sessions 2-3, 5-6</td>
+</tr>
+<tr class="even">
+<td>Bulk RNA-seq</td>
+<td>Sequencing of RNA pooled from many cells → one expression value per gene</td>
+<td>FASTQ → count table (CSV/TSV)</td>
+<td>Which genes respond to drought?</td>
+<td>Session 8 (project)</td>
+</tr>
+<tr class="odd">
+<td>Single-cell RNA-seq</td>
+<td>RNA sequenced <strong>per individual cell</strong></td>
+<td>sparse matrix (MTX, H5)</td>
+<td>Which cell types are present, and how do they differ?</td>
+<td>mentioned only</td>
+</tr>
+<tr class="even">
+<td>Proteomics</td>
+<td>Mass spectrometry of peptides</td>
+<td>mzML → abundance table</td>
+<td>Which proteins change with treatment?</td>
+<td>mentioned only</td>
+</tr>
+<tr class="odd">
+<td>Metabolomics</td>
+<td>Mass spectrometry or NMR of small molecules</td>
+<td>feature-intensity tables</td>
+<td>Which metabolites mark a phenotype?</td>
+<td>mentioned only</td>
+</tr>
+<tr class="even">
+<td>Imaging / microscopy</td>
+<td>Automated microscopes + image segmentation</td>
+<td>TIFF / OME-TIFF → measurement tables</td>
+<td>Does cell shape change between conditions?</td>
+<td>mentioned only</td>
+</tr>
+<tr class="odd">
+<td>Genotyping / GWAS</td>
+<td>SNP arrays or sequencing → genotype matrix</td>
+<td>VCF, genotype tables</td>
+<td>Which variants associate with a trait?</td>
+<td>Session 6 / project</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The pattern to remember:</strong> whatever the instrument, the analysis almost always ends up in one of two shapes of text file: <strong>sequences</strong> (FASTA, FASTQ) or <strong>tables</strong> (rows = samples or features, columns = variables). This course spends its time teaching you to open, check, and summarise those two shapes with confidence.</p>
+<p><strong>Bulk vs single-cell, in one line each.</strong> <em>Bulk</em> measures the average over thousands of cells: cheap, and enough to ask “which genes differ between conditions”. <em>Single-cell</em> resolves cell-to-cell variation and rare populations: more expensive, and the data are much sparser. How the sequencing itself works (library preparation, paired-end reads, read length) comes in Session 2, alongside FASTQ and quality control.</p>
+</section>
+</section>
+<section id="how-a-computer-works" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="how-a-computer-works"><span class="header-section-number">1.2.2</span> 2. How a computer works</h3>
+<p>A computer has a small number of parts. Each one has a single job.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Part</th>
+<th>Job</th>
+<th>Kitchen analogy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>CPU</strong> (processor)</td>
+<td>Does the calculations, one step after another (very fast).</td>
+<td>The cook</td>
+</tr>
+<tr class="even">
+<td><strong>RAM</strong> (memory)</td>
+<td>Holds the data currently being worked on. Fast, but <strong>erased when the power goes off</strong>.</td>
+<td>The worktop: only what you are using right now fits on it</td>
+</tr>
+<tr class="odd">
+<td><strong>Disk / SSD</strong> (storage)</td>
+<td>Keeps files when the power is off. Slower than RAM, much bigger.</td>
+<td>The fridge and cupboards</td>
+</tr>
+<tr class="even">
+<td><strong>GPU</strong> (graphics card)</td>
+<td>Does many simple calculations in parallel. Used for images and for deep learning.</td>
+<td>A brigade of line cooks all chopping at once</td>
+</tr>
+<tr class="odd">
+<td><strong>Operating system</strong> (Linux, macOS, Windows)</td>
+<td>Manages the parts, the files, and the programs.</td>
+<td>The kitchen manager</td>
+</tr>
+<tr class="even">
+<td><strong>Network card</strong></td>
+<td>Talks to other computers.</td>
+<td>The delivery door</td>
+</tr>
+</tbody>
+</table>
+<p>Two ideas matter for the rest of the course:</p>
+<ul>
+<li><strong>A program is just a file</strong> that the CPU knows how to run. <code>ls</code>, <code>head</code>, <code>R</code> and <code>blast</code> are all programs sitting on the disk.</li>
+<li><strong>Files live in folders, folders live in folders.</strong> The chain of folder names that leads to a file is its <strong>path</strong>, for example <code>/home/you/bioinfo_course/data/reads.fasta</code>. The leading <code>/</code> is the top of the tree. The folder you are “standing in” right now is the <strong>working directory</strong>; a command that is given no path looks there.</li>
+</ul>
+<section id="the-shell" class="level4" data-number="1.2.2.1">
+<h4 data-number="1.2.2.1" class="anchored" data-anchor-id="the-shell"><span class="header-section-number">1.2.2.1</span> The shell</h4>
+<p>The <strong>shell</strong> lets you drive the computer by typing commands instead of clicking. You type the name of a program, press <kbd>Enter</kbd>, and read what it prints back. If you know R, this is the same idea with a different language. The shell we use is called <strong>bash</strong>. It is good at three things bioinformatics needs constantly: navigating files, repeating an analysis exactly, and moving or summarising large files automatically.</p>
+</section>
+</section>
+<section id="from-your-laptop-to-a-compute-cluster" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="from-your-laptop-to-a-compute-cluster"><span class="header-section-number">1.2.3</span> 3. From your laptop to a compute cluster</h3>
+<p>A laptop is fine for writing code and looking at results. It is not fine for aligning a million sequencing reads: not enough CPU, not enough memory, and the data would not even fit. A <strong>compute cluster</strong> solves this. It is a set of powerful computers (“nodes”) in a server room that many people share, with the large data stored right next to them.</p>
+<p>For this course we use <strong>LEGcompute</strong>, hosted by the Laboratory of Evolutionary Genetics and shared across the Institute of Biology (<a href="https://github.com/crolllab/IBIOL-compute-resources">crolllab/IBIOL-compute-resources</a>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/01/legcompute.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="The LEGcompute cluster."><img src="img/01/legcompute.jpeg" class="img-fluid figure-img" width="380" alt="The LEGcompute cluster."></a></p>
+<figcaption>The LEGcompute cluster.</figcaption>
+</figure>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>LEGcompute</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CPU cores</td>
+<td>~1000 (Intel + AMD)</td>
+</tr>
+<tr class="even">
+<td>GPUs</td>
+<td>RTX 3090, 3× RTX A5500, 4× RTX 5000 Ada, 2× RTX PRO 6000 (96 GB)</td>
+</tr>
+<tr class="odd">
+<td>Memory</td>
+<td>4 TB RAM</td>
+</tr>
+<tr class="even">
+<td>Storage</td>
+<td>80 TB SSD</td>
+</tr>
+<tr class="odd">
+<td>System</td>
+<td>Ubuntu 26.04 LTS, Slurm scheduler, RStudio Server</td>
+</tr>
+</tbody>
+</table>
+<section id="how-the-cluster-is-organised" class="level4" data-number="1.2.3.1">
+<h4 data-number="1.2.3.1" class="anchored" data-anchor-id="how-the-cluster-is-organised"><span class="header-section-number">1.2.3.1</span> How the cluster is organised</h4>
+<div class="cell" data-layout-align="default">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>flowchart LR</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  L["Your laptop"] -- "https :8787 (RStudio)" --&gt; H</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  L -- "ssh" --&gt; H</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  H["Login / head node&lt;br/&gt;(where you land)"] -- "sbatch / srun" --&gt; S["Slurm scheduler"]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  S --&gt; C1["compute node"]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  S --&gt; C2["compute node"]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  S --&gt; G["GPU node"]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  H --- ST[("Shared storage&lt;br/&gt;/home  /data  /scratch")]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  C1 --- ST</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  C2 --- ST</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  G --- ST</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  L["Your laptop"] -- "https :8787 (RStudio)" --&gt; H
+  L -- "ssh" --&gt; H
+  H["Login / head node&lt;br/&gt;(where you land)"] -- "sbatch / srun" --&gt; S["Slurm scheduler"]
+  S --&gt; C1["compute node"]
+  S --&gt; C2["compute node"]
+  S --&gt; G["GPU node"]
+  H --- ST[("Shared storage&lt;br/&gt;/home  /data  /scratch")]
+  C1 --- ST
+  C2 --- ST
+  G --- ST
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<ul>
+<li>You <strong>log in to the head node</strong>. Everyone shares it, so it is for light interactive work only: editing, plotting, small commands (everything we do today).</li>
+<li>Real jobs are <strong>submitted to Slurm</strong> with <code>sbatch</code>, which sends them to a free compute node so the machine is never overloaded and everyone gets a fair share. We meet Slurm properly in a later session.</li>
+<li><strong>Storage is shared</strong> by every node, so a file you create on the head node is visible in your jobs too:
+<ul>
+<li><code>/home/username</code>: scripts and small files (<strong>quota: 100 GB per student</strong>);</li>
+<li><code>/data/username</code>: large datasets and analysis output (1+ TB);</li>
+<li><code>/scratch</code>: temporary space; <strong>files older than 30 days are deleted automatically</strong>.</li>
+</ul></li>
+<li><strong>~200 bioinformatics tools</strong> are pre-installed as <em>modules</em> (<code>module load SAMtools</code>). Nothing to install during class.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>No backups
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No backup is made of anything on the server. Keeping a copy of work you care about is your responsibility.</p>
+</div>
+</div>
+</section>
+<section id="access-for-this-course" class="level4" data-number="1.2.3.2">
+<h4 data-number="1.2.3.2" class="anchored" data-anchor-id="access-for-this-course"><span class="header-section-number">1.2.3.2</span> Access for this course</h4>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Connecting to LEGcompute
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1. Be on the university network.</strong> Either the <code>unine</code> WiFi on campus, or the <a href="https://mydoc.unine.ch/fr/Internet_VPN_WiFi/VPN">GlobalProtect VPN</a> from home. There is no way in from the open internet.</p>
+<p><strong>2. Claim your account.</strong> <a href="https://docs.google.com/spreadsheets/d/1QaN-ZJ-bWl8s_HbvMpZnnwgBn-5SQyBFRyZqk5vqST8/edit?usp=sharing">Open the shared Google Sheet the instructor</a>. On the course tab, pick a free username and write your name in the yellow cell next to it. The first page of the sheet explains how to set or reset your password (via the <a href="https://legserv.de6.quickconnect.to">user account server</a>).</p>
+<p><strong>3. Connect (pick one):</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>How</th>
+<th>Good for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>RStudio Server</strong></td>
+<td>Browser → <a href="http://legcompute.unine.ch:8787" class="uri">http://legcompute.unine.ch:8787</a> → log in. Use the <strong>Terminal</strong> tab for the shell.</td>
+<td><strong>Everyone today.</strong> Nothing to install.</td>
+</tr>
+<tr class="even">
+<td><strong>SSH</strong></td>
+<td>In a local terminal: <code>ssh username@legcompute.unine.ch</code></td>
+<td>Later, once you are comfortable.</td>
+</tr>
+</tbody>
+</table>
+<p>We use <strong>RStudio Server</strong> for the whole course. It gives you an editor, an R Console, a Terminal and a file browser in one browser tab, with nothing to install.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="the-fasta-format" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" class="anchored" data-anchor-id="the-fasta-format"><span class="header-section-number">1.2.4</span> 4. The FASTA format</h3>
+<p><strong>FASTA</strong> is the simplest way to store one or more biological sequences as text. A <strong>record</strong> has two parts:</p>
+<ol type="1">
+<li>a <strong>header line</strong>, whose first character is <code>&gt;</code>, giving the sequence a name;</li>
+<li>one or more <strong>sequence lines</strong> (the bases or amino acids).</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>&gt;NC_045512.2 Severe acute respiratory syndrome coronavirus 2, surface glycoprotein region (partial)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ATGTTTGTTTTTCTTGTTTTATTGCCACTAGTCTCTAGTCAGTGTGTTAATCTTACAACC</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>AGAACTCAATTACCCCCTGCATACACTAATTCTTTCACACGTGGTGTTTATTACCCTGAC</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>&gt;oligo_F short PCR primer</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>GATTACAGGCGTGAGCCACCACGT</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Here the first record’s sequence is wrapped over two lines; the second fits on one. Both are still single records.</p>
+<p>The next record starts at the next line beginning with <code>&gt;</code>. Counting records is therefore the same as counting <code>&gt;</code> lines. Nothing in the format tells you whether a sequence is DNA or protein, how long it is, or whether it is complete: you have to look.</p>
+</section>
+<section id="practical-briefing" class="level3" data-number="1.2.5">
+<h3 data-number="1.2.5" class="anchored" data-anchor-id="practical-briefing"><span class="header-section-number">1.2.5</span> Practical briefing</h3>
+<p>You will connect to the cluster, build a small project folder, and copy in one FASTA file, <code>mystery.fasta</code>. It is deliberately messy: different line widths, a record that is not DNA, and one that was cut off mid-download. Your job is to find that out with the commands, in pairs. <strong>Write every command you run into a script file</strong>, even (especially) the ones that fail: an error message is evidence, not a reason to start over.</p>
+</section>
+</section>
+<section id="practical-1-h-50" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="practical-1-h-50"><span class="header-section-number">1.3</span> Practical (≈1 h 50)</h2>
+<section id="essential-commands-for-today" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="essential-commands-for-today"><span class="header-section-number">1.3.1</span> Essential commands for today</h3>
+<p>Six commands to move around, plus four to look inside a file. That is the whole toolbox for today.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>pwd</code></td>
+<td>print working directory: “where am I?”</td>
+<td><code>pwd</code></td>
+</tr>
+<tr class="even">
+<td><code>ls</code></td>
+<td>list the current folder (<code>ls -lh</code> adds sizes)</td>
+<td><code>ls -lh</code></td>
+</tr>
+<tr class="odd">
+<td><code>mkdir</code></td>
+<td>make a new folder</td>
+<td><code>mkdir data</code></td>
+</tr>
+<tr class="even">
+<td><code>cd</code></td>
+<td>change directory: move into a folder</td>
+<td><code>cd data</code></td>
+</tr>
+<tr class="odd">
+<td><code>cp</code></td>
+<td>copy a file: <code>cp &lt;what&gt; &lt;where&gt;</code></td>
+<td><code>cp reads.fasta .</code></td>
+</tr>
+<tr class="even">
+<td><code>head</code></td>
+<td>show the first lines of a text file</td>
+<td><code>head -n 4 reads.fasta</code></td>
+</tr>
+<tr class="odd">
+<td><code>tail</code></td>
+<td>show the last lines</td>
+<td><code>tail -n 3 reads.fasta</code></td>
+</tr>
+<tr class="even">
+<td><code>wc -l</code></td>
+<td>count lines</td>
+<td><code>wc -l reads.fasta</code></td>
+</tr>
+<tr class="odd">
+<td><code>grep "^&gt;"</code></td>
+<td>show the lines that start with <code>&gt;</code> (FASTA headers)</td>
+<td><code>grep "^&gt;" reads.fasta</code></td>
+</tr>
+<tr class="even">
+<td><code>grep -c "^&gt;"</code></td>
+<td><em>count</em> the lines that start with <code>&gt;</code> (records)</td>
+<td><code>grep -c "^&gt;" reads.fasta</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>^&gt;</code> means “a line beginning with <code>&gt;</code>”. <code>cat</code> (whole file) and <code>less</code> (scroll, press <code>q</code> to quit) are useful too. Deleting files is deliberately <strong>not</strong> covered today.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Three habits that save time
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Tab completion.</strong> Type the first few letters of a command or file name and press <kbd>Tab</kbd>. The shell finishes it for you and prevents typos.</li>
+<li><strong>Command history.</strong> Press <kbd>↑</kbd> to bring back the previous command and edit it.</li>
+<li><strong>Send a line from the script.</strong> With your <code>.sh</code> script open, put the cursor on a line and press <kbd>Ctrl</kbd>+<kbd>Enter</kbd> (<kbd>Cmd</kbd>+<kbd>Enter</kbd> on macOS) to run it in the Terminal without copy-pasting.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="a.-connect-and-get-oriented-1500-1515" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="a.-connect-and-get-oriented-1500-1515"><span class="header-section-number">1.3.2</span> A. Connect and get oriented (15:00-15:15)</h3>
+<ol type="1">
+<li><p>In a browser, go to <a href="http://legcompute.unine.ch:8787" class="uri">http://legcompute.unine.ch:8787</a> and log in with your cluster username and password.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/01/rstudio_login.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="The RStudio Server login page."><img src="img/01/rstudio_login.png" class="img-fluid figure-img" width="360" alt="The RStudio Server login page."></a></p>
+<figcaption>The RStudio Server login page.</figcaption>
+</figure>
+</div></li>
+<li><p>Find these four parts of the RStudio window:</p>
+<ul>
+<li><strong>Source editor</strong> (top left): where scripts are written;</li>
+<li><strong>Console</strong> (bottom left): runs <strong>R</strong> code;</li>
+<li><strong>Terminal</strong> (a tab next to the Console): runs <strong>shell</strong> commands;</li>
+<li><strong>Files</strong> pane (bottom right): a click-through file browser.</li>
+</ul>
+<p>If there is no Terminal tab, open one with <strong>Tools → Terminal → New Terminal</strong>. The welcome text it prints is just a message from the server.</p></li>
+</ol>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Console vs Terminal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Everything in this practical is typed in the <strong>Terminal</strong>. The <strong>Console</strong> is for R and comes in later sessions. If a shell command gives a strange R error, you are in the wrong panel.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Open a new script: <strong>File → New File → Shell Script</strong>. Save it straight away as <code>session_01_commands.sh</code>. From now on, every command you try goes in this file, including ones that fail. Keep it: you reuse it in Session 2, and a partner reruns it in block F.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>If you cannot connect
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Do not lose ten minutes alone. Pair up with a neighbour and share one screen, or use a room computer, and tell the instructor. Fixing access for one person should not stop the class.</p>
+</div>
+</div>
+</section>
+<section id="b.-where-am-i-navigating-folders-1515-1535" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="b.-where-am-i-navigating-folders-1515-1535"><span class="header-section-number">1.3.3</span> B. Where am I? Navigating folders (15:15-15:35)</h3>
+<p>Work <strong>one line at a time</strong>. Before you press <kbd>Enter</kbd>, write in your script, as a <code>#</code> comment, what you expect to see. Then run it and compare. A wrong prediction is the useful part: it shows exactly which idea to fix.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span>                     <span class="co"># predict: which folder does this print?</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>                      <span class="co"># predict: what is already here?</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> bioinfo_course    <span class="co"># predict: what does ls show now?</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> bioinfo_course</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span>                     <span class="co"># predict: how has the path changed?</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> session_01</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> session_01</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Checkpoint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>pwd</code> ends in <code>bioinfo_course/session_01</code>.</p>
+</div>
+</div>
+<p>Make a <code>data</code> folder and move into it. Predict each line first.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> data</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> data</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="c.-get-the-data-and-take-a-first-look-1535-1550" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="c.-get-the-data-and-take-a-first-look-1535-1550"><span class="header-section-number">1.3.4</span> C. Get the data and take a first look (15:35-15:50)</h3>
+<p>Your instructor will give you the exact path to the course materials on the server. Copy the sequence file and your worksheet into the folder you are standing in, then check they arrived:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/mystery.fasta .</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/WORKSHEET.md .</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The final <code>.</code> means “here, in the current folder”. <code>ls -lh</code> also shows the file sizes.</p>
+<p><code>WORKSHEET.md</code> is a plain text file of questions, not a script: open it from the <strong>Files</strong> pane (click its name) or <strong>File → Open File</strong>, and type your answers directly under each “Answer:” line as you go through today’s blocks. Save it like any other file (<kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+<kbd>S</kbd>). There is nothing to submit: it stays in your folder, and your instructor may look at it to see where the class is.</p>
+<p>Now look inside it four ways. Predict the output of each line before you run it.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 6 mystery.fasta       <span class="co"># the first few lines</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-n</span> 3 mystery.fasta       <span class="co"># the last few lines</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^&gt;"</span> mystery.fasta    <span class="co"># how many records (lines starting with &gt;)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> mystery.fasta           <span class="co"># how many lines in total</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Checkpoint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>grep -c "^&gt;"</code> prints <strong>40</strong>. <code>wc -l</code> prints <strong>134</strong>. Keep both numbers: block D asks why they differ. Note the output of <code>pwd</code> and the <code>ls -lh</code> line for <code>mystery.fasta</code> now, for <strong>Section 2</strong> of your worksheet.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Moving files in and out (no exercise, just so you know)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You will not need it today, but the RStudio <strong>Files</strong> pane moves files between your laptop and the server: <strong>Upload</strong> (laptop to server) and tick a file then <strong>More -&gt; Export…</strong> (server to laptop). No <code>scp</code> required.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/01/rstudio_upload.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Uploading a file through the RStudio Files pane."><img src="img/01/rstudio_upload.png" class="img-fluid figure-img" width="620" alt="Uploading a file through the RStudio Files pane."></a></p>
+<figcaption>Uploading a file through the RStudio Files pane.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="checkpoint-and-short-break" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="checkpoint-and-short-break"><span class="header-section-number">1.3.5</span> 15:50-16:00: Checkpoint and short break</h3>
+<p>Before you step away: your script is <strong>saved</strong>, and <code>pwd</code> ends in <code>bioinfo_course/session_01/data</code>.</p>
+</section>
+<section id="d.-the-investigation-in-pairs-1600-1622" class="level3" data-number="1.3.6">
+<h3 data-number="1.3.6" class="anchored" data-anchor-id="d.-the-investigation-in-pairs-1600-1622"><span class="header-section-number">1.3.6</span> D. The investigation, in pairs (16:00-16:22)</h3>
+<p><code>mystery.fasta</code> holds 40 records. Most are unremarkable filler; seven are not, and they are scattered in among the rest, not conveniently grouped at the top. Work with one other student. For <strong>each</strong> question below, write the answer <strong>and the command you used</strong> in Section 3 of your worksheet.</p>
+<ol type="1">
+<li>How many sequence records are in the file? Which command answers this without miscounting, and why is scrolling and counting <code>&gt;</code> by eye unreliable here?</li>
+<li><code>wc -l</code> gave 134, not 80 (which would be two lines per record). Give the <strong>two</strong> separate reasons.</li>
+<li>One record is <strong>not DNA</strong>. Which one? Give two clues, one from the sequence and one from the header.</li>
+<li>One record was <strong>cut off during download</strong>. Which one, and how does <code>tail</code> show it?</li>
+<li>Look at <code>contig_07</code>. Its sequence mixes UPPERCASE and lowercase and contains a run of <code>N</code>. What do the lowercase letters mean, and what does the <code>N</code> run mean? You do not need to change anything.</li>
+<li>Which record has the <strong>shortest complete sequence</strong>? (The cut-off record from question 4 does not count: it has no sequence at all.) Show it and say how you decided.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Short on time?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>At 16:22, move to block E with whatever you have, even if some questions are unanswered or your answers are unsure. Partial answers are fine: this is not graded, and there is no benefit in rushing block E to finish block D.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Commands you may want
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"^&gt;"</span> mystery.fasta          <span class="co"># list every header at once</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^&gt;"</span> mystery.fasta       <span class="co"># count records</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 20 mystery.fasta         <span class="co"># a first chunk of records, to get a feel for the file</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-n</span> 3 mystery.fasta          <span class="co"># last lines</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-A</span> 1 <span class="st">"SPIKE"</span> mystery.fasta  <span class="co"># a matching header and the line right after it</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</section>
+<section id="e.-break-it-and-diagnose-in-pairs-1622-1640" class="level3" data-number="1.3.7">
+<h3 data-number="1.3.7" class="anchored" data-anchor-id="e.-break-it-and-diagnose-in-pairs-1622-1640"><span class="header-section-number">1.3.7</span> E. Break it and diagnose, in pairs (16:22-16:40)</h3>
+<p>Every command below fails or surprises you, each for a <strong>different</strong> reason. For each one: predict what will happen, run it, copy the <strong>exact</strong> message, then write a version that works. Record all of it in your script.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Data</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> mystery.fna</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> mystery.fasta</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> mystery.fasta</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> mystery.fasta</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../mystery.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Hints:</p>
+<ul>
+<li>Linux distinguishes uppercase from lowercase.</li>
+<li>A file name must match exactly, extension included.</li>
+<li>Some options need a value; some commands need more than one argument.</li>
+<li><code>..</code> is “the folder above”; a bare name is “in the current folder”.</li>
+</ul>
+<p>Return to <code>bioinfo_course/session_01/data</code> when you are done.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Short on time?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>At 16:40, move to block F even if you have not diagnosed all six. Whatever you have recorded, including the ones you did not solve, is still useful material for block G.</p>
+</div>
+</div>
+</section>
+<section id="f.-reproduce-it-1640-1650" class="level3" data-number="1.3.8">
+<h3 data-number="1.3.8" class="anchored" data-anchor-id="f.-reproduce-it-1640-1650"><span class="header-section-number">1.3.8</span> F. Reproduce it (16:40-16:50)</h3>
+<p>Trade <code>session_01_commands.sh</code> with your partner. From your home folder, start clean and run <strong>their</strong> commands in order:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> replay</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> replay</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># now run your partner's commands, from the top, one by one</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Does it run start to finish? If it stops, the missing step is something they did but did not write down, usually a <code>cd</code> or the <code>cp</code> path. Add the missing lines to <strong>your own</strong> script so it works from an empty folder. That is what “reproducible” means in practice.</p>
+</section>
+<section id="g.-individual-wrap-up-1650-1700" class="level3" data-number="1.3.9">
+<h3 data-number="1.3.9" class="anchored" data-anchor-id="g.-individual-wrap-up-1650-1700"><span class="header-section-number">1.3.9</span> G. Individual wrap-up (16:50-17:00)</h3>
+<p>On your own, complete Sections 1, 4, and 5 of your worksheet:</p>
+<ul>
+<li>one command that failed today: the exact message, the cause, and the fix;</li>
+<li>two or three sentences: from <code>mystery.fasta</code> alone, what <strong>can</strong> you say about these sequences, and what can you <strong>not</strong> say?</li>
+</ul>
+<p>You should leave with:</p>
+<ul>
+<li><code>WORKSHEET.md</code> with your answers;</li>
+<li><code>session_01_commands.sh</code> with every command you attempted, errors included, that runs from a clean start.</li>
+</ul>
+<p>Session 1 is a diagnostic, not a test. It is <strong>not graded</strong>: the continuous assessment (a short Moodle quiz at the end of each session) starts at Session 3. Your instructor may still look at your worksheet to see where the class is.</p>
+<p><strong>Keep the <code>bioinfo_course</code> folder.</strong> Session 2 reuses it.</p>
+</section>
+</section>
+<section id="checkpoint-2" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="checkpoint-2"><span class="header-section-number">1.4</span> Checkpoint</h2>
+<p>You are done when all of the following are true:</p>
+<ul>
+<li>you reached the Terminal in RStudio Server and know it is not the Console;</li>
+<li><code>session_01_commands.sh</code> is saved, includes the commands that failed, and runs from an empty folder;</li>
+<li><code>pwd</code> ends in <code>bioinfo_course/session_01/data</code>, and that folder contains <code>mystery.fasta</code>;</li>
+<li>you can say the file has <strong>40</strong> records, that <code>grep -c "^&gt;"</code> is the reliable way to count them, and why <code>wc -l</code> gives a different number;</li>
+<li>you can name the record that is not DNA and the record that was truncated, and say how you spotted each;</li>
+<li>you can explain in one sentence that a FASTA record starts on a line whose first character is <code>&gt;</code>.</li>
+</ul>
+</section>
+<section id="optional-challenge" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="optional-challenge"><span class="header-section-number">1.5</span> Optional challenge</h2>
+<p>For your own interest, not graded.</p>
+<p><strong>A. Look at a real genome without opening it.</strong> Your instructor will point you to a full genome FASTA in the shared course folder.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/reference/</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/reference/genome.fasta</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^&gt;"</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/reference/genome.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Note the file size, how many sequences <code>grep -c</code> finds, and how fast <code>head</code> answers even on a file of hundreds of megabytes. Why would opening it in the editor be a bad idea?</p>
+<p><strong>B. Make the answers reproducible.</strong> Write a three-line script <code>answers.sh</code> that prints the record count and the last record of <code>mystery.fasta</code>, then run it with <code>bash answers.sh</code>.</p>
+</section>
+<section id="before-the-next-session" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="before-the-next-session"><span class="header-section-number">1.6</span> Before the next session</h2>
+<p>Keep the <code>bioinfo_course</code> folder. Session 2 builds a fuller project structure inside it and looks at FASTQ files and quality control.</p>
+<hr>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Sources and reuse
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This session adapts material from <a href="https://github.com/tbadet/teaching/tree/main/Bioinformatic_tools">tbadet/teaching (Bioinformatic_tools)</a> (RStudio Server access, file transfer, the essential-commands walkthrough) and from <a href="https://github.com/crolllab/IBIOL-compute-resources">crolllab/IBIOL-compute-resources</a> (cluster description and connection instructions). Screenshots are from the tbadet course materials; the cluster photo is from the IBIOL repository.</p>
+</div>
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../index.html" class="pagination-link" aria-label="Preface">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Session 1: Initial diagnostic and essential commands"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Biological question</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>What information can we recover from an unfamiliar sequence file?</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>This first session has two jobs. It gives everyone a shared mental model of **how a</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>computer works** and **what a compute cluster is**, and it runs a short **diagnostic**</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>so the rest of the course can be adjusted to the group. No prior experience is assumed.</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>If you have used a terminal before, help the person next to you.</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## Starting-point survey (about 4 min)</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>Before the lecture, fill in the short survey: <span class="co">[</span><span class="ot">starting-point survey</span><span class="co">](https://forms.gle/au3JoYFokMEEzbqx7)</span>,</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>or scan the code below.</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="al">![](img/01/survey_qr.png)</span>{width="140"}</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>It asks about your background, the tools you have already met, and the data you care</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>about. Your name is **optional** and the survey is **not graded**: the answers are used</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>to weight the examples for the rest of the course, and the class summary is shown back</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>to you a few minutes later so you can see how mixed the starting levels are.</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>This is separate from Section 1 of your worksheet, a self-assessment you fill in at the</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>end of the practical (block G). Nothing in Sessions 1 and 2 is graded.</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="fu">### Learning outcomes</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>By the end of this session, you should be able to:</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>name a few common types of biological data and say roughly how each is produced;</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>name the main parts of a computer and say what each one does;</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>explain what a compute cluster is and why we use one;</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>connect to the university cluster through RStudio Server (and know that <span class="in">`ssh`</span> exists);</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>distinguish the RStudio **Console** from the **Terminal**;</span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>identify your current folder and list its contents;</span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>create and enter a folder;</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>copy a file and look inside it with <span class="in">`head`</span>, <span class="in">`tail`</span>, <span class="in">`grep`</span>, and <span class="in">`wc`</span>;</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>recognise **FASTA** records, count them reliably, and spot one that is not DNA or was truncated;</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>read an error message and correct the command;</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>keep a command log that another person can rerun from a clean start.</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="fu">### Session plan</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Time <span class="pp">|</span> Block <span class="pp">|</span> What happens <span class="pp">|</span></span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a><span class="pp">|---:|---|---|</span></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 14:15-14:20 <span class="pp">|</span> Welcome <span class="pp">|</span> Anonymous starting-point survey (Form). <span class="pp">|</span></span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 14:20-14:32 <span class="pp">|</span> Theory 1 <span class="pp">|</span> What bioinformatics is, and where biological data comes from. <span class="pp">|</span></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 14:32-14:45 <span class="pp">|</span> Theory 2 <span class="pp">|</span> How a computer works (live teardown). <span class="pp">|</span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 14:45-15:00 <span class="pp">|</span> Theory 3-4 <span class="pp">|</span> From your laptop to a cluster. The FASTA format. Practical briefing. <span class="pp">|</span></span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 15:00-15:15 <span class="pp">|</span> Practical A <span class="pp">|</span> Connect to RStudio Server. Console vs Terminal. Start a command log. <span class="pp">|</span></span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 15:15-15:35 <span class="pp">|</span> Practical B <span class="pp">|</span> Navigate folders: predict each line, then run it. <span class="pp">|</span></span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 15:35-15:50 <span class="pp">|</span> Practical C <span class="pp">|</span> Copy the file. Four ways to look inside it. <span class="pp">|</span></span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 15:50-16:00 <span class="pp">|</span> Checkpoint <span class="pp">|</span> Save your work. Short break. <span class="pp">|</span></span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 16:00-16:22 <span class="pp">|</span> Practical D <span class="pp">|</span> The investigation: what is wrong with <span class="in">`mystery.fasta`</span>? (pairs) <span class="pp">|</span></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 16:22-16:40 <span class="pp">|</span> Practical E <span class="pp">|</span> Break it and diagnose: six failures, six causes. (pairs) <span class="pp">|</span></span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 16:40-16:50 <span class="pp">|</span> Practical F <span class="pp">|</span> Reproduce a partner's script from an empty folder. <span class="pp">|</span></span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 16:50-17:00 <span class="pp">|</span> Practical G <span class="pp">|</span> Individual wrap-up (not graded). <span class="pp">|</span></span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a><span class="fu">## Theory (≈45 min)</span></span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. Bioinformatics and the data it works on</span></span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>Bioinformatics connects a **biological question** to **data** and to a **reproducible</span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>analysis** that produces a result you can explain.</span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>flowchart LR</span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>  Q[<span class="ot">"</span><span class="st">Biological question&lt;br/&gt;(e.g. which genes respond to stress in this organism?)</span><span class="ot">"</span>] --&gt; D[<span class="ot">"</span><span class="st">Data&lt;br/&gt;(files: FASTA, FASTQ, tables…)</span><span class="ot">"</span>]</span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>  D --&gt; A[<span class="ot">"</span><span class="st">Analysis&lt;br/&gt;(a few commands, run in order)</span><span class="ot">"</span>]</span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>  A --&gt; R[<span class="ot">"</span><span class="st">Result&lt;br/&gt;(a number, a table, a figure)</span><span class="ot">"</span>]</span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>  R --&gt; I[<span class="ot">"</span><span class="st">Interpretation&lt;br/&gt;(answer + one limitation)</span><span class="ot">"</span>]</span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>The analysis is just a **list of commands run in a defined order**. If you write the</span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>commands down, another person (including future you) can run them again and get the</span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>same result. That is what "reproducible" means, and it is the habit this course builds.</span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Where does biological data come from?</span></span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a>Different instruments answer different questions. You do not need to master any of these</span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>today: the goal is to recognise the main families and the kind of file each one lands in.</span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Data type <span class="pp">|</span> How it is produced <span class="pp">|</span> Typical files <span class="pp">|</span> Example question <span class="pp">|</span> In this course <span class="pp">|</span></span>
+<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|---|</span></span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Genome / amplicon sequencing <span class="pp">|</span> High-throughput sequencers (Illumina, Oxford Nanopore) read DNA fragments <span class="pp">|</span> FASTA, FASTQ <span class="pp">|</span> Which species are in this soil sample? <span class="pp">|</span> Sessions 2-3, 5-6 <span class="pp">|</span></span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Bulk RNA-seq <span class="pp">|</span> Sequencing of RNA pooled from many cells → one expression value per gene <span class="pp">|</span> FASTQ → count table (CSV/TSV) <span class="pp">|</span> Which genes respond to drought? <span class="pp">|</span> Session 8 (project) <span class="pp">|</span></span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Single-cell RNA-seq <span class="pp">|</span> RNA sequenced **per individual cell** <span class="pp">|</span> sparse matrix (MTX, H5) <span class="pp">|</span> Which cell types are present, and how do they differ? <span class="pp">|</span> mentioned only <span class="pp">|</span></span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Proteomics <span class="pp">|</span> Mass spectrometry of peptides <span class="pp">|</span> mzML → abundance table <span class="pp">|</span> Which proteins change with treatment? <span class="pp">|</span> mentioned only <span class="pp">|</span></span>
+<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Metabolomics <span class="pp">|</span> Mass spectrometry or NMR of small molecules <span class="pp">|</span> feature-intensity tables <span class="pp">|</span> Which metabolites mark a phenotype? <span class="pp">|</span> mentioned only <span class="pp">|</span></span>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Imaging / microscopy <span class="pp">|</span> Automated microscopes + image segmentation <span class="pp">|</span> TIFF / OME-TIFF → measurement tables <span class="pp">|</span> Does cell shape change between conditions? <span class="pp">|</span> mentioned only <span class="pp">|</span></span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Genotyping / GWAS <span class="pp">|</span> SNP arrays or sequencing → genotype matrix <span class="pp">|</span> VCF, genotype tables <span class="pp">|</span> Which variants associate with a trait? <span class="pp">|</span> Session 6 / project <span class="pp">|</span></span>
+<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a>**The pattern to remember:** whatever the instrument, the analysis almost always ends up</span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a>in one of two shapes of text file: **sequences** (FASTA, FASTQ) or **tables** (rows =</span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a>samples or features, columns = variables). This course spends its time teaching you to</span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a>open, check, and summarise those two shapes with confidence.</span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a>**Bulk vs single-cell, in one line each.** *Bulk* measures the average over thousands of</span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a>cells: cheap, and enough to ask "which genes differ between conditions". *Single-cell*</span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>resolves cell-to-cell variation and rare populations: more expensive, and the data are</span>
+<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a>much sparser. How the sequencing itself works (library preparation, paired-end reads,</span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a>read length) comes in Session 2, alongside FASTQ and quality control.</span>
+<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. How a computer works</span></span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a>A computer has a small number of parts. Each one has a single job.</span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Part <span class="pp">|</span> Job <span class="pp">|</span> Kitchen analogy <span class="pp">|</span></span>
+<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **CPU** (processor) <span class="pp">|</span> Does the calculations, one step after another (very fast). <span class="pp">|</span> The cook <span class="pp">|</span></span>
+<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **RAM** (memory) | Holds the data currently being worked on. Fast, but **erased when the power goes off**. <span class="pp">|</span> The worktop: only what you are using right now fits on it <span class="pp">|</span></span>
+<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Disk / SSD** (storage) <span class="pp">|</span> Keeps files when the power is off. Slower than RAM, much bigger. <span class="pp">|</span> The fridge and cupboards <span class="pp">|</span></span>
+<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **GPU** (graphics card) <span class="pp">|</span> Does many simple calculations in parallel. Used for images and for deep learning. <span class="pp">|</span> A brigade of line cooks all chopping at once <span class="pp">|</span></span>
+<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Operating system** (Linux, macOS, Windows) <span class="pp">|</span> Manages the parts, the files, and the programs. <span class="pp">|</span> The kitchen manager <span class="pp">|</span></span>
+<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Network card** <span class="pp">|</span> Talks to other computers. <span class="pp">|</span> The delivery door <span class="pp">|</span></span>
+<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a>Two ideas matter for the rest of the course:</span>
+<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**A program is just a file** that the CPU knows how to run. <span class="in">`ls`</span>, <span class="in">`head`</span>, <span class="in">`R`</span> and</span>
+<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a>  <span class="in">`blast`</span> are all programs sitting on the disk.</span>
+<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Files live in folders, folders live in folders.** The chain of folder names that</span>
+<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a>  leads to a file is its **path**, for example <span class="in">`/home/you/bioinfo_course/data/reads.fasta`</span>.</span>
+<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a>  The leading <span class="in">`/`</span> is the top of the tree. The folder you are "standing in" right now is</span>
+<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a>  the **working directory**; a command that is given no path looks there.</span>
+<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a><span class="fu">#### The shell</span></span>
+<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a>The **shell** lets you drive the computer by typing commands instead of clicking. You</span>
+<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a>type the name of a program, press <span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Enter<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span>, and read what it prints back. If you</span>
+<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a>know R, this is the same idea with a different language. The shell we use is called</span>
+<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a>**bash**. It is good at three things bioinformatics needs constantly: navigating files,</span>
+<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a>repeating an analysis exactly, and moving or summarising large files automatically.</span>
+<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. From your laptop to a compute cluster</span></span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a>A laptop is fine for writing code and looking at results. It is not fine for aligning a</span>
+<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a>million sequencing reads: not enough CPU, not enough memory, and the data would not even</span>
+<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a>fit. A **compute cluster** solves this. It is a set of powerful computers ("nodes") in a</span>
+<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a>server room that many people share, with the large data stored right next to them.</span>
+<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a>For this course we use **LEGcompute**, hosted by the Laboratory of Evolutionary Genetics</span>
+<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a>and shared across the Institute of Biology</span>
+<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a>(<span class="co">[</span><span class="ot">crolllab/IBIOL-compute-resources</span><span class="co">](https://github.com/crolllab/IBIOL-compute-resources)</span>).</span>
+<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a><span class="al">![The LEGcompute cluster.](img/01/legcompute.jpeg)</span>{width="380"}</span>
+<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Resource <span class="pp">|</span> LEGcompute <span class="pp">|</span></span>
+<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
+<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> CPU cores <span class="pp">|</span> ~1000 (Intel + AMD) <span class="pp">|</span></span>
+<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> GPUs <span class="pp">|</span> RTX 3090, 3× RTX A5500, 4× RTX 5000 Ada, 2× RTX PRO 6000 (96 GB) <span class="pp">|</span></span>
+<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Memory <span class="pp">|</span> 4 TB RAM <span class="pp">|</span></span>
+<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Storage <span class="pp">|</span> 80 TB SSD <span class="pp">|</span></span>
+<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> System <span class="pp">|</span> Ubuntu 26.04 LTS, Slurm scheduler, RStudio Server <span class="pp">|</span></span>
+<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a><span class="fu">#### How the cluster is organised</span></span>
+<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a>flowchart LR</span>
+<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a>  L[<span class="ot">"</span><span class="st">Your laptop</span><span class="ot">"</span>] -- <span class="ot">"</span><span class="st">https :8787 (RStudio)</span><span class="ot">"</span> --&gt; H</span>
+<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a>  L -- <span class="ot">"</span><span class="st">ssh</span><span class="ot">"</span> --&gt; H</span>
+<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a>  H[<span class="ot">"</span><span class="st">Login / head node&lt;br/&gt;(where you land)</span><span class="ot">"</span>] -- <span class="ot">"</span><span class="st">sbatch / srun</span><span class="ot">"</span> --&gt; S[<span class="ot">"</span><span class="st">Slurm scheduler</span><span class="ot">"</span>]</span>
+<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a>  S --&gt; C1[<span class="ot">"</span><span class="st">compute node</span><span class="ot">"</span>]</span>
+<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a>  S --&gt; C2[<span class="ot">"</span><span class="st">compute node</span><span class="ot">"</span>]</span>
+<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a>  S --&gt; G[<span class="ot">"</span><span class="st">GPU node</span><span class="ot">"</span>]</span>
+<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a>  H --- ST[(<span class="ot">"</span><span class="st">Shared storage&lt;br/&gt;/home  /data  /scratch</span><span class="ot">"</span>)]</span>
+<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a>  C1 --- ST</span>
+<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a>  C2 --- ST</span>
+<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a>  G --- ST</span>
+<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You **log in to the head node**. Everyone shares it, so it is for light interactive</span>
+<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a>  work only: editing, plotting, small commands (everything we do today).</span>
+<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Real jobs are **submitted to Slurm** with <span class="in">`sbatch`</span>, which sends them to a free compute</span>
+<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a>  node so the machine is never overloaded and everyone gets a fair share. We meet Slurm</span>
+<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a>  properly in a later session.</span>
+<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Storage is shared** by every node, so a file you create on the head node is visible</span>
+<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a>  in your jobs too:</span>
+<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`/home/username`</span>: scripts and small files (**quota: 100 GB per student**);</span>
+<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`/data/username`</span>: large datasets and analysis output (1+ TB);</span>
+<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`/scratch`</span>: temporary space; **files older than 30 days are deleted automatically**.</span>
+<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**~200 bioinformatics tools** are pre-installed as *modules* (<span class="in">`module load SAMtools`</span>).</span>
+<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a>  Nothing to install during class.</span>
+<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a><span class="fu">## No backups</span></span>
+<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a>No backup is made of anything on the server. Keeping a copy of work you care about is</span>
+<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a>your responsibility.</span>
+<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Access for this course</span></span>
+<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a><span class="fu">## Connecting to LEGcompute</span></span>
+<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a>**1. Be on the university network.** Either the <span class="in">`unine`</span> WiFi on campus, or the</span>
+<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">GlobalProtect VPN</span><span class="co">](https://mydoc.unine.ch/fr/Internet_VPN_WiFi/VPN)</span> from home. There is</span>
+<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a>no way in from the open internet.</span>
+<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a>**2. Claim your account.** <span class="co">[</span><span class="ot">Open the shared Google Sheet the instructor</span><span class="co">](https://docs.google.com/spreadsheets/d/1QaN-ZJ-bWl8s_HbvMpZnnwgBn-5SQyBFRyZqk5vqST8/edit?usp=sharing)</span>.</span>
+<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a>On the course tab, pick a free username and write your name in the yellow cell next to</span>
+<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a>it. The first page of the sheet explains how to set or reset your password (via the</span>
+<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">user account server</span><span class="co">](https://legserv.de6.quickconnect.to)</span>).</span>
+<span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a>**3. Connect (pick one):**</span>
+<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Method <span class="pp">|</span> How <span class="pp">|</span> Good for <span class="pp">|</span></span>
+<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **RStudio Server** | Browser → &lt;http://legcompute.unine.ch:8787&gt; → log in. Use the **Terminal** tab for the shell. | **Everyone today.** Nothing to install. <span class="pp">|</span></span>
+<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **SSH** <span class="pp">|</span> In a local terminal: <span class="in">`ssh username@legcompute.unine.ch`</span> <span class="pp">|</span> Later, once you are comfortable. <span class="pp">|</span></span>
+<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a>We use **RStudio Server** for the whole course. It gives you an editor, an R Console, a</span>
+<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a>Terminal and a file browser in one browser tab, with nothing to install.</span>
+<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4. The FASTA format</span></span>
+<span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a>**FASTA** is the simplest way to store one or more biological sequences as text. A</span>
+<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a>**record** has two parts:</span>
+<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a **header line**, whose first character is <span class="in">`&gt;`</span>, giving the sequence a name;</span>
+<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>one or more **sequence lines** (the bases or amino acids).</span>
+<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a><span class="in">```default</span></span>
+<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a><span class="in">&gt;NC_045512.2 Severe acute respiratory syndrome coronavirus 2, surface glycoprotein region (partial)</span></span>
+<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a><span class="in">ATGTTTGTTTTTCTTGTTTTATTGCCACTAGTCTCTAGTCAGTGTGTTAATCTTACAACC</span></span>
+<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a><span class="in">AGAACTCAATTACCCCCTGCATACACTAATTCTTTCACACGTGGTGTTTATTACCCTGAC</span></span>
+<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a><span class="in">&gt;oligo_F short PCR primer</span></span>
+<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a><span class="in">GATTACAGGCGTGAGCCACCACGT</span></span>
+<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a>Here the first record's sequence is wrapped over two lines; the second fits on one. Both</span>
+<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a>are still single records.</span>
+<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-248"><a href="#cb12-248" aria-hidden="true" tabindex="-1"></a>The next record starts at the next line beginning with <span class="in">`&gt;`</span>. Counting records is</span>
+<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a>therefore the same as counting <span class="in">`&gt;`</span> lines. Nothing in the format tells you whether a</span>
+<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a>sequence is DNA or protein, how long it is, or whether it is complete: you have to look.</span>
+<span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a><span class="fu">### Practical briefing</span></span>
+<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a>You will connect to the cluster, build a small project folder, and copy in one FASTA</span>
+<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a>file, <span class="in">`mystery.fasta`</span>. It is deliberately messy: different line widths, a record that is</span>
+<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a>not DNA, and one that was cut off mid-download. Your job is to find that out with the</span>
+<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a>commands, in pairs. **Write every command you run into a script file**, even (especially)</span>
+<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a>the ones that fail: an error message is evidence, not a reason to start over.</span>
+<span id="cb12-259"><a href="#cb12-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-260"><a href="#cb12-260" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practical (≈1 h 50)</span></span>
+<span id="cb12-261"><a href="#cb12-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-262"><a href="#cb12-262" aria-hidden="true" tabindex="-1"></a><span class="fu">### Essential commands for today</span></span>
+<span id="cb12-263"><a href="#cb12-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-264"><a href="#cb12-264" aria-hidden="true" tabindex="-1"></a>Six commands to move around, plus four to look inside a file. That is the whole toolbox</span>
+<span id="cb12-265"><a href="#cb12-265" aria-hidden="true" tabindex="-1"></a>for today.</span>
+<span id="cb12-266"><a href="#cb12-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-267"><a href="#cb12-267" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Command <span class="pp">|</span> What it does <span class="pp">|</span> Example <span class="pp">|</span></span>
+<span id="cb12-268"><a href="#cb12-268" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb12-269"><a href="#cb12-269" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`pwd`</span> <span class="pp">|</span> print working directory: "where am I?" <span class="pp">|</span> <span class="in">`pwd`</span> <span class="pp">|</span></span>
+<span id="cb12-270"><a href="#cb12-270" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ls`</span> <span class="pp">|</span> list the current folder (<span class="in">`ls -lh`</span> adds sizes) <span class="pp">|</span> <span class="in">`ls -lh`</span> <span class="pp">|</span></span>
+<span id="cb12-271"><a href="#cb12-271" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`mkdir`</span> <span class="pp">|</span> make a new folder <span class="pp">|</span> <span class="in">`mkdir data`</span> <span class="pp">|</span></span>
+<span id="cb12-272"><a href="#cb12-272" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`cd`</span> <span class="pp">|</span> change directory: move into a folder <span class="pp">|</span> <span class="in">`cd data`</span> <span class="pp">|</span></span>
+<span id="cb12-273"><a href="#cb12-273" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`cp`</span> <span class="pp">|</span> copy a file: <span class="in">`cp &lt;what&gt; &lt;where&gt;`</span> <span class="pp">|</span> <span class="in">`cp reads.fasta .`</span> <span class="pp">|</span></span>
+<span id="cb12-274"><a href="#cb12-274" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`head`</span> <span class="pp">|</span> show the first lines of a text file <span class="pp">|</span> <span class="in">`head -n 4 reads.fasta`</span> <span class="pp">|</span></span>
+<span id="cb12-275"><a href="#cb12-275" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`tail`</span> <span class="pp">|</span> show the last lines <span class="pp">|</span> <span class="in">`tail -n 3 reads.fasta`</span> <span class="pp">|</span></span>
+<span id="cb12-276"><a href="#cb12-276" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`wc -l`</span> <span class="pp">|</span> count lines <span class="pp">|</span> <span class="in">`wc -l reads.fasta`</span> <span class="pp">|</span></span>
+<span id="cb12-277"><a href="#cb12-277" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`grep "^&gt;"`</span> <span class="pp">|</span> show the lines that start with <span class="in">`&gt;`</span> (FASTA headers) <span class="pp">|</span> <span class="in">`grep "^&gt;" reads.fasta`</span> <span class="pp">|</span></span>
+<span id="cb12-278"><a href="#cb12-278" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`grep -c "^&gt;"`</span> <span class="pp">|</span> *count* the lines that start with <span class="in">`&gt;`</span> (records) <span class="pp">|</span> <span class="in">`grep -c "^&gt;" reads.fasta`</span> <span class="pp">|</span></span>
+<span id="cb12-279"><a href="#cb12-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-280"><a href="#cb12-280" aria-hidden="true" tabindex="-1"></a><span class="in">`^&gt;`</span> means "a line beginning with <span class="in">`&gt;`</span>". <span class="in">`cat`</span> (whole file) and <span class="in">`less`</span> (scroll, press <span class="in">`q`</span></span>
+<span id="cb12-281"><a href="#cb12-281" aria-hidden="true" tabindex="-1"></a>to quit) are useful too. Deleting files is deliberately **not** covered today.</span>
+<span id="cb12-282"><a href="#cb12-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-283"><a href="#cb12-283" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb12-284"><a href="#cb12-284" aria-hidden="true" tabindex="-1"></a><span class="fu">## Three habits that save time</span></span>
+<span id="cb12-285"><a href="#cb12-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-286"><a href="#cb12-286" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Tab completion.** Type the first few letters of a command or file name and press</span>
+<span id="cb12-287"><a href="#cb12-287" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Tab<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span>. The shell finishes it for you and prevents typos.</span>
+<span id="cb12-288"><a href="#cb12-288" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Command history.** Press <span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>↑<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span> to bring back the previous command and edit it.</span>
+<span id="cb12-289"><a href="#cb12-289" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Send a line from the script.** With your <span class="in">`.sh`</span> script open, put the cursor on a line</span>
+<span id="cb12-290"><a href="#cb12-290" aria-hidden="true" tabindex="-1"></a>  and press <span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Ctrl<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span>+<span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Enter<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span> (<span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Cmd<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span>+<span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Enter<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span> on macOS) to</span>
+<span id="cb12-291"><a href="#cb12-291" aria-hidden="true" tabindex="-1"></a>  run it in the Terminal without copy-pasting.</span>
+<span id="cb12-292"><a href="#cb12-292" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-293"><a href="#cb12-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-294"><a href="#cb12-294" aria-hidden="true" tabindex="-1"></a><span class="fu">### A. Connect and get oriented (15:00-15:15)</span></span>
+<span id="cb12-295"><a href="#cb12-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-296"><a href="#cb12-296" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>In a browser, go to <span class="ot">&lt;http://legcompute.unine.ch:8787&gt;</span> and log in with your cluster</span>
+<span id="cb12-297"><a href="#cb12-297" aria-hidden="true" tabindex="-1"></a>   username and password.</span>
+<span id="cb12-298"><a href="#cb12-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-299"><a href="#cb12-299" aria-hidden="true" tabindex="-1"></a>   <span class="al">![The RStudio Server login page.](img/01/rstudio_login.png)</span>{width="360"}</span>
+<span id="cb12-300"><a href="#cb12-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-301"><a href="#cb12-301" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Find these four parts of the RStudio window:</span>
+<span id="cb12-302"><a href="#cb12-302" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Source editor** (top left): where scripts are written;</span>
+<span id="cb12-303"><a href="#cb12-303" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Console** (bottom left): runs **R** code;</span>
+<span id="cb12-304"><a href="#cb12-304" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Terminal** (a tab next to the Console): runs **shell** commands;</span>
+<span id="cb12-305"><a href="#cb12-305" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Files** pane (bottom right): a click-through file browser.</span>
+<span id="cb12-306"><a href="#cb12-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-307"><a href="#cb12-307" aria-hidden="true" tabindex="-1"></a>   If there is no Terminal tab, open one with **Tools → Terminal → New Terminal**. The</span>
+<span id="cb12-308"><a href="#cb12-308" aria-hidden="true" tabindex="-1"></a>   welcome text it prints is just a message from the server.</span>
+<span id="cb12-309"><a href="#cb12-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-310"><a href="#cb12-310" aria-hidden="true" tabindex="-1"></a>::: callout-warning</span>
+<span id="cb12-311"><a href="#cb12-311" aria-hidden="true" tabindex="-1"></a><span class="fu">## Console vs Terminal</span></span>
+<span id="cb12-312"><a href="#cb12-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-313"><a href="#cb12-313" aria-hidden="true" tabindex="-1"></a>Everything in this practical is typed in the **Terminal**. The **Console** is for R and</span>
+<span id="cb12-314"><a href="#cb12-314" aria-hidden="true" tabindex="-1"></a>comes in later sessions. If a shell command gives a strange R error, you are in the</span>
+<span id="cb12-315"><a href="#cb12-315" aria-hidden="true" tabindex="-1"></a>wrong panel.</span>
+<span id="cb12-316"><a href="#cb12-316" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-317"><a href="#cb12-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-318"><a href="#cb12-318" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Open a new script: **File → New File → Shell Script**. Save it straight away as</span>
+<span id="cb12-319"><a href="#cb12-319" aria-hidden="true" tabindex="-1"></a>   <span class="in">`session_01_commands.sh`</span>. From now on, every command you try goes in this file,</span>
+<span id="cb12-320"><a href="#cb12-320" aria-hidden="true" tabindex="-1"></a>   including ones that fail. Keep it: you reuse it in Session 2, and a partner reruns it</span>
+<span id="cb12-321"><a href="#cb12-321" aria-hidden="true" tabindex="-1"></a>   in block F.</span>
+<span id="cb12-322"><a href="#cb12-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-323"><a href="#cb12-323" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb12-324"><a href="#cb12-324" aria-hidden="true" tabindex="-1"></a><span class="fu">## If you cannot connect</span></span>
+<span id="cb12-325"><a href="#cb12-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-326"><a href="#cb12-326" aria-hidden="true" tabindex="-1"></a>Do not lose ten minutes alone. Pair up with a neighbour and share one screen, or use a</span>
+<span id="cb12-327"><a href="#cb12-327" aria-hidden="true" tabindex="-1"></a>room computer, and tell the instructor. Fixing access for one person should not stop the</span>
+<span id="cb12-328"><a href="#cb12-328" aria-hidden="true" tabindex="-1"></a>class.</span>
+<span id="cb12-329"><a href="#cb12-329" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-330"><a href="#cb12-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-331"><a href="#cb12-331" aria-hidden="true" tabindex="-1"></a><span class="fu">### B. Where am I? Navigating folders (15:15-15:35)</span></span>
+<span id="cb12-332"><a href="#cb12-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-333"><a href="#cb12-333" aria-hidden="true" tabindex="-1"></a>Work **one line at a time**. Before you press <span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Enter<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span>, write in your script,</span>
+<span id="cb12-334"><a href="#cb12-334" aria-hidden="true" tabindex="-1"></a>as a <span class="in">`#`</span> comment, what you expect to see. Then run it and compare. A wrong prediction is</span>
+<span id="cb12-335"><a href="#cb12-335" aria-hidden="true" tabindex="-1"></a>the useful part: it shows exactly which idea to fix.</span>
+<span id="cb12-336"><a href="#cb12-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-337"><a href="#cb12-337" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb12-338"><a href="#cb12-338" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span>                     <span class="co"># predict: which folder does this print?</span></span>
+<span id="cb12-339"><a href="#cb12-339" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>                      <span class="co"># predict: what is already here?</span></span>
+<span id="cb12-340"><a href="#cb12-340" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> bioinfo_course    <span class="co"># predict: what does ls show now?</span></span>
+<span id="cb12-341"><a href="#cb12-341" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> bioinfo_course</span>
+<span id="cb12-342"><a href="#cb12-342" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span>                     <span class="co"># predict: how has the path changed?</span></span>
+<span id="cb12-343"><a href="#cb12-343" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> session_01</span>
+<span id="cb12-344"><a href="#cb12-344" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> session_01</span>
+<span id="cb12-345"><a href="#cb12-345" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb12-346"><a href="#cb12-346" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-347"><a href="#cb12-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-348"><a href="#cb12-348" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb12-349"><a href="#cb12-349" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb12-350"><a href="#cb12-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-351"><a href="#cb12-351" aria-hidden="true" tabindex="-1"></a><span class="in">`pwd`</span> ends in <span class="in">`bioinfo_course/session_01`</span>.</span>
+<span id="cb12-352"><a href="#cb12-352" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-353"><a href="#cb12-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-354"><a href="#cb12-354" aria-hidden="true" tabindex="-1"></a>Make a <span class="in">`data`</span> folder and move into it. Predict each line first.</span>
+<span id="cb12-355"><a href="#cb12-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-356"><a href="#cb12-356" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb12-357"><a href="#cb12-357" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> data</span>
+<span id="cb12-358"><a href="#cb12-358" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> data</span>
+<span id="cb12-359"><a href="#cb12-359" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb12-360"><a href="#cb12-360" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-361"><a href="#cb12-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-362"><a href="#cb12-362" aria-hidden="true" tabindex="-1"></a><span class="fu">### C. Get the data and take a first look (15:35-15:50)</span></span>
+<span id="cb12-363"><a href="#cb12-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-364"><a href="#cb12-364" aria-hidden="true" tabindex="-1"></a>Your instructor will give you the exact path to the course materials on the server. Copy</span>
+<span id="cb12-365"><a href="#cb12-365" aria-hidden="true" tabindex="-1"></a>the sequence file and your worksheet into the folder you are standing in, then check</span>
+<span id="cb12-366"><a href="#cb12-366" aria-hidden="true" tabindex="-1"></a>they arrived:</span>
+<span id="cb12-367"><a href="#cb12-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-368"><a href="#cb12-368" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb12-369"><a href="#cb12-369" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/mystery.fasta .</span>
+<span id="cb12-370"><a href="#cb12-370" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/WORKSHEET.md .</span>
+<span id="cb12-371"><a href="#cb12-371" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span></span>
+<span id="cb12-372"><a href="#cb12-372" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-373"><a href="#cb12-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-374"><a href="#cb12-374" aria-hidden="true" tabindex="-1"></a>The final <span class="in">`.`</span> means "here, in the current folder". <span class="in">`ls -lh`</span> also shows the file sizes.</span>
+<span id="cb12-375"><a href="#cb12-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-376"><a href="#cb12-376" aria-hidden="true" tabindex="-1"></a><span class="in">`WORKSHEET.md`</span> is a plain text file of questions, not a script: open it from the</span>
+<span id="cb12-377"><a href="#cb12-377" aria-hidden="true" tabindex="-1"></a>**Files** pane (click its name) or **File → Open File**, and type your answers directly</span>
+<span id="cb12-378"><a href="#cb12-378" aria-hidden="true" tabindex="-1"></a>under each "Answer:" line as you go through today's blocks. Save it like any other file</span>
+<span id="cb12-379"><a href="#cb12-379" aria-hidden="true" tabindex="-1"></a>(<span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Ctrl<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span>/<span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Cmd<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span>+<span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>S<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span>). There is nothing to submit: it stays in</span>
+<span id="cb12-380"><a href="#cb12-380" aria-hidden="true" tabindex="-1"></a>your folder, and your instructor may look at it to see where the class is.</span>
+<span id="cb12-381"><a href="#cb12-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-382"><a href="#cb12-382" aria-hidden="true" tabindex="-1"></a>Now look inside it four ways. Predict the output of each line before you run it.</span>
+<span id="cb12-383"><a href="#cb12-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-384"><a href="#cb12-384" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb12-385"><a href="#cb12-385" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 6 mystery.fasta       <span class="co"># the first few lines</span></span>
+<span id="cb12-386"><a href="#cb12-386" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-n</span> 3 mystery.fasta       <span class="co"># the last few lines</span></span>
+<span id="cb12-387"><a href="#cb12-387" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^&gt;"</span> mystery.fasta    <span class="co"># how many records (lines starting with &gt;)</span></span>
+<span id="cb12-388"><a href="#cb12-388" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> mystery.fasta           <span class="co"># how many lines in total</span></span>
+<span id="cb12-389"><a href="#cb12-389" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-390"><a href="#cb12-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-391"><a href="#cb12-391" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb12-392"><a href="#cb12-392" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb12-393"><a href="#cb12-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-394"><a href="#cb12-394" aria-hidden="true" tabindex="-1"></a><span class="in">`grep -c "^&gt;"`</span> prints **40**. `wc -l` prints **134**. Keep both numbers: block D asks why</span>
+<span id="cb12-395"><a href="#cb12-395" aria-hidden="true" tabindex="-1"></a>they differ. Note the output of <span class="in">`pwd`</span> and the <span class="in">`ls -lh`</span> line for <span class="in">`mystery.fasta`</span> now, for</span>
+<span id="cb12-396"><a href="#cb12-396" aria-hidden="true" tabindex="-1"></a>**Section 2** of your worksheet.</span>
+<span id="cb12-397"><a href="#cb12-397" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-398"><a href="#cb12-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-399"><a href="#cb12-399" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb12-400"><a href="#cb12-400" aria-hidden="true" tabindex="-1"></a><span class="fu">## Moving files in and out (no exercise, just so you know)</span></span>
+<span id="cb12-401"><a href="#cb12-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-402"><a href="#cb12-402" aria-hidden="true" tabindex="-1"></a>You will not need it today, but the RStudio **Files** pane moves files between your</span>
+<span id="cb12-403"><a href="#cb12-403" aria-hidden="true" tabindex="-1"></a>laptop and the server: **Upload** (laptop to server) and tick a file then **More -&gt;</span>
+<span id="cb12-404"><a href="#cb12-404" aria-hidden="true" tabindex="-1"></a>Export...** (server to laptop). No <span class="in">`scp`</span> required.</span>
+<span id="cb12-405"><a href="#cb12-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-406"><a href="#cb12-406" aria-hidden="true" tabindex="-1"></a><span class="al">![Uploading a file through the RStudio Files pane.](img/01/rstudio_upload.png)</span>{width="620"}</span>
+<span id="cb12-407"><a href="#cb12-407" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-408"><a href="#cb12-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-409"><a href="#cb12-409" aria-hidden="true" tabindex="-1"></a><span class="fu">### 15:50-16:00: Checkpoint and short break</span></span>
+<span id="cb12-410"><a href="#cb12-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-411"><a href="#cb12-411" aria-hidden="true" tabindex="-1"></a>Before you step away: your script is **saved**, and <span class="in">`pwd`</span> ends in</span>
+<span id="cb12-412"><a href="#cb12-412" aria-hidden="true" tabindex="-1"></a><span class="in">`bioinfo_course/session_01/data`</span>.</span>
+<span id="cb12-413"><a href="#cb12-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-414"><a href="#cb12-414" aria-hidden="true" tabindex="-1"></a><span class="fu">### D. The investigation, in pairs (16:00-16:22)</span></span>
+<span id="cb12-415"><a href="#cb12-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-416"><a href="#cb12-416" aria-hidden="true" tabindex="-1"></a><span class="in">`mystery.fasta`</span> holds 40 records. Most are unremarkable filler; seven are not, and they</span>
+<span id="cb12-417"><a href="#cb12-417" aria-hidden="true" tabindex="-1"></a>are scattered in among the rest, not conveniently grouped at the top. Work with one other</span>
+<span id="cb12-418"><a href="#cb12-418" aria-hidden="true" tabindex="-1"></a>student. For **each** question below, write the answer **and the command you used** in</span>
+<span id="cb12-419"><a href="#cb12-419" aria-hidden="true" tabindex="-1"></a>Section 3 of your worksheet.</span>
+<span id="cb12-420"><a href="#cb12-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-421"><a href="#cb12-421" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>How many sequence records are in the file? Which command answers this without</span>
+<span id="cb12-422"><a href="#cb12-422" aria-hidden="true" tabindex="-1"></a>   miscounting, and why is scrolling and counting <span class="in">`&gt;`</span> by eye unreliable here?</span>
+<span id="cb12-423"><a href="#cb12-423" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="in">`wc -l`</span> gave 134, not 80 (which would be two lines per record). Give the **two**</span>
+<span id="cb12-424"><a href="#cb12-424" aria-hidden="true" tabindex="-1"></a>   separate reasons.</span>
+<span id="cb12-425"><a href="#cb12-425" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>One record is **not DNA**. Which one? Give two clues, one from the sequence and one</span>
+<span id="cb12-426"><a href="#cb12-426" aria-hidden="true" tabindex="-1"></a>   from the header.</span>
+<span id="cb12-427"><a href="#cb12-427" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>One record was **cut off during download**. Which one, and how does <span class="in">`tail`</span> show it?</span>
+<span id="cb12-428"><a href="#cb12-428" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Look at <span class="in">`contig_07`</span>. Its sequence mixes UPPERCASE and lowercase and contains a run of</span>
+<span id="cb12-429"><a href="#cb12-429" aria-hidden="true" tabindex="-1"></a>   <span class="in">`N`</span>. What do the lowercase letters mean, and what does the <span class="in">`N`</span> run mean? You do not</span>
+<span id="cb12-430"><a href="#cb12-430" aria-hidden="true" tabindex="-1"></a>   need to change anything.</span>
+<span id="cb12-431"><a href="#cb12-431" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Which record has the **shortest complete sequence**? (The cut-off record from</span>
+<span id="cb12-432"><a href="#cb12-432" aria-hidden="true" tabindex="-1"></a>   question 4 does not count: it has no sequence at all.) Show it and say how you decided.</span>
+<span id="cb12-433"><a href="#cb12-433" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-434"><a href="#cb12-434" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb12-435"><a href="#cb12-435" aria-hidden="true" tabindex="-1"></a><span class="fu">## Short on time?</span></span>
+<span id="cb12-436"><a href="#cb12-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-437"><a href="#cb12-437" aria-hidden="true" tabindex="-1"></a>At 16:22, move to block E with whatever you have, even if some questions are unanswered</span>
+<span id="cb12-438"><a href="#cb12-438" aria-hidden="true" tabindex="-1"></a>or your answers are unsure. Partial answers are fine: this is not graded, and there is no</span>
+<span id="cb12-439"><a href="#cb12-439" aria-hidden="true" tabindex="-1"></a>benefit in rushing block E to finish block D.</span>
+<span id="cb12-440"><a href="#cb12-440" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-441"><a href="#cb12-441" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-442"><a href="#cb12-442" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb12-443"><a href="#cb12-443" aria-hidden="true" tabindex="-1"></a><span class="fu">## Commands you may want</span></span>
+<span id="cb12-444"><a href="#cb12-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-445"><a href="#cb12-445" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb12-446"><a href="#cb12-446" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"^&gt;"</span> mystery.fasta          <span class="co"># list every header at once</span></span>
+<span id="cb12-447"><a href="#cb12-447" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^&gt;"</span> mystery.fasta       <span class="co"># count records</span></span>
+<span id="cb12-448"><a href="#cb12-448" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 20 mystery.fasta         <span class="co"># a first chunk of records, to get a feel for the file</span></span>
+<span id="cb12-449"><a href="#cb12-449" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-n</span> 3 mystery.fasta          <span class="co"># last lines</span></span>
+<span id="cb12-450"><a href="#cb12-450" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-A</span> 1 <span class="st">"SPIKE"</span> mystery.fasta  <span class="co"># a matching header and the line right after it</span></span>
+<span id="cb12-451"><a href="#cb12-451" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-452"><a href="#cb12-452" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-453"><a href="#cb12-453" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-454"><a href="#cb12-454" aria-hidden="true" tabindex="-1"></a><span class="fu">### E. Break it and diagnose, in pairs (16:22-16:40)</span></span>
+<span id="cb12-455"><a href="#cb12-455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-456"><a href="#cb12-456" aria-hidden="true" tabindex="-1"></a>Every command below fails or surprises you, each for a **different** reason. For each</span>
+<span id="cb12-457"><a href="#cb12-457" aria-hidden="true" tabindex="-1"></a>one: predict what will happen, run it, copy the **exact** message, then write a version</span>
+<span id="cb12-458"><a href="#cb12-458" aria-hidden="true" tabindex="-1"></a>that works. Record all of it in your script.</span>
+<span id="cb12-459"><a href="#cb12-459" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-460"><a href="#cb12-460" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb12-461"><a href="#cb12-461" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Data</span>
+<span id="cb12-462"><a href="#cb12-462" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> mystery.fna</span>
+<span id="cb12-463"><a href="#cb12-463" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> mystery.fasta</span>
+<span id="cb12-464"><a href="#cb12-464" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> mystery.fasta</span>
+<span id="cb12-465"><a href="#cb12-465" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> mystery.fasta</span>
+<span id="cb12-466"><a href="#cb12-466" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../mystery.fasta</span>
+<span id="cb12-467"><a href="#cb12-467" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-468"><a href="#cb12-468" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-469"><a href="#cb12-469" aria-hidden="true" tabindex="-1"></a>Hints:</span>
+<span id="cb12-470"><a href="#cb12-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-471"><a href="#cb12-471" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Linux distinguishes uppercase from lowercase.</span>
+<span id="cb12-472"><a href="#cb12-472" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A file name must match exactly, extension included.</span>
+<span id="cb12-473"><a href="#cb12-473" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Some options need a value; some commands need more than one argument.</span>
+<span id="cb12-474"><a href="#cb12-474" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`..`</span> is "the folder above"; a bare name is "in the current folder".</span>
+<span id="cb12-475"><a href="#cb12-475" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-476"><a href="#cb12-476" aria-hidden="true" tabindex="-1"></a>Return to <span class="in">`bioinfo_course/session_01/data`</span> when you are done.</span>
+<span id="cb12-477"><a href="#cb12-477" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-478"><a href="#cb12-478" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb12-479"><a href="#cb12-479" aria-hidden="true" tabindex="-1"></a><span class="fu">## Short on time?</span></span>
+<span id="cb12-480"><a href="#cb12-480" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-481"><a href="#cb12-481" aria-hidden="true" tabindex="-1"></a>At 16:40, move to block F even if you have not diagnosed all six. Whatever you have</span>
+<span id="cb12-482"><a href="#cb12-482" aria-hidden="true" tabindex="-1"></a>recorded, including the ones you did not solve, is still useful material for block G.</span>
+<span id="cb12-483"><a href="#cb12-483" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-484"><a href="#cb12-484" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-485"><a href="#cb12-485" aria-hidden="true" tabindex="-1"></a><span class="fu">### F. Reproduce it (16:40-16:50)</span></span>
+<span id="cb12-486"><a href="#cb12-486" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-487"><a href="#cb12-487" aria-hidden="true" tabindex="-1"></a>Trade <span class="in">`session_01_commands.sh`</span> with your partner. From your home folder, start clean and</span>
+<span id="cb12-488"><a href="#cb12-488" aria-hidden="true" tabindex="-1"></a>run **their** commands in order:</span>
+<span id="cb12-489"><a href="#cb12-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-490"><a href="#cb12-490" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb12-491"><a href="#cb12-491" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span>
+<span id="cb12-492"><a href="#cb12-492" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> replay</span>
+<span id="cb12-493"><a href="#cb12-493" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> replay</span>
+<span id="cb12-494"><a href="#cb12-494" aria-hidden="true" tabindex="-1"></a><span class="co"># now run your partner's commands, from the top, one by one</span></span>
+<span id="cb12-495"><a href="#cb12-495" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-496"><a href="#cb12-496" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-497"><a href="#cb12-497" aria-hidden="true" tabindex="-1"></a>Does it run start to finish? If it stops, the missing step is something they did but did</span>
+<span id="cb12-498"><a href="#cb12-498" aria-hidden="true" tabindex="-1"></a>not write down, usually a <span class="in">`cd`</span> or the <span class="in">`cp`</span> path. Add the missing lines to **your own**</span>
+<span id="cb12-499"><a href="#cb12-499" aria-hidden="true" tabindex="-1"></a>script so it works from an empty folder. That is what "reproducible" means in practice.</span>
+<span id="cb12-500"><a href="#cb12-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-501"><a href="#cb12-501" aria-hidden="true" tabindex="-1"></a><span class="fu">### G. Individual wrap-up (16:50-17:00)</span></span>
+<span id="cb12-502"><a href="#cb12-502" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-503"><a href="#cb12-503" aria-hidden="true" tabindex="-1"></a>On your own, complete Sections 1, 4, and 5 of your worksheet:</span>
+<span id="cb12-504"><a href="#cb12-504" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-505"><a href="#cb12-505" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>one command that failed today: the exact message, the cause, and the fix;</span>
+<span id="cb12-506"><a href="#cb12-506" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>two or three sentences: from <span class="in">`mystery.fasta`</span> alone, what **can** you say about these</span>
+<span id="cb12-507"><a href="#cb12-507" aria-hidden="true" tabindex="-1"></a>  sequences, and what can you **not** say?</span>
+<span id="cb12-508"><a href="#cb12-508" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-509"><a href="#cb12-509" aria-hidden="true" tabindex="-1"></a>You should leave with:</span>
+<span id="cb12-510"><a href="#cb12-510" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-511"><a href="#cb12-511" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`WORKSHEET.md`</span> with your answers;</span>
+<span id="cb12-512"><a href="#cb12-512" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`session_01_commands.sh`</span> with every command you attempted, errors included, that runs</span>
+<span id="cb12-513"><a href="#cb12-513" aria-hidden="true" tabindex="-1"></a>  from a clean start.</span>
+<span id="cb12-514"><a href="#cb12-514" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-515"><a href="#cb12-515" aria-hidden="true" tabindex="-1"></a>Session 1 is a diagnostic, not a test. It is **not graded**: the continuous assessment</span>
+<span id="cb12-516"><a href="#cb12-516" aria-hidden="true" tabindex="-1"></a>(a short Moodle quiz at the end of each session) starts at Session 3. Your instructor</span>
+<span id="cb12-517"><a href="#cb12-517" aria-hidden="true" tabindex="-1"></a>may still look at your worksheet to see where the class is.</span>
+<span id="cb12-518"><a href="#cb12-518" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-519"><a href="#cb12-519" aria-hidden="true" tabindex="-1"></a>**Keep the `bioinfo_course` folder.** Session 2 reuses it.</span>
+<span id="cb12-520"><a href="#cb12-520" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-521"><a href="#cb12-521" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb12-522"><a href="#cb12-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-523"><a href="#cb12-523" aria-hidden="true" tabindex="-1"></a>You are done when all of the following are true:</span>
+<span id="cb12-524"><a href="#cb12-524" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-525"><a href="#cb12-525" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you reached the Terminal in RStudio Server and know it is not the Console;</span>
+<span id="cb12-526"><a href="#cb12-526" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`session_01_commands.sh`</span> is saved, includes the commands that failed, and runs from an</span>
+<span id="cb12-527"><a href="#cb12-527" aria-hidden="true" tabindex="-1"></a>  empty folder;</span>
+<span id="cb12-528"><a href="#cb12-528" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`pwd`</span> ends in <span class="in">`bioinfo_course/session_01/data`</span>, and that folder contains</span>
+<span id="cb12-529"><a href="#cb12-529" aria-hidden="true" tabindex="-1"></a>  <span class="in">`mystery.fasta`</span>;</span>
+<span id="cb12-530"><a href="#cb12-530" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can say the file has **40** records, that <span class="in">`grep -c "^&gt;"`</span> is the reliable way to</span>
+<span id="cb12-531"><a href="#cb12-531" aria-hidden="true" tabindex="-1"></a>  count them, and why <span class="in">`wc -l`</span> gives a different number;</span>
+<span id="cb12-532"><a href="#cb12-532" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can name the record that is not DNA and the record that was truncated, and say how</span>
+<span id="cb12-533"><a href="#cb12-533" aria-hidden="true" tabindex="-1"></a>  you spotted each;</span>
+<span id="cb12-534"><a href="#cb12-534" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can explain in one sentence that a FASTA record starts on a line whose first</span>
+<span id="cb12-535"><a href="#cb12-535" aria-hidden="true" tabindex="-1"></a>  character is <span class="in">`&gt;`</span>.</span>
+<span id="cb12-536"><a href="#cb12-536" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-537"><a href="#cb12-537" aria-hidden="true" tabindex="-1"></a><span class="fu">## Optional challenge</span></span>
+<span id="cb12-538"><a href="#cb12-538" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-539"><a href="#cb12-539" aria-hidden="true" tabindex="-1"></a>For your own interest, not graded.</span>
+<span id="cb12-540"><a href="#cb12-540" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-541"><a href="#cb12-541" aria-hidden="true" tabindex="-1"></a>**A. Look at a real genome without opening it.** Your instructor will point you to a</span>
+<span id="cb12-542"><a href="#cb12-542" aria-hidden="true" tabindex="-1"></a>full genome FASTA in the shared course folder.</span>
+<span id="cb12-543"><a href="#cb12-543" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-544"><a href="#cb12-544" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb12-545"><a href="#cb12-545" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/reference/</span>
+<span id="cb12-546"><a href="#cb12-546" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/reference/genome.fasta</span>
+<span id="cb12-547"><a href="#cb12-547" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^&gt;"</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/reference/genome.fasta</span>
+<span id="cb12-548"><a href="#cb12-548" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-549"><a href="#cb12-549" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-550"><a href="#cb12-550" aria-hidden="true" tabindex="-1"></a>Note the file size, how many sequences <span class="in">`grep -c`</span> finds, and how fast <span class="in">`head`</span> answers even</span>
+<span id="cb12-551"><a href="#cb12-551" aria-hidden="true" tabindex="-1"></a>on a file of hundreds of megabytes. Why would opening it in the editor be a bad idea?</span>
+<span id="cb12-552"><a href="#cb12-552" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-553"><a href="#cb12-553" aria-hidden="true" tabindex="-1"></a>**B. Make the answers reproducible.** Write a three-line script <span class="in">`answers.sh`</span> that prints</span>
+<span id="cb12-554"><a href="#cb12-554" aria-hidden="true" tabindex="-1"></a>the record count and the last record of <span class="in">`mystery.fasta`</span>, then run it with</span>
+<span id="cb12-555"><a href="#cb12-555" aria-hidden="true" tabindex="-1"></a><span class="in">`bash answers.sh`</span>.</span>
+<span id="cb12-556"><a href="#cb12-556" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-557"><a href="#cb12-557" aria-hidden="true" tabindex="-1"></a><span class="fu">## Before the next session</span></span>
+<span id="cb12-558"><a href="#cb12-558" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-559"><a href="#cb12-559" aria-hidden="true" tabindex="-1"></a>Keep the <span class="in">`bioinfo_course`</span> folder. Session 2 builds a fuller project structure inside it</span>
+<span id="cb12-560"><a href="#cb12-560" aria-hidden="true" tabindex="-1"></a>and looks at FASTQ files and quality control.</span>
+<span id="cb12-561"><a href="#cb12-561" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-562"><a href="#cb12-562" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb12-563"><a href="#cb12-563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-564"><a href="#cb12-564" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb12-565"><a href="#cb12-565" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sources and reuse</span></span>
+<span id="cb12-566"><a href="#cb12-566" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-567"><a href="#cb12-567" aria-hidden="true" tabindex="-1"></a>This session adapts material from</span>
+<span id="cb12-568"><a href="#cb12-568" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">tbadet/teaching (Bioinformatic_tools)</span><span class="co">](https://github.com/tbadet/teaching/tree/main/Bioinformatic_tools)</span></span>
+<span id="cb12-569"><a href="#cb12-569" aria-hidden="true" tabindex="-1"></a>(RStudio Server access, file transfer, the essential-commands walkthrough) and from</span>
+<span id="cb12-570"><a href="#cb12-570" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">crolllab/IBIOL-compute-resources</span><span class="co">](https://github.com/crolllab/IBIOL-compute-resources)</span></span>
+<span id="cb12-571"><a href="#cb12-571" aria-hidden="true" tabindex="-1"></a>(cluster description and connection instructions). Screenshots are from the tbadet</span>
+<span id="cb12-572"><a href="#cb12-572" aria-hidden="true" tabindex="-1"></a>course materials; the cluster photo is from the IBIOL repository.</span>
+<span id="cb12-573"><a href="#cb12-573" aria-hidden="true" tabindex="-1"></a>:::</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+      <i class="bi bi-badge-cc-fill" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://cmaslard.xyz/">
+<p>Corentin Maslard 2026</p>
+</a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="mailto:maslard.corentin@gmail.com">
+<p><iconify-icon role="img" inline="" icon="fa6-solid:envelope" aria-label="Icon envelope from fa6-solid Iconify.design set." title="Icon envelope from fa6-solid Iconify.design set."></iconify-icon></p>
+</a>
+  </li>  
+    <li class="nav-item">
+ 
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/cmaslard/bioinformatics-tools-course/">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://www.linkedin.com/in/corentin-maslard">
+<p><iconify-icon role="img" inline="" icon="fa6-brands:linkedin" aria-label="Icon linkedin from fa6-brands Iconify.design set." title="Icon linkedin from fa6-brands Iconify.design set."></iconify-icon></p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://x.com/cmaslard">
+<p><iconify-icon role="img" inline="" icon="fa6-brands:square-x-twitter" aria-label="Icon square-x-twitter from fa6-brands Iconify.design set." title="Icon square-x-twitter from fa6-brands Iconify.design set."></iconify-icon></p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://bsky.app/profile/cmaslard.bsky.social">
+<p><iconify-icon role="img" inline="" icon="fa6-brands:bluesky" aria-label="Icon bluesky from fa6-brands Iconify.design set." title="Icon bluesky from fa6-brands Iconify.design set."></iconify-icon></p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://orcid.org/0000-0002-6951-1963">
+<p><iconify-icon role="img" inline="" icon="fa6-brands:orcid" aria-label="Icon orcid from fa6-brands Iconify.design set." title="Icon orcid from fa6-brands Iconify.design set."></iconify-icon></p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://www.researchgate.net/profile/Corentin-Maslard">
+<p><iconify-icon role="img" inline="" icon="fa6-brands:researchgate" aria-label="Icon researchgate from fa6-brands Iconify.design set." title="Icon researchgate from fa6-brands Iconify.design set."></iconify-icon></p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=TsztyiMAAAAJ&amp;hl" target="blank">
+<p><iconify-icon role="img" inline="" icon="academicons:google-scholar" aria-label="Icon google-scholar from academicons Iconify.design set." title="Icon google-scholar from academicons Iconify.design set."></iconify-icon></p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://cv.hal.science/corentinmaslard">
+<p><iconify-icon role="img" inline="" icon="academicons:hal" aria-label="Icon hal from academicons Iconify.design set." title="Icon hal from academicons Iconify.design set."></iconify-icon></p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://docs.google.com/document/d/1oCgrdjnAJuVjgocx3F2kmlbJxlqa6uWrSgqm5fWRhpA/edit?usp=sharing">
+<p><iconify-icon role="img" inline="" icon="pepicons-pop:cv" aria-label="Icon cv from pepicons-pop Iconify.design set." title="Icon cv from pepicons-pop Iconify.design set."></iconify-icon></p>
+</a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/cmaslard/bioinformatics-tools-course/blob/main/sessions/01_diagnostic_and_essential_commands.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/cmaslard/bioinformatics-tools-course/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><span class="faux-block">Made with <iconify-icon icon="line-md:heart-twotone"></iconify-icon>, <iconify-icon icon="line-md:coffee-twotone-loop"></iconify-icon>, <iconify-icon role="img" inline="" icon="fa6-brands:r-project" aria-label="Icon r-project from fa6-brands Iconify.design set." title="Icon r-project from fa6-brands Iconify.design set."></iconify-icon> and <a href="https://quarto.org/">Quarto</a></span> | <span class="faux-block"><a href="https://github.com/cmaslard/bioinformatics-tools-course">View the source at <iconify-icon role="img" inline="" icon="fa6-brands:github" aria-label="Icon github from fa6-brands Iconify.design set." title="Icon github from fa6-brands Iconify.design set."></iconify-icon> GitHub</a></span></p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"right","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

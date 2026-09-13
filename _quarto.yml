@@ -28,6 +28,9 @@ book:
   abstract: "Student website for the Bioinformatics Tools course: nine sessions introducing the essential command-line, R, and machine-learning tools used to inspect, analyse, and interpret biological data."
   chapters:
     - index.qmd
+    - part: "Foundations"
+      chapters:
+        - sessions/01_diagnostic_and_essential_commands.qmd
     - references.qmd
   search:
     type: overlay
@@ -87,7 +90,8 @@ format:
   html:
     grid:
       body-width: 1000px
-    code-fold: false
+    code-fold: true
+    code-summary: "Code"
     code-tools: true
     theme:
       light: [cosmo, src/theme-light.scss]
