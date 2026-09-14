@@ -1233,10 +1233,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="optional-challenge" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="optional-challenge"><span class="header-section-number">1.5</span> Optional challenge</h2>
 <p>For your own interest, not graded.</p>
-<p><strong>A. Look at a real genome without opening it.</strong> Your instructor will point you to a full genome FASTA in the shared course folder.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/reference/</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/reference/genome.fasta</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^&gt;"</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/reference/genome.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>A. Look at a real genome without opening it.</strong> LEGcompute keeps a shared folder of reference genomes that every account can read, no path from the instructor needed:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> /data/genomes/fasta/</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> /data/genomes/fasta/Vitis_vinifera.12Xv2.dna.toplevel.fa</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^&gt;"</span> /data/genomes/fasta/Vitis_vinifera.12Xv2.dna.toplevel.fa</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Note the file size, how many sequences <code>grep -c</code> finds, and how fast <code>head</code> answers even on a file of hundreds of megabytes. Why would opening it in the editor be a bad idea?</p>
 <p><strong>B. Make the answers reproducible.</strong> Write a three-line script <code>answers.sh</code> that prints the record count and the last record of <code>mystery.fasta</code>, then run it with <code>bash answers.sh</code>.</p>
 </section>
@@ -2279,13 +2279,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-538"><a href="#cb12-538" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-539"><a href="#cb12-539" aria-hidden="true" tabindex="-1"></a>For your own interest, not graded.</span>
 <span id="cb12-540"><a href="#cb12-540" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-541"><a href="#cb12-541" aria-hidden="true" tabindex="-1"></a>**A. Look at a real genome without opening it.** Your instructor will point you to a</span>
-<span id="cb12-542"><a href="#cb12-542" aria-hidden="true" tabindex="-1"></a>full genome FASTA in the shared course folder.</span>
+<span id="cb12-541"><a href="#cb12-541" aria-hidden="true" tabindex="-1"></a>**A. Look at a real genome without opening it.** LEGcompute keeps a shared folder of</span>
+<span id="cb12-542"><a href="#cb12-542" aria-hidden="true" tabindex="-1"></a>reference genomes that every account can read, no path from the instructor needed:</span>
 <span id="cb12-543"><a href="#cb12-543" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-544"><a href="#cb12-544" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb12-545"><a href="#cb12-545" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/reference/</span>
-<span id="cb12-546"><a href="#cb12-546" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/reference/genome.fasta</span>
-<span id="cb12-547"><a href="#cb12-547" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^&gt;"</span> <span class="op">&lt;</span>course_materials_path<span class="op">&gt;</span>/reference/genome.fasta</span>
+<span id="cb12-545"><a href="#cb12-545" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> /data/genomes/fasta/</span>
+<span id="cb12-546"><a href="#cb12-546" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> /data/genomes/fasta/Vitis_vinifera.12Xv2.dna.toplevel.fa</span>
+<span id="cb12-547"><a href="#cb12-547" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^&gt;"</span> /data/genomes/fasta/Vitis_vinifera.12Xv2.dna.toplevel.fa</span>
 <span id="cb12-548"><a href="#cb12-548" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb12-549"><a href="#cb12-549" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-550"><a href="#cb12-550" aria-hidden="true" tabindex="-1"></a>Note the file size, how many sequences <span class="in">`grep -c`</span> finds, and how fast <span class="in">`head`</span> answers even</span>

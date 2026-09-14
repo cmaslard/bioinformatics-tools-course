@@ -534,13 +534,13 @@ You are done when all of the following are true:
 
 For your own interest, not graded.
 
-**A. Look at a real genome without opening it.** Your instructor will point you to a
-full genome FASTA in the shared course folder.
+**A. Look at a real genome without opening it.** LEGcompute keeps a shared folder of
+reference genomes that every account can read, no path from the instructor needed:
 
 ```bash
-ls -lh <course_materials_path>/reference/
-head <course_materials_path>/reference/genome.fasta
-grep -c "^>" <course_materials_path>/reference/genome.fasta
+ls -lh /data/genomes/fasta/
+head /data/genomes/fasta/Vitis_vinifera.12Xv2.dna.toplevel.fa
+grep -c "^>" /data/genomes/fasta/Vitis_vinifera.12Xv2.dna.toplevel.fa
 ```
 
 Note the file size, how many sequences `grep -c` finds, and how fast `head` answers even
