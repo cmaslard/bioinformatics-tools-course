@@ -368,14 +368,13 @@ them.
 
 ### C. Get the data and take a first look (15:35-15:50)
 
-Your instructor will give you the exact path to the course materials on the server. Make
-sure `pwd` still ends in `bioinfo_course/session_01/data` (you are copying files *into*
-this folder, not into the course materials folder), then copy the sequence file and your
-worksheet, and check they arrived:
+Make sure `pwd` still ends in `bioinfo_course/session_01/data` (you are copying files
+*into* this folder, not into the course materials folder), then copy the sequence file
+and your worksheet, and check they arrived:
 
 ```bash
-cp <course_materials_path>/mystery.fasta .
-cp <course_materials_path>/WORKSHEET.md .
+cp /home/cmaslard/bioinfo_tools_course/session_01/mystery.fasta .
+cp /home/cmaslard/bioinfo_tools_course/session_01/WORKSHEET.md .
 ls -lh
 ```
 
