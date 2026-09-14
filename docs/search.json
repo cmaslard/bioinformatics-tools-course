@@ -119,8 +119,19 @@
     "objectID": "sessions/01_diagnostic_and_essential_commands.html#before-the-next-session",
     "href": "sessions/01_diagnostic_and_essential_commands.html#before-the-next-session",
     "title": "1  Session 1: Initial diagnostic and essential commands",
-    "section": "1.6 Before the next session",
-    "text": "1.6 Before the next session\nKeep the bioinfo_course folder. Session 2 builds a fuller project structure inside it and looks at FASTQ files and quality control.\n\n\n\n\n\n\n\nNoteSources and reuse\n\n\n\n\n\nThis session adapts material from tbadet/teaching (Bioinformatic_tools) (RStudio Server access, file transfer, the essential-commands walkthrough) and from crolllab/IBIOL-compute-resources (cluster description and connection instructions). Screenshots are from the tbadet course materials; the cluster photo is from the IBIOL repository.",
+    "section": "1.7 Before the next session",
+    "text": "1.7 Before the next session\nKeep the bioinfo_course folder. Session 2 builds a fuller project structure inside it and looks at FASTQ files and quality control.\n\n\n\n\n\n\n\nNoteSources and reuse\n\n\n\n\n\nThis session adapts material from tbadet/teaching (Bioinformatic_tools) (RStudio Server access, file transfer, the essential-commands walkthrough, and the “Going further” commands) and from crolllab/IBIOL-compute-resources (cluster description and connection instructions). Screenshots are from the tbadet course materials; the cluster photo is from the IBIOL repository.",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Session 1: Initial diagnostic and essential commands</span>"
+    ]
+  },
+  {
+    "objectID": "sessions/01_diagnostic_and_essential_commands.html#going-further-more-shell-commands",
+    "href": "sessions/01_diagnostic_and_essential_commands.html#going-further-more-shell-commands",
+    "title": "1  Session 1: Initial diagnostic and essential commands",
+    "section": "1.6 Going further: more shell commands",
+    "text": "1.6 Going further: more shell commands\n\n\n\n\n\n\nTipOptional, if you have time left\n\n\n\nNot part of the essential route, not graded, and nothing later in the course assumes you have done it. If you reach 16:50 and blocks A to G are done, work through as much of this as you like; stopping partway through is completely fine.\n\n\nA few more small, useful commands. Try each one in bioinfo_course/session_01/data.\n\n1.6.1 More ways to ls\nls -l     # long format: permissions, owner, size, date\nls -a     # include hidden files (names starting with a dot)\nls -h     # human-readable sizes, e.g. 6.4K instead of 6460\nls -lh    # options can be combined\nls -R     # list this folder and every folder inside it\nRun each one and compare. Which combination would you reach for to check a file’s exact size before copying it somewhere with a tight quota?\n\n\n1.6.2 Writing and reading small text files\necho prints text. On its own it writes to the screen; with &gt; it writes to a file instead, replacing whatever was there. With &gt;&gt; it adds a line without erasing the rest.\necho \"first line\" &gt; notes.txt\ncat notes.txt              # cat shows the whole file at once\necho \"second line\" &gt;&gt; notes.txt\ncat notes.txt\nhead -n 1 notes.txt        # compare with cat: only the first line\n&gt; and &gt;&gt; are two characters apart and easy to mix up: &gt; replacing a file you meant to add to is a classic way to lose work, so pause before you press Enter on one.\n\n\n1.6.3 Moving and renaming with mv\ncp leaves the original in place; mv does not; it moves or renames.\nmkdir backup\ncp mystery.fasta backup/\nls backup/\nmv backup/mystery.fasta backup/mystery_copy.fasta   # mv also renames\nls backup/\n\n\n1.6.4 Two more worth knowing exist\n\nless mystery.fasta scrolls a file a screen at a time with the arrow keys; press q to quit. Handy for a file too long for head to feel like enough.\nnano notes.txt opens a small in-terminal text editor: type, Ctrl+X to exit, y to save. You already have an editor in RStudio’s Source pane, so you may never need it here, but you will meet nano again on other servers.",
     "crumbs": [
       "Foundations",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Session 1: Initial diagnostic and essential commands</span>"
