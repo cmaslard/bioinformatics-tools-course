@@ -54,7 +54,7 @@
     "href": "sessions/01_diagnostic_and_essential_commands.html",
     "title": "1  Session 1: Initial diagnostic and essential commands",
     "section": "",
-    "text": "1.1 Overview\nThis first session has two jobs. It gives everyone a shared mental model of how a computer works and what a compute cluster is, and it runs a short diagnostic so the rest of the course can be adjusted to the group. No prior experience is assumed. If you have used a terminal before, help the person next to you.",
+    "text": "1.1 Overview\nDownload the lecture slides (PDF)\nThis first session has two jobs. It gives everyone a shared mental model of how a computer works and what a compute cluster is, and it runs a short diagnostic so the rest of the course can be adjusted to the group. No prior experience is assumed. If you have used a terminal before, help the person next to you.",
     "crumbs": [
       "Foundations",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Session 1: Initial diagnostic and essential commands</span>"

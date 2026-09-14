@@ -4,6 +4,8 @@ title: "Session 1: Initial diagnostic and essential commands"
 
 ## Overview
 
+[Download the lecture slides (PDF)](slides/01_lecture_slides.pdf)
+
 ::: callout-note
 ## Biological question
 
