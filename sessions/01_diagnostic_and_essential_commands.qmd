@@ -627,6 +627,16 @@ ls backup/
 Keep the `bioinfo_course` folder. Session 2 builds a fuller project structure inside it
 and looks at FASTQ files and quality control.
 
+::: callout-important
+## Please finish your worksheet before Session 2
+
+If you only got as far as copying `mystery.fasta` and `WORKSHEET.md` into place today,
+that is a completely normal amount to reach in the time we had. Please work through the
+rest at home before the next session: blocks D to G in the practical above are exactly
+the same whether you do them in class or on your own. It is still **not graded**; the
+point is that everyone starts Session 2 from roughly the same place.
+:::
+
 ---
 
 ::: {.callout-note collapse="true"}
