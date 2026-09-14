@@ -357,11 +357,21 @@ cd data
 pwd
 ```
 
+::: callout-note
+## Checkpoint
+
+`pwd` ends in `bioinfo_course/session_01/data`. **Check this before block C**: the `cp`
+commands below copy into whatever folder you are currently standing in, so if `pwd`
+shows the wrong place, `cd` there first, or the files land somewhere you will not find
+them.
+:::
+
 ### C. Get the data and take a first look (15:35-15:50)
 
-Your instructor will give you the exact path to the course materials on the server. Copy
-the sequence file and your worksheet into the folder you are standing in, then check
-they arrived:
+Your instructor will give you the exact path to the course materials on the server. Make
+sure `pwd` still ends in `bioinfo_course/session_01/data` (you are copying files *into*
+this folder, not into the course materials folder), then copy the sequence file and your
+worksheet, and check they arrived:
 
 ```bash
 cp <course_materials_path>/mystery.fasta .
