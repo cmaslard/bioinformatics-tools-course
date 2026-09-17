@@ -1147,7 +1147,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>One record is <strong>not DNA</strong>. Which one? Give two clues, one from the sequence and one from the header.</li>
 <li>One record was <strong>cut off during download</strong>. Which one, and how does <code>tail</code> show it?</li>
 <li>Look at <code>contig_07</code>. Its sequence mixes UPPERCASE and lowercase and contains a run of <code>N</code>. What do the lowercase letters mean, and what does the <code>N</code> run mean? You do not need to change anything.</li>
-<li>Which record has the <strong>shortest complete sequence</strong>? (The cut-off record from question 4 does not count: it has no sequence at all.) Show it and say how you decided.</li>
+<li>Which record has the <strong>shortest complete sequence</strong>? (The cut-off record from question 4 does not count: it has no sequence at all.) Show it and say how you decided. There is no single command that measures sequence length for you here: scroll through with <code>cat</code> or <code>less</code>, spot the records whose sequence fits on <strong>one line</strong>, and compare those by eye.</li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -2268,219 +2268,222 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-441"><a href="#cb15-441" aria-hidden="true" tabindex="-1"></a>   need to change anything.</span>
 <span id="cb15-442"><a href="#cb15-442" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Which record has the **shortest complete sequence**? (The cut-off record from</span>
 <span id="cb15-443"><a href="#cb15-443" aria-hidden="true" tabindex="-1"></a>   question 4 does not count: it has no sequence at all.) Show it and say how you decided.</span>
-<span id="cb15-444"><a href="#cb15-444" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-445"><a href="#cb15-445" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb15-446"><a href="#cb15-446" aria-hidden="true" tabindex="-1"></a><span class="fu">## Short on time?</span></span>
+<span id="cb15-444"><a href="#cb15-444" aria-hidden="true" tabindex="-1"></a>   There is no single command that measures sequence length for you here: scroll through</span>
+<span id="cb15-445"><a href="#cb15-445" aria-hidden="true" tabindex="-1"></a>   with <span class="in">`cat`</span> or <span class="in">`less`</span>, spot the records whose sequence fits on **one line**, and compare</span>
+<span id="cb15-446"><a href="#cb15-446" aria-hidden="true" tabindex="-1"></a>   those by eye.</span>
 <span id="cb15-447"><a href="#cb15-447" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-448"><a href="#cb15-448" aria-hidden="true" tabindex="-1"></a>At 16:22, move to block E with whatever you have, even if some questions are unanswered</span>
-<span id="cb15-449"><a href="#cb15-449" aria-hidden="true" tabindex="-1"></a>or your answers are unsure. Partial answers are fine: this is not graded, and there is no</span>
-<span id="cb15-450"><a href="#cb15-450" aria-hidden="true" tabindex="-1"></a>benefit in rushing block E to finish block D.</span>
-<span id="cb15-451"><a href="#cb15-451" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb15-452"><a href="#cb15-452" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-453"><a href="#cb15-453" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb15-454"><a href="#cb15-454" aria-hidden="true" tabindex="-1"></a><span class="fu">## Commands you may want</span></span>
+<span id="cb15-448"><a href="#cb15-448" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb15-449"><a href="#cb15-449" aria-hidden="true" tabindex="-1"></a><span class="fu">## Short on time?</span></span>
+<span id="cb15-450"><a href="#cb15-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-451"><a href="#cb15-451" aria-hidden="true" tabindex="-1"></a>At 16:22, move to block E with whatever you have, even if some questions are unanswered</span>
+<span id="cb15-452"><a href="#cb15-452" aria-hidden="true" tabindex="-1"></a>or your answers are unsure. Partial answers are fine: this is not graded, and there is no</span>
+<span id="cb15-453"><a href="#cb15-453" aria-hidden="true" tabindex="-1"></a>benefit in rushing block E to finish block D.</span>
+<span id="cb15-454"><a href="#cb15-454" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb15-455"><a href="#cb15-455" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-456"><a href="#cb15-456" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb15-457"><a href="#cb15-457" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"^&gt;"</span> mystery.fasta          <span class="co"># list every header at once</span></span>
-<span id="cb15-458"><a href="#cb15-458" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^&gt;"</span> mystery.fasta       <span class="co"># count records</span></span>
-<span id="cb15-459"><a href="#cb15-459" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 20 mystery.fasta         <span class="co"># a first chunk of records, to get a feel for the file</span></span>
-<span id="cb15-460"><a href="#cb15-460" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-n</span> 3 mystery.fasta          <span class="co"># last lines</span></span>
-<span id="cb15-461"><a href="#cb15-461" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-A</span> 1 <span class="st">"SPIKE"</span> mystery.fasta  <span class="co"># a matching header and the line right after it</span></span>
-<span id="cb15-462"><a href="#cb15-462" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-463"><a href="#cb15-463" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb15-464"><a href="#cb15-464" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-465"><a href="#cb15-465" aria-hidden="true" tabindex="-1"></a><span class="fu">### E. Break it and diagnose, in pairs (16:22-16:40)</span></span>
-<span id="cb15-466"><a href="#cb15-466" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-467"><a href="#cb15-467" aria-hidden="true" tabindex="-1"></a>Every command below fails or surprises you, each for a **different** reason. For each</span>
-<span id="cb15-468"><a href="#cb15-468" aria-hidden="true" tabindex="-1"></a>one: predict what will happen, run it, copy the **exact** message, then write a version</span>
-<span id="cb15-469"><a href="#cb15-469" aria-hidden="true" tabindex="-1"></a>that works. Record all of it in your script.</span>
-<span id="cb15-470"><a href="#cb15-470" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-471"><a href="#cb15-471" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb15-472"><a href="#cb15-472" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Data</span>
-<span id="cb15-473"><a href="#cb15-473" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> mystery.fna</span>
-<span id="cb15-474"><a href="#cb15-474" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> mystery.fasta</span>
-<span id="cb15-475"><a href="#cb15-475" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> mystery.fasta</span>
-<span id="cb15-476"><a href="#cb15-476" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> mystery.fasta</span>
-<span id="cb15-477"><a href="#cb15-477" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../mystery.fasta</span>
-<span id="cb15-478"><a href="#cb15-478" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-479"><a href="#cb15-479" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-480"><a href="#cb15-480" aria-hidden="true" tabindex="-1"></a>Hints:</span>
-<span id="cb15-481"><a href="#cb15-481" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-482"><a href="#cb15-482" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Linux distinguishes uppercase from lowercase.</span>
-<span id="cb15-483"><a href="#cb15-483" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A file name must match exactly, extension included.</span>
-<span id="cb15-484"><a href="#cb15-484" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Some options need a value; some commands need more than one argument.</span>
-<span id="cb15-485"><a href="#cb15-485" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`..`</span> is "the folder above"; a bare name is "in the current folder".</span>
-<span id="cb15-486"><a href="#cb15-486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-487"><a href="#cb15-487" aria-hidden="true" tabindex="-1"></a>Return to <span class="in">`bioinfo_course/session_01/data`</span> when you are done.</span>
-<span id="cb15-488"><a href="#cb15-488" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-489"><a href="#cb15-489" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb15-490"><a href="#cb15-490" aria-hidden="true" tabindex="-1"></a><span class="fu">## Short on time?</span></span>
+<span id="cb15-456"><a href="#cb15-456" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb15-457"><a href="#cb15-457" aria-hidden="true" tabindex="-1"></a><span class="fu">## Commands you may want</span></span>
+<span id="cb15-458"><a href="#cb15-458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-459"><a href="#cb15-459" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb15-460"><a href="#cb15-460" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"^&gt;"</span> mystery.fasta          <span class="co"># list every header at once</span></span>
+<span id="cb15-461"><a href="#cb15-461" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^&gt;"</span> mystery.fasta       <span class="co"># count records</span></span>
+<span id="cb15-462"><a href="#cb15-462" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 20 mystery.fasta         <span class="co"># a first chunk of records, to get a feel for the file</span></span>
+<span id="cb15-463"><a href="#cb15-463" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-n</span> 3 mystery.fasta          <span class="co"># last lines</span></span>
+<span id="cb15-464"><a href="#cb15-464" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-A</span> 1 <span class="st">"SPIKE"</span> mystery.fasta  <span class="co"># a matching header and the line right after it</span></span>
+<span id="cb15-465"><a href="#cb15-465" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-466"><a href="#cb15-466" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-467"><a href="#cb15-467" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-468"><a href="#cb15-468" aria-hidden="true" tabindex="-1"></a><span class="fu">### E. Break it and diagnose, in pairs (16:22-16:40)</span></span>
+<span id="cb15-469"><a href="#cb15-469" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-470"><a href="#cb15-470" aria-hidden="true" tabindex="-1"></a>Every command below fails or surprises you, each for a **different** reason. For each</span>
+<span id="cb15-471"><a href="#cb15-471" aria-hidden="true" tabindex="-1"></a>one: predict what will happen, run it, copy the **exact** message, then write a version</span>
+<span id="cb15-472"><a href="#cb15-472" aria-hidden="true" tabindex="-1"></a>that works. Record all of it in your script.</span>
+<span id="cb15-473"><a href="#cb15-473" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-474"><a href="#cb15-474" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb15-475"><a href="#cb15-475" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Data</span>
+<span id="cb15-476"><a href="#cb15-476" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> mystery.fna</span>
+<span id="cb15-477"><a href="#cb15-477" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> mystery.fasta</span>
+<span id="cb15-478"><a href="#cb15-478" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> mystery.fasta</span>
+<span id="cb15-479"><a href="#cb15-479" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> mystery.fasta</span>
+<span id="cb15-480"><a href="#cb15-480" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../mystery.fasta</span>
+<span id="cb15-481"><a href="#cb15-481" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-482"><a href="#cb15-482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-483"><a href="#cb15-483" aria-hidden="true" tabindex="-1"></a>Hints:</span>
+<span id="cb15-484"><a href="#cb15-484" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-485"><a href="#cb15-485" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Linux distinguishes uppercase from lowercase.</span>
+<span id="cb15-486"><a href="#cb15-486" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A file name must match exactly, extension included.</span>
+<span id="cb15-487"><a href="#cb15-487" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Some options need a value; some commands need more than one argument.</span>
+<span id="cb15-488"><a href="#cb15-488" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`..`</span> is "the folder above"; a bare name is "in the current folder".</span>
+<span id="cb15-489"><a href="#cb15-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-490"><a href="#cb15-490" aria-hidden="true" tabindex="-1"></a>Return to <span class="in">`bioinfo_course/session_01/data`</span> when you are done.</span>
 <span id="cb15-491"><a href="#cb15-491" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-492"><a href="#cb15-492" aria-hidden="true" tabindex="-1"></a>At 16:40, move to block F even if you have not diagnosed all six. Whatever you have</span>
-<span id="cb15-493"><a href="#cb15-493" aria-hidden="true" tabindex="-1"></a>recorded, including the ones you did not solve, is still useful material for block G.</span>
-<span id="cb15-494"><a href="#cb15-494" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb15-495"><a href="#cb15-495" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-496"><a href="#cb15-496" aria-hidden="true" tabindex="-1"></a><span class="fu">### F. Reproduce it (16:40-16:50)</span></span>
-<span id="cb15-497"><a href="#cb15-497" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-498"><a href="#cb15-498" aria-hidden="true" tabindex="-1"></a>Trade <span class="in">`session_01_commands.sh`</span> with your partner. From your home folder, start clean and</span>
-<span id="cb15-499"><a href="#cb15-499" aria-hidden="true" tabindex="-1"></a>run **their** commands in order:</span>
+<span id="cb15-492"><a href="#cb15-492" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb15-493"><a href="#cb15-493" aria-hidden="true" tabindex="-1"></a><span class="fu">## Short on time?</span></span>
+<span id="cb15-494"><a href="#cb15-494" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-495"><a href="#cb15-495" aria-hidden="true" tabindex="-1"></a>At 16:40, move to block F even if you have not diagnosed all six. Whatever you have</span>
+<span id="cb15-496"><a href="#cb15-496" aria-hidden="true" tabindex="-1"></a>recorded, including the ones you did not solve, is still useful material for block G.</span>
+<span id="cb15-497"><a href="#cb15-497" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-498"><a href="#cb15-498" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-499"><a href="#cb15-499" aria-hidden="true" tabindex="-1"></a><span class="fu">### F. Reproduce it (16:40-16:50)</span></span>
 <span id="cb15-500"><a href="#cb15-500" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-501"><a href="#cb15-501" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb15-502"><a href="#cb15-502" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span>
-<span id="cb15-503"><a href="#cb15-503" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> replay</span>
-<span id="cb15-504"><a href="#cb15-504" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> replay</span>
-<span id="cb15-505"><a href="#cb15-505" aria-hidden="true" tabindex="-1"></a><span class="co"># now run your partner's commands, from the top, one by one</span></span>
-<span id="cb15-506"><a href="#cb15-506" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-507"><a href="#cb15-507" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-508"><a href="#cb15-508" aria-hidden="true" tabindex="-1"></a>Does it run start to finish? If it stops, the missing step is something they did but did</span>
-<span id="cb15-509"><a href="#cb15-509" aria-hidden="true" tabindex="-1"></a>not write down, usually a <span class="in">`cd`</span> or the <span class="in">`cp`</span> path. Add the missing lines to **your own**</span>
-<span id="cb15-510"><a href="#cb15-510" aria-hidden="true" tabindex="-1"></a>script so it works from an empty folder. That is what "reproducible" means in practice.</span>
-<span id="cb15-511"><a href="#cb15-511" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-512"><a href="#cb15-512" aria-hidden="true" tabindex="-1"></a><span class="fu">### G. Individual wrap-up (16:50-17:00)</span></span>
-<span id="cb15-513"><a href="#cb15-513" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-514"><a href="#cb15-514" aria-hidden="true" tabindex="-1"></a>On your own, complete Sections 1, 4, and 5 of your worksheet:</span>
-<span id="cb15-515"><a href="#cb15-515" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-516"><a href="#cb15-516" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>one command that failed today: the exact message, the cause, and the fix;</span>
-<span id="cb15-517"><a href="#cb15-517" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>two or three sentences: from <span class="in">`mystery.fasta`</span> alone, what **can** you say about these</span>
-<span id="cb15-518"><a href="#cb15-518" aria-hidden="true" tabindex="-1"></a>  sequences, and what can you **not** say?</span>
-<span id="cb15-519"><a href="#cb15-519" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-520"><a href="#cb15-520" aria-hidden="true" tabindex="-1"></a>You should leave with:</span>
-<span id="cb15-521"><a href="#cb15-521" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-522"><a href="#cb15-522" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`WORKSHEET.md`</span> with your answers;</span>
-<span id="cb15-523"><a href="#cb15-523" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`session_01_commands.sh`</span> with every command you attempted, errors included, that runs</span>
-<span id="cb15-524"><a href="#cb15-524" aria-hidden="true" tabindex="-1"></a>  from a clean start.</span>
-<span id="cb15-525"><a href="#cb15-525" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-526"><a href="#cb15-526" aria-hidden="true" tabindex="-1"></a>Session 1 is a diagnostic, not a test. It is **not graded**: the continuous assessment</span>
-<span id="cb15-527"><a href="#cb15-527" aria-hidden="true" tabindex="-1"></a>(a short Moodle quiz at the end of each session) starts at Session 3. Your instructor</span>
-<span id="cb15-528"><a href="#cb15-528" aria-hidden="true" tabindex="-1"></a>may still look at your worksheet to see where the class is.</span>
-<span id="cb15-529"><a href="#cb15-529" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-530"><a href="#cb15-530" aria-hidden="true" tabindex="-1"></a>**Keep the `bioinfo_course` folder.** Session 2 reuses it.</span>
-<span id="cb15-531"><a href="#cb15-531" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-532"><a href="#cb15-532" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
-<span id="cb15-533"><a href="#cb15-533" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-534"><a href="#cb15-534" aria-hidden="true" tabindex="-1"></a>You are done when all of the following are true:</span>
-<span id="cb15-535"><a href="#cb15-535" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-536"><a href="#cb15-536" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you reached the Terminal in RStudio Server and know it is not the Console;</span>
-<span id="cb15-537"><a href="#cb15-537" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`session_01_commands.sh`</span> is saved, includes the commands that failed, and runs from an</span>
-<span id="cb15-538"><a href="#cb15-538" aria-hidden="true" tabindex="-1"></a>  empty folder;</span>
-<span id="cb15-539"><a href="#cb15-539" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`pwd`</span> ends in <span class="in">`bioinfo_course/session_01/data`</span>, and that folder contains</span>
-<span id="cb15-540"><a href="#cb15-540" aria-hidden="true" tabindex="-1"></a>  <span class="in">`mystery.fasta`</span>;</span>
-<span id="cb15-541"><a href="#cb15-541" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can say the file has **40** records, that <span class="in">`grep -c "^&gt;"`</span> is the reliable way to</span>
-<span id="cb15-542"><a href="#cb15-542" aria-hidden="true" tabindex="-1"></a>  count them, and why <span class="in">`wc -l`</span> gives a different number;</span>
-<span id="cb15-543"><a href="#cb15-543" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can name the record that is not DNA and the record that was truncated, and say how</span>
-<span id="cb15-544"><a href="#cb15-544" aria-hidden="true" tabindex="-1"></a>  you spotted each;</span>
-<span id="cb15-545"><a href="#cb15-545" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can explain in one sentence that a FASTA record starts on a line whose first</span>
-<span id="cb15-546"><a href="#cb15-546" aria-hidden="true" tabindex="-1"></a>  character is <span class="in">`&gt;`</span>.</span>
-<span id="cb15-547"><a href="#cb15-547" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-548"><a href="#cb15-548" aria-hidden="true" tabindex="-1"></a><span class="fu">## Optional challenge</span></span>
-<span id="cb15-549"><a href="#cb15-549" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-550"><a href="#cb15-550" aria-hidden="true" tabindex="-1"></a>For your own interest, not graded.</span>
-<span id="cb15-551"><a href="#cb15-551" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-552"><a href="#cb15-552" aria-hidden="true" tabindex="-1"></a>**A. Look at a real genome without opening it.** LEGcompute keeps a shared folder of</span>
-<span id="cb15-553"><a href="#cb15-553" aria-hidden="true" tabindex="-1"></a>reference genomes that every account can read, no path from the instructor needed:</span>
+<span id="cb15-501"><a href="#cb15-501" aria-hidden="true" tabindex="-1"></a>Trade <span class="in">`session_01_commands.sh`</span> with your partner. From your home folder, start clean and</span>
+<span id="cb15-502"><a href="#cb15-502" aria-hidden="true" tabindex="-1"></a>run **their** commands in order:</span>
+<span id="cb15-503"><a href="#cb15-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-504"><a href="#cb15-504" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb15-505"><a href="#cb15-505" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span>
+<span id="cb15-506"><a href="#cb15-506" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> replay</span>
+<span id="cb15-507"><a href="#cb15-507" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> replay</span>
+<span id="cb15-508"><a href="#cb15-508" aria-hidden="true" tabindex="-1"></a><span class="co"># now run your partner's commands, from the top, one by one</span></span>
+<span id="cb15-509"><a href="#cb15-509" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-510"><a href="#cb15-510" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-511"><a href="#cb15-511" aria-hidden="true" tabindex="-1"></a>Does it run start to finish? If it stops, the missing step is something they did but did</span>
+<span id="cb15-512"><a href="#cb15-512" aria-hidden="true" tabindex="-1"></a>not write down, usually a <span class="in">`cd`</span> or the <span class="in">`cp`</span> path. Add the missing lines to **your own**</span>
+<span id="cb15-513"><a href="#cb15-513" aria-hidden="true" tabindex="-1"></a>script so it works from an empty folder. That is what "reproducible" means in practice.</span>
+<span id="cb15-514"><a href="#cb15-514" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-515"><a href="#cb15-515" aria-hidden="true" tabindex="-1"></a><span class="fu">### G. Individual wrap-up (16:50-17:00)</span></span>
+<span id="cb15-516"><a href="#cb15-516" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-517"><a href="#cb15-517" aria-hidden="true" tabindex="-1"></a>On your own, complete Sections 1, 4, and 5 of your worksheet:</span>
+<span id="cb15-518"><a href="#cb15-518" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-519"><a href="#cb15-519" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>one command that failed today: the exact message, the cause, and the fix;</span>
+<span id="cb15-520"><a href="#cb15-520" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>two or three sentences: from <span class="in">`mystery.fasta`</span> alone, what **can** you say about these</span>
+<span id="cb15-521"><a href="#cb15-521" aria-hidden="true" tabindex="-1"></a>  sequences, and what can you **not** say?</span>
+<span id="cb15-522"><a href="#cb15-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-523"><a href="#cb15-523" aria-hidden="true" tabindex="-1"></a>You should leave with:</span>
+<span id="cb15-524"><a href="#cb15-524" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-525"><a href="#cb15-525" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`WORKSHEET.md`</span> with your answers;</span>
+<span id="cb15-526"><a href="#cb15-526" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`session_01_commands.sh`</span> with every command you attempted, errors included, that runs</span>
+<span id="cb15-527"><a href="#cb15-527" aria-hidden="true" tabindex="-1"></a>  from a clean start.</span>
+<span id="cb15-528"><a href="#cb15-528" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-529"><a href="#cb15-529" aria-hidden="true" tabindex="-1"></a>Session 1 is a diagnostic, not a test. It is **not graded**: the continuous assessment</span>
+<span id="cb15-530"><a href="#cb15-530" aria-hidden="true" tabindex="-1"></a>(a short Moodle quiz at the end of each session) starts at Session 3. Your instructor</span>
+<span id="cb15-531"><a href="#cb15-531" aria-hidden="true" tabindex="-1"></a>may still look at your worksheet to see where the class is.</span>
+<span id="cb15-532"><a href="#cb15-532" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-533"><a href="#cb15-533" aria-hidden="true" tabindex="-1"></a>**Keep the `bioinfo_course` folder.** Session 2 reuses it.</span>
+<span id="cb15-534"><a href="#cb15-534" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-535"><a href="#cb15-535" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb15-536"><a href="#cb15-536" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-537"><a href="#cb15-537" aria-hidden="true" tabindex="-1"></a>You are done when all of the following are true:</span>
+<span id="cb15-538"><a href="#cb15-538" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-539"><a href="#cb15-539" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you reached the Terminal in RStudio Server and know it is not the Console;</span>
+<span id="cb15-540"><a href="#cb15-540" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`session_01_commands.sh`</span> is saved, includes the commands that failed, and runs from an</span>
+<span id="cb15-541"><a href="#cb15-541" aria-hidden="true" tabindex="-1"></a>  empty folder;</span>
+<span id="cb15-542"><a href="#cb15-542" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`pwd`</span> ends in <span class="in">`bioinfo_course/session_01/data`</span>, and that folder contains</span>
+<span id="cb15-543"><a href="#cb15-543" aria-hidden="true" tabindex="-1"></a>  <span class="in">`mystery.fasta`</span>;</span>
+<span id="cb15-544"><a href="#cb15-544" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can say the file has **40** records, that <span class="in">`grep -c "^&gt;"`</span> is the reliable way to</span>
+<span id="cb15-545"><a href="#cb15-545" aria-hidden="true" tabindex="-1"></a>  count them, and why <span class="in">`wc -l`</span> gives a different number;</span>
+<span id="cb15-546"><a href="#cb15-546" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can name the record that is not DNA and the record that was truncated, and say how</span>
+<span id="cb15-547"><a href="#cb15-547" aria-hidden="true" tabindex="-1"></a>  you spotted each;</span>
+<span id="cb15-548"><a href="#cb15-548" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can explain in one sentence that a FASTA record starts on a line whose first</span>
+<span id="cb15-549"><a href="#cb15-549" aria-hidden="true" tabindex="-1"></a>  character is <span class="in">`&gt;`</span>.</span>
+<span id="cb15-550"><a href="#cb15-550" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-551"><a href="#cb15-551" aria-hidden="true" tabindex="-1"></a><span class="fu">## Optional challenge</span></span>
+<span id="cb15-552"><a href="#cb15-552" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-553"><a href="#cb15-553" aria-hidden="true" tabindex="-1"></a>For your own interest, not graded.</span>
 <span id="cb15-554"><a href="#cb15-554" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-555"><a href="#cb15-555" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb15-556"><a href="#cb15-556" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> /data/genomes/fasta/</span>
-<span id="cb15-557"><a href="#cb15-557" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> /data/genomes/fasta/Vitis_vinifera.12Xv2.dna.toplevel.fa</span>
-<span id="cb15-558"><a href="#cb15-558" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^&gt;"</span> /data/genomes/fasta/Vitis_vinifera.12Xv2.dna.toplevel.fa</span>
-<span id="cb15-559"><a href="#cb15-559" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-560"><a href="#cb15-560" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-561"><a href="#cb15-561" aria-hidden="true" tabindex="-1"></a>Note the file size, how many sequences <span class="in">`grep -c`</span> finds, and how fast <span class="in">`head`</span> answers even</span>
-<span id="cb15-562"><a href="#cb15-562" aria-hidden="true" tabindex="-1"></a>on a file of hundreds of megabytes. Why would opening it in the editor be a bad idea?</span>
+<span id="cb15-555"><a href="#cb15-555" aria-hidden="true" tabindex="-1"></a>**A. Look at a real genome without opening it.** LEGcompute keeps a shared folder of</span>
+<span id="cb15-556"><a href="#cb15-556" aria-hidden="true" tabindex="-1"></a>reference genomes that every account can read, no path from the instructor needed:</span>
+<span id="cb15-557"><a href="#cb15-557" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-558"><a href="#cb15-558" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb15-559"><a href="#cb15-559" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> /data/genomes/fasta/</span>
+<span id="cb15-560"><a href="#cb15-560" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> /data/genomes/fasta/Vitis_vinifera.12Xv2.dna.toplevel.fa</span>
+<span id="cb15-561"><a href="#cb15-561" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^&gt;"</span> /data/genomes/fasta/Vitis_vinifera.12Xv2.dna.toplevel.fa</span>
+<span id="cb15-562"><a href="#cb15-562" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-563"><a href="#cb15-563" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-564"><a href="#cb15-564" aria-hidden="true" tabindex="-1"></a>**B. Make the answers reproducible.** Write a three-line script <span class="in">`answers.sh`</span> that prints</span>
-<span id="cb15-565"><a href="#cb15-565" aria-hidden="true" tabindex="-1"></a>the record count and the last record of <span class="in">`mystery.fasta`</span>, then run it with</span>
-<span id="cb15-566"><a href="#cb15-566" aria-hidden="true" tabindex="-1"></a><span class="in">`bash answers.sh`</span>.</span>
-<span id="cb15-567"><a href="#cb15-567" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-568"><a href="#cb15-568" aria-hidden="true" tabindex="-1"></a><span class="fu">## Going further: more shell commands</span></span>
-<span id="cb15-569"><a href="#cb15-569" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-570"><a href="#cb15-570" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb15-571"><a href="#cb15-571" aria-hidden="true" tabindex="-1"></a><span class="fu">## Optional, if you have time left</span></span>
+<span id="cb15-564"><a href="#cb15-564" aria-hidden="true" tabindex="-1"></a>Note the file size, how many sequences <span class="in">`grep -c`</span> finds, and how fast <span class="in">`head`</span> answers even</span>
+<span id="cb15-565"><a href="#cb15-565" aria-hidden="true" tabindex="-1"></a>on a file of hundreds of megabytes. Why would opening it in the editor be a bad idea?</span>
+<span id="cb15-566"><a href="#cb15-566" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-567"><a href="#cb15-567" aria-hidden="true" tabindex="-1"></a>**B. Make the answers reproducible.** Write a three-line script <span class="in">`answers.sh`</span> that prints</span>
+<span id="cb15-568"><a href="#cb15-568" aria-hidden="true" tabindex="-1"></a>the record count and the last record of <span class="in">`mystery.fasta`</span>, then run it with</span>
+<span id="cb15-569"><a href="#cb15-569" aria-hidden="true" tabindex="-1"></a><span class="in">`bash answers.sh`</span>.</span>
+<span id="cb15-570"><a href="#cb15-570" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-571"><a href="#cb15-571" aria-hidden="true" tabindex="-1"></a><span class="fu">## Going further: more shell commands</span></span>
 <span id="cb15-572"><a href="#cb15-572" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-573"><a href="#cb15-573" aria-hidden="true" tabindex="-1"></a>Not part of the essential route, not graded, and nothing later in the course assumes</span>
-<span id="cb15-574"><a href="#cb15-574" aria-hidden="true" tabindex="-1"></a>you have done it. If you reach 16:50 and blocks A to G are done, work through as much of</span>
-<span id="cb15-575"><a href="#cb15-575" aria-hidden="true" tabindex="-1"></a>this as you like; stopping partway through is completely fine.</span>
-<span id="cb15-576"><a href="#cb15-576" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb15-577"><a href="#cb15-577" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-578"><a href="#cb15-578" aria-hidden="true" tabindex="-1"></a>A few more small, useful commands. Try each one in <span class="in">`bioinfo_course/session_01/data`</span>.</span>
-<span id="cb15-579"><a href="#cb15-579" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-580"><a href="#cb15-580" aria-hidden="true" tabindex="-1"></a><span class="fu">### More ways to `ls`</span></span>
-<span id="cb15-581"><a href="#cb15-581" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-582"><a href="#cb15-582" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb15-583"><a href="#cb15-583" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span>     <span class="co"># long format: permissions, owner, size, date</span></span>
-<span id="cb15-584"><a href="#cb15-584" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-a</span>     <span class="co"># include hidden files (names starting with a dot)</span></span>
-<span id="cb15-585"><a href="#cb15-585" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-h</span>     <span class="co"># human-readable sizes, e.g. 6.4K instead of 6460</span></span>
-<span id="cb15-586"><a href="#cb15-586" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span>    <span class="co"># options can be combined</span></span>
-<span id="cb15-587"><a href="#cb15-587" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-R</span>     <span class="co"># list this folder and every folder inside it</span></span>
-<span id="cb15-588"><a href="#cb15-588" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-589"><a href="#cb15-589" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-590"><a href="#cb15-590" aria-hidden="true" tabindex="-1"></a>Run each one and compare. Which combination would you reach for to check a file's exact</span>
-<span id="cb15-591"><a href="#cb15-591" aria-hidden="true" tabindex="-1"></a>size before copying it somewhere with a tight quota?</span>
+<span id="cb15-573"><a href="#cb15-573" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb15-574"><a href="#cb15-574" aria-hidden="true" tabindex="-1"></a><span class="fu">## Optional, if you have time left</span></span>
+<span id="cb15-575"><a href="#cb15-575" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-576"><a href="#cb15-576" aria-hidden="true" tabindex="-1"></a>Not part of the essential route, not graded, and nothing later in the course assumes</span>
+<span id="cb15-577"><a href="#cb15-577" aria-hidden="true" tabindex="-1"></a>you have done it. If you reach 16:50 and blocks A to G are done, work through as much of</span>
+<span id="cb15-578"><a href="#cb15-578" aria-hidden="true" tabindex="-1"></a>this as you like; stopping partway through is completely fine.</span>
+<span id="cb15-579"><a href="#cb15-579" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-580"><a href="#cb15-580" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-581"><a href="#cb15-581" aria-hidden="true" tabindex="-1"></a>A few more small, useful commands. Try each one in <span class="in">`bioinfo_course/session_01/data`</span>.</span>
+<span id="cb15-582"><a href="#cb15-582" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-583"><a href="#cb15-583" aria-hidden="true" tabindex="-1"></a><span class="fu">### More ways to `ls`</span></span>
+<span id="cb15-584"><a href="#cb15-584" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-585"><a href="#cb15-585" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb15-586"><a href="#cb15-586" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span>     <span class="co"># long format: permissions, owner, size, date</span></span>
+<span id="cb15-587"><a href="#cb15-587" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-a</span>     <span class="co"># include hidden files (names starting with a dot)</span></span>
+<span id="cb15-588"><a href="#cb15-588" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-h</span>     <span class="co"># human-readable sizes, e.g. 6.4K instead of 6460</span></span>
+<span id="cb15-589"><a href="#cb15-589" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span>    <span class="co"># options can be combined</span></span>
+<span id="cb15-590"><a href="#cb15-590" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-R</span>     <span class="co"># list this folder and every folder inside it</span></span>
+<span id="cb15-591"><a href="#cb15-591" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-592"><a href="#cb15-592" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-593"><a href="#cb15-593" aria-hidden="true" tabindex="-1"></a><span class="fu">### Writing and reading small text files</span></span>
-<span id="cb15-594"><a href="#cb15-594" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-595"><a href="#cb15-595" aria-hidden="true" tabindex="-1"></a><span class="in">`echo`</span> prints text. On its own it writes to the screen; with <span class="in">`&gt;`</span> it writes to a file</span>
-<span id="cb15-596"><a href="#cb15-596" aria-hidden="true" tabindex="-1"></a>instead, replacing whatever was there. With <span class="in">`&gt;&gt;`</span> it adds a line without erasing the rest.</span>
+<span id="cb15-593"><a href="#cb15-593" aria-hidden="true" tabindex="-1"></a>Run each one and compare. Which combination would you reach for to check a file's exact</span>
+<span id="cb15-594"><a href="#cb15-594" aria-hidden="true" tabindex="-1"></a>size before copying it somewhere with a tight quota?</span>
+<span id="cb15-595"><a href="#cb15-595" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-596"><a href="#cb15-596" aria-hidden="true" tabindex="-1"></a><span class="fu">### Writing and reading small text files</span></span>
 <span id="cb15-597"><a href="#cb15-597" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-598"><a href="#cb15-598" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb15-599"><a href="#cb15-599" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"first line"</span> <span class="op">&gt;</span> notes.txt</span>
-<span id="cb15-600"><a href="#cb15-600" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> notes.txt              <span class="co"># cat shows the whole file at once</span></span>
-<span id="cb15-601"><a href="#cb15-601" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"second line"</span> <span class="op">&gt;&gt;</span> notes.txt</span>
-<span id="cb15-602"><a href="#cb15-602" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> notes.txt</span>
-<span id="cb15-603"><a href="#cb15-603" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 1 notes.txt        <span class="co"># compare with cat: only the first line</span></span>
-<span id="cb15-604"><a href="#cb15-604" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-605"><a href="#cb15-605" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-606"><a href="#cb15-606" aria-hidden="true" tabindex="-1"></a><span class="in">`&gt;`</span> and <span class="in">`&gt;&gt;`</span> are two characters apart and easy to mix up: <span class="in">`&gt;`</span> replacing a file you</span>
-<span id="cb15-607"><a href="#cb15-607" aria-hidden="true" tabindex="-1"></a>meant to add to is a classic way to lose work, so pause before you press Enter on one.</span>
+<span id="cb15-598"><a href="#cb15-598" aria-hidden="true" tabindex="-1"></a><span class="in">`echo`</span> prints text. On its own it writes to the screen; with <span class="in">`&gt;`</span> it writes to a file</span>
+<span id="cb15-599"><a href="#cb15-599" aria-hidden="true" tabindex="-1"></a>instead, replacing whatever was there. With <span class="in">`&gt;&gt;`</span> it adds a line without erasing the rest.</span>
+<span id="cb15-600"><a href="#cb15-600" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-601"><a href="#cb15-601" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb15-602"><a href="#cb15-602" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"first line"</span> <span class="op">&gt;</span> notes.txt</span>
+<span id="cb15-603"><a href="#cb15-603" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> notes.txt              <span class="co"># cat shows the whole file at once</span></span>
+<span id="cb15-604"><a href="#cb15-604" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"second line"</span> <span class="op">&gt;&gt;</span> notes.txt</span>
+<span id="cb15-605"><a href="#cb15-605" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> notes.txt</span>
+<span id="cb15-606"><a href="#cb15-606" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 1 notes.txt        <span class="co"># compare with cat: only the first line</span></span>
+<span id="cb15-607"><a href="#cb15-607" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-608"><a href="#cb15-608" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-609"><a href="#cb15-609" aria-hidden="true" tabindex="-1"></a><span class="fu">### Moving and renaming with `mv`</span></span>
-<span id="cb15-610"><a href="#cb15-610" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-611"><a href="#cb15-611" aria-hidden="true" tabindex="-1"></a><span class="in">`cp`</span> leaves the original in place; <span class="in">`mv`</span> does not; it moves or renames.</span>
-<span id="cb15-612"><a href="#cb15-612" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-613"><a href="#cb15-613" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb15-614"><a href="#cb15-614" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> backup</span>
-<span id="cb15-615"><a href="#cb15-615" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> mystery.fasta backup/</span>
-<span id="cb15-616"><a href="#cb15-616" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> backup/</span>
-<span id="cb15-617"><a href="#cb15-617" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> backup/mystery.fasta backup/mystery_copy.fasta   <span class="co"># mv also renames</span></span>
-<span id="cb15-618"><a href="#cb15-618" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> backup/</span>
-<span id="cb15-619"><a href="#cb15-619" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-620"><a href="#cb15-620" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-621"><a href="#cb15-621" aria-hidden="true" tabindex="-1"></a><span class="fu">### Two more worth knowing exist</span></span>
-<span id="cb15-622"><a href="#cb15-622" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-623"><a href="#cb15-623" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`less mystery.fasta`</span> scrolls a file a screen at a time with the arrow keys; press</span>
-<span id="cb15-624"><a href="#cb15-624" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>q<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span> to quit. Handy for a file too long for <span class="in">`head`</span> to feel like enough.</span>
-<span id="cb15-625"><a href="#cb15-625" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`nano notes.txt`</span> opens a small in-terminal text editor: type, <span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Ctrl<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span>+<span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>X<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span></span>
-<span id="cb15-626"><a href="#cb15-626" aria-hidden="true" tabindex="-1"></a>  to exit, <span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>y<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span> to save. You already have an editor in RStudio's Source pane, so</span>
-<span id="cb15-627"><a href="#cb15-627" aria-hidden="true" tabindex="-1"></a>  you may never need it here, but you will meet <span class="in">`nano`</span> again on other servers.</span>
-<span id="cb15-628"><a href="#cb15-628" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-629"><a href="#cb15-629" aria-hidden="true" tabindex="-1"></a><span class="fu">## Before the next session</span></span>
-<span id="cb15-630"><a href="#cb15-630" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-631"><a href="#cb15-631" aria-hidden="true" tabindex="-1"></a>Keep the <span class="in">`bioinfo_course`</span> folder. Session 2 builds a fuller project structure inside it</span>
-<span id="cb15-632"><a href="#cb15-632" aria-hidden="true" tabindex="-1"></a>and looks at FASTQ files and quality control.</span>
+<span id="cb15-609"><a href="#cb15-609" aria-hidden="true" tabindex="-1"></a><span class="in">`&gt;`</span> and <span class="in">`&gt;&gt;`</span> are two characters apart and easy to mix up: <span class="in">`&gt;`</span> replacing a file you</span>
+<span id="cb15-610"><a href="#cb15-610" aria-hidden="true" tabindex="-1"></a>meant to add to is a classic way to lose work, so pause before you press Enter on one.</span>
+<span id="cb15-611"><a href="#cb15-611" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-612"><a href="#cb15-612" aria-hidden="true" tabindex="-1"></a><span class="fu">### Moving and renaming with `mv`</span></span>
+<span id="cb15-613"><a href="#cb15-613" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-614"><a href="#cb15-614" aria-hidden="true" tabindex="-1"></a><span class="in">`cp`</span> leaves the original in place; <span class="in">`mv`</span> does not; it moves or renames.</span>
+<span id="cb15-615"><a href="#cb15-615" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-616"><a href="#cb15-616" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb15-617"><a href="#cb15-617" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> backup</span>
+<span id="cb15-618"><a href="#cb15-618" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> mystery.fasta backup/</span>
+<span id="cb15-619"><a href="#cb15-619" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> backup/</span>
+<span id="cb15-620"><a href="#cb15-620" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> backup/mystery.fasta backup/mystery_copy.fasta   <span class="co"># mv also renames</span></span>
+<span id="cb15-621"><a href="#cb15-621" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> backup/</span>
+<span id="cb15-622"><a href="#cb15-622" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-623"><a href="#cb15-623" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-624"><a href="#cb15-624" aria-hidden="true" tabindex="-1"></a><span class="fu">### Two more worth knowing exist</span></span>
+<span id="cb15-625"><a href="#cb15-625" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-626"><a href="#cb15-626" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`less mystery.fasta`</span> scrolls a file a screen at a time with the arrow keys; press</span>
+<span id="cb15-627"><a href="#cb15-627" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>q<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span> to quit. Handy for a file too long for <span class="in">`head`</span> to feel like enough.</span>
+<span id="cb15-628"><a href="#cb15-628" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`nano notes.txt`</span> opens a small in-terminal text editor: type, <span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Ctrl<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span>+<span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>X<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span></span>
+<span id="cb15-629"><a href="#cb15-629" aria-hidden="true" tabindex="-1"></a>  to exit, <span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>y<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span> to save. You already have an editor in RStudio's Source pane, so</span>
+<span id="cb15-630"><a href="#cb15-630" aria-hidden="true" tabindex="-1"></a>  you may never need it here, but you will meet <span class="in">`nano`</span> again on other servers.</span>
+<span id="cb15-631"><a href="#cb15-631" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-632"><a href="#cb15-632" aria-hidden="true" tabindex="-1"></a><span class="fu">## Before the next session</span></span>
 <span id="cb15-633"><a href="#cb15-633" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-634"><a href="#cb15-634" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb15-635"><a href="#cb15-635" aria-hidden="true" tabindex="-1"></a><span class="fu">## Please finish your worksheet before Session 2</span></span>
+<span id="cb15-634"><a href="#cb15-634" aria-hidden="true" tabindex="-1"></a>Keep the <span class="in">`bioinfo_course`</span> folder. Session 2 builds a fuller project structure inside it</span>
+<span id="cb15-635"><a href="#cb15-635" aria-hidden="true" tabindex="-1"></a>and looks at FASTQ files and quality control.</span>
 <span id="cb15-636"><a href="#cb15-636" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-637"><a href="#cb15-637" aria-hidden="true" tabindex="-1"></a>If you only got as far as copying <span class="in">`mystery.fasta`</span> and <span class="in">`WORKSHEET.md`</span> into place today,</span>
-<span id="cb15-638"><a href="#cb15-638" aria-hidden="true" tabindex="-1"></a>that is a completely normal amount to reach in the time we had. Please work through the</span>
-<span id="cb15-639"><a href="#cb15-639" aria-hidden="true" tabindex="-1"></a>rest at home before the next session: blocks D to G in the practical above are exactly</span>
-<span id="cb15-640"><a href="#cb15-640" aria-hidden="true" tabindex="-1"></a>the same whether you do them in class or on your own. It is still **not graded**; the</span>
-<span id="cb15-641"><a href="#cb15-641" aria-hidden="true" tabindex="-1"></a>point is that everyone starts Session 2 from roughly the same place.</span>
-<span id="cb15-642"><a href="#cb15-642" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb15-643"><a href="#cb15-643" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-644"><a href="#cb15-644" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb15-645"><a href="#cb15-645" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-646"><a href="#cb15-646" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb15-647"><a href="#cb15-647" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sources and reuse</span></span>
+<span id="cb15-637"><a href="#cb15-637" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb15-638"><a href="#cb15-638" aria-hidden="true" tabindex="-1"></a><span class="fu">## Please finish your worksheet before Session 2</span></span>
+<span id="cb15-639"><a href="#cb15-639" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-640"><a href="#cb15-640" aria-hidden="true" tabindex="-1"></a>If you only got as far as copying <span class="in">`mystery.fasta`</span> and <span class="in">`WORKSHEET.md`</span> into place today,</span>
+<span id="cb15-641"><a href="#cb15-641" aria-hidden="true" tabindex="-1"></a>that is a completely normal amount to reach in the time we had. Please work through the</span>
+<span id="cb15-642"><a href="#cb15-642" aria-hidden="true" tabindex="-1"></a>rest at home before the next session: blocks D to G in the practical above are exactly</span>
+<span id="cb15-643"><a href="#cb15-643" aria-hidden="true" tabindex="-1"></a>the same whether you do them in class or on your own. It is still **not graded**; the</span>
+<span id="cb15-644"><a href="#cb15-644" aria-hidden="true" tabindex="-1"></a>point is that everyone starts Session 2 from roughly the same place.</span>
+<span id="cb15-645"><a href="#cb15-645" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-646"><a href="#cb15-646" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-647"><a href="#cb15-647" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb15-648"><a href="#cb15-648" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-649"><a href="#cb15-649" aria-hidden="true" tabindex="-1"></a>This session adapts material from</span>
-<span id="cb15-650"><a href="#cb15-650" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">tbadet/teaching (Bioinformatic_tools)</span><span class="co">](https://github.com/tbadet/teaching/tree/main/Bioinformatic_tools)</span></span>
-<span id="cb15-651"><a href="#cb15-651" aria-hidden="true" tabindex="-1"></a>(RStudio Server access, file transfer, the essential-commands walkthrough, and the</span>
-<span id="cb15-652"><a href="#cb15-652" aria-hidden="true" tabindex="-1"></a>"Going further" commands) and from</span>
-<span id="cb15-653"><a href="#cb15-653" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">crolllab/IBIOL-compute-resources</span><span class="co">](https://github.com/crolllab/IBIOL-compute-resources)</span></span>
-<span id="cb15-654"><a href="#cb15-654" aria-hidden="true" tabindex="-1"></a>(cluster description and connection instructions). Screenshots are from the tbadet</span>
-<span id="cb15-655"><a href="#cb15-655" aria-hidden="true" tabindex="-1"></a>course materials; the cluster photo is from the IBIOL repository.</span>
-<span id="cb15-656"><a href="#cb15-656" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-649"><a href="#cb15-649" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb15-650"><a href="#cb15-650" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sources and reuse</span></span>
+<span id="cb15-651"><a href="#cb15-651" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-652"><a href="#cb15-652" aria-hidden="true" tabindex="-1"></a>This session adapts material from</span>
+<span id="cb15-653"><a href="#cb15-653" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">tbadet/teaching (Bioinformatic_tools)</span><span class="co">](https://github.com/tbadet/teaching/tree/main/Bioinformatic_tools)</span></span>
+<span id="cb15-654"><a href="#cb15-654" aria-hidden="true" tabindex="-1"></a>(RStudio Server access, file transfer, the essential-commands walkthrough, and the</span>
+<span id="cb15-655"><a href="#cb15-655" aria-hidden="true" tabindex="-1"></a>"Going further" commands) and from</span>
+<span id="cb15-656"><a href="#cb15-656" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">crolllab/IBIOL-compute-resources</span><span class="co">](https://github.com/crolllab/IBIOL-compute-resources)</span></span>
+<span id="cb15-657"><a href="#cb15-657" aria-hidden="true" tabindex="-1"></a>(cluster description and connection instructions). Screenshots are from the tbadet</span>
+<span id="cb15-658"><a href="#cb15-658" aria-hidden="true" tabindex="-1"></a>course materials; the cluster photo is from the IBIOL repository.</span>
+<span id="cb15-659"><a href="#cb15-659" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
