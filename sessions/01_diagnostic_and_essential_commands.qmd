@@ -437,6 +437,9 @@ Section 3 of your worksheet.
    need to change anything.
 6. Which record has the **shortest complete sequence**? (The cut-off record from
    question 4 does not count: it has no sequence at all.) Show it and say how you decided.
+   There is no single command that measures sequence length for you here: scroll through
+   with `cat` or `less`, spot the records whose sequence fits on **one line**, and compare
+   those by eye.
 
 ::: callout-note
 ## Short on time?
