@@ -1144,7 +1144,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Repeat steps 2-4 for <code>SRR2589044</code> (5,000 generations) and <code>SRR2584863</code> (15,000 generations). Does the number of candidate variants grow with generation number, the way you would expect if mutations accumulate over time?</li>
 <li>Filter by quality before counting: <code>bcftools view -i 'QUAL&gt;50' variants.vcf.gz | grep -vc "^#"</code>. How much does the count drop?</li>
-<li>The famous result from this population, Ara-3, is that it evolved the ability to use <strong>citrate</strong> aerobically, around generation 31,500 (Blount, Borland &amp; Lenski, <em>PNAS</em>, 2008). Nothing here identifies that specific mutation: it involves a structural rearrangement, not a simple substitution, and needs the full genome assembly and paired-end reads to see properly. This bonus shows you the first step of the method that eventually finds it.</li>
+<li>The famous result from this population, Ara-3, is that it evolved the ability to use <strong>citrate</strong> aerobically, around generation 31,500 (<a href="img/02/zpq7899.pdf">Blount, Borland &amp; Lenski, <em>PNAS</em> 2008</a>). The paper is short and readable end to end: the team tested <strong>8.4 trillion</strong> ancestral cells for the ability to grow on citrate and found not one that could, yet a clone from generation 31,500 could. Nothing in today’s bonus identifies that specific mutation: it involves a structural rearrangement, not a simple substitution, and needs the full genome assembly and paired-end reads to see properly. This bonus shows you the first step of the method that eventually finds it.</li>
 </ul>
 <hr>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1159,7 +1159,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The three <em>E. coli</em> samples and the long-term evolution experiment framing are adapted from the Data Carpentry <strong>“Data Wrangling and Processing for Genomics”</strong> lesson (<a href="https://datacarpentry.github.io/wrangling-genomics/">datacarpentry.github.io/wrangling-genomics</a>), which uses reads from Richard Lenski’s LTEE population Ara-3 at 5,000, 15,000, and 50,000 generations; the raw files are archived on <a href="https://figshare.com/articles/dataset/Data_Carpentry_Genomics_beta_2_0/7726454">FigShare</a>. The good/bad reference reports used in block D are the official example reports from <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">Babraham Bioinformatics’ FastQC</a>. The variant-calling bonus follows the same alignment/calling tool chain (BWA, SAMtools, BCFtools) as the Data Carpentry lesson’s later steps; the ancestral reference genome (REL606, <code>NC_012967.1</code>) is from NCBI. The citrate result referenced there is from Blount, Borland &amp; Lenski (<em>PNAS</em>, 2008); the genome-wide mutation analysis is from Tenaillon et al. (<em>Science</em>, 2016). None of this is authored by this course; see the original sites and papers for licensing and citation.</p>
+<p>The three <em>E. coli</em> samples and the long-term evolution experiment framing are adapted from the Data Carpentry <strong>“Data Wrangling and Processing for Genomics”</strong> lesson (<a href="https://datacarpentry.github.io/wrangling-genomics/">datacarpentry.github.io/wrangling-genomics</a>), which uses reads from Richard Lenski’s LTEE population Ara-3 at 5,000, 15,000, and 50,000 generations; the raw files are archived on <a href="https://figshare.com/articles/dataset/Data_Carpentry_Genomics_beta_2_0/7726454">FigShare</a>. The good/bad reference reports used in block D are the official example reports from <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">Babraham Bioinformatics’ FastQC</a>. The variant-calling bonus follows the same alignment/calling tool chain (BWA, SAMtools, BCFtools) as the Data Carpentry lesson’s later steps; the ancestral reference genome (REL606, <code>NC_012967.1</code>) is from NCBI. The citrate result referenced there is from <a href="img/02/zpq7899.pdf">Blount, Borland &amp; Lenski (<em>PNAS</em>, 2008)</a>, included here as a PDF for convenience; the genome-wide mutation analysis is from Tenaillon et al.&nbsp;(<em>Science</em>, 2016). None of this is authored by this course; see the original sites and papers for licensing and citation.</p>
 </div>
 </div>
 </div>
@@ -2223,32 +2223,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb16-580"><a href="#cb16-580" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Filter by quality before counting: <span class="in">`bcftools view -i 'QUAL&gt;50' variants.vcf.gz | grep -vc "^#"`</span>.</span>
 <span id="cb16-581"><a href="#cb16-581" aria-hidden="true" tabindex="-1"></a>  How much does the count drop?</span>
 <span id="cb16-582"><a href="#cb16-582" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The famous result from this population, Ara-3, is that it evolved the ability to use</span>
-<span id="cb16-583"><a href="#cb16-583" aria-hidden="true" tabindex="-1"></a>  **citrate** aerobically, around generation 31,500 (Blount, Borland &amp; Lenski, *PNAS*,</span>
-<span id="cb16-584"><a href="#cb16-584" aria-hidden="true" tabindex="-1"></a>  2008). Nothing here identifies that specific mutation: it involves a structural</span>
-<span id="cb16-585"><a href="#cb16-585" aria-hidden="true" tabindex="-1"></a>  rearrangement, not a simple substitution, and needs the full genome assembly and</span>
-<span id="cb16-586"><a href="#cb16-586" aria-hidden="true" tabindex="-1"></a>  paired-end reads to see properly. This bonus shows you the first step of the method</span>
-<span id="cb16-587"><a href="#cb16-587" aria-hidden="true" tabindex="-1"></a>  that eventually finds it.</span>
-<span id="cb16-588"><a href="#cb16-588" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-589"><a href="#cb16-589" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb16-590"><a href="#cb16-590" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-591"><a href="#cb16-591" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb16-592"><a href="#cb16-592" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sources and reuse</span></span>
+<span id="cb16-583"><a href="#cb16-583" aria-hidden="true" tabindex="-1"></a>  **citrate** aerobically, around generation 31,500</span>
+<span id="cb16-584"><a href="#cb16-584" aria-hidden="true" tabindex="-1"></a>  (<span class="co">[</span><span class="ot">Blount, Borland &amp; Lenski, *PNAS* 2008</span><span class="co">](img/02/zpq7899.pdf)</span>). The paper is short and</span>
+<span id="cb16-585"><a href="#cb16-585" aria-hidden="true" tabindex="-1"></a>  readable end to end: the team tested **8.4 trillion** ancestral cells for the ability</span>
+<span id="cb16-586"><a href="#cb16-586" aria-hidden="true" tabindex="-1"></a>  to grow on citrate and found not one that could, yet a clone from generation 31,500</span>
+<span id="cb16-587"><a href="#cb16-587" aria-hidden="true" tabindex="-1"></a>  could. Nothing in today's bonus identifies that specific mutation: it involves a</span>
+<span id="cb16-588"><a href="#cb16-588" aria-hidden="true" tabindex="-1"></a>  structural rearrangement, not a simple substitution, and needs the full genome assembly</span>
+<span id="cb16-589"><a href="#cb16-589" aria-hidden="true" tabindex="-1"></a>  and paired-end reads to see properly. This bonus shows you the first step of the method</span>
+<span id="cb16-590"><a href="#cb16-590" aria-hidden="true" tabindex="-1"></a>  that eventually finds it.</span>
+<span id="cb16-591"><a href="#cb16-591" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-592"><a href="#cb16-592" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb16-593"><a href="#cb16-593" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-594"><a href="#cb16-594" aria-hidden="true" tabindex="-1"></a>The three *E. coli* samples and the long-term evolution experiment framing are adapted</span>
-<span id="cb16-595"><a href="#cb16-595" aria-hidden="true" tabindex="-1"></a>from the Data Carpentry **"Data Wrangling and Processing for Genomics"** lesson</span>
-<span id="cb16-596"><a href="#cb16-596" aria-hidden="true" tabindex="-1"></a>(<span class="co">[</span><span class="ot">datacarpentry.github.io/wrangling-genomics</span><span class="co">](https://datacarpentry.github.io/wrangling-genomics/)</span>),</span>
-<span id="cb16-597"><a href="#cb16-597" aria-hidden="true" tabindex="-1"></a>which uses reads from Richard Lenski's LTEE population Ara-3 at 5,000, 15,000, and 50,000</span>
-<span id="cb16-598"><a href="#cb16-598" aria-hidden="true" tabindex="-1"></a>generations; the raw files are archived on</span>
-<span id="cb16-599"><a href="#cb16-599" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">FigShare</span><span class="co">](https://figshare.com/articles/dataset/Data_Carpentry_Genomics_beta_2_0/7726454)</span>.</span>
-<span id="cb16-600"><a href="#cb16-600" aria-hidden="true" tabindex="-1"></a>The good/bad reference reports used in block D are the official example reports from</span>
-<span id="cb16-601"><a href="#cb16-601" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Babraham Bioinformatics' FastQC</span><span class="co">](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)</span>.</span>
-<span id="cb16-602"><a href="#cb16-602" aria-hidden="true" tabindex="-1"></a>The variant-calling bonus follows the same alignment/calling tool chain (BWA, SAMtools,</span>
-<span id="cb16-603"><a href="#cb16-603" aria-hidden="true" tabindex="-1"></a>BCFtools) as the Data Carpentry lesson's later steps; the ancestral reference genome</span>
-<span id="cb16-604"><a href="#cb16-604" aria-hidden="true" tabindex="-1"></a>(REL606, <span class="in">`NC_012967.1`</span>) is from NCBI. The citrate result referenced there is from Blount,</span>
-<span id="cb16-605"><a href="#cb16-605" aria-hidden="true" tabindex="-1"></a>Borland &amp; Lenski (*PNAS*, 2008); the genome-wide mutation analysis is from Tenaillon et al.</span>
-<span id="cb16-606"><a href="#cb16-606" aria-hidden="true" tabindex="-1"></a>(*Science*, 2016). None of this is authored by this course; see the original sites and</span>
-<span id="cb16-607"><a href="#cb16-607" aria-hidden="true" tabindex="-1"></a>papers for licensing and citation.</span>
-<span id="cb16-608"><a href="#cb16-608" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-594"><a href="#cb16-594" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb16-595"><a href="#cb16-595" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sources and reuse</span></span>
+<span id="cb16-596"><a href="#cb16-596" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-597"><a href="#cb16-597" aria-hidden="true" tabindex="-1"></a>The three *E. coli* samples and the long-term evolution experiment framing are adapted</span>
+<span id="cb16-598"><a href="#cb16-598" aria-hidden="true" tabindex="-1"></a>from the Data Carpentry **"Data Wrangling and Processing for Genomics"** lesson</span>
+<span id="cb16-599"><a href="#cb16-599" aria-hidden="true" tabindex="-1"></a>(<span class="co">[</span><span class="ot">datacarpentry.github.io/wrangling-genomics</span><span class="co">](https://datacarpentry.github.io/wrangling-genomics/)</span>),</span>
+<span id="cb16-600"><a href="#cb16-600" aria-hidden="true" tabindex="-1"></a>which uses reads from Richard Lenski's LTEE population Ara-3 at 5,000, 15,000, and 50,000</span>
+<span id="cb16-601"><a href="#cb16-601" aria-hidden="true" tabindex="-1"></a>generations; the raw files are archived on</span>
+<span id="cb16-602"><a href="#cb16-602" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">FigShare</span><span class="co">](https://figshare.com/articles/dataset/Data_Carpentry_Genomics_beta_2_0/7726454)</span>.</span>
+<span id="cb16-603"><a href="#cb16-603" aria-hidden="true" tabindex="-1"></a>The good/bad reference reports used in block D are the official example reports from</span>
+<span id="cb16-604"><a href="#cb16-604" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Babraham Bioinformatics' FastQC</span><span class="co">](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)</span>.</span>
+<span id="cb16-605"><a href="#cb16-605" aria-hidden="true" tabindex="-1"></a>The variant-calling bonus follows the same alignment/calling tool chain (BWA, SAMtools,</span>
+<span id="cb16-606"><a href="#cb16-606" aria-hidden="true" tabindex="-1"></a>BCFtools) as the Data Carpentry lesson's later steps; the ancestral reference genome</span>
+<span id="cb16-607"><a href="#cb16-607" aria-hidden="true" tabindex="-1"></a>(REL606, <span class="in">`NC_012967.1`</span>) is from NCBI. The citrate result referenced there is from</span>
+<span id="cb16-608"><a href="#cb16-608" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Blount, Borland &amp; Lenski (*PNAS*, 2008)</span><span class="co">](img/02/zpq7899.pdf)</span>, included here as a PDF for</span>
+<span id="cb16-609"><a href="#cb16-609" aria-hidden="true" tabindex="-1"></a>convenience; the genome-wide mutation analysis is from Tenaillon et al. (*Science*, 2016).</span>
+<span id="cb16-610"><a href="#cb16-610" aria-hidden="true" tabindex="-1"></a>None of this is authored by this course; see the original sites and papers for licensing</span>
+<span id="cb16-611"><a href="#cb16-611" aria-hidden="true" tabindex="-1"></a>and citation.</span>
+<span id="cb16-612"><a href="#cb16-612" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

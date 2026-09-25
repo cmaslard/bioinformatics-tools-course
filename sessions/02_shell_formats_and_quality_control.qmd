@@ -574,10 +574,13 @@ first step of a real analysis looks like", not as a discovery.
 - Filter by quality before counting: `bcftools view -i 'QUAL>50' variants.vcf.gz | grep -vc "^#"`.
   How much does the count drop?
 - The famous result from this population, Ara-3, is that it evolved the ability to use
-  **citrate** aerobically, around generation 31,500 (Blount, Borland & Lenski, *PNAS*,
-  2008). Nothing here identifies that specific mutation: it involves a structural
-  rearrangement, not a simple substitution, and needs the full genome assembly and
-  paired-end reads to see properly. This bonus shows you the first step of the method
+  **citrate** aerobically, around generation 31,500
+  ([Blount, Borland & Lenski, *PNAS* 2008](img/02/zpq7899.pdf)). The paper is short and
+  readable end to end: the team tested **8.4 trillion** ancestral cells for the ability
+  to grow on citrate and found not one that could, yet a clone from generation 31,500
+  could. Nothing in today's bonus identifies that specific mutation: it involves a
+  structural rearrangement, not a simple substitution, and needs the full genome assembly
+  and paired-end reads to see properly. This bonus shows you the first step of the method
   that eventually finds it.
 
 ---
@@ -595,8 +598,9 @@ The good/bad reference reports used in block D are the official example reports 
 [Babraham Bioinformatics' FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).
 The variant-calling bonus follows the same alignment/calling tool chain (BWA, SAMtools,
 BCFtools) as the Data Carpentry lesson's later steps; the ancestral reference genome
-(REL606, `NC_012967.1`) is from NCBI. The citrate result referenced there is from Blount,
-Borland & Lenski (*PNAS*, 2008); the genome-wide mutation analysis is from Tenaillon et al.
-(*Science*, 2016). None of this is authored by this course; see the original sites and
-papers for licensing and citation.
+(REL606, `NC_012967.1`) is from NCBI. The citrate result referenced there is from
+[Blount, Borland & Lenski (*PNAS*, 2008)](img/02/zpq7899.pdf), included here as a PDF for
+convenience; the genome-wide mutation analysis is from Tenaillon et al. (*Science*, 2016).
+None of this is authored by this course; see the original sites and papers for licensing
+and citation.
 :::
