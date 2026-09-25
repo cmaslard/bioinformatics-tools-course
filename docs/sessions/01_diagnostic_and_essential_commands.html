@@ -423,7 +423,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#moving-and-renaming-with-mv" id="toc-moving-and-renaming-with-mv" class="nav-link" data-scroll-target="#moving-and-renaming-with-mv"><span class="header-section-number">1.6.3</span> Moving and renaming with <code>mv</code></a></li>
   <li><a href="#two-more-worth-knowing-exist" id="toc-two-more-worth-knowing-exist" class="nav-link" data-scroll-target="#two-more-worth-knowing-exist"><span class="header-section-number">1.6.4</span> Two more worth knowing exist</a></li>
   </ul></li>
-  <li><a href="#before-the-next-session" id="toc-before-the-next-session" class="nav-link" data-scroll-target="#before-the-next-session"><span class="header-section-number">1.7</span> Before the next session</a></li>
+  <li><a href="#answers" id="toc-answers" class="nav-link" data-scroll-target="#answers"><span class="header-section-number">1.7</span> Answers</a></li>
+  <li><a href="#before-the-next-session" id="toc-before-the-next-session" class="nav-link" data-scroll-target="#before-the-next-session"><span class="header-section-number">1.8</span> Before the next session</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/cmaslard/bioinformatics-tools-course/blob/main/sessions/01_diagnostic_and_essential_commands.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/cmaslard/bioinformatics-tools-course/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -1319,8 +1320,89 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="before-the-next-session" class="level2" data-number="1.7">
-<h2 data-number="1.7" class="anchored" data-anchor-id="before-the-next-session"><span class="header-section-number">1.7</span> Before the next session</h2>
+<section id="answers" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="answers"><span class="header-section-number">1.7</span> Answers</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Open this after you have tried the exercises yourself
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Session 1 is not graded, so there is no reason to hide the answers once you have genuinely tried each block. Use this to check your own reasoning, not instead of it: the value is in working out <em>why</em>, not in reading the line below.</p>
+<p><strong>Block C checkpoint.</strong> <code>grep -c "^&gt;" mystery.fasta</code> prints <strong>40</strong>; <code>wc -l mystery.fasta</code> prints <strong>134</strong>.</p>
+<p><strong>Block D, the investigation.</strong></p>
+<ol type="1">
+<li><strong>40 records</strong>, from <code>grep -c "^&gt;" mystery.fasta</code>. Counting <code>&gt;</code> by eye is unreliable here because 40 headers are spread over 134 unevenly wrapped lines: easy to double-count or skip one while scrolling.</li>
+<li><code>wc -l</code> gives 134, not 80 (2 x 40), for two reasons: (a) most sequences wrap over two or more lines, adding lines beyond one per record; (b) <code>truncated_record</code> contributes only its header line, with no sequence line at all.</li>
+<li><strong>Not DNA: <code>sp|P0DTC2|SPIKE_SARS2</code>.</strong> Sequence clue: it contains letters that are not A/C/G/T/N (E, F, I, K, L, M, P, Q, R, S, V, W, Y). Header clue: <code>sp|...|</code> is a UniProt (Swiss-Prot) protein identifier, and the description says “glycoprotein”.</li>
+<li><strong>Truncated: <code>truncated_record</code>.</strong> <code>tail -n 3 mystery.fasta</code> shows the file ending on a header line, with no sequence line after it.</li>
+<li>In <code>contig_07</code>, lowercase letters mark <strong>soft-masked</strong> regions (repetitive sequence flagged by a masking tool, not removed). The run of <code>N</code> is an <strong>assembly gap</strong>: the length is estimated but the bases are unknown.</li>
+<li><strong>Shortest complete sequence: <code>oligo_F</code></strong> (24 bases, one line). <code>truncated_record</code> has no sequence at all, so it counts as “cut off” (question 4), not “shortest”.</li>
+</ol>
+<p><strong>Block E, six failures.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>Fails because</th>
+<th>A version that works</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>cd Data</code></td>
+<td>case sensitivity: the folder is <code>data</code></td>
+<td><code>cd data</code></td>
+</tr>
+<tr class="even">
+<td><code>head mystery.fna</code></td>
+<td>wrong name: the file is <code>mystery.fasta</code></td>
+<td><code>head mystery.fasta</code></td>
+</tr>
+<tr class="odd">
+<td><code>head -n mystery.fasta</code></td>
+<td><code>-n</code> needs a number; it consumed <code>mystery.fasta</code> as the count</td>
+<td><code>head -n 5 mystery.fasta</code></td>
+</tr>
+<tr class="even">
+<td><code>cp mystery.fasta</code></td>
+<td><code>cp</code> needs a destination as well as a source</td>
+<td><code>cp mystery.fasta backup.fasta</code></td>
+</tr>
+<tr class="odd">
+<td><code>cd mystery.fasta</code></td>
+<td><code>mystery.fasta</code> is a file, not a directory</td>
+<td><code>cd .</code> (stay), or <code>cd ..</code> to go up</td>
+</tr>
+<tr class="even">
+<td><code>head ../mystery.fasta</code> (from <code>data/</code>)</td>
+<td><code>..</code> is <code>session_01/</code>, where the file is not</td>
+<td><code>head mystery.fasta</code> or <code>head ./mystery.fasta</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Optional challenge.</strong></p>
+<ul>
+<li><strong>A.</strong> <code>Vitis_vinifera.12Xv2.dna.toplevel.fa</code> is 472 MB with <strong>20</strong> sequences (<code>grep -c "^&gt;"</code>). <code>head</code> and <code>grep -c</code> both return in well under a second even on a file this size. Opening it in a text editor would try to load the whole 472 MB into memory at once, instead of reading a few bytes at a time.</li>
+<li><strong>B.</strong> For example, <code>grep -c "^&gt;" mystery.fasta</code> on the first line and <code>tail -n 2 mystery.fasta</code> on the second, saved as <code>answers.sh</code> and run with <code>bash answers.sh</code>.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="before-the-next-session" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="before-the-next-session"><span class="header-section-number">1.8</span> Before the next session</h2>
 <p>Keep the <code>bioinfo_course</code> folder. Session 2 builds a fuller project structure inside it and looks at FASTQ files and quality control.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1337,7 +1419,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <hr>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1346,7 +1428,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This session adapts material from <a href="https://github.com/tbadet/teaching/tree/main/Bioinformatic_tools">tbadet/teaching (Bioinformatic_tools)</a> (RStudio Server access, file transfer, the essential-commands walkthrough, and the “Going further” commands) and from <a href="https://github.com/crolllab/IBIOL-compute-resources">crolllab/IBIOL-compute-resources</a> (cluster description and connection instructions). Screenshots are from the tbadet course materials; the cluster photo is from the IBIOL repository.</p>
 </div>
@@ -2462,34 +2544,87 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-629"><a href="#cb15-629" aria-hidden="true" tabindex="-1"></a>  to exit, <span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>y<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span> to save. You already have an editor in RStudio's Source pane, so</span>
 <span id="cb15-630"><a href="#cb15-630" aria-hidden="true" tabindex="-1"></a>  you may never need it here, but you will meet <span class="in">`nano`</span> again on other servers.</span>
 <span id="cb15-631"><a href="#cb15-631" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-632"><a href="#cb15-632" aria-hidden="true" tabindex="-1"></a><span class="fu">## Before the next session</span></span>
+<span id="cb15-632"><a href="#cb15-632" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answers</span></span>
 <span id="cb15-633"><a href="#cb15-633" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-634"><a href="#cb15-634" aria-hidden="true" tabindex="-1"></a>Keep the <span class="in">`bioinfo_course`</span> folder. Session 2 builds a fuller project structure inside it</span>
-<span id="cb15-635"><a href="#cb15-635" aria-hidden="true" tabindex="-1"></a>and looks at FASTQ files and quality control.</span>
+<span id="cb15-634"><a href="#cb15-634" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb15-635"><a href="#cb15-635" aria-hidden="true" tabindex="-1"></a><span class="fu">## Open this after you have tried the exercises yourself</span></span>
 <span id="cb15-636"><a href="#cb15-636" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-637"><a href="#cb15-637" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb15-638"><a href="#cb15-638" aria-hidden="true" tabindex="-1"></a><span class="fu">## Please finish your worksheet before Session 2</span></span>
-<span id="cb15-639"><a href="#cb15-639" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-640"><a href="#cb15-640" aria-hidden="true" tabindex="-1"></a>If you only got as far as copying <span class="in">`mystery.fasta`</span> and <span class="in">`WORKSHEET.md`</span> into place today,</span>
-<span id="cb15-641"><a href="#cb15-641" aria-hidden="true" tabindex="-1"></a>that is a completely normal amount to reach in the time we had. Please work through the</span>
-<span id="cb15-642"><a href="#cb15-642" aria-hidden="true" tabindex="-1"></a>rest at home before the next session: blocks D to G in the practical above are exactly</span>
-<span id="cb15-643"><a href="#cb15-643" aria-hidden="true" tabindex="-1"></a>the same whether you do them in class or on your own. It is still **not graded**; the</span>
-<span id="cb15-644"><a href="#cb15-644" aria-hidden="true" tabindex="-1"></a>point is that everyone starts Session 2 from roughly the same place.</span>
-<span id="cb15-645"><a href="#cb15-645" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb15-646"><a href="#cb15-646" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-647"><a href="#cb15-647" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb15-648"><a href="#cb15-648" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-649"><a href="#cb15-649" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb15-650"><a href="#cb15-650" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sources and reuse</span></span>
-<span id="cb15-651"><a href="#cb15-651" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-652"><a href="#cb15-652" aria-hidden="true" tabindex="-1"></a>This session adapts material from</span>
-<span id="cb15-653"><a href="#cb15-653" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">tbadet/teaching (Bioinformatic_tools)</span><span class="co">](https://github.com/tbadet/teaching/tree/main/Bioinformatic_tools)</span></span>
-<span id="cb15-654"><a href="#cb15-654" aria-hidden="true" tabindex="-1"></a>(RStudio Server access, file transfer, the essential-commands walkthrough, and the</span>
-<span id="cb15-655"><a href="#cb15-655" aria-hidden="true" tabindex="-1"></a>"Going further" commands) and from</span>
-<span id="cb15-656"><a href="#cb15-656" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">crolllab/IBIOL-compute-resources</span><span class="co">](https://github.com/crolllab/IBIOL-compute-resources)</span></span>
-<span id="cb15-657"><a href="#cb15-657" aria-hidden="true" tabindex="-1"></a>(cluster description and connection instructions). Screenshots are from the tbadet</span>
-<span id="cb15-658"><a href="#cb15-658" aria-hidden="true" tabindex="-1"></a>course materials; the cluster photo is from the IBIOL repository.</span>
-<span id="cb15-659"><a href="#cb15-659" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-637"><a href="#cb15-637" aria-hidden="true" tabindex="-1"></a>Session 1 is not graded, so there is no reason to hide the answers once you have</span>
+<span id="cb15-638"><a href="#cb15-638" aria-hidden="true" tabindex="-1"></a>genuinely tried each block. Use this to check your own reasoning, not instead of it: the</span>
+<span id="cb15-639"><a href="#cb15-639" aria-hidden="true" tabindex="-1"></a>value is in working out *why*, not in reading the line below.</span>
+<span id="cb15-640"><a href="#cb15-640" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-641"><a href="#cb15-641" aria-hidden="true" tabindex="-1"></a>**Block C checkpoint.** `grep -c "^&gt;" mystery.fasta` prints **40**; <span class="in">`wc -l mystery.fasta`</span></span>
+<span id="cb15-642"><a href="#cb15-642" aria-hidden="true" tabindex="-1"></a>prints **134**.</span>
+<span id="cb15-643"><a href="#cb15-643" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-644"><a href="#cb15-644" aria-hidden="true" tabindex="-1"></a>**Block D, the investigation.**</span>
+<span id="cb15-645"><a href="#cb15-645" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-646"><a href="#cb15-646" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**40 records**, from <span class="in">`grep -c "^&gt;" mystery.fasta`</span>. Counting <span class="in">`&gt;`</span> by eye is unreliable</span>
+<span id="cb15-647"><a href="#cb15-647" aria-hidden="true" tabindex="-1"></a>   here because 40 headers are spread over 134 unevenly wrapped lines: easy to</span>
+<span id="cb15-648"><a href="#cb15-648" aria-hidden="true" tabindex="-1"></a>   double-count or skip one while scrolling.</span>
+<span id="cb15-649"><a href="#cb15-649" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="in">`wc -l`</span> gives 134, not 80 (2 x 40), for two reasons: (a) most sequences wrap over two</span>
+<span id="cb15-650"><a href="#cb15-650" aria-hidden="true" tabindex="-1"></a>   or more lines, adding lines beyond one per record; (b) <span class="in">`truncated_record`</span> contributes</span>
+<span id="cb15-651"><a href="#cb15-651" aria-hidden="true" tabindex="-1"></a>   only its header line, with no sequence line at all.</span>
+<span id="cb15-652"><a href="#cb15-652" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Not DNA: `sp|P0DTC2|SPIKE_SARS2`.** Sequence clue: it contains letters that are not</span>
+<span id="cb15-653"><a href="#cb15-653" aria-hidden="true" tabindex="-1"></a>   A/C/G/T/N (E, F, I, K, L, M, P, Q, R, S, V, W, Y). Header clue: <span class="in">`sp|...|`</span> is a UniProt</span>
+<span id="cb15-654"><a href="#cb15-654" aria-hidden="true" tabindex="-1"></a>   (Swiss-Prot) protein identifier, and the description says "glycoprotein".</span>
+<span id="cb15-655"><a href="#cb15-655" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Truncated: `truncated_record`.** <span class="in">`tail -n 3 mystery.fasta`</span> shows the file ending on</span>
+<span id="cb15-656"><a href="#cb15-656" aria-hidden="true" tabindex="-1"></a>   a header line, with no sequence line after it.</span>
+<span id="cb15-657"><a href="#cb15-657" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>In <span class="in">`contig_07`</span>, lowercase letters mark **soft-masked** regions (repetitive sequence</span>
+<span id="cb15-658"><a href="#cb15-658" aria-hidden="true" tabindex="-1"></a>   flagged by a masking tool, not removed). The run of <span class="in">`N`</span> is an **assembly gap**: the</span>
+<span id="cb15-659"><a href="#cb15-659" aria-hidden="true" tabindex="-1"></a>   length is estimated but the bases are unknown.</span>
+<span id="cb15-660"><a href="#cb15-660" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Shortest complete sequence: `oligo_F`** (24 bases, one line). <span class="in">`truncated_record`</span> has</span>
+<span id="cb15-661"><a href="#cb15-661" aria-hidden="true" tabindex="-1"></a>   no sequence at all, so it counts as "cut off" (question 4), not "shortest".</span>
+<span id="cb15-662"><a href="#cb15-662" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-663"><a href="#cb15-663" aria-hidden="true" tabindex="-1"></a>**Block E, six failures.**</span>
+<span id="cb15-664"><a href="#cb15-664" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-665"><a href="#cb15-665" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Command <span class="pp">|</span> Fails because <span class="pp">|</span> A version that works <span class="pp">|</span></span>
+<span id="cb15-666"><a href="#cb15-666" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb15-667"><a href="#cb15-667" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`cd Data`</span> <span class="pp">|</span> case sensitivity: the folder is <span class="in">`data`</span> <span class="pp">|</span> <span class="in">`cd data`</span> <span class="pp">|</span></span>
+<span id="cb15-668"><a href="#cb15-668" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`head mystery.fna`</span> <span class="pp">|</span> wrong name: the file is <span class="in">`mystery.fasta`</span> <span class="pp">|</span> <span class="in">`head mystery.fasta`</span> <span class="pp">|</span></span>
+<span id="cb15-669"><a href="#cb15-669" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`head -n mystery.fasta`</span> <span class="pp">|</span> <span class="in">`-n`</span> needs a number; it consumed <span class="in">`mystery.fasta`</span> as the count <span class="pp">|</span> <span class="in">`head -n 5 mystery.fasta`</span> <span class="pp">|</span></span>
+<span id="cb15-670"><a href="#cb15-670" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`cp mystery.fasta`</span> <span class="pp">|</span> <span class="in">`cp`</span> needs a destination as well as a source <span class="pp">|</span> <span class="in">`cp mystery.fasta backup.fasta`</span> <span class="pp">|</span></span>
+<span id="cb15-671"><a href="#cb15-671" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`cd mystery.fasta`</span> <span class="pp">|</span> <span class="in">`mystery.fasta`</span> is a file, not a directory <span class="pp">|</span> <span class="in">`cd .`</span> (stay), or <span class="in">`cd ..`</span> to go up <span class="pp">|</span></span>
+<span id="cb15-672"><a href="#cb15-672" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`head ../mystery.fasta`</span> (from <span class="in">`data/`</span>) <span class="pp">|</span> <span class="in">`..`</span> is <span class="in">`session_01/`</span>, where the file is not <span class="pp">|</span> <span class="in">`head mystery.fasta`</span> or <span class="in">`head ./mystery.fasta`</span> <span class="pp">|</span></span>
+<span id="cb15-673"><a href="#cb15-673" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-674"><a href="#cb15-674" aria-hidden="true" tabindex="-1"></a>**Optional challenge.**</span>
+<span id="cb15-675"><a href="#cb15-675" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-676"><a href="#cb15-676" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**A.** `Vitis_vinifera.12Xv2.dna.toplevel.fa` is 472 MB with **20** sequences</span>
+<span id="cb15-677"><a href="#cb15-677" aria-hidden="true" tabindex="-1"></a>  (<span class="in">`grep -c "^&gt;"`</span>). <span class="in">`head`</span> and <span class="in">`grep -c`</span> both return in well under a second even on a</span>
+<span id="cb15-678"><a href="#cb15-678" aria-hidden="true" tabindex="-1"></a>  file this size. Opening it in a text editor would try to load the whole 472 MB into</span>
+<span id="cb15-679"><a href="#cb15-679" aria-hidden="true" tabindex="-1"></a>  memory at once, instead of reading a few bytes at a time.</span>
+<span id="cb15-680"><a href="#cb15-680" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**B.** For example, <span class="in">`grep -c "^&gt;" mystery.fasta`</span> on the first line and</span>
+<span id="cb15-681"><a href="#cb15-681" aria-hidden="true" tabindex="-1"></a>  <span class="in">`tail -n 2 mystery.fasta`</span> on the second, saved as <span class="in">`answers.sh`</span> and run with</span>
+<span id="cb15-682"><a href="#cb15-682" aria-hidden="true" tabindex="-1"></a>  <span class="in">`bash answers.sh`</span>.</span>
+<span id="cb15-683"><a href="#cb15-683" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-684"><a href="#cb15-684" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-685"><a href="#cb15-685" aria-hidden="true" tabindex="-1"></a><span class="fu">## Before the next session</span></span>
+<span id="cb15-686"><a href="#cb15-686" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-687"><a href="#cb15-687" aria-hidden="true" tabindex="-1"></a>Keep the <span class="in">`bioinfo_course`</span> folder. Session 2 builds a fuller project structure inside it</span>
+<span id="cb15-688"><a href="#cb15-688" aria-hidden="true" tabindex="-1"></a>and looks at FASTQ files and quality control.</span>
+<span id="cb15-689"><a href="#cb15-689" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-690"><a href="#cb15-690" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb15-691"><a href="#cb15-691" aria-hidden="true" tabindex="-1"></a><span class="fu">## Please finish your worksheet before Session 2</span></span>
+<span id="cb15-692"><a href="#cb15-692" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-693"><a href="#cb15-693" aria-hidden="true" tabindex="-1"></a>If you only got as far as copying <span class="in">`mystery.fasta`</span> and <span class="in">`WORKSHEET.md`</span> into place today,</span>
+<span id="cb15-694"><a href="#cb15-694" aria-hidden="true" tabindex="-1"></a>that is a completely normal amount to reach in the time we had. Please work through the</span>
+<span id="cb15-695"><a href="#cb15-695" aria-hidden="true" tabindex="-1"></a>rest at home before the next session: blocks D to G in the practical above are exactly</span>
+<span id="cb15-696"><a href="#cb15-696" aria-hidden="true" tabindex="-1"></a>the same whether you do them in class or on your own. It is still **not graded**; the</span>
+<span id="cb15-697"><a href="#cb15-697" aria-hidden="true" tabindex="-1"></a>point is that everyone starts Session 2 from roughly the same place.</span>
+<span id="cb15-698"><a href="#cb15-698" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-699"><a href="#cb15-699" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-700"><a href="#cb15-700" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-701"><a href="#cb15-701" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-702"><a href="#cb15-702" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb15-703"><a href="#cb15-703" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sources and reuse</span></span>
+<span id="cb15-704"><a href="#cb15-704" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-705"><a href="#cb15-705" aria-hidden="true" tabindex="-1"></a>This session adapts material from</span>
+<span id="cb15-706"><a href="#cb15-706" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">tbadet/teaching (Bioinformatic_tools)</span><span class="co">](https://github.com/tbadet/teaching/tree/main/Bioinformatic_tools)</span></span>
+<span id="cb15-707"><a href="#cb15-707" aria-hidden="true" tabindex="-1"></a>(RStudio Server access, file transfer, the essential-commands walkthrough, and the</span>
+<span id="cb15-708"><a href="#cb15-708" aria-hidden="true" tabindex="-1"></a>"Going further" commands) and from</span>
+<span id="cb15-709"><a href="#cb15-709" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">crolllab/IBIOL-compute-resources</span><span class="co">](https://github.com/crolllab/IBIOL-compute-resources)</span></span>
+<span id="cb15-710"><a href="#cb15-710" aria-hidden="true" tabindex="-1"></a>(cluster description and connection instructions). Screenshots are from the tbadet</span>
+<span id="cb15-711"><a href="#cb15-711" aria-hidden="true" tabindex="-1"></a>course materials; the cluster photo is from the IBIOL repository.</span>
+<span id="cb15-712"><a href="#cb15-712" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
