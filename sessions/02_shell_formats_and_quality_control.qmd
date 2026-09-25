@@ -1,0 +1,602 @@
+---
+title: "Session 2: Shell, biological formats, and quality control"
+engine: knitr
+---
+
+## Overview
+
+::: callout-tip
+## Quick poll (Poll Everywhere)
+
+Respond at [pe.app/cmaslard1](https://pe.app/cmaslard1)
+:::
+
+::: callout-note
+## Biological question
+
+You are handed sequencing reads from an experiment that has been running for decades.
+Before anyone trusts a single result from them: **are these reads good enough to use?**
+:::
+
+Session 1 gave you a FASTA file and the commands to look inside it. Today the file gets
+one line stranger (FASTQ) and the question gets one step more useful: not just "what is
+in this file", but "can I trust it". By the end of the practical you will have run a real
+quality-control tool on real sequencing reads and made a keep/flag decision backed by
+evidence, the same first move every sequencing-based analysis makes before anything else
+happens.
+
+### Learning outcomes
+
+By the end of this session, you should be able to:
+
+- describe the four lines of a FASTQ record, including what the quality line encodes;
+- explain what a Phred quality score is, roughly, without the formula;
+- run FastQC on a FASTQ file and know what the six commands you already have (`pwd`,
+  `ls`, `mkdir`, `cd`, `cp`, `head`) still do for you here;
+- read a FastQC report's per-base quality plot and name what "good" and "bad" look like;
+- decide, with two supporting observations, whether a sample should be trusted for
+  downstream analysis;
+- keep raw data, results, and scripts in separate, clearly named folders.
+
+### Session plan
+
+| Time | Block | What happens |
+|---:|---|---|
+| 14:15-14:20 | Retrieval | One question from Session 1, then today's question. |
+| 14:20-14:35 | Theory 1 | The FASTQ format: four lines, and what a quality score means. |
+| 14:35-14:50 | Theory 2 | Worked example: the *E. coli* long-term evolution experiment. |
+| 14:50-15:00 | Practical briefing | What "quality doctor" will ask of you today. |
+| 15:00-15:15 | Practical A | Rebuild the project folder, fetch three FASTQ samples. |
+| 15:15-15:35 | Practical B | Look inside a FASTQ file; decode a quality string by hand. |
+| 15:35-15:50 | Practical C | Run FastQC on the three samples. |
+| 15:50-16:00 | Checkpoint | Three FastQC reports exist. Short break. |
+| 16:00-16:40 | Practical D | Quality doctor: read the reports, build a checklist, diagnose. (pairs) |
+| 16:40-16:55 | Practical E | Individual: a new, unseen sample. Write your decision. |
+| 16:55-17:00 | Wrap-up | Save your work. Preview of Session 3. |
+
+## Theory (≈45 min)
+
+### 1. The FASTQ format
+
+FASTA (Session 1) only stores a sequence and its name. **FASTQ** stores that plus, for
+every single base, how much the sequencer trusts its own reading. Each record is exactly
+**four lines**:
+
+```default
+@SRR098281.1 length=36
+GATTTGGGGTTCAAAGCAGTATCGATCAAATAGTAA
++
+IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+```
+
+| Line | Content |
+|---|---|
+| 1 | `@` + read name and, sometimes, extra info |
+| 2 | the sequence itself (A/C/G/T, same alphabet as FASTA) |
+| 3 | a bare `+` (sometimes repeats the name; ignore it) |
+| 4 | one quality **character per base** in line 2, same length as line 2 |
+
+So a FASTQ record is a FASTA record with a fourth line bolted on. Counting records is the
+same idea as Session 1, but the count of `>` lines becomes a count of every **4th line**
+instead, since there is no unique marker character to `grep` for FASTQ headers as cleanly
+as `^>` did.
+
+### 2. What a quality score actually is
+
+Line 4 looks like punctuation soup. It is not. Each character encodes a **Phred quality
+score**: the sequencer's own estimate of how likely it is that this one base was read
+wrong. Higher score = more confident. The character is just that number, hidden as a
+single symbol so line 2 and line 4 line up one-for-one.
+
+You will not need the formula, only the reading direction: some characters mean "trust
+this", others mean "doubt this". Modern Illumina sequencers do not even give a smooth
+range any more: they round every base into one of a handful of confidence bins. Six of
+those characters, low to high:
+
+| Character | Phred score | Roughly means |
+|:---:|:---:|---|
+| `!` | 0 | no confidence at all |
+| `#` | 2 | very likely wrong |
+| `,` | 11 | doubtful |
+| `:` | 25 | acceptable |
+| `F` | 37 | good |
+| `I` | 40 | excellent |
+
+::: callout-tip
+## Decode two bases by hand (2 min)
+
+Take `,IF#` (four bases). Using the table: which base would you trust least, and which
+one most? You just did, by hand, exactly what a quality-control tool does automatically
+for every base of every read, thousands of times per second.
+:::
+
+Nobody reads quality lines by eye on real data: a run produces millions of reads. A tool
+called **FastQC** does the same decoding, then plots the score **by position along the
+read**, across all reads in the file at once, and gives you a report instead of a wall of
+symbols. That plot is today's main practical output, on data you fetch and run yourself.
+
+### 3. Worked example: 50,000 generations of *E. coli*
+
+Since 1988, Richard Lenski's lab has kept twelve populations of *E. coli* growing
+continuously in a glucose-limited flask, transferred to a fresh flask every single day.
+This is the **Long-Term Evolution Experiment (LTEE)**: the longest-running controlled
+evolution experiment there is, now well past 50,000 generations. One population, **Ara-3**,
+did something nobody expected: around generation 31,500, it evolved the ability to feed on
+**citrate**, a molecule the ancestral strain could not use as food under the experiment's
+conditions. Evolution, caught in the act, in a flask.
+
+Today's data are real sequencing reads from this experiment, at three points in its
+history: **5,000, 15,000, and 50,000 generations**. Before anyone can ask an evolutionary
+question with them ("did anything change in the DNA between these timepoints?"), the same
+unglamorous first step applies as to any sequencing data: check whether the reads
+themselves are trustworthy. That is today's job. The evolutionary question itself is not
+ours to answer today, but you are handling the actual reads behind a real, famous result.
+
+### Practical briefing
+
+You will rebuild your project folder from Session 1, fetch three small FASTQ files (one
+per generation), and run FastQC on each. You then compare the three reports side by side,
+build a short checklist of what a "bad" report looks like using one reference example, and
+use that checklist to make a keep/flag call on a sample you have not seen before. Everything
+you run and every decision you make goes in your script and worksheet, exactly like
+Session 1.
+
+## Practical (≈1 h 50)
+
+### New commands for today
+
+Three new commands on top of everything from Session 1 (`pwd`, `ls`, `mkdir`, `cd`, `cp`,
+`head`, `tail`, `wc -l`, `grep`, `cat`, `less`).
+
+| Command | What it does | Example |
+|---|---|---|
+| `mv` | move **or** rename a file (unlike `cp`, the original does not stay behind) | `mv a.txt results/` |
+| `module load` | make a pre-installed tool available in this session | `module load FastQC` |
+| `fastqc` | run quality control on one or more FASTQ files, producing an HTML report | `fastqc sample.fastq.gz` |
+
+::: callout-important
+## Check the module name before class
+
+`module load FastQC` follows the pattern from Session 1 (`module load SAMtools`), but the
+exact name and capitalisation on LEGcompute must be confirmed with `module avail fastqc`
+before the session; instructor to update this block if it differs.
+:::
+
+### A. Rebuild the project and fetch the data (15:00-15:15)
+
+Reopen `bioinfo_course` from Session 1. Predict each line before running it.
+
+```bash
+cd ~/bioinfo_course
+mkdir session_02
+cd session_02
+mkdir data results
+cd data
+pwd
+```
+
+::: callout-note
+## Checkpoint
+
+`pwd` ends in `bioinfo_course/session_02/data`, and `bioinfo_course/session_02` now
+contains two empty folders, `data` and `results`. Keeping raw files and generated output
+apart like this is the whole of "project organisation" for today: two folders, used
+consistently.
+:::
+
+Copy in the three timepoints and your worksheet:
+
+```bash
+cp /home/cmaslard/bioinfo_tools_course/session_02/ecoli_5k.fastq.gz .
+cp /home/cmaslard/bioinfo_tools_course/session_02/ecoli_15k.fastq.gz .
+cp /home/cmaslard/bioinfo_tools_course/session_02/ecoli_50k.fastq.gz .
+cp /home/cmaslard/bioinfo_tools_course/session_02/WORKSHEET.md .
+ls -lh
+```
+
+::: {.callout-tip collapse="true"}
+## Why `.gz`?
+
+Sequencing files are big, so they are almost always shipped compressed. `zcat` reads a
+`.gz` file without decompressing it first, e.g. `zcat ecoli_5k.fastq.gz | head -n 4`.
+`fastqc` also accepts `.gz` files directly: no need to decompress anything today.
+:::
+
+### B. Look inside a FASTQ file (15:15-15:35)
+
+Predict the output of each line before running it.
+
+```bash
+zcat ecoli_5k.fastq.gz | head -n 4     # the first record, all four lines
+zcat ecoli_5k.fastq.gz | wc -l         # total lines
+```
+
+::: callout-note
+## Checkpoint
+
+The first line starts with `@`. The third line is a bare `+`. Line 2 and line 4 are the
+same length. `wc -l` divided by 4 gives the number of reads in the file: write that
+number, and the file's `ls -lh` size, in Section 2 of your worksheet, for all three files.
+:::
+
+Now decode a real quality string by hand, using the table from Theory 2:
+
+```bash
+zcat ecoli_5k.fastq.gz | head -n 4 | tail -n 1   # just the quality line of read 1
+```
+
+Pick any three consecutive characters from that line. Look each one up in the table and
+write down the three Phred scores. Would you trust that stretch of the read? You now know
+exactly what FastQC's main plot is going to show you, one read at a time, for every read
+in the file at once.
+
+### C. Run FastQC (15:35-15:50)
+
+```bash
+module load FastQC
+fastqc ecoli_5k.fastq.gz ecoli_15k.fastq.gz ecoli_50k.fastq.gz -o ../results
+ls -lh ../results
+```
+
+`-o ../results` sends the reports to the `results` folder instead of cluttering `data`,
+the same separation you set up in block A. Each input file produces two outputs: an
+`_fastqc.html` report and an `_fastqc.zip` archive (the report's data, unpacked; ignore it
+today).
+
+::: callout-note
+## Checkpoint
+
+`../results` contains six files: three `_fastqc.html` and three `_fastqc.zip`, one pair
+per generation. `fastqc` finished without an error message for all three.
+:::
+
+Download the three HTML reports through the RStudio **Files** pane (tick each file →
+**More → Export…**, as in Session 1) and open them in a browser on your own laptop.
+
+### 15:50-16:00: Checkpoint and short break
+
+Before you step away: three FastQC reports open (or downloaded), your script saved, and
+your three read counts and file sizes recorded in the worksheet.
+
+### D. Quality doctor, in pairs (16:00-16:40)
+
+A FastQC report has many sections; three matter today.
+
+| Section | What it shows | Red flag looks like |
+|---|---|---|
+| **Per base sequence quality** | a green/orange/red band, quality score by position along the read | the line dips into orange or red, especially toward the end |
+| **Per sequence GC content** | one smooth bump expected, centred on the organism's typical GC% | a second bump, or a bump far from the expected centre |
+| **Overrepresented sequences** | short sequences appearing far more often than chance | a long list here, especially of adapter-like sequences |
+
+First, build your eye for a real failure. Open Babraham Bioinformatics' own reference
+examples, a good run and a deliberately bad one, side by side:
+
+- [Good example](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html)
+- [Bad example](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html)
+
+For each of the three sections above, write one sentence describing the difference
+between the good and the bad example. That sentence is your checklist for the rest of the
+practical.
+
+Now open your own reports for the two **extreme** timepoints, **5,000** and **50,000**
+generations (leave 15,000 unopened; that one is block E), and with your partner answer in
+Section 3 of your worksheet:
+
+1. Using your checklist, does **either** timepoint look like the bad example in any
+   section? Which one, and which section?
+2. Compare "Per base sequence quality" between the two. Does read quality change with
+   generation number, or does it look the same regardless of how evolutionarily old or
+   young the sample is? What does that tell you about what sequencing quality actually
+   depends on (the sequencing run) versus what it does not depend on (the biology of the
+   sample)?
+3. Pick the single plot you found most convincing for deciding whether to trust a sample.
+   Why that one over the others?
+
+::: callout-note
+## Short on time?
+
+At 16:40, move to block E with whatever you have. A partial checklist and one solid
+observation per timepoint are enough to start block E.
+:::
+
+### E. Individual: a new sample (16:40-16:55)
+
+On your own, open the report for **15,000 generations**, the one timepoint you fetched
+and ran FastQC on in blocks A-C but have not yet individually assessed.
+
+Using your checklist from block D, write in Section 4 of your worksheet:
+
+- your decision: **trust this sample for downstream analysis, or flag it**;
+- **two observations** from the report that support your decision, each naming the
+  section you looked at.
+
+This is the exact shape of decision a bioinformatician makes before every real analysis,
+and the exact shape of answer the graded Moodle quizzes from Session 3 onward will ask
+for: a decision, backed by named evidence, not a gut feeling.
+
+### Wrap-up (16:55-17:00)
+
+You should leave with:
+
+- `WORKSHEET.md`, Sections 2-4 completed;
+- `session_02_commands.sh` with every command you ran;
+- `bioinfo_course/session_02/results/`, containing three FastQC reports.
+
+Session 2 is still **not graded**: the continuous assessment starts at Session 3. Keep the
+`bioinfo_course` folder; Session 3 uses it again.
+
+## Checkpoint
+
+You are done when all of the following are true:
+
+- you can name the four lines of a FASTQ record and say what line 4 encodes;
+- you can read a `!`/`#`/`,`/`:`/`F`/`I` character as roughly bad-to-excellent without
+  recomputing the formula;
+- `../results` holds three FastQC reports, produced by a `fastqc` command you ran yourself;
+- you can point to one plot in a report and say, in one sentence, why it does or does not
+  worry you;
+- you made a trust/flag decision on an unseen sample, backed by two named observations.
+
+## Optional challenge
+
+For your own interest, not graded.
+
+**A. Compare read counts across timepoints.** Using `zcat ... | wc -l` divided by 4 for
+each of the three files, is the number of reads roughly the same across timepoints? Should
+it be, for this kind of comparison to be fair?
+
+**B. `mv` for real.** In `results`, make a subfolder per timepoint (`mkdir gen5000`, etc.)
+and `mv` each pair of report files into the matching folder. Confirm with `ls -R ..`
+(from the "Going further" list in Session 1) that everything landed where you intended.
+
+## Before the next session
+
+Session 3 asks a different kind of question of sequence data: not "can I trust this read",
+but "what does this sequence match, and how are these sequences related to each other". It
+reuses the shell habits from Sessions 1-2 and adds sequence similarity search and a first
+phylogenetic tree.
+
+---
+
+## Bonus: version control with Git {.unnumbered}
+
+::: callout-tip
+## Optional, for students who are ahead
+
+**This is not part of the course.** No marks depend on it, and no later session assumes
+you have done it. It is here because version control becomes genuinely useful once your
+analyses grow past a couple of scripts. Come back to it whenever you like.
+:::
+
+You already keep a command log and clear file names. Git is the professional version of
+that same habit: it records your project as a series of **snapshots** ("commits"), each
+with a short message.
+
+Three things this gives you:
+
+- **A history you can trust.** Every commit is a labelled state of the whole project.
+  You can see exactly what changed between two points and go back to any earlier one.
+  No more `analysis_final_v3_really_final.R`.
+- **A clean off-site backup.** One `git push` copies your project, with its full history,
+  to GitHub. Useful anywhere, and especially on the cluster, which is **not** backed up
+  (see Session 1).
+- **Sharing by link.** A repository is a URL. Send it and another person has your exact
+  code and history; they can read it, rerun it, or suggest changes without a single
+  emailed zip file.
+
+### The idea in four steps
+
+```{mermaid}
+flowchart LR
+  W["Working folder<br/>(your files)"] -- "git add" --> S["Staged<br/>(marked for the next snapshot)"]
+  S -- "git commit -m '...'" --> C["Commit<br/>(snapshot + message, saved locally)"]
+  C -- "git push" --> R["GitHub<br/>(off-site copy, shareable)"]
+```
+
+### Try it (about 15 minutes)
+
+Use the `bioinfo_course` folder from Sessions 1 and 2. In the RStudio **Terminal**:
+
+```{bash}
+#| eval: false
+# 1. Tell Git who you are (only needed once per machine)
+git config --global user.name "Your Name"
+git config --global user.email "you@unine.ch"
+
+# 2. Turn the project folder into a repository
+cd ~/bioinfo_course
+git init
+git status            # everything shows as "untracked"
+
+# 3. Save a first snapshot
+git add .
+git commit -m "First snapshot: sessions 1-2 work"
+
+# 4. Change something, then see what Git noticed
+#    (edit session_01_commands.sh, add a comment line, save)
+git status            # the file is now "modified"
+git diff              # the exact lines that changed
+git add session_01_commands.sh
+git commit -m "Add a note to the command log"
+
+git log --oneline     # your history so far
+```
+
+Optional last step, if you have a GitHub account: create a new **empty** repository on
+<https://github.com> (no README), then connect and push:
+
+```{bash}
+#| eval: false
+git remote add origin https://github.com/<your-username>/bioinfo_course.git
+git branch -M main
+git push -u origin main
+```
+
+Your work now has a backup you can open in a browser and share with a link.
+
+When Git asks for a password on `push`, GitHub wants a **personal access token**, not
+your account password. Happy Git explains how to make one in its
+["Personal access token" chapter](https://happygitwithr.com/https-pat).
+
+::: callout-note
+## On RStudio Server you can click instead of type
+
+Once a folder is a Git repository, RStudio shows a **Git** tab (top-right pane). You can
+stage, commit, view diffs, and push with buttons. The commands above and the buttons do
+exactly the same thing.
+:::
+
+### Checkpoint
+
+- `git log --oneline` lists at least two commits.
+- If you pushed: the repository and both commits are visible on github.com.
+
+### Go further
+
+If you want to learn Git properly, these are good and free:
+
+- [**Happy Git and GitHub for the useR**](https://happygitwithr.com/) (Jenny Bryan).
+  Written for R and RStudio users, so it matches our setup. Best starting point.
+- [**Software Carpentry: Version Control with Git**](https://swcarpentry.github.io/git-novice/).
+  The classic hands-on lesson, about two hours, entirely in the shell.
+- [**GitHub "Hello World"**](https://docs.github.com/en/get-started/start-your-journey/hello-world).
+  Ten minutes, browser only, nothing to install.
+- [**Pro Git**](https://git-scm.com/book) (Chacon & Straub). The reference book when you
+  want the details.
+- [**Oh My Git!**](https://ohmygit.org/). A free game that makes branching visual.
+
+---
+
+## Bonus: watching evolution happen (variant calling) {.unnumbered}
+
+::: callout-tip
+## Optional, for students who are ahead
+
+**This is not part of the course.** No marks depend on it, and no later session assumes
+you have done it. It exists because it directly answers a question today's practical
+raises but does not close: the DNA behind these reads has been evolving for 50,000
+generations, so what, exactly, changed? A bacterial genome is small (4.6 Mb, against 3+
+billion for ours), so the full path from reads to an answer takes well under a minute.
+:::
+
+FastQC told you whether to trust a read. **Variant calling** goes one step further: it
+lines every read up against a reference genome and reports every position where your
+sample disagrees with it. Each disagreement is a candidate **mutation**. Four new tools,
+each doing one job:
+
+| Tool | Job |
+|---|---|
+| `bwa index` | prepares a reference genome for fast searching |
+| `bwa mem` | aligns reads against that reference |
+| `samtools sort` / `index` | puts aligned reads in genome order and makes them searchable |
+| `bcftools mpileup` / `call` | at every position, compares the reads to the reference and reports differences |
+
+### Try it (about 15 minutes)
+
+Work in a new folder, and reuse the `module load` habit from earlier today.
+
+```bash
+mkdir -p ~/bioinfo_course/session_02/bonus_evolution
+cd ~/bioinfo_course/session_02/bonus_evolution
+module load BWA/0.7.18-GCCcore-13.3.0 SAMtools/1.21-GCC-13.3.0 BCFtools/1.21-GCC-13.3.0
+```
+
+**1. Get the ancestor.** Every mutation is defined relative to a starting point: the
+LTEE's ancestral strain, REL606, whose genome is public on NCBI (accession `NC_012967.1`).
+
+```bash
+curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=NC_012967.1&rettype=fasta&retmode=text" -o REL606.fasta
+bwa index REL606.fasta
+```
+
+**2. Get a deeper read sample.** The 10,000-read files from earlier today are enough for
+quality control, but too shallow to call mutations confidently. Reuse the same
+`zcat | head | gzip` trick from block B, just with a bigger number, on the 50,000-generation
+run:
+
+```bash
+curl -s "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/006/SRR2584866/SRR2584866_1.fastq.gz" | zcat | head -n 800000 | gzip > reads_deep.fastq.gz
+```
+
+::: callout-note
+## Checkpoint before continuing
+
+`zcat reads_deep.fastq.gz | wc -l` prints **800000**. Downloads over a real network
+occasionally cut short with no error message; if your number is much smaller, just run
+the `curl` line again.
+:::
+
+**3. Align, sort, and index.**
+
+```bash
+bwa mem -t 4 REL606.fasta reads_deep.fastq.gz | samtools sort -o aligned.bam -
+samtools index aligned.bam
+samtools flagstat aligned.bam
+```
+
+`flagstat` reports what fraction of reads found a matching spot in the reference. Expect
+well above 90%: this is the ancestor's own species, after all, just 50,000 generations
+later.
+
+**4. Call variants.**
+
+```bash
+bcftools mpileup -f REL606.fasta aligned.bam | bcftools call -mv -Oz -o variants.vcf.gz
+bcftools index variants.vcf.gz
+zcat variants.vcf.gz | grep -vc "^#"
+bcftools view variants.vcf.gz | grep -v "^##" | head -10
+```
+
+Each remaining line is one candidate difference from the ancestor: a position (`POS`), what
+the ancestor had (`REF`), what your sample has instead (`ALT`), and a confidence score
+(`QUAL`). Sort by quality to see where you should look first:
+
+```bash
+bcftools view variants.vcf.gz | grep -v "^#" | sort -t$'\t' -k6,6 -rn | head -5
+```
+
+::: callout-important
+## Read this before you get excited
+
+This list is a **rough first pass**, not a validated result. At this depth and with no
+filtering, some entries are real mutations and some are noise (a handful of misread
+bases lining up by chance). The actual published analysis of this experiment
+(Tenaillon et al., *Science*, 2016) uses much deeper coverage, both directions of each
+paired-end read, and careful filtering. Treat today's list as "here is what the
+first step of a real analysis looks like", not as a discovery.
+:::
+
+### Go further
+
+- Repeat steps 2-4 for `SRR2589044` (5,000 generations) and `SRR2584863` (15,000
+  generations). Does the number of candidate variants grow with generation number, the
+  way you would expect if mutations accumulate over time?
+- Filter by quality before counting: `bcftools view -i 'QUAL>50' variants.vcf.gz | grep -vc "^#"`.
+  How much does the count drop?
+- The famous result from this population, Ara-3, is that it evolved the ability to use
+  **citrate** aerobically, around generation 31,500 (Blount, Borland & Lenski, *PNAS*,
+  2008). Nothing here identifies that specific mutation: it involves a structural
+  rearrangement, not a simple substitution, and needs the full genome assembly and
+  paired-end reads to see properly. This bonus shows you the first step of the method
+  that eventually finds it.
+
+---
+
+::: {.callout-note collapse="true"}
+## Sources and reuse
+
+The three *E. coli* samples and the long-term evolution experiment framing are adapted
+from the Data Carpentry **"Data Wrangling and Processing for Genomics"** lesson
+([datacarpentry.github.io/wrangling-genomics](https://datacarpentry.github.io/wrangling-genomics/)),
+which uses reads from Richard Lenski's LTEE population Ara-3 at 5,000, 15,000, and 50,000
+generations; the raw files are archived on
+[FigShare](https://figshare.com/articles/dataset/Data_Carpentry_Genomics_beta_2_0/7726454).
+The good/bad reference reports used in block D are the official example reports from
+[Babraham Bioinformatics' FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).
+The variant-calling bonus follows the same alignment/calling tool chain (BWA, SAMtools,
+BCFtools) as the Data Carpentry lesson's later steps; the ancestral reference genome
+(REL606, `NC_012967.1`) is from NCBI. The citrate result referenced there is from Blount,
+Borland & Lenski (*PNAS*, 2008); the genome-wide mutation analysis is from Tenaillon et al.
+(*Science*, 2016). None of this is authored by this course; see the original sites and
+papers for licensing and citation.
+:::
