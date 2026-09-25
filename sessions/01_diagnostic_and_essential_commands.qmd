@@ -625,6 +625,59 @@ ls backup/
   to exit, <kbd>y</kbd> to save. You already have an editor in RStudio's Source pane, so
   you may never need it here, but you will meet `nano` again on other servers.
 
+## Answers
+
+::: {.callout-note collapse="true"}
+## Open this after you have tried the exercises yourself
+
+Session 1 is not graded, so there is no reason to hide the answers once you have
+genuinely tried each block. Use this to check your own reasoning, not instead of it: the
+value is in working out *why*, not in reading the line below.
+
+**Block C checkpoint.** `grep -c "^>" mystery.fasta` prints **40**; `wc -l mystery.fasta`
+prints **134**.
+
+**Block D, the investigation.**
+
+1. **40 records**, from `grep -c "^>" mystery.fasta`. Counting `>` by eye is unreliable
+   here because 40 headers are spread over 134 unevenly wrapped lines: easy to
+   double-count or skip one while scrolling.
+2. `wc -l` gives 134, not 80 (2 x 40), for two reasons: (a) most sequences wrap over two
+   or more lines, adding lines beyond one per record; (b) `truncated_record` contributes
+   only its header line, with no sequence line at all.
+3. **Not DNA: `sp|P0DTC2|SPIKE_SARS2`.** Sequence clue: it contains letters that are not
+   A/C/G/T/N (E, F, I, K, L, M, P, Q, R, S, V, W, Y). Header clue: `sp|...|` is a UniProt
+   (Swiss-Prot) protein identifier, and the description says "glycoprotein".
+4. **Truncated: `truncated_record`.** `tail -n 3 mystery.fasta` shows the file ending on
+   a header line, with no sequence line after it.
+5. In `contig_07`, lowercase letters mark **soft-masked** regions (repetitive sequence
+   flagged by a masking tool, not removed). The run of `N` is an **assembly gap**: the
+   length is estimated but the bases are unknown.
+6. **Shortest complete sequence: `oligo_F`** (24 bases, one line). `truncated_record` has
+   no sequence at all, so it counts as "cut off" (question 4), not "shortest".
+
+**Block E, six failures.**
+
+| Command | Fails because | A version that works |
+|---|---|---|
+| `cd Data` | case sensitivity: the folder is `data` | `cd data` |
+| `head mystery.fna` | wrong name: the file is `mystery.fasta` | `head mystery.fasta` |
+| `head -n mystery.fasta` | `-n` needs a number; it consumed `mystery.fasta` as the count | `head -n 5 mystery.fasta` |
+| `cp mystery.fasta` | `cp` needs a destination as well as a source | `cp mystery.fasta backup.fasta` |
+| `cd mystery.fasta` | `mystery.fasta` is a file, not a directory | `cd .` (stay), or `cd ..` to go up |
+| `head ../mystery.fasta` (from `data/`) | `..` is `session_01/`, where the file is not | `head mystery.fasta` or `head ./mystery.fasta` |
+
+**Optional challenge.**
+
+- **A.** `Vitis_vinifera.12Xv2.dna.toplevel.fa` is 472 MB with **20** sequences
+  (`grep -c "^>"`). `head` and `grep -c` both return in well under a second even on a
+  file this size. Opening it in a text editor would try to load the whole 472 MB into
+  memory at once, instead of reading a few bytes at a time.
+- **B.** For example, `grep -c "^>" mystery.fasta` on the first line and
+  `tail -n 2 mystery.fasta` on the second, saved as `answers.sh` and run with
+  `bash answers.sh`.
+:::
+
 ## Before the next session
 
 Keep the `bioinfo_course` folder. Session 2 builds a fuller project structure inside it
