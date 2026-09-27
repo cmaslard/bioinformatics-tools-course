@@ -358,115 +358,6 @@ phylogenetic tree.
 
 ---
 
-## Bonus: version control with Git {.unnumbered}
-
-::: callout-tip
-## Optional, for students who are ahead
-
-**This is not part of the course.** No marks depend on it, and no later session assumes
-you have done it. It is here because version control becomes genuinely useful once your
-analyses grow past a couple of scripts. Come back to it whenever you like.
-:::
-
-You already keep a command log and clear file names. Git is the professional version of
-that same habit: it records your project as a series of **snapshots** ("commits"), each
-with a short message.
-
-Three things this gives you:
-
-- **A history you can trust.** Every commit is a labelled state of the whole project.
-  You can see exactly what changed between two points and go back to any earlier one.
-  No more `analysis_final_v3_really_final.R`.
-- **A clean off-site backup.** One `git push` copies your project, with its full history,
-  to GitHub. Useful anywhere, and especially on the cluster, which is **not** backed up
-  (see Session 1).
-- **Sharing by link.** A repository is a URL. Send it and another person has your exact
-  code and history; they can read it, rerun it, or suggest changes without a single
-  emailed zip file.
-
-### The idea in four steps
-
-```{mermaid}
-flowchart LR
-  W["Working folder<br/>(your files)"] -- "git add" --> S["Staged<br/>(marked for the next snapshot)"]
-  S -- "git commit -m '...'" --> C["Commit<br/>(snapshot + message, saved locally)"]
-  C -- "git push" --> R["GitHub<br/>(off-site copy, shareable)"]
-```
-
-### Try it (about 15 minutes)
-
-Use the `bioinfo_course` folder from Sessions 1 and 2. In the RStudio **Terminal**:
-
-```{bash}
-#| eval: false
-# 1. Tell Git who you are (only needed once per machine)
-git config --global user.name "Your Name"
-git config --global user.email "you@unine.ch"
-
-# 2. Turn the project folder into a repository
-cd ~/bioinfo_course
-git init
-git status            # everything shows as "untracked"
-
-# 3. Save a first snapshot
-git add .
-git commit -m "First snapshot: sessions 1-2 work"
-
-# 4. Change something, then see what Git noticed
-#    (edit session_01_commands.sh, add a comment line, save)
-git status            # the file is now "modified"
-git diff              # the exact lines that changed
-git add session_01_commands.sh
-git commit -m "Add a note to the command log"
-
-git log --oneline     # your history so far
-```
-
-Optional last step, if you have a GitHub account: create a new **empty** repository on
-<https://github.com> (no README), then connect and push:
-
-```{bash}
-#| eval: false
-git remote add origin https://github.com/<your-username>/bioinfo_course.git
-git branch -M main
-git push -u origin main
-```
-
-Your work now has a backup you can open in a browser and share with a link.
-
-When Git asks for a password on `push`, GitHub wants a **personal access token**, not
-your account password. Happy Git explains how to make one in its
-["Personal access token" chapter](https://happygitwithr.com/https-pat).
-
-::: callout-note
-## On RStudio Server you can click instead of type
-
-Once a folder is a Git repository, RStudio shows a **Git** tab (top-right pane). You can
-stage, commit, view diffs, and push with buttons. The commands above and the buttons do
-exactly the same thing.
-:::
-
-### Checkpoint
-
-- `git log --oneline` lists at least two commits.
-- If you pushed: the repository and both commits are visible on github.com.
-
-### Go further
-
-If you want to learn Git properly, these are good and free:
-
-- [**Happy Git and GitHub for the useR**](https://happygitwithr.com/) (Jenny Bryan).
-  Written for R and RStudio users, so it matches our setup. Best starting point.
-- [**Software Carpentry: Version Control with Git**](https://swcarpentry.github.io/git-novice/).
-  The classic hands-on lesson, about two hours, entirely in the shell.
-- [**GitHub "Hello World"**](https://docs.github.com/en/get-started/start-your-journey/hello-world).
-  Ten minutes, browser only, nothing to install.
-- [**Pro Git**](https://git-scm.com/book) (Chacon & Straub). The reference book when you
-  want the details.
-- [**Oh My Git!**](https://ohmygit.org/). A free game that makes branching visual.
-
----
-
 ## Bonus: watching evolution happen (variant calling) {.unnumbered}
 
 ::: callout-tip
@@ -582,6 +473,115 @@ first step of a real analysis looks like", not as a discovery.
   structural rearrangement, not a simple substitution, and needs the full genome assembly
   and paired-end reads to see properly. This bonus shows you the first step of the method
   that eventually finds it.
+
+---
+
+## Bonus: version control with Git {.unnumbered}
+
+::: callout-tip
+## Optional, for students who are ahead
+
+**This is not part of the course.** No marks depend on it, and no later session assumes
+you have done it. It is here because version control becomes genuinely useful once your
+analyses grow past a couple of scripts. Come back to it whenever you like.
+:::
+
+You already keep a command log and clear file names. Git is the professional version of
+that same habit: it records your project as a series of **snapshots** ("commits"), each
+with a short message.
+
+Three things this gives you:
+
+- **A history you can trust.** Every commit is a labelled state of the whole project.
+  You can see exactly what changed between two points and go back to any earlier one.
+  No more `analysis_final_v3_really_final.R`.
+- **A clean off-site backup.** One `git push` copies your project, with its full history,
+  to GitHub. Useful anywhere, and especially on the cluster, which is **not** backed up
+  (see Session 1).
+- **Sharing by link.** A repository is a URL. Send it and another person has your exact
+  code and history; they can read it, rerun it, or suggest changes without a single
+  emailed zip file.
+
+### The idea in four steps
+
+```{mermaid}
+flowchart LR
+  W["Working folder<br/>(your files)"] -- "git add" --> S["Staged<br/>(marked for the next snapshot)"]
+  S -- "git commit -m '...'" --> C["Commit<br/>(snapshot + message, saved locally)"]
+  C -- "git push" --> R["GitHub<br/>(off-site copy, shareable)"]
+```
+
+### Try it (about 15 minutes)
+
+Use the `bioinfo_course` folder from Sessions 1 and 2. In the RStudio **Terminal**:
+
+```{bash}
+#| eval: false
+# 1. Tell Git who you are (only needed once per machine)
+git config --global user.name "Your Name"
+git config --global user.email "you@unine.ch"
+
+# 2. Turn the project folder into a repository
+cd ~/bioinfo_course
+git init
+git status            # everything shows as "untracked"
+
+# 3. Save a first snapshot
+git add .
+git commit -m "First snapshot: sessions 1-2 work"
+
+# 4. Change something, then see what Git noticed
+#    (edit session_01_commands.sh, add a comment line, save)
+git status            # the file is now "modified"
+git diff              # the exact lines that changed
+git add session_01_commands.sh
+git commit -m "Add a note to the command log"
+
+git log --oneline     # your history so far
+```
+
+Optional last step, if you have a GitHub account: create a new **empty** repository on
+<https://github.com> (no README), then connect and push:
+
+```{bash}
+#| eval: false
+git remote add origin https://github.com/<your-username>/bioinfo_course.git
+git branch -M main
+git push -u origin main
+```
+
+Your work now has a backup you can open in a browser and share with a link.
+
+When Git asks for a password on `push`, GitHub wants a **personal access token**, not
+your account password. Happy Git explains how to make one in its
+["Personal access token" chapter](https://happygitwithr.com/https-pat).
+
+::: callout-note
+## On RStudio Server you can click instead of type
+
+Once a folder is a Git repository, RStudio shows a **Git** tab (top-right pane). You can
+stage, commit, view diffs, and push with buttons. The commands above and the buttons do
+exactly the same thing.
+:::
+
+### Checkpoint
+
+- `git log --oneline` lists at least two commits.
+- If you pushed: the repository and both commits are visible on github.com.
+
+### Go further
+
+If you want to learn Git properly, these are good and free:
+
+- [**Happy Git and GitHub for the useR**](https://happygitwithr.com/) (Jenny Bryan).
+  Written for R and RStudio users, so it matches our setup. Best starting point.
+- [**Software Carpentry: Version Control with Git**](https://swcarpentry.github.io/git-novice/).
+  The classic hands-on lesson, about two hours, entirely in the shell.
+- [**GitHub "Hello World"**](https://docs.github.com/en/get-started/start-your-journey/hello-world).
+  Ten minutes, browser only, nothing to install.
+- [**Pro Git**](https://git-scm.com/book) (Chacon & Straub). The reference book when you
+  want the details.
+- [**Oh My Git!**](https://ohmygit.org/). A free game that makes branching visual.
 
 ---
 
