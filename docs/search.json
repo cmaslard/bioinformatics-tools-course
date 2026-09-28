@@ -153,7 +153,7 @@
     "href": "sessions/02_shell_formats_and_quality_control.html",
     "title": "2  Session 2: Shell, biological formats, and quality control",
     "section": "",
-    "text": "2.1 Overview\nSession 1 gave you a FASTA file and the commands to look inside it. Today the file gets one line stranger (FASTQ) and the question gets one step more useful: not just “what is in this file”, but “can I trust it”. By the end of the practical you will have run a real quality-control tool on real sequencing reads and made a keep/flag decision backed by evidence, the same first move every sequencing-based analysis makes before anything else happens.",
+    "text": "2.1 Overview\nDownload the lecture slides (PDF)\nSession 1 gave you a FASTA file and the commands to look inside it. Today the file gets one line stranger (FASTQ) and the question gets one step more useful: not just “what is in this file”, but “can I trust it”. By the end of the practical you will have run a real quality-control tool on real sequencing reads and made a keep/flag decision backed by evidence, the same first move every sequencing-based analysis makes before anything else happens.",
     "crumbs": [
       "Foundations",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Session 2: Shell, biological formats, and quality control</span>"
