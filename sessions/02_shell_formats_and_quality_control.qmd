@@ -5,6 +5,8 @@ engine: knitr
 
 ## Overview
 
+[Download the lecture slides (PDF)](slides/02_lecture_slides.pdf)
+
 ::: callout-tip
 ## Quick poll (Poll Everywhere)
 
