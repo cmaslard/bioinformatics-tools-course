@@ -373,6 +373,74 @@ it be, for this kind of comparison to be fair?
 and `mv` each pair of report files into the matching folder. Confirm with `ls -R ..`
 (from the "Going further" list in Session 1) that everything landed where you intended.
 
+## Answers
+
+::: {.callout-note collapse="true"}
+## Open this after you have tried the exercises yourself
+
+Session 2 is not graded, so there is no reason to hide the answers once you have
+genuinely tried each block. Use this to check your own reasoning, not instead of it: the
+value is in working out *why*, not in reading the line below. These are the real FastQC
+numbers from the five files, not a schematic version of them.
+
+**Block D, question 1 (does either timepoint look like `reference_bad`?).** Not in the
+same way. `reference_bad` **fails** "Per base sequence quality" early (mean quality is
+already drifting down by position 4), **fails** "Per tile sequence quality", and **warns**
+on "Overrepresented sequences" (four overlapping 41-base sequences, each about 0.5-0.65%
+of all reads, flagged "No Hit": the same piece of DNA, read many times). Both *E. coli*
+timepoints also **fail** "Per base sequence quality", but only because of the last 20-30
+bases of a 150-base read (mean quality falls from about 32 at position 1 to about 22-23 by
+position 150); the first 120 bases stay solidly in the green zone, and neither timepoint
+flags a single overrepresented sequence. Neither looks as clean as `reference_good`,
+which **passes** "Per base sequence quality" outright across its full 40 bases.
+
+**Block D, question 2 (does quality change with generation number?).** No, essentially
+not. 5,000 generations: mean Phred ≈32.4 at position 1, ≈22.8 at position 150. 50,000
+generations: mean Phred ≈31.6 at position 1, ≈21.9 at position 150. Same shape, same
+collapse point, within about one Phred point of each other. That is the point: sequencing
+quality is a property of the **sequencing run** (the chemistry, the read's position on
+the flow cell), not of the DNA's evolutionary age. A population at 50,000 generations is
+not "worse DNA"; it was simply sequenced the same way as the others.
+
+**Block D, question 3 (most convincing plot).** For this dataset, "Per base sequence
+quality" is the only one of the three sections that actually separates the files.
+"Per sequence GC content" **warns** on `reference_good` and on all three *E. coli* files
+alike, and even **passes** on `reference_bad`, so it does not reliably tell a trustworthy
+sample from a failing one here. "Overrepresented sequences" stays clean on every
+*E. coli* file. Reasonable answers vary, but they should name a specific numeric or visual
+feature of the quality plot, not just "it looked bad".
+
+**Block E (15,000 generations).** The report sits exactly where the pattern from block D
+predicts: mean Phred ≈32.5 at position 1, falling to ≈22.8 by position 150 ("Per base
+sequence quality" **fails**, the same tail-collapse shape as the other two timepoints);
+"Per sequence GC content" **warns**, but the peak sits around 52-54%, in range for
+*E. coli*'s genome; "Overrepresented sequences" **passes**, with nothing flagged. A
+defensible decision is **trust, with the last 20-30 bases trimmed**: the problem is
+confined to the read ends, not scattered through the whole read or paired with a
+contamination signal, so this is not the same kind of failure as `reference_bad`. "Flag
+outright" is defensible too, as long as it is backed by two named observations rather than
+a single section.
+
+**Optional challenge A.** All three files contain exactly **10,000 reads** each (`zcat
+... | wc -l` gives 40,000 for every file, divided by 4). That equality is not a property
+of the original sequencing runs: it was built in on purpose when these class files were
+subsampled from the much larger original runs, specifically so a depth difference could
+not be mistaken for a quality difference today. For a genuinely fair comparison between
+two arbitrary samples, you would need to confirm the depth matches yourself first, exactly
+as you just did here, rather than assume it.
+
+**Optional challenge B.** For example:
+
+```bash
+cd ~/bioinfo_course/session_02/results
+mkdir gen5000 gen15000 gen50000
+mv ecoli_5k_fastqc.* gen5000/
+mv ecoli_15k_fastqc.* gen15000/
+mv ecoli_50k_fastqc.* gen50000/
+ls -R ..
+```
+:::
+
 ## Before the next session
 
 Session 3 asks a different kind of question of sequence data: not "can I trust this read",
