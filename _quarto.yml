@@ -32,6 +32,7 @@ book:
       chapters:
         - sessions/01_diagnostic_and_essential_commands.qmd
         - sessions/02_shell_formats_and_quality_control.qmd
+        - sessions/03_sequence_similarity_and_phylogeny.qmd
     - references.qmd
   search:
     type: overlay
