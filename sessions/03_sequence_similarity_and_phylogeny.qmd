@@ -198,11 +198,11 @@ command log, exactly like Sessions 1-2.
 
 ### New commands for today
 
-Nine new commands on top of everything from Sessions 1-2: today's practical went past
-this course's usual limit of six, on purpose, because block D now has you fetch real data
-from NCBI yourselves rather than start from a prepared file. Treat `esearch`/`efetch` as
-one pattern, the same way you already treat `module load X` as one pattern, and this is
-closer to seven ideas than nine.
+Eleven new commands on top of everything from Sessions 1-2: today's practical went well
+past this course's usual limit of six, on purpose, because block D now has you fetch real
+data from NCBI yourselves rather than start from a prepared file. Treat `esearch`/`efetch`
+as one pattern, the same way you already treat `module load X` as one pattern, and this is
+closer to nine ideas than eleven.
 
 | Command | What it does | Example |
 |---|---|---|
@@ -213,6 +213,8 @@ closer to seven ideas than nine.
 | `esearch` / `efetch` | search and download real records from NCBI | `esearch -db nucleotide -query "..." \| efetch -format fasta` |
 | `mafft` | align a set of unaligned sequences | `mafft --auto in.fasta > aligned.fasta` |
 | `FastTree` | build a tree from an aligned FASTA file | `FastTree -nt aligned.fasta > tree.nwk` |
+| `sed` | search and replace text in a file | `sed -i "s/old/new/" file.fasta` |
+| `pip install --user` / `clipkit` | install a small Python tool into your own account, then run it | `pip install --user clipkit` |
 | *(RStudio)* Source | run an entire R script from the Console or the Source button | `source("plot_tree.R")` |
 
 ::: callout-tip
@@ -221,8 +223,10 @@ closer to seven ideas than nine.
 `module load BLAST+` resolves to the current default, `BLAST+/2.17.0-gompi-2025b`,
 `module load FastTree` to `FastTree/2.2-GCCcore-13.3.0`, `module load EntrezDirect` to
 `EntrezDirect/24.4.20250710`, and `module load MAFFT` to `MAFFT/7.526-GCC-14.2.0-with-extensions`:
-the same `module load X` pattern as `SAMtools` and `FastQC` in Sessions 1-2. The R step
-needs no `module load` at all: RStudio Server's R already has `ape` installed.
+the same `module load X` pattern as `SAMtools` and `FastQC` in Sessions 1-2. `ClipKIT` is
+not a cluster module (there is none): `module load Python` then `python3 -m pip install
+--user clipkit` installs it in a few seconds, confirmed working. The R step needs no
+`module load` at all: RStudio Server's R already has `ape` installed.
 :::
 
 ### A. Rebuild the project and fetch the data (15:00-15:15)
@@ -411,6 +415,14 @@ module load EntrezDirect
 esearch -db nucleotide -query "Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2"
 ```
 
+The first line sets an environment variable, `NCBI_API_KEY`, the same idea as `$PATH` or
+any other variable, just one NCBI's tools look for by name. Registering this key with
+NCBI (already done for the whole class) raises how many requests per second you are
+allowed to make to their servers, from 3 to 10 — useful with everyone in the room
+querying around the same time. `esearch -db nucleotide -query "..."` is the actual
+search: `-db nucleotide` says which NCBI database to search, `-query` is the search term,
+the same kind of text you could type into NCBI's website search box.
+
 ::: callout-note
 ## Checkpoint
 
@@ -429,12 +441,21 @@ cat unknown_sample.fasta >> sars_variants.fasta
 grep -c ">" sars_variants.fasta
 ```
 
-`-stop 100` is a time budget, not a hard limit: if you are ahead and curious, you can
-rerun the first line with a bigger number (`-stop 300`, say) before moving on — MAFFT and
-FastTree both take longer with more sequences, so check the time before committing to a
-much larger number. The second line fetches 100 real SARS-CoV-2 genomes submitted to
-NCBI, no two the same; the third adds 13 specific, named genomes by accession; the fourth
-adds `unknown_sample` itself:
+The first line reuses the same `esearch` search as above, but this time pipes (`|`) its
+result into `efetch`, the same `search → fetch` pattern as `esearch | efetch` anywhere
+else today: `esearch` finds matching records, `efetch` downloads them. `-format fasta`
+asks for plain FASTA, the format you already know; `-stop 100` caps it at the first 100
+results, since `efetch` would otherwise try to download every one of the millions you
+just counted. `-stop 100` is a time budget, not a hard limit: if you are ahead and
+curious, you can rerun this line with a bigger number (`-stop 300`, say) before moving
+on — MAFFT and FastTree both take longer with more sequences, so check the time before
+committing to a much larger number. The second line is a different pattern: `efetch
+-db nuccore -id ACC1,ACC2,...` fetches specific, known accessions directly, no `esearch`
+needed first, because you already know exactly which 13 records you want, listed by
+accession and separated by commas. `>>` (two angle brackets, not one) appends to the file
+instead of overwriting it, so this line adds its 13 sequences onto the 100 already in
+`sars_variants.fasta` rather than replacing them; the third line, a plain `cat`, appends
+`unknown_sample.fasta` the same way:
 
 | Accession | Variant | Accession | Variant |
 |---|---|---|---|
@@ -473,27 +494,79 @@ in Section 4 of `WORKSHEET.md`. This is the earliest known SARS-CoV-2 genome seq
 every other sequence in your tree is, directly or indirectly, a descendant of this one.
 :::
 
-Align, then build the tree, the same `module load` pattern as `BLAST+` and `FastTree`
-earlier today:
+Align, then build the tree, the same `module load` pattern you already used for `BLAST+`
+in block B, and will use again for `FastTree` below:
 
 ```bash
 module load MAFFT
 mafft --auto --thread 8 sars_variants.fasta > ../results/sars_variants_aligned_mine.fasta
 ```
 
+`--auto` lets MAFFT pick its own alignment strategy based on how many sequences you have
+and how long they are, instead of you choosing one of its several algorithms by hand;
+`--thread 8` tells it to use 8 CPU cores at once instead of 1, splitting the alignment
+work across them to finish faster, the same reason the fetch earlier used an API key to
+unlock more parallel requests.
+
 ::: callout-note
 ## Short on time?
 
 MAFFT takes **roughly 2-3 minutes** on 114 sequences this size (longer if you fetched more
 than 100): a good moment to answer the questions above if you have not already, or read
-ahead. If it fails or does not finish, skip straight to FastTree using the prepared
-`sars_variants_aligned.fasta`, already in your data folder from block A, in place of your
-own `sars_variants_aligned_mine.fasta` below.
+ahead. If it fails or does not finish, skip straight to the trimming step below using the
+prepared `sars_variants_aligned.fasta`, already in your data folder from block A, in place
+of your own `sars_variants_aligned_mine.fasta`.
+:::
+
+An alignment this size, built from real, un-curated submissions, is a good candidate for
+a quality check before you trust it with a tree: a handful of columns are usually mostly
+gaps or ambiguous bases for one or two sequences, adding noise rather than real signal.
+**ClipKIT** finds and trims columns like that automatically. It is not a cluster module
+(there is none), so you install it once into your own account, the same way you would on
+your own laptop:
+
+```bash
+module purge
+module load Python
+python3 -m pip install --user clipkit
+export PATH=$HOME/.local/bin:$PATH
+clipkit ../results/sars_variants_aligned_mine.fasta -m smart-gap -o ../results/sars_variants_trimmed_mine.fasta
+```
+
+Five lines, five different jobs. `module purge` unloads MAFFT and everything it pulled
+in, so it cannot clash with the Python module you are about to load — a precaution worth
+taking whenever you switch from one cluster tool to an unrelated one in the same session.
+`module load Python` gives
+you `python3` and, bundled with it, `pip`, Python's own installer (the bare system
+`python3` on LEGcompute does not have `pip`, which is why this module matters).
+`python3 -m pip install --user clipkit` means "run the `pip` module through this Python,
+and install the package named `clipkit`"; `--user` installs it into your own account
+(`~/.local`) instead of a shared system location you do not have permission to write to.
+That creates a new problem the next line solves: the shell only looks for programs in a
+specific list of folders, called `$PATH` (a variable, like the ones you have already set
+today, just one the shell itself reads to decide what `clipkit` even means as a command).
+Your new `~/.local/bin` is not in that list yet, so `export PATH=$HOME/.local/bin:$PATH`
+adds it to the front, keeping everything already in `$PATH` after it — without this line,
+typing `clipkit` would fail with "command not found" even though the program is sitting
+right there on disk. Finally, `clipkit input -m smart-gap -o output`: `-m smart-gap` picks
+the trimming mode described above, `-o` names the output file explicitly instead of
+letting ClipKIT invent one by appending `.clipkit` to the input name.
+
+::: callout-note
+## Checkpoint
+
+The install takes a few seconds the first time (downloads `clipkit` and two small
+dependencies from PyPI, nothing to do with NCBI or `micromamba`). ClipKIT itself finishes
+in under a second and prints a short report: original alignment length, how many sites it
+trimmed, and the percentage. On this alignment, expect it to trim **around 1% of
+columns** — a small, reassuring number: most of what you downloaded was already usable,
+this step is a safety check, not a rescue. It writes **one** output file, the trimmed
+alignment you named above with `-o`.
 :::
 
 ```bash
 module load FastTree
-FastTree -nt ../results/sars_variants_aligned_mine.fasta > ../results/sars_variants_tree_mine.nwk
+FastTree -nt ../results/sars_variants_trimmed_mine.fasta > ../results/sars_variants_tree_mine.nwk
 ```
 
 ::: callout-note
@@ -577,6 +650,110 @@ other files are: what might explain a real sequence standing out like that (a se
 or assembly error, a genuinely unusual isolate, a mislabelled sample)? There is no single
 correct answer; this is the kind of judgement call real analyses require.
 
+**Continue this before Thursday if you do not get to it in class.** Your 114-tip tree
+above, with `unknown_sample` rooted as an outgroup, **stays your main, required result
+for block D** — nothing below replaces it or needs redoing it. This next part asks a
+different kind of question with the same real data.
+
+A tree is a summary: it compresses an entire alignment, every column of every sequence,
+down into a branching diagram of who is related to whom. That compression is exactly what
+makes a 114-tip tree readable at all — but it also means you never actually *see* the
+alignment it was built from. Block C had you do this by eye, counting mismatches column
+by column, but only for a 60-column window of five sequences; at 114 sequences and tens
+of thousands of columns, counting by hand is no longer possible, and even a colour-coded
+view would be too dense to read. The 13 named variants, on their own, are small enough to
+both align and genuinely look at, the same way block C did, just with a proper tool doing
+the counting instead of your own eyes.
+
+Fetch the 13 named variants again, this time into their own file, separate from the 100
+background genomes:
+
+```bash
+efetch -db nuccore -id MN908947.1,MW931310.1,OU297363.1,OK252993.1,MZ727692.1,OX315743.1,OX315675.1,OP093374.1,OP164778.1,OP457109.1,PP997352.1,PQ325441.1,PQ356432.1 -format fasta > sars_named_variants.fasta
+```
+
+Their headers are the same long NCBI descriptions as before (`>MN908947.1 Wuhan seafood
+market pneumonia virus isolate Wuhan-Hu-1, complete genome`, and so on) — fine for a
+computer to match on the accession, but unreadable as labels in a viewer. Replace each
+with a short name using `sed`, a search-and-replace command you have not used yet today:
+`sed 's/PATTERN/REPLACEMENT/' file` searches each line of `file` for `PATTERN` and swaps
+in `REPLACEMENT`; `-i` makes it edit the file in place instead of printing the result to
+the screen. `>MN908947.1.*` matches the whole header line starting with that accession
+(`.` means "any character", `*` means "zero or more of the previous thing", so
+`.*` means "the rest of the line, whatever it is"), and `>Wuhan_China` replaces all of it.
+One `sed` line per accession, 13 lines total, each one only touching its own header:
+
+```bash
+sed -i "s/>MN908947.1.*/>Wuhan_China/" sars_named_variants.fasta
+sed -i "s/>MW931310.1.*/>Delta_variant/" sars_named_variants.fasta
+sed -i "s/>OU297363.1.*/>Alpha_variant/" sars_named_variants.fasta
+sed -i "s/>OK252993.1.*/>Gamma_variant/" sars_named_variants.fasta
+sed -i "s/>MZ727692.1.*/>Mu_variant/" sars_named_variants.fasta
+sed -i "s/>OX315743.1.*/>Omicron_BA.1_variant/" sars_named_variants.fasta
+sed -i "s/>OX315675.1.*/>Omicron_BA.2_variant/" sars_named_variants.fasta
+sed -i "s/>OP093374.1.*/>Omicron_BA.4_variant/" sars_named_variants.fasta
+sed -i "s/>OP164778.1.*/>Omicron_BA.5_variant/" sars_named_variants.fasta
+sed -i "s/>OP457109.1.*/>Omicron_BA.2.75_variant/" sars_named_variants.fasta
+sed -i "s/>PP997352.1.*/>Omicron_24A_variant/" sars_named_variants.fasta
+sed -i "s/>PQ325441.1.*/>Omicron_24B_variant/" sars_named_variants.fasta
+sed -i "s/>PQ356432.1.*/>Omicron_24C_variant/" sars_named_variants.fasta
+grep ">" sars_named_variants.fasta
+```
+
+::: callout-note
+## Checkpoint
+
+13 short, readable headers, one per named variant. Each `sed` line only matches its own
+accession, so the order you run them in does not matter.
+:::
+
+Align these 13 on their own, then trim with ClipKIT again, the same two tools and the
+same `smart-gap` mode as above, just on much less data: MAFFT finishes in roughly **11
+seconds instead of two and a half minutes**, not a better result, just less data to
+compare pairwise.
+
+```bash
+module load MAFFT
+mafft --auto --thread 8 sars_named_variants.fasta > sars_named_variants_aligned.fasta
+module purge
+module load Python
+python3 -m pip install --user clipkit
+export PATH=$HOME/.local/bin:$PATH
+clipkit sars_named_variants_aligned.fasta -m smart-gap
+```
+
+::: callout-note
+## Checkpoint
+
+`pip install` finishes almost instantly this time: ClipKIT is already installed in your
+account from earlier in this block. On 13 sequences, expect a somewhat **higher**
+percentage of columns trimmed than the ~1% on the full 114 (roughly double, in testing) —
+with far fewer sequences to vote on whether a column is "real," a handful of genuinely
+gappy positions make up a bigger share of the whole alignment. This writes one output
+file, `sars_named_variants_aligned.fasta.clipkit`.
+:::
+
+Download `sars_named_variants_aligned.fasta.clipkit` to your computer (Files pane →
+select it → **More → Export**), then open EBI's
+[alignment viewer](https://www.ebi.ac.uk/jdispatcher/msa/mview), choose **DNA** as the
+input type, and upload it. After about a minute, you get back exactly what block C showed
+you in miniature: rows of sequences, columns of aligned positions, except now it is all
+~29,787 columns and all 13 named variants at once, each base coloured by identity. Scroll
+across it: wide, uniformly-coloured stretches are columns where every variant agrees (the
+vast majority of the genome, since these are all the same virus species); the stretches
+where colours break up are exactly the positions carrying the mutations that define one
+variant from another, the same kind of difference you counted one by one in block C's
+60-column window, now visible across the whole genome at a glance.
+
+In Section 4 of `WORKSHEET.md`: does any one region of the genome look more variable
+across the 13 variants than the rest, by eye? Do the Omicron sublineages' columns look
+more similar to each other than to `Wuhan_China`'s, consistent with what the big tree
+already showed you?
+
+For more SARS-CoV-2 data than you could reasonably fetch by hand today, including how
+these and many other variants actually spread over time and place, see
+[Nextstrain](https://nextstrain.org/sars-cov-2) — no setup required, just a browser.
+
 ### D2. The same question, at the protein level (16:40-16:50, pairs)
 
 `reference_spike_proteins.fasta` holds the same four coronaviruses' spike **proteins**,
@@ -640,7 +817,7 @@ required file type beyond "readable."
 | Criterion | Points | What it looks for |
 |---|---:|---|
 | Reproducible workflow | 2 | A clearly named script or command log showing how you got your result. |
-| Working analysis | 3 | Both BLAST searches, `blastp`, the live NCBI fetch through FastTree, and the R script all ran and produced the expected output. |
+| Working analysis | 3 | Both BLAST searches, `blastp`, the live NCBI fetch through FastTree (including ClipKIT), and the R script all ran and produced the expected output. |
 | Required result | 2 | The exported, annotated tree image from block D, readable. |
 | Biological interpretation | 2 | Your written conclusion about `unknown_sample`, citing evidence from your own result. |
 | Reflection | 1 | Your one limitation sentence. |
@@ -652,7 +829,8 @@ You should leave with:
 - `session_03_commands.sh` (or equivalent) with every command you ran;
 - `bioinfo_course/session_03/results/`, containing `blast_result.tsv`,
   `blast_result_deep.tsv`, `blastp_result.tsv`, `sars_variants_aligned_mine.fasta`,
-  `sars_variants_tree_mine.nwk`, and your exported tree image.
+  `sars_variants_trimmed_mine.fasta`, `sars_variants_tree_mine.nwk`, and your exported
+  tree image.
 
 ## Checkpoint
 
