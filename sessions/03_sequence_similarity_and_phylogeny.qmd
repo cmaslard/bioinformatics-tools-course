@@ -736,9 +736,13 @@ both align and genuinely look at, the same way block C did, just with a proper t
 the counting instead of your own eyes.
 
 Fetch the 13 named variants again, this time into their own file, separate from the 100
-background genomes:
+background genomes. `module purge` from the ClipKIT and FastTree steps above unloaded
+`EntrezDirect` along with everything else, so load it again first — if you see
+`efetch: command not found` without this line, this is why:
 
 ```bash
+module purge
+module load EntrezDirect
 efetch -db nuccore -id MN908947.1,MW931310.1,OU297363.1,OK252993.1,MZ727692.1,OX315743.1,OX315675.1,OP093374.1,OP164778.1,OP457109.1,PP997352.1,PQ325441.1,PQ356432.1 -format fasta > sars_named_variants.fasta
 ```
 
@@ -827,9 +831,14 @@ these and many other variants actually spread over time and place, see
 
 `reference_spike_proteins.fasta` holds the same four coronaviruses' spike **proteins**,
 including the exact Session 1 record, `SARS-CoV-2_Wuhan-Hu-1` (UniProt `P0DTC2`). Build a
-protein database and search the file against itself:
+protein database and search the file against itself. `BLAST+` was loaded back in block B,
+but block D's `module purge` steps (for `ClipKIT`, for `FastTree`) unloaded it along with
+everything else, so load it again first — if `makeblastdb`/`blastp` come back as "command
+not found", this is why:
 
 ```bash
+module purge
+module load BLAST+
 makeblastdb -in reference_spike_proteins.fasta -dbtype prot -out ../results/protein_db
 blastp -query reference_spike_proteins.fasta -db ../results/protein_db -max_hsps 1 -outfmt "6 qseqid sseqid pident length evalue bitscore" -out ../results/blastp_result.tsv
 cat ../results/blastp_result.tsv
