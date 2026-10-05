@@ -1156,7 +1156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="what-rooting-actually-does-and-why-this-edit-matters" class="level3" data-number="3.3.7">
 <h3 data-number="3.3.7" class="anchored" data-anchor-id="what-rooting-actually-does-and-why-this-edit-matters"><span class="header-section-number">3.3.7</span> What rooting actually does, and why this edit matters</h3>
-<p>FastTree does not know which end of the tree is “the start”: it only works out how closely everything is related to everything else, the branching pattern itself. That branching pattern on its own can be drawn equally validly starting from any point — rooting is choosing one tip or node and saying “draw the tree growing out from here.” Changing the root <strong>never changes which tips are each other’s closest relatives</strong>; it only changes which one ends up drawn at the top, and how the rest unfolds visually from there. This is exactly the <code>outgroup</code> idea from the theory block’s glossary, now something you do yourself instead of just reading a definition: a good root is a sequence you have independent reason to believe sits outside the group you are actually comparing, so that everything else is free to arrange itself by real relatedness, undistorted by the choice of root. <code>unknown_sample</code> is a good root precisely because blocks B-D2 already gave you independent evidence it is not a SARS-CoV-2 variant at all.</p>
+<p>FastTree does not know which end of the tree is “the start”: it only works out how closely everything is related to everything else, the branching pattern itself. That branching pattern on its own can be drawn equally validly starting from any point — rooting is choosing one tip or node and saying “draw the tree growing out from here.” Changing the root <strong>never changes which tips are each other’s closest relatives</strong>; it only changes which one ends up treated as the single outlier versus everything else. This is exactly the <code>outgroup</code> idea from the theory block’s glossary, now something you do yourself instead of just reading a definition: a good root is a sequence you have independent reason to believe sits outside the group you are actually comparing, so that everything else is free to arrange itself by real relatedness, undistorted by the choice of root. <code>unknown_sample</code> is a good root precisely because blocks B-D2 already gave you independent evidence it is not a SARS-CoV-2 variant at all.</p>
 </section>
 <section id="how-to-make-the-edit" class="level3" data-number="3.3.8">
 <h3 data-number="3.3.8" class="anchored" data-anchor-id="how-to-make-the-edit"><span class="header-section-number">3.3.8</span> How to make the edit</h3>
@@ -1181,7 +1181,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The named variants still group with each other exactly as before: rerooting never changes who is related to whom, only which tip sits at the very top of the plot. But this particular reroot should look messier than the original: <code>Wuhan-Hu-1</code> is itself one of the 113 SARS-CoV-2 genomes, not a real outgroup, so forcing the tree to start there is a weaker choice than rooting on <code>unknown_sample</code>, which actually sits outside the group being compared. If the plot looks completely unchanged, you likely skipped the save step above — check the editor tab for an unsaved-changes dot/asterisk next to the file name. Change <code>root_on</code> back to <code>"unknown_sample"</code> (and save, and re-run) before exporting.</p>
+<p>The named variants still group with each other exactly as before — that part is the point, and it holds regardless of what the plot looks like. On this particular tree, the <strong>two plots will look almost identical</strong>, close enough that you may need to look twice to tell them apart: <code>Wuhan-Hu-1</code>’s own branch is nearly zero length (you can check this in <code>../results/sars_variants_tree_mine.nwk</code>, right next to its name), so it sits essentially <em>at</em> the point everything else branches from either way — rooting there or rooting just outside it, on <code>unknown_sample</code>, lands in almost the same place visually. That is a real result, not a sign that your edit failed: if <code>source()</code> ran with no error and the Console shows no leftover red text, the reroot worked, whether or not you can see it.</p>
+<p><strong>Change <code>root_on</code> back to <code>"unknown_sample"</code> now</strong> (edit, save, <code>source()</code> again) — <code>unknown_sample</code> is the correct root and the version you submit; the <code>MN908947.1</code> version was only for this comparison, not something to export or hand in.</p>
 </div>
 </div>
 <p>Export the figure: in the Plots pane, <strong>Export → Save as Image…</strong> (or <strong>Save as PDF…</strong>), into <code>results/</code>. Any format the dialog offers is fine to submit (PNG, JPEG, SVG, PDF, …): Moodle accepts all of them, there is no single required file type here. Set the height generously, at least <strong>14 inches</strong> (or ~1400 px) if you are offered a choice: 114 labelled and unlabelled tips need the extra room to stay legible, more than the on-screen preview shows. This tree image is today’s required figure for block D.</p>
@@ -2566,9 +2567,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb24-637"><a href="#cb24-637" aria-hidden="true" tabindex="-1"></a>branching pattern on its own can be drawn equally validly starting from any point —</span>
 <span id="cb24-638"><a href="#cb24-638" aria-hidden="true" tabindex="-1"></a>rooting is choosing one tip or node and saying "draw the tree growing out from here."</span>
 <span id="cb24-639"><a href="#cb24-639" aria-hidden="true" tabindex="-1"></a>Changing the root **never changes which tips are each other's closest relatives**; it</span>
-<span id="cb24-640"><a href="#cb24-640" aria-hidden="true" tabindex="-1"></a>only changes which one ends up drawn at the top, and how the rest unfolds visually from</span>
-<span id="cb24-641"><a href="#cb24-641" aria-hidden="true" tabindex="-1"></a>there. This is exactly the <span class="in">`outgroup`</span> idea from the theory block's glossary, now something</span>
-<span id="cb24-642"><a href="#cb24-642" aria-hidden="true" tabindex="-1"></a>you do yourself instead of just reading a definition: a good root is a sequence you have</span>
+<span id="cb24-640"><a href="#cb24-640" aria-hidden="true" tabindex="-1"></a>only changes which one ends up treated as the single outlier versus everything else. This</span>
+<span id="cb24-641"><a href="#cb24-641" aria-hidden="true" tabindex="-1"></a>is exactly the <span class="in">`outgroup`</span> idea from the theory block's glossary, now something you do</span>
+<span id="cb24-642"><a href="#cb24-642" aria-hidden="true" tabindex="-1"></a>yourself instead of just reading a definition: a good root is a sequence you have</span>
 <span id="cb24-643"><a href="#cb24-643" aria-hidden="true" tabindex="-1"></a>independent reason to believe sits outside the group you are actually comparing, so that</span>
 <span id="cb24-644"><a href="#cb24-644" aria-hidden="true" tabindex="-1"></a>everything else is free to arrange itself by real relatedness, undistorted by the choice</span>
 <span id="cb24-645"><a href="#cb24-645" aria-hidden="true" tabindex="-1"></a>of root. <span class="in">`unknown_sample`</span> is a good root precisely because blocks B-D2 already gave you</span>
@@ -2601,378 +2602,384 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb24-672"><a href="#cb24-672" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
 <span id="cb24-673"><a href="#cb24-673" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
 <span id="cb24-674"><a href="#cb24-674" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-675"><a href="#cb24-675" aria-hidden="true" tabindex="-1"></a>The named variants still group with each other exactly as before: rerooting never changes</span>
-<span id="cb24-676"><a href="#cb24-676" aria-hidden="true" tabindex="-1"></a>who is related to whom, only which tip sits at the very top of the plot. But this</span>
-<span id="cb24-677"><a href="#cb24-677" aria-hidden="true" tabindex="-1"></a>particular reroot should look messier than the original: <span class="in">`Wuhan-Hu-1`</span> is itself one of</span>
-<span id="cb24-678"><a href="#cb24-678" aria-hidden="true" tabindex="-1"></a>the 113 SARS-CoV-2 genomes, not a real outgroup, so forcing the tree to start there is a</span>
-<span id="cb24-679"><a href="#cb24-679" aria-hidden="true" tabindex="-1"></a>weaker choice than rooting on <span class="in">`unknown_sample`</span>, which actually sits outside the group</span>
-<span id="cb24-680"><a href="#cb24-680" aria-hidden="true" tabindex="-1"></a>being compared. If the plot looks completely unchanged, you likely skipped the save step</span>
-<span id="cb24-681"><a href="#cb24-681" aria-hidden="true" tabindex="-1"></a>above — check the editor tab for an unsaved-changes dot/asterisk next to the file name.</span>
-<span id="cb24-682"><a href="#cb24-682" aria-hidden="true" tabindex="-1"></a>Change <span class="in">`root_on`</span> back to <span class="in">`"unknown_sample"`</span> (and save, and re-run) before exporting.</span>
-<span id="cb24-683"><a href="#cb24-683" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb24-684"><a href="#cb24-684" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-685"><a href="#cb24-685" aria-hidden="true" tabindex="-1"></a>Export the figure: in the Plots pane, **Export → Save as Image…** (or **Save as PDF…**),</span>
-<span id="cb24-686"><a href="#cb24-686" aria-hidden="true" tabindex="-1"></a>into <span class="in">`results/`</span>. Any format the dialog offers is fine to submit (PNG, JPEG, SVG, PDF,</span>
-<span id="cb24-687"><a href="#cb24-687" aria-hidden="true" tabindex="-1"></a>...): Moodle accepts all of them, there is no single required file type here. Set the</span>
-<span id="cb24-688"><a href="#cb24-688" aria-hidden="true" tabindex="-1"></a>height generously, at least **14 inches** (or ~1400 px) if you are offered a choice: 114</span>
-<span id="cb24-689"><a href="#cb24-689" aria-hidden="true" tabindex="-1"></a>labelled and unlabelled tips need the extra room to stay legible, more than the on-screen</span>
-<span id="cb24-690"><a href="#cb24-690" aria-hidden="true" tabindex="-1"></a>preview shows. This tree image is today's required figure for block D.</span>
-<span id="cb24-691"><a href="#cb24-691" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-692"><a href="#cb24-692" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb24-693"><a href="#cb24-693" aria-hidden="true" tabindex="-1"></a><span class="fu">## Short on time?</span></span>
-<span id="cb24-694"><a href="#cb24-694" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-695"><a href="#cb24-695" aria-hidden="true" tabindex="-1"></a>If the fetch, MAFFT, or FastTree did not finish, change the file name near the top of</span>
-<span id="cb24-696"><a href="#cb24-696" aria-hidden="true" tabindex="-1"></a><span class="in">`plot_tree.R`</span> from <span class="in">`"../results/sars_variants_tree_mine.nwk"`</span> to <span class="in">`"sars_variants_tree.nwk"`</span>,</span>
-<span id="cb24-697"><a href="#cb24-697" aria-hidden="true" tabindex="-1"></a>the prepared fallback copied in block A, and continue from there.</span>
-<span id="cb24-698"><a href="#cb24-698" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb24-699"><a href="#cb24-699" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-700"><a href="#cb24-700" aria-hidden="true" tabindex="-1"></a>In Section 4 of <span class="in">`WORKSHEET.md`</span>, write a few sentences describing your tree image, the</span>
-<span id="cb24-701"><a href="#cb24-701" aria-hidden="true" tabindex="-1"></a>same way you would in a lab notebook: where <span class="in">`unknown_sample`</span> sits and how its branch</span>
-<span id="cb24-702"><a href="#cb24-702" aria-hidden="true" tabindex="-1"></a>compares to the rest; whether the named variants fall in the order you would expect; and,</span>
-<span id="cb24-703"><a href="#cb24-703" aria-hidden="true" tabindex="-1"></a>using the collection date you looked up earlier, **to what era do most of your 100</span>
-<span id="cb24-704"><a href="#cb24-704" aria-hidden="true" tabindex="-1"></a>background sequences most likely belong** — recent, or as old as the earliest named</span>
-<span id="cb24-705"><a href="#cb24-705" aria-hidden="true" tabindex="-1"></a>variants? (Hint: check a handful of background headers in <span class="in">`sars_variants.fasta`</span> with</span>
-<span id="cb24-706"><a href="#cb24-706" aria-hidden="true" tabindex="-1"></a><span class="in">`grep "&gt;" sars_variants.fasta | head`</span>, and compare the years you see there to</span>
-<span id="cb24-707"><a href="#cb24-707" aria-hidden="true" tabindex="-1"></a><span class="in">`MN908947.1`</span>'s collection date.) The image file itself is submitted alongside</span>
-<span id="cb24-708"><a href="#cb24-708" aria-hidden="true" tabindex="-1"></a><span class="in">`WORKSHEET.md`</span>, not pasted into it.</span>
-<span id="cb24-709"><a href="#cb24-709" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-710"><a href="#cb24-710" aria-hidden="true" tabindex="-1"></a>**If you have more time:** <span class="in">`unknown_sample`</span> is the longest branch by far, but it is not</span>
-<span id="cb24-711"><a href="#cb24-711" aria-hidden="true" tabindex="-1"></a>the only one worth a second look — among the 100 background sequences, one or two are</span>
-<span id="cb24-712"><a href="#cb24-712" aria-hidden="true" tabindex="-1"></a>still noticeably longer than most. Real NCBI submissions are not curated the way today's</span>
-<span id="cb24-713"><a href="#cb24-713" aria-hidden="true" tabindex="-1"></a>other files are: what might explain a real sequence standing out like that (a sequencing</span>
-<span id="cb24-714"><a href="#cb24-714" aria-hidden="true" tabindex="-1"></a>or assembly error, a genuinely unusual isolate, a mislabelled sample)? There is no single</span>
-<span id="cb24-715"><a href="#cb24-715" aria-hidden="true" tabindex="-1"></a>correct answer; this is the kind of judgement call real analyses require.</span>
-<span id="cb24-716"><a href="#cb24-716" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-717"><a href="#cb24-717" aria-hidden="true" tabindex="-1"></a>**Continue this before Thursday if you do not get to it in class.** Your 114-tip tree</span>
-<span id="cb24-718"><a href="#cb24-718" aria-hidden="true" tabindex="-1"></a>above, with <span class="in">`unknown_sample`</span> rooted as an outgroup, **stays your main, required result</span>
-<span id="cb24-719"><a href="#cb24-719" aria-hidden="true" tabindex="-1"></a>for block D** — nothing below replaces it or needs redoing it. This next part asks a</span>
-<span id="cb24-720"><a href="#cb24-720" aria-hidden="true" tabindex="-1"></a>different kind of question with the same real data.</span>
-<span id="cb24-721"><a href="#cb24-721" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-722"><a href="#cb24-722" aria-hidden="true" tabindex="-1"></a>A tree is a summary: it compresses an entire alignment, every column of every sequence,</span>
-<span id="cb24-723"><a href="#cb24-723" aria-hidden="true" tabindex="-1"></a>down into a branching diagram of who is related to whom. That compression is exactly what</span>
-<span id="cb24-724"><a href="#cb24-724" aria-hidden="true" tabindex="-1"></a>makes a 114-tip tree readable at all — but it also means you never actually *see* the</span>
-<span id="cb24-725"><a href="#cb24-725" aria-hidden="true" tabindex="-1"></a>alignment it was built from. Block C had you do this by eye, counting mismatches column</span>
-<span id="cb24-726"><a href="#cb24-726" aria-hidden="true" tabindex="-1"></a>by column, but only for a 60-column window of five sequences; at 114 sequences and tens</span>
-<span id="cb24-727"><a href="#cb24-727" aria-hidden="true" tabindex="-1"></a>of thousands of columns, counting by hand is no longer possible, and even a colour-coded</span>
-<span id="cb24-728"><a href="#cb24-728" aria-hidden="true" tabindex="-1"></a>view would be too dense to read. The 13 named variants, on their own, are small enough to</span>
-<span id="cb24-729"><a href="#cb24-729" aria-hidden="true" tabindex="-1"></a>both align and genuinely look at, the same way block C did, just with a proper tool doing</span>
-<span id="cb24-730"><a href="#cb24-730" aria-hidden="true" tabindex="-1"></a>the counting instead of your own eyes.</span>
-<span id="cb24-731"><a href="#cb24-731" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-732"><a href="#cb24-732" aria-hidden="true" tabindex="-1"></a>Fetch the 13 named variants again, this time into their own file, separate from the 100</span>
-<span id="cb24-733"><a href="#cb24-733" aria-hidden="true" tabindex="-1"></a>background genomes:</span>
-<span id="cb24-734"><a href="#cb24-734" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-735"><a href="#cb24-735" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb24-736"><a href="#cb24-736" aria-hidden="true" tabindex="-1"></a><span class="ex">efetch</span> <span class="at">-db</span> nuccore <span class="at">-id</span> MN908947.1,MW931310.1,OU297363.1,OK252993.1,MZ727692.1,OX315743.1,OX315675.1,OP093374.1,OP164778.1,OP457109.1,PP997352.1,PQ325441.1,PQ356432.1 <span class="at">-format</span> fasta <span class="op">&gt;</span> sars_named_variants.fasta</span>
-<span id="cb24-737"><a href="#cb24-737" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-738"><a href="#cb24-738" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-739"><a href="#cb24-739" aria-hidden="true" tabindex="-1"></a>Their headers are the same long NCBI descriptions as before (`&gt;MN908947.1 Wuhan seafood</span>
-<span id="cb24-740"><a href="#cb24-740" aria-hidden="true" tabindex="-1"></a>market pneumonia virus isolate Wuhan-Hu-1, complete genome`, and so on) — fine for a</span>
-<span id="cb24-741"><a href="#cb24-741" aria-hidden="true" tabindex="-1"></a>computer to match on the accession, but unreadable as labels in a viewer. Replace each</span>
-<span id="cb24-742"><a href="#cb24-742" aria-hidden="true" tabindex="-1"></a>with a short name using <span class="in">`sed`</span>, a search-and-replace command you have not used yet today:</span>
-<span id="cb24-743"><a href="#cb24-743" aria-hidden="true" tabindex="-1"></a><span class="in">`sed 's/PATTERN/REPLACEMENT/' file`</span> searches each line of <span class="in">`file`</span> for <span class="in">`PATTERN`</span> and swaps</span>
-<span id="cb24-744"><a href="#cb24-744" aria-hidden="true" tabindex="-1"></a>in <span class="in">`REPLACEMENT`</span>; <span class="in">`-i`</span> makes it edit the file in place instead of printing the result to</span>
-<span id="cb24-745"><a href="#cb24-745" aria-hidden="true" tabindex="-1"></a>the screen. <span class="in">`&gt;MN908947.1.*`</span> matches the whole header line starting with that accession</span>
-<span id="cb24-746"><a href="#cb24-746" aria-hidden="true" tabindex="-1"></a>(<span class="in">`.`</span> means "any character", <span class="in">`*`</span> means "zero or more of the previous thing", so</span>
-<span id="cb24-747"><a href="#cb24-747" aria-hidden="true" tabindex="-1"></a><span class="in">`.*`</span> means "the rest of the line, whatever it is"), and <span class="in">`&gt;Wuhan_China`</span> replaces all of it.</span>
-<span id="cb24-748"><a href="#cb24-748" aria-hidden="true" tabindex="-1"></a>One <span class="in">`sed`</span> line per accession, 13 lines total, each one only touching its own header:</span>
-<span id="cb24-749"><a href="#cb24-749" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-750"><a href="#cb24-750" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb24-751"><a href="#cb24-751" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;MN908947.1.*/&gt;Wuhan_China/"</span> sars_named_variants.fasta</span>
-<span id="cb24-752"><a href="#cb24-752" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;MW931310.1.*/&gt;Delta_variant/"</span> sars_named_variants.fasta</span>
-<span id="cb24-753"><a href="#cb24-753" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;OU297363.1.*/&gt;Alpha_variant/"</span> sars_named_variants.fasta</span>
-<span id="cb24-754"><a href="#cb24-754" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;OK252993.1.*/&gt;Gamma_variant/"</span> sars_named_variants.fasta</span>
-<span id="cb24-755"><a href="#cb24-755" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;MZ727692.1.*/&gt;Mu_variant/"</span> sars_named_variants.fasta</span>
-<span id="cb24-756"><a href="#cb24-756" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;OX315743.1.*/&gt;Omicron_BA.1_variant/"</span> sars_named_variants.fasta</span>
-<span id="cb24-757"><a href="#cb24-757" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;OX315675.1.*/&gt;Omicron_BA.2_variant/"</span> sars_named_variants.fasta</span>
-<span id="cb24-758"><a href="#cb24-758" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;OP093374.1.*/&gt;Omicron_BA.4_variant/"</span> sars_named_variants.fasta</span>
-<span id="cb24-759"><a href="#cb24-759" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;OP164778.1.*/&gt;Omicron_BA.5_variant/"</span> sars_named_variants.fasta</span>
-<span id="cb24-760"><a href="#cb24-760" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;OP457109.1.*/&gt;Omicron_BA.2.75_variant/"</span> sars_named_variants.fasta</span>
-<span id="cb24-761"><a href="#cb24-761" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;PP997352.1.*/&gt;Omicron_24A_variant/"</span> sars_named_variants.fasta</span>
-<span id="cb24-762"><a href="#cb24-762" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;PQ325441.1.*/&gt;Omicron_24B_variant/"</span> sars_named_variants.fasta</span>
-<span id="cb24-763"><a href="#cb24-763" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;PQ356432.1.*/&gt;Omicron_24C_variant/"</span> sars_named_variants.fasta</span>
-<span id="cb24-764"><a href="#cb24-764" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"&gt;"</span> sars_named_variants.fasta</span>
-<span id="cb24-765"><a href="#cb24-765" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-766"><a href="#cb24-766" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-767"><a href="#cb24-767" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb24-768"><a href="#cb24-768" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
-<span id="cb24-769"><a href="#cb24-769" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-770"><a href="#cb24-770" aria-hidden="true" tabindex="-1"></a>13 short, readable headers, one per named variant. Each <span class="in">`sed`</span> line only matches its own</span>
-<span id="cb24-771"><a href="#cb24-771" aria-hidden="true" tabindex="-1"></a>accession, so the order you run them in does not matter.</span>
-<span id="cb24-772"><a href="#cb24-772" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb24-773"><a href="#cb24-773" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-774"><a href="#cb24-774" aria-hidden="true" tabindex="-1"></a>Align these 13 on their own, then trim with ClipKIT again, the same two tools and the</span>
-<span id="cb24-775"><a href="#cb24-775" aria-hidden="true" tabindex="-1"></a>same <span class="in">`smart-gap`</span> mode as above, just on much less data: MAFFT finishes in roughly **11</span>
-<span id="cb24-776"><a href="#cb24-776" aria-hidden="true" tabindex="-1"></a>seconds instead of two and a half minutes**, not a better result, just less data to</span>
-<span id="cb24-777"><a href="#cb24-777" aria-hidden="true" tabindex="-1"></a>compare pairwise.</span>
-<span id="cb24-778"><a href="#cb24-778" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-779"><a href="#cb24-779" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb24-780"><a href="#cb24-780" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load MAFFT</span>
-<span id="cb24-781"><a href="#cb24-781" aria-hidden="true" tabindex="-1"></a><span class="ex">mafft</span> <span class="at">--auto</span> <span class="at">--thread</span> 8 sars_named_variants.fasta <span class="op">&gt;</span> sars_named_variants_aligned.fasta</span>
-<span id="cb24-782"><a href="#cb24-782" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
-<span id="cb24-783"><a href="#cb24-783" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load Python</span>
-<span id="cb24-784"><a href="#cb24-784" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> pip install <span class="at">--user</span> clipkit</span>
-<span id="cb24-785"><a href="#cb24-785" aria-hidden="true" tabindex="-1"></a><span class="ex">~/.local/bin/clipkit</span> sars_named_variants_aligned.fasta <span class="at">-m</span> smart-gap</span>
-<span id="cb24-786"><a href="#cb24-786" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-787"><a href="#cb24-787" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-788"><a href="#cb24-788" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb24-789"><a href="#cb24-789" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
-<span id="cb24-790"><a href="#cb24-790" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-791"><a href="#cb24-791" aria-hidden="true" tabindex="-1"></a><span class="in">`pip install`</span> finishes almost instantly this time: ClipKIT is already installed in your</span>
-<span id="cb24-792"><a href="#cb24-792" aria-hidden="true" tabindex="-1"></a>account from earlier in this block. On 13 sequences, expect a somewhat **higher**</span>
-<span id="cb24-793"><a href="#cb24-793" aria-hidden="true" tabindex="-1"></a>percentage of columns trimmed than the ~1% on the full 114 (roughly double, in testing) —</span>
-<span id="cb24-794"><a href="#cb24-794" aria-hidden="true" tabindex="-1"></a>with far fewer sequences to vote on whether a column is "real," a handful of genuinely</span>
-<span id="cb24-795"><a href="#cb24-795" aria-hidden="true" tabindex="-1"></a>gappy positions make up a bigger share of the whole alignment. This writes one output</span>
-<span id="cb24-796"><a href="#cb24-796" aria-hidden="true" tabindex="-1"></a>file, <span class="in">`sars_named_variants_aligned.fasta.clipkit`</span>.</span>
-<span id="cb24-797"><a href="#cb24-797" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb24-798"><a href="#cb24-798" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-799"><a href="#cb24-799" aria-hidden="true" tabindex="-1"></a>Download <span class="in">`sars_named_variants_aligned.fasta.clipkit`</span> to your computer (Files pane →</span>
-<span id="cb24-800"><a href="#cb24-800" aria-hidden="true" tabindex="-1"></a>select it → **More → Export**), then open EBI's</span>
-<span id="cb24-801"><a href="#cb24-801" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">alignment viewer</span><span class="co">](https://www.ebi.ac.uk/jdispatcher/msa/mview)</span>, choose **DNA** as the</span>
-<span id="cb24-802"><a href="#cb24-802" aria-hidden="true" tabindex="-1"></a>input type, and upload it. After about a minute, you get back exactly what block C showed</span>
-<span id="cb24-803"><a href="#cb24-803" aria-hidden="true" tabindex="-1"></a>you in miniature: rows of sequences, columns of aligned positions, except now it is all</span>
-<span id="cb24-804"><a href="#cb24-804" aria-hidden="true" tabindex="-1"></a>~29,787 columns and all 13 named variants at once, each base coloured by identity. Scroll</span>
-<span id="cb24-805"><a href="#cb24-805" aria-hidden="true" tabindex="-1"></a>across it: wide, uniformly-coloured stretches are columns where every variant agrees (the</span>
-<span id="cb24-806"><a href="#cb24-806" aria-hidden="true" tabindex="-1"></a>vast majority of the genome, since these are all the same virus species); the stretches</span>
-<span id="cb24-807"><a href="#cb24-807" aria-hidden="true" tabindex="-1"></a>where colours break up are exactly the positions carrying the mutations that define one</span>
-<span id="cb24-808"><a href="#cb24-808" aria-hidden="true" tabindex="-1"></a>variant from another, the same kind of difference you counted one by one in block C's</span>
-<span id="cb24-809"><a href="#cb24-809" aria-hidden="true" tabindex="-1"></a>60-column window, now visible across the whole genome at a glance.</span>
-<span id="cb24-810"><a href="#cb24-810" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-811"><a href="#cb24-811" aria-hidden="true" tabindex="-1"></a>In Section 4 of <span class="in">`WORKSHEET.md`</span>: does any one region of the genome look more variable</span>
-<span id="cb24-812"><a href="#cb24-812" aria-hidden="true" tabindex="-1"></a>across the 13 variants than the rest, by eye? Do the Omicron sublineages' columns look</span>
-<span id="cb24-813"><a href="#cb24-813" aria-hidden="true" tabindex="-1"></a>more similar to each other than to <span class="in">`Wuhan_China`</span>'s, consistent with what the big tree</span>
-<span id="cb24-814"><a href="#cb24-814" aria-hidden="true" tabindex="-1"></a>already showed you?</span>
-<span id="cb24-815"><a href="#cb24-815" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-816"><a href="#cb24-816" aria-hidden="true" tabindex="-1"></a>For more SARS-CoV-2 data than you could reasonably fetch by hand today, including how</span>
-<span id="cb24-817"><a href="#cb24-817" aria-hidden="true" tabindex="-1"></a>these and many other variants actually spread over time and place, see</span>
-<span id="cb24-818"><a href="#cb24-818" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Nextstrain</span><span class="co">](https://nextstrain.org/sars-cov-2)</span> — no setup required, just a browser.</span>
-<span id="cb24-819"><a href="#cb24-819" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-820"><a href="#cb24-820" aria-hidden="true" tabindex="-1"></a><span class="fu">### D2. The same question, at the protein level (16:40-16:50, pairs)</span></span>
+<span id="cb24-675"><a href="#cb24-675" aria-hidden="true" tabindex="-1"></a>The named variants still group with each other exactly as before — that part is the</span>
+<span id="cb24-676"><a href="#cb24-676" aria-hidden="true" tabindex="-1"></a>point, and it holds regardless of what the plot looks like. On this particular tree, the</span>
+<span id="cb24-677"><a href="#cb24-677" aria-hidden="true" tabindex="-1"></a>**two plots will look almost identical**, close enough that you may need to look twice to</span>
+<span id="cb24-678"><a href="#cb24-678" aria-hidden="true" tabindex="-1"></a>tell them apart: <span class="in">`Wuhan-Hu-1`</span>'s own branch is nearly zero length (you can check this in</span>
+<span id="cb24-679"><a href="#cb24-679" aria-hidden="true" tabindex="-1"></a><span class="in">`../results/sars_variants_tree_mine.nwk`</span>, right next to its name), so it sits</span>
+<span id="cb24-680"><a href="#cb24-680" aria-hidden="true" tabindex="-1"></a>essentially *at* the point everything else branches from either way — rooting there or</span>
+<span id="cb24-681"><a href="#cb24-681" aria-hidden="true" tabindex="-1"></a>rooting just outside it, on <span class="in">`unknown_sample`</span>, lands in almost the same place visually.</span>
+<span id="cb24-682"><a href="#cb24-682" aria-hidden="true" tabindex="-1"></a>That is a real result, not a sign that your edit failed: if <span class="in">`source()`</span> ran with no error</span>
+<span id="cb24-683"><a href="#cb24-683" aria-hidden="true" tabindex="-1"></a>and the Console shows no leftover red text, the reroot worked, whether or not you can see</span>
+<span id="cb24-684"><a href="#cb24-684" aria-hidden="true" tabindex="-1"></a>it.</span>
+<span id="cb24-685"><a href="#cb24-685" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-686"><a href="#cb24-686" aria-hidden="true" tabindex="-1"></a>**Change `root_on` back to `"unknown_sample"` now** (edit, save, <span class="in">`source()`</span> again) —</span>
+<span id="cb24-687"><a href="#cb24-687" aria-hidden="true" tabindex="-1"></a><span class="in">`unknown_sample`</span> is the correct root and the version you submit; the <span class="in">`MN908947.1`</span> version</span>
+<span id="cb24-688"><a href="#cb24-688" aria-hidden="true" tabindex="-1"></a>was only for this comparison, not something to export or hand in.</span>
+<span id="cb24-689"><a href="#cb24-689" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb24-690"><a href="#cb24-690" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-691"><a href="#cb24-691" aria-hidden="true" tabindex="-1"></a>Export the figure: in the Plots pane, **Export → Save as Image…** (or **Save as PDF…**),</span>
+<span id="cb24-692"><a href="#cb24-692" aria-hidden="true" tabindex="-1"></a>into <span class="in">`results/`</span>. Any format the dialog offers is fine to submit (PNG, JPEG, SVG, PDF,</span>
+<span id="cb24-693"><a href="#cb24-693" aria-hidden="true" tabindex="-1"></a>...): Moodle accepts all of them, there is no single required file type here. Set the</span>
+<span id="cb24-694"><a href="#cb24-694" aria-hidden="true" tabindex="-1"></a>height generously, at least **14 inches** (or ~1400 px) if you are offered a choice: 114</span>
+<span id="cb24-695"><a href="#cb24-695" aria-hidden="true" tabindex="-1"></a>labelled and unlabelled tips need the extra room to stay legible, more than the on-screen</span>
+<span id="cb24-696"><a href="#cb24-696" aria-hidden="true" tabindex="-1"></a>preview shows. This tree image is today's required figure for block D.</span>
+<span id="cb24-697"><a href="#cb24-697" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-698"><a href="#cb24-698" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb24-699"><a href="#cb24-699" aria-hidden="true" tabindex="-1"></a><span class="fu">## Short on time?</span></span>
+<span id="cb24-700"><a href="#cb24-700" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-701"><a href="#cb24-701" aria-hidden="true" tabindex="-1"></a>If the fetch, MAFFT, or FastTree did not finish, change the file name near the top of</span>
+<span id="cb24-702"><a href="#cb24-702" aria-hidden="true" tabindex="-1"></a><span class="in">`plot_tree.R`</span> from <span class="in">`"../results/sars_variants_tree_mine.nwk"`</span> to <span class="in">`"sars_variants_tree.nwk"`</span>,</span>
+<span id="cb24-703"><a href="#cb24-703" aria-hidden="true" tabindex="-1"></a>the prepared fallback copied in block A, and continue from there.</span>
+<span id="cb24-704"><a href="#cb24-704" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb24-705"><a href="#cb24-705" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-706"><a href="#cb24-706" aria-hidden="true" tabindex="-1"></a>In Section 4 of <span class="in">`WORKSHEET.md`</span>, write a few sentences describing your tree image, the</span>
+<span id="cb24-707"><a href="#cb24-707" aria-hidden="true" tabindex="-1"></a>same way you would in a lab notebook: where <span class="in">`unknown_sample`</span> sits and how its branch</span>
+<span id="cb24-708"><a href="#cb24-708" aria-hidden="true" tabindex="-1"></a>compares to the rest; whether the named variants fall in the order you would expect; and,</span>
+<span id="cb24-709"><a href="#cb24-709" aria-hidden="true" tabindex="-1"></a>using the collection date you looked up earlier, **to what era do most of your 100</span>
+<span id="cb24-710"><a href="#cb24-710" aria-hidden="true" tabindex="-1"></a>background sequences most likely belong** — recent, or as old as the earliest named</span>
+<span id="cb24-711"><a href="#cb24-711" aria-hidden="true" tabindex="-1"></a>variants? (Hint: check a handful of background headers in <span class="in">`sars_variants.fasta`</span> with</span>
+<span id="cb24-712"><a href="#cb24-712" aria-hidden="true" tabindex="-1"></a><span class="in">`grep "&gt;" sars_variants.fasta | head`</span>, and compare the years you see there to</span>
+<span id="cb24-713"><a href="#cb24-713" aria-hidden="true" tabindex="-1"></a><span class="in">`MN908947.1`</span>'s collection date.) The image file itself is submitted alongside</span>
+<span id="cb24-714"><a href="#cb24-714" aria-hidden="true" tabindex="-1"></a><span class="in">`WORKSHEET.md`</span>, not pasted into it.</span>
+<span id="cb24-715"><a href="#cb24-715" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-716"><a href="#cb24-716" aria-hidden="true" tabindex="-1"></a>**If you have more time:** <span class="in">`unknown_sample`</span> is the longest branch by far, but it is not</span>
+<span id="cb24-717"><a href="#cb24-717" aria-hidden="true" tabindex="-1"></a>the only one worth a second look — among the 100 background sequences, one or two are</span>
+<span id="cb24-718"><a href="#cb24-718" aria-hidden="true" tabindex="-1"></a>still noticeably longer than most. Real NCBI submissions are not curated the way today's</span>
+<span id="cb24-719"><a href="#cb24-719" aria-hidden="true" tabindex="-1"></a>other files are: what might explain a real sequence standing out like that (a sequencing</span>
+<span id="cb24-720"><a href="#cb24-720" aria-hidden="true" tabindex="-1"></a>or assembly error, a genuinely unusual isolate, a mislabelled sample)? There is no single</span>
+<span id="cb24-721"><a href="#cb24-721" aria-hidden="true" tabindex="-1"></a>correct answer; this is the kind of judgement call real analyses require.</span>
+<span id="cb24-722"><a href="#cb24-722" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-723"><a href="#cb24-723" aria-hidden="true" tabindex="-1"></a>**Continue this before Thursday if you do not get to it in class.** Your 114-tip tree</span>
+<span id="cb24-724"><a href="#cb24-724" aria-hidden="true" tabindex="-1"></a>above, with <span class="in">`unknown_sample`</span> rooted as an outgroup, **stays your main, required result</span>
+<span id="cb24-725"><a href="#cb24-725" aria-hidden="true" tabindex="-1"></a>for block D** — nothing below replaces it or needs redoing it. This next part asks a</span>
+<span id="cb24-726"><a href="#cb24-726" aria-hidden="true" tabindex="-1"></a>different kind of question with the same real data.</span>
+<span id="cb24-727"><a href="#cb24-727" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-728"><a href="#cb24-728" aria-hidden="true" tabindex="-1"></a>A tree is a summary: it compresses an entire alignment, every column of every sequence,</span>
+<span id="cb24-729"><a href="#cb24-729" aria-hidden="true" tabindex="-1"></a>down into a branching diagram of who is related to whom. That compression is exactly what</span>
+<span id="cb24-730"><a href="#cb24-730" aria-hidden="true" tabindex="-1"></a>makes a 114-tip tree readable at all — but it also means you never actually *see* the</span>
+<span id="cb24-731"><a href="#cb24-731" aria-hidden="true" tabindex="-1"></a>alignment it was built from. Block C had you do this by eye, counting mismatches column</span>
+<span id="cb24-732"><a href="#cb24-732" aria-hidden="true" tabindex="-1"></a>by column, but only for a 60-column window of five sequences; at 114 sequences and tens</span>
+<span id="cb24-733"><a href="#cb24-733" aria-hidden="true" tabindex="-1"></a>of thousands of columns, counting by hand is no longer possible, and even a colour-coded</span>
+<span id="cb24-734"><a href="#cb24-734" aria-hidden="true" tabindex="-1"></a>view would be too dense to read. The 13 named variants, on their own, are small enough to</span>
+<span id="cb24-735"><a href="#cb24-735" aria-hidden="true" tabindex="-1"></a>both align and genuinely look at, the same way block C did, just with a proper tool doing</span>
+<span id="cb24-736"><a href="#cb24-736" aria-hidden="true" tabindex="-1"></a>the counting instead of your own eyes.</span>
+<span id="cb24-737"><a href="#cb24-737" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-738"><a href="#cb24-738" aria-hidden="true" tabindex="-1"></a>Fetch the 13 named variants again, this time into their own file, separate from the 100</span>
+<span id="cb24-739"><a href="#cb24-739" aria-hidden="true" tabindex="-1"></a>background genomes:</span>
+<span id="cb24-740"><a href="#cb24-740" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-741"><a href="#cb24-741" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb24-742"><a href="#cb24-742" aria-hidden="true" tabindex="-1"></a><span class="ex">efetch</span> <span class="at">-db</span> nuccore <span class="at">-id</span> MN908947.1,MW931310.1,OU297363.1,OK252993.1,MZ727692.1,OX315743.1,OX315675.1,OP093374.1,OP164778.1,OP457109.1,PP997352.1,PQ325441.1,PQ356432.1 <span class="at">-format</span> fasta <span class="op">&gt;</span> sars_named_variants.fasta</span>
+<span id="cb24-743"><a href="#cb24-743" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-744"><a href="#cb24-744" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-745"><a href="#cb24-745" aria-hidden="true" tabindex="-1"></a>Their headers are the same long NCBI descriptions as before (`&gt;MN908947.1 Wuhan seafood</span>
+<span id="cb24-746"><a href="#cb24-746" aria-hidden="true" tabindex="-1"></a>market pneumonia virus isolate Wuhan-Hu-1, complete genome`, and so on) — fine for a</span>
+<span id="cb24-747"><a href="#cb24-747" aria-hidden="true" tabindex="-1"></a>computer to match on the accession, but unreadable as labels in a viewer. Replace each</span>
+<span id="cb24-748"><a href="#cb24-748" aria-hidden="true" tabindex="-1"></a>with a short name using <span class="in">`sed`</span>, a search-and-replace command you have not used yet today:</span>
+<span id="cb24-749"><a href="#cb24-749" aria-hidden="true" tabindex="-1"></a><span class="in">`sed 's/PATTERN/REPLACEMENT/' file`</span> searches each line of <span class="in">`file`</span> for <span class="in">`PATTERN`</span> and swaps</span>
+<span id="cb24-750"><a href="#cb24-750" aria-hidden="true" tabindex="-1"></a>in <span class="in">`REPLACEMENT`</span>; <span class="in">`-i`</span> makes it edit the file in place instead of printing the result to</span>
+<span id="cb24-751"><a href="#cb24-751" aria-hidden="true" tabindex="-1"></a>the screen. <span class="in">`&gt;MN908947.1.*`</span> matches the whole header line starting with that accession</span>
+<span id="cb24-752"><a href="#cb24-752" aria-hidden="true" tabindex="-1"></a>(<span class="in">`.`</span> means "any character", <span class="in">`*`</span> means "zero or more of the previous thing", so</span>
+<span id="cb24-753"><a href="#cb24-753" aria-hidden="true" tabindex="-1"></a><span class="in">`.*`</span> means "the rest of the line, whatever it is"), and <span class="in">`&gt;Wuhan_China`</span> replaces all of it.</span>
+<span id="cb24-754"><a href="#cb24-754" aria-hidden="true" tabindex="-1"></a>One <span class="in">`sed`</span> line per accession, 13 lines total, each one only touching its own header:</span>
+<span id="cb24-755"><a href="#cb24-755" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-756"><a href="#cb24-756" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb24-757"><a href="#cb24-757" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;MN908947.1.*/&gt;Wuhan_China/"</span> sars_named_variants.fasta</span>
+<span id="cb24-758"><a href="#cb24-758" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;MW931310.1.*/&gt;Delta_variant/"</span> sars_named_variants.fasta</span>
+<span id="cb24-759"><a href="#cb24-759" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;OU297363.1.*/&gt;Alpha_variant/"</span> sars_named_variants.fasta</span>
+<span id="cb24-760"><a href="#cb24-760" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;OK252993.1.*/&gt;Gamma_variant/"</span> sars_named_variants.fasta</span>
+<span id="cb24-761"><a href="#cb24-761" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;MZ727692.1.*/&gt;Mu_variant/"</span> sars_named_variants.fasta</span>
+<span id="cb24-762"><a href="#cb24-762" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;OX315743.1.*/&gt;Omicron_BA.1_variant/"</span> sars_named_variants.fasta</span>
+<span id="cb24-763"><a href="#cb24-763" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;OX315675.1.*/&gt;Omicron_BA.2_variant/"</span> sars_named_variants.fasta</span>
+<span id="cb24-764"><a href="#cb24-764" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;OP093374.1.*/&gt;Omicron_BA.4_variant/"</span> sars_named_variants.fasta</span>
+<span id="cb24-765"><a href="#cb24-765" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;OP164778.1.*/&gt;Omicron_BA.5_variant/"</span> sars_named_variants.fasta</span>
+<span id="cb24-766"><a href="#cb24-766" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;OP457109.1.*/&gt;Omicron_BA.2.75_variant/"</span> sars_named_variants.fasta</span>
+<span id="cb24-767"><a href="#cb24-767" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;PP997352.1.*/&gt;Omicron_24A_variant/"</span> sars_named_variants.fasta</span>
+<span id="cb24-768"><a href="#cb24-768" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;PQ325441.1.*/&gt;Omicron_24B_variant/"</span> sars_named_variants.fasta</span>
+<span id="cb24-769"><a href="#cb24-769" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">"s/&gt;PQ356432.1.*/&gt;Omicron_24C_variant/"</span> sars_named_variants.fasta</span>
+<span id="cb24-770"><a href="#cb24-770" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"&gt;"</span> sars_named_variants.fasta</span>
+<span id="cb24-771"><a href="#cb24-771" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-772"><a href="#cb24-772" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-773"><a href="#cb24-773" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb24-774"><a href="#cb24-774" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb24-775"><a href="#cb24-775" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-776"><a href="#cb24-776" aria-hidden="true" tabindex="-1"></a>13 short, readable headers, one per named variant. Each <span class="in">`sed`</span> line only matches its own</span>
+<span id="cb24-777"><a href="#cb24-777" aria-hidden="true" tabindex="-1"></a>accession, so the order you run them in does not matter.</span>
+<span id="cb24-778"><a href="#cb24-778" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb24-779"><a href="#cb24-779" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-780"><a href="#cb24-780" aria-hidden="true" tabindex="-1"></a>Align these 13 on their own, then trim with ClipKIT again, the same two tools and the</span>
+<span id="cb24-781"><a href="#cb24-781" aria-hidden="true" tabindex="-1"></a>same <span class="in">`smart-gap`</span> mode as above, just on much less data: MAFFT finishes in roughly **11</span>
+<span id="cb24-782"><a href="#cb24-782" aria-hidden="true" tabindex="-1"></a>seconds instead of two and a half minutes**, not a better result, just less data to</span>
+<span id="cb24-783"><a href="#cb24-783" aria-hidden="true" tabindex="-1"></a>compare pairwise.</span>
+<span id="cb24-784"><a href="#cb24-784" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-785"><a href="#cb24-785" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb24-786"><a href="#cb24-786" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load MAFFT</span>
+<span id="cb24-787"><a href="#cb24-787" aria-hidden="true" tabindex="-1"></a><span class="ex">mafft</span> <span class="at">--auto</span> <span class="at">--thread</span> 8 sars_named_variants.fasta <span class="op">&gt;</span> sars_named_variants_aligned.fasta</span>
+<span id="cb24-788"><a href="#cb24-788" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
+<span id="cb24-789"><a href="#cb24-789" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load Python</span>
+<span id="cb24-790"><a href="#cb24-790" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> pip install <span class="at">--user</span> clipkit</span>
+<span id="cb24-791"><a href="#cb24-791" aria-hidden="true" tabindex="-1"></a><span class="ex">~/.local/bin/clipkit</span> sars_named_variants_aligned.fasta <span class="at">-m</span> smart-gap</span>
+<span id="cb24-792"><a href="#cb24-792" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-793"><a href="#cb24-793" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-794"><a href="#cb24-794" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb24-795"><a href="#cb24-795" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb24-796"><a href="#cb24-796" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-797"><a href="#cb24-797" aria-hidden="true" tabindex="-1"></a><span class="in">`pip install`</span> finishes almost instantly this time: ClipKIT is already installed in your</span>
+<span id="cb24-798"><a href="#cb24-798" aria-hidden="true" tabindex="-1"></a>account from earlier in this block. On 13 sequences, expect a somewhat **higher**</span>
+<span id="cb24-799"><a href="#cb24-799" aria-hidden="true" tabindex="-1"></a>percentage of columns trimmed than the ~1% on the full 114 (roughly double, in testing) —</span>
+<span id="cb24-800"><a href="#cb24-800" aria-hidden="true" tabindex="-1"></a>with far fewer sequences to vote on whether a column is "real," a handful of genuinely</span>
+<span id="cb24-801"><a href="#cb24-801" aria-hidden="true" tabindex="-1"></a>gappy positions make up a bigger share of the whole alignment. This writes one output</span>
+<span id="cb24-802"><a href="#cb24-802" aria-hidden="true" tabindex="-1"></a>file, <span class="in">`sars_named_variants_aligned.fasta.clipkit`</span>.</span>
+<span id="cb24-803"><a href="#cb24-803" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb24-804"><a href="#cb24-804" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-805"><a href="#cb24-805" aria-hidden="true" tabindex="-1"></a>Download <span class="in">`sars_named_variants_aligned.fasta.clipkit`</span> to your computer (Files pane →</span>
+<span id="cb24-806"><a href="#cb24-806" aria-hidden="true" tabindex="-1"></a>select it → **More → Export**), then open EBI's</span>
+<span id="cb24-807"><a href="#cb24-807" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">alignment viewer</span><span class="co">](https://www.ebi.ac.uk/jdispatcher/msa/mview)</span>, choose **DNA** as the</span>
+<span id="cb24-808"><a href="#cb24-808" aria-hidden="true" tabindex="-1"></a>input type, and upload it. After about a minute, you get back exactly what block C showed</span>
+<span id="cb24-809"><a href="#cb24-809" aria-hidden="true" tabindex="-1"></a>you in miniature: rows of sequences, columns of aligned positions, except now it is all</span>
+<span id="cb24-810"><a href="#cb24-810" aria-hidden="true" tabindex="-1"></a>~29,787 columns and all 13 named variants at once, each base coloured by identity. Scroll</span>
+<span id="cb24-811"><a href="#cb24-811" aria-hidden="true" tabindex="-1"></a>across it: wide, uniformly-coloured stretches are columns where every variant agrees (the</span>
+<span id="cb24-812"><a href="#cb24-812" aria-hidden="true" tabindex="-1"></a>vast majority of the genome, since these are all the same virus species); the stretches</span>
+<span id="cb24-813"><a href="#cb24-813" aria-hidden="true" tabindex="-1"></a>where colours break up are exactly the positions carrying the mutations that define one</span>
+<span id="cb24-814"><a href="#cb24-814" aria-hidden="true" tabindex="-1"></a>variant from another, the same kind of difference you counted one by one in block C's</span>
+<span id="cb24-815"><a href="#cb24-815" aria-hidden="true" tabindex="-1"></a>60-column window, now visible across the whole genome at a glance.</span>
+<span id="cb24-816"><a href="#cb24-816" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-817"><a href="#cb24-817" aria-hidden="true" tabindex="-1"></a>In Section 4 of <span class="in">`WORKSHEET.md`</span>: does any one region of the genome look more variable</span>
+<span id="cb24-818"><a href="#cb24-818" aria-hidden="true" tabindex="-1"></a>across the 13 variants than the rest, by eye? Do the Omicron sublineages' columns look</span>
+<span id="cb24-819"><a href="#cb24-819" aria-hidden="true" tabindex="-1"></a>more similar to each other than to <span class="in">`Wuhan_China`</span>'s, consistent with what the big tree</span>
+<span id="cb24-820"><a href="#cb24-820" aria-hidden="true" tabindex="-1"></a>already showed you?</span>
 <span id="cb24-821"><a href="#cb24-821" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-822"><a href="#cb24-822" aria-hidden="true" tabindex="-1"></a><span class="in">`reference_spike_proteins.fasta`</span> holds the same four coronaviruses' spike **proteins**,</span>
-<span id="cb24-823"><a href="#cb24-823" aria-hidden="true" tabindex="-1"></a>including the exact Session 1 record, <span class="in">`SARS-CoV-2_Wuhan-Hu-1`</span> (UniProt <span class="in">`P0DTC2`</span>). Build a</span>
-<span id="cb24-824"><a href="#cb24-824" aria-hidden="true" tabindex="-1"></a>protein database and search the file against itself:</span>
+<span id="cb24-822"><a href="#cb24-822" aria-hidden="true" tabindex="-1"></a>For more SARS-CoV-2 data than you could reasonably fetch by hand today, including how</span>
+<span id="cb24-823"><a href="#cb24-823" aria-hidden="true" tabindex="-1"></a>these and many other variants actually spread over time and place, see</span>
+<span id="cb24-824"><a href="#cb24-824" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Nextstrain</span><span class="co">](https://nextstrain.org/sars-cov-2)</span> — no setup required, just a browser.</span>
 <span id="cb24-825"><a href="#cb24-825" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-826"><a href="#cb24-826" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb24-827"><a href="#cb24-827" aria-hidden="true" tabindex="-1"></a><span class="ex">makeblastdb</span> <span class="at">-in</span> reference_spike_proteins.fasta <span class="at">-dbtype</span> prot <span class="at">-out</span> ../results/protein_db</span>
-<span id="cb24-828"><a href="#cb24-828" aria-hidden="true" tabindex="-1"></a><span class="ex">blastp</span> <span class="at">-query</span> reference_spike_proteins.fasta <span class="at">-db</span> ../results/protein_db <span class="at">-max_hsps</span> 1 <span class="at">-outfmt</span> <span class="st">"6 qseqid sseqid pident length evalue bitscore"</span> <span class="at">-out</span> ../results/blastp_result.tsv</span>
-<span id="cb24-829"><a href="#cb24-829" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ../results/blastp_result.tsv</span>
-<span id="cb24-830"><a href="#cb24-830" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-826"><a href="#cb24-826" aria-hidden="true" tabindex="-1"></a><span class="fu">### D2. The same question, at the protein level (16:40-16:50, pairs)</span></span>
+<span id="cb24-827"><a href="#cb24-827" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-828"><a href="#cb24-828" aria-hidden="true" tabindex="-1"></a><span class="in">`reference_spike_proteins.fasta`</span> holds the same four coronaviruses' spike **proteins**,</span>
+<span id="cb24-829"><a href="#cb24-829" aria-hidden="true" tabindex="-1"></a>including the exact Session 1 record, <span class="in">`SARS-CoV-2_Wuhan-Hu-1`</span> (UniProt <span class="in">`P0DTC2`</span>). Build a</span>
+<span id="cb24-830"><a href="#cb24-830" aria-hidden="true" tabindex="-1"></a>protein database and search the file against itself:</span>
 <span id="cb24-831"><a href="#cb24-831" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-832"><a href="#cb24-832" aria-hidden="true" tabindex="-1"></a>Each sequence is searched against all four, including itself, so ignore the self-hits</span>
-<span id="cb24-833"><a href="#cb24-833" aria-hidden="true" tabindex="-1"></a>(<span class="in">`pident`</span> 100: a sequence always matches itself perfectly).</span>
-<span id="cb24-834"><a href="#cb24-834" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-835"><a href="#cb24-835" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb24-836"><a href="#cb24-836" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb24-832"><a href="#cb24-832" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb24-833"><a href="#cb24-833" aria-hidden="true" tabindex="-1"></a><span class="ex">makeblastdb</span> <span class="at">-in</span> reference_spike_proteins.fasta <span class="at">-dbtype</span> prot <span class="at">-out</span> ../results/protein_db</span>
+<span id="cb24-834"><a href="#cb24-834" aria-hidden="true" tabindex="-1"></a><span class="ex">blastp</span> <span class="at">-query</span> reference_spike_proteins.fasta <span class="at">-db</span> ../results/protein_db <span class="at">-max_hsps</span> 1 <span class="at">-outfmt</span> <span class="st">"6 qseqid sseqid pident length evalue bitscore"</span> <span class="at">-out</span> ../results/blastp_result.tsv</span>
+<span id="cb24-835"><a href="#cb24-835" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ../results/blastp_result.tsv</span>
+<span id="cb24-836"><a href="#cb24-836" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-837"><a href="#cb24-837" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-838"><a href="#cb24-838" aria-hidden="true" tabindex="-1"></a><span class="in">`blastp_result.tsv`</span> has **16 lines**: four references, each searched against all four</span>
-<span id="cb24-839"><a href="#cb24-839" aria-hidden="true" tabindex="-1"></a>(including itself), one best match per pair. Find the line pairing</span>
-<span id="cb24-840"><a href="#cb24-840" aria-hidden="true" tabindex="-1"></a><span class="in">`SARS-CoV-2_Wuhan-Hu-1`</span> with <span class="in">`SARS-CoV-1_Tor2`</span>: percent identity at</span>
-<span id="cb24-841"><a href="#cb24-841" aria-hidden="true" tabindex="-1"></a>the **protein** level. Compare it with the same pair's percent identity at the</span>
-<span id="cb24-842"><a href="#cb24-842" aria-hidden="true" tabindex="-1"></a>**nucleotide** level, from block B's deep search (<span class="in">`blast_result_deep.tsv`</span>). Protein</span>
-<span id="cb24-843"><a href="#cb24-843" aria-hidden="true" tabindex="-1"></a>identity comes out a little **higher**. Several different DNA codons can encode the same</span>
-<span id="cb24-844"><a href="#cb24-844" aria-hidden="true" tabindex="-1"></a>amino acid: a nucleotide substitution that lands on one of those "silent" positions</span>
-<span id="cb24-845"><a href="#cb24-845" aria-hidden="true" tabindex="-1"></a>changes the gene without changing the protein. Write this comparison, with both numbers,</span>
-<span id="cb24-846"><a href="#cb24-846" aria-hidden="true" tabindex="-1"></a>in Section 4 of your worksheet.</span>
-<span id="cb24-847"><a href="#cb24-847" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb24-848"><a href="#cb24-848" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-849"><a href="#cb24-849" aria-hidden="true" tabindex="-1"></a><span class="fu">### E. Draft your interpretation; submit on Moodle by Thursday (16:50-17:00)</span></span>
-<span id="cb24-850"><a href="#cb24-850" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-851"><a href="#cb24-851" aria-hidden="true" tabindex="-1"></a>Start this alone, in Section 5 of <span class="in">`WORKSHEET.md`</span>. You now have four required kinds of</span>
-<span id="cb24-852"><a href="#cb24-852" aria-hidden="true" tabindex="-1"></a>evidence about <span class="in">`unknown_sample`</span>: the quick BLAST hit, the deep BLAST table, the alignment</span>
-<span id="cb24-853"><a href="#cb24-853" aria-hidden="true" tabindex="-1"></a>and distance table, and the protein-level check. Block D's 114-tip tree is a fifth, bonus</span>
-<span id="cb24-854"><a href="#cb24-854" aria-hidden="true" tabindex="-1"></a>piece of evidence: <span class="in">`unknown_sample`</span>'s unusually long branch, apart from all 113 real</span>
-<span id="cb24-855"><a href="#cb24-855" aria-hidden="true" tabindex="-1"></a>SARS-CoV-2 genomes, is a strong, independent confirmation, by a completely different</span>
-<span id="cb24-856"><a href="#cb24-856" aria-hidden="true" tabindex="-1"></a>method, of the same conclusion. Citing it strengthens an answer but is not required. Write:</span>
-<span id="cb24-857"><a href="#cb24-857" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-858"><a href="#cb24-858" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>a conclusion answering today's biological question for <span class="in">`unknown_sample`</span>, citing</span>
-<span id="cb24-859"><a href="#cb24-859" aria-hidden="true" tabindex="-1"></a>  evidence from **at least two** of the four required sources by name (block D's tree can</span>
-<span id="cb24-860"><a href="#cb24-860" aria-hidden="true" tabindex="-1"></a>  count as a bonus third or more);</span>
-<span id="cb24-861"><a href="#cb24-861" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>one sentence naming a limitation, uncertainty, or assumption in today's analysis (the</span>
-<span id="cb24-862"><a href="#cb24-862" aria-hidden="true" tabindex="-1"></a>  block B/C disagreement over <span class="in">`MERS-CoV`</span> versus <span class="in">`HCoV-OC43_seasonal`</span> is one honest</span>
-<span id="cb24-863"><a href="#cb24-863" aria-hidden="true" tabindex="-1"></a>  candidate, but not the only one).</span>
-<span id="cb24-864"><a href="#cb24-864" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-865"><a href="#cb24-865" aria-hidden="true" tabindex="-1"></a>Get a complete draft down before you leave; a clear, unrushed final version, in your own</span>
-<span id="cb24-866"><a href="#cb24-866" aria-hidden="true" tabindex="-1"></a>words, is due **on Moodle** by **Thursday**.</span>
-<span id="cb24-867"><a href="#cb24-867" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-868"><a href="#cb24-868" aria-hidden="true" tabindex="-1"></a><span class="fu">### Wrap-up</span></span>
-<span id="cb24-869"><a href="#cb24-869" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-870"><a href="#cb24-870" aria-hidden="true" tabindex="-1"></a>Save your script, confirm <span class="in">`results/`</span> contains both BLAST tables, <span class="in">`blastp_result.tsv`</span>,</span>
-<span id="cb24-871"><a href="#cb24-871" aria-hidden="true" tabindex="-1"></a><span class="in">`sars_variants_tree_mine.nwk`</span>, and your exported tree image. Submit <span class="in">`WORKSHEET.md`</span> plus</span>
-<span id="cb24-872"><a href="#cb24-872" aria-hidden="true" tabindex="-1"></a>the tree image through Moodle by **Thursday**: any file format works for the image (PNG,</span>
-<span id="cb24-873"><a href="#cb24-873" aria-hidden="true" tabindex="-1"></a>JPEG, PDF, SVG, ...), and <span class="in">`WORKSHEET.md`</span> can be submitted as-is (plain text/Markdown) or</span>
-<span id="cb24-874"><a href="#cb24-874" aria-hidden="true" tabindex="-1"></a>converted to PDF or Word first if you prefer — Moodle accepts any of these, there is no</span>
-<span id="cb24-875"><a href="#cb24-875" aria-hidden="true" tabindex="-1"></a>required file type beyond "readable."</span>
-<span id="cb24-876"><a href="#cb24-876" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-877"><a href="#cb24-877" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb24-878"><a href="#cb24-878" aria-hidden="true" tabindex="-1"></a><span class="fu">## How this is graded (10 points)</span></span>
-<span id="cb24-879"><a href="#cb24-879" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-880"><a href="#cb24-880" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Criterion <span class="pp">|</span> Points <span class="pp">|</span> What it looks for <span class="pp">|</span></span>
-<span id="cb24-881"><a href="#cb24-881" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---:|---|</span></span>
-<span id="cb24-882"><a href="#cb24-882" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Reproducible workflow <span class="pp">|</span> 2 <span class="pp">|</span> A clearly named script or command log showing how you got your result. <span class="pp">|</span></span>
-<span id="cb24-883"><a href="#cb24-883" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Working analysis <span class="pp">|</span> 3 <span class="pp">|</span> Both BLAST searches, <span class="in">`blastp`</span>, the live NCBI fetch through FastTree (including ClipKIT), and the R script all ran and produced the expected output. <span class="pp">|</span></span>
-<span id="cb24-884"><a href="#cb24-884" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Required result <span class="pp">|</span> 2 <span class="pp">|</span> The exported, annotated tree image from block D, readable. <span class="pp">|</span></span>
-<span id="cb24-885"><a href="#cb24-885" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Biological interpretation <span class="pp">|</span> 2 <span class="pp">|</span> Your written conclusion about <span class="in">`unknown_sample`</span>, citing evidence from your own result. <span class="pp">|</span></span>
-<span id="cb24-886"><a href="#cb24-886" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Reflection <span class="pp">|</span> 1 <span class="pp">|</span> Your one limitation sentence. <span class="pp">|</span></span>
-<span id="cb24-887"><a href="#cb24-887" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb24-888"><a href="#cb24-888" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-889"><a href="#cb24-889" aria-hidden="true" tabindex="-1"></a>You should leave with:</span>
-<span id="cb24-890"><a href="#cb24-890" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-891"><a href="#cb24-891" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`WORKSHEET.md`</span>, drafted through Section 5;</span>
-<span id="cb24-892"><a href="#cb24-892" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`session_03_commands.sh`</span> (or equivalent) with every command you ran;</span>
-<span id="cb24-893"><a href="#cb24-893" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`bioinfo_course/session_03/results/`</span>, containing <span class="in">`blast_result.tsv`</span>,</span>
-<span id="cb24-894"><a href="#cb24-894" aria-hidden="true" tabindex="-1"></a>  <span class="in">`blast_result_deep.tsv`</span>, <span class="in">`blastp_result.tsv`</span>, <span class="in">`sars_variants_aligned_mine.fasta`</span>,</span>
-<span id="cb24-895"><a href="#cb24-895" aria-hidden="true" tabindex="-1"></a>  <span class="in">`sars_variants_trimmed_mine.fasta`</span>, <span class="in">`sars_variants_tree_mine.nwk`</span>, and your exported</span>
-<span id="cb24-896"><a href="#cb24-896" aria-hidden="true" tabindex="-1"></a>  tree image.</span>
-<span id="cb24-897"><a href="#cb24-897" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-898"><a href="#cb24-898" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
-<span id="cb24-899"><a href="#cb24-899" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-900"><a href="#cb24-900" aria-hidden="true" tabindex="-1"></a>You are done when all of the following are true:</span>
-<span id="cb24-901"><a href="#cb24-901" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-902"><a href="#cb24-902" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can say what <span class="in">`pident`</span>, <span class="in">`evalue`</span>, and <span class="in">`bitscore`</span> each roughly mean, and can name a</span>
-<span id="cb24-903"><a href="#cb24-903" aria-hidden="true" tabindex="-1"></a>  real case from today where they did not all agree;</span>
-<span id="cb24-904"><a href="#cb24-904" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you ran a strict and a sensitive BLAST search and can explain why they gave different</span>
-<span id="cb24-905"><a href="#cb24-905" aria-hidden="true" tabindex="-1"></a>  numbers of hits;</span>
-<span id="cb24-906"><a href="#cb24-906" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you built a tree yourself with FastTree and can say what its support values roughly mean;</span>
-<span id="cb24-907"><a href="#cb24-907" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can explain, in your own words, how an alignment turns into a tree, and read a</span>
-<span id="cb24-908"><a href="#cb24-908" aria-hidden="true" tabindex="-1"></a>  distance matrix as a table;</span>
-<span id="cb24-909"><a href="#cb24-909" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you fetched real sequences from NCBI yourself, built a 114-tip tree from them (including</span>
-<span id="cb24-910"><a href="#cb24-910" aria-hidden="true" tabindex="-1"></a>  <span class="in">`unknown_sample`</span>), and can say where the named variants sit relative to Wuhan-Hu-1 and</span>
-<span id="cb24-911"><a href="#cb24-911" aria-hidden="true" tabindex="-1"></a>  to each other;</span>
-<span id="cb24-912"><a href="#cb24-912" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can say where <span class="in">`unknown_sample`</span> sits in that tree, and why that is independent</span>
-<span id="cb24-913"><a href="#cb24-913" aria-hidden="true" tabindex="-1"></a>  confirmation of blocks B-D2's conclusion;</span>
-<span id="cb24-914"><a href="#cb24-914" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you re-rooted that tree on <span class="in">`Wuhan-Hu-1`</span> and can explain both why the named variants'</span>
-<span id="cb24-915"><a href="#cb24-915" aria-hidden="true" tabindex="-1"></a>  groupings did not change, and why that reroot gave a less clean picture than rooting on</span>
-<span id="cb24-916"><a href="#cb24-916" aria-hidden="true" tabindex="-1"></a>  <span class="in">`unknown_sample`</span>;</span>
-<span id="cb24-917"><a href="#cb24-917" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you compared a nucleotide-level and a protein-level percent identity for the same gene</span>
-<span id="cb24-918"><a href="#cb24-918" aria-hidden="true" tabindex="-1"></a>  pair;</span>
-<span id="cb24-919"><a href="#cb24-919" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you have a complete draft interpretation in <span class="in">`WORKSHEET.md`</span>, ready to polish and submit</span>
-<span id="cb24-920"><a href="#cb24-920" aria-hidden="true" tabindex="-1"></a>  by Thursday.</span>
-<span id="cb24-921"><a href="#cb24-921" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-922"><a href="#cb24-922" aria-hidden="true" tabindex="-1"></a><span class="fu">## Optional challenge</span></span>
-<span id="cb24-923"><a href="#cb24-923" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-924"><a href="#cb24-924" aria-hidden="true" tabindex="-1"></a>For your own interest, not graded.</span>
-<span id="cb24-925"><a href="#cb24-925" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-926"><a href="#cb24-926" aria-hidden="true" tabindex="-1"></a>**A. Root on a background tip instead.** In <span class="in">`plot_tree.R`</span>, set <span class="in">`root_on`</span> to one of the</span>
-<span id="cb24-927"><a href="#cb24-927" aria-hidden="true" tabindex="-1"></a>**unlabelled** background accessions instead of <span class="in">`unknown_sample`</span> (`grep "&gt;"</span>
-<span id="cb24-928"><a href="#cb24-928" aria-hidden="true" tabindex="-1"></a>sars_variants.fasta` for options). Does this change the named variants' grouping at all?</span>
-<span id="cb24-929"><a href="#cb24-929" aria-hidden="true" tabindex="-1"></a>Why might rooting on <span class="in">`unknown_sample`</span> (as the script does by default, confirmed as a real</span>
-<span id="cb24-930"><a href="#cb24-930" aria-hidden="true" tabindex="-1"></a>outgroup by its long branch and by blocks B-D2) give a more defensible picture than</span>
-<span id="cb24-931"><a href="#cb24-931" aria-hidden="true" tabindex="-1"></a>rooting on an arbitrary background sequence, even though both are valid trees</span>
-<span id="cb24-932"><a href="#cb24-932" aria-hidden="true" tabindex="-1"></a>mathematically?</span>
-<span id="cb24-933"><a href="#cb24-933" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-934"><a href="#cb24-934" aria-hidden="true" tabindex="-1"></a>**B. A distance correction model.** Today's small tree (blocks B-D2) used **raw** percent</span>
-<span id="cb24-935"><a href="#cb24-935" aria-hidden="true" tabindex="-1"></a>difference as its distance. Try a correction model that accounts for multiple</span>
-<span id="cb24-936"><a href="#cb24-936" aria-hidden="true" tabindex="-1"></a>substitutions at the same site:</span>
-<span id="cb24-937"><a href="#cb24-937" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-938"><a href="#cb24-938" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb24-939"><a href="#cb24-939" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
-<span id="cb24-940"><a href="#cb24-940" aria-hidden="true" tabindex="-1"></a>aln <span class="ot">&lt;-</span> <span class="fu">read.dna</span>(<span class="st">"aligned_spike.fasta"</span>, <span class="at">format =</span> <span class="st">"fasta"</span>)</span>
-<span id="cb24-941"><a href="#cb24-941" aria-hidden="true" tabindex="-1"></a>d_raw <span class="ot">&lt;-</span> <span class="fu">dist.dna</span>(aln, <span class="at">model =</span> <span class="st">"raw"</span>, <span class="at">pairwise.deletion =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb24-942"><a href="#cb24-942" aria-hidden="true" tabindex="-1"></a>d_jc <span class="ot">&lt;-</span> <span class="fu">dist.dna</span>(aln, <span class="at">model =</span> <span class="st">"JC69"</span>, <span class="at">pairwise.deletion =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb24-943"><a href="#cb24-943" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">as.matrix</span>(d_raw)[<span class="st">"unknown_sample"</span>, ] <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
-<span id="cb24-944"><a href="#cb24-944" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">as.matrix</span>(d_jc)[<span class="st">"unknown_sample"</span>, ] <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
-<span id="cb24-945"><a href="#cb24-945" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-946"><a href="#cb24-946" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-947"><a href="#cb24-947" aria-hidden="true" tabindex="-1"></a>The closest reference barely moves under the correction; the two most distant ones move a</span>
-<span id="cb24-948"><a href="#cb24-948" aria-hidden="true" tabindex="-1"></a>lot more. Given the "saturation" idea from the theory block, why would correction matter</span>
-<span id="cb24-949"><a href="#cb24-949" aria-hidden="true" tabindex="-1"></a>more for distant pairs than for close ones? (FastTree's own log, printed to the screen</span>
-<span id="cb24-950"><a href="#cb24-950" aria-hidden="true" tabindex="-1"></a>each time you ran it today, names the distance it starts from: look for the word</span>
-<span id="cb24-951"><a href="#cb24-951" aria-hidden="true" tabindex="-1"></a>"Jukes-Cantor" near the top.)</span>
+<span id="cb24-838"><a href="#cb24-838" aria-hidden="true" tabindex="-1"></a>Each sequence is searched against all four, including itself, so ignore the self-hits</span>
+<span id="cb24-839"><a href="#cb24-839" aria-hidden="true" tabindex="-1"></a>(<span class="in">`pident`</span> 100: a sequence always matches itself perfectly).</span>
+<span id="cb24-840"><a href="#cb24-840" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-841"><a href="#cb24-841" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb24-842"><a href="#cb24-842" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb24-843"><a href="#cb24-843" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-844"><a href="#cb24-844" aria-hidden="true" tabindex="-1"></a><span class="in">`blastp_result.tsv`</span> has **16 lines**: four references, each searched against all four</span>
+<span id="cb24-845"><a href="#cb24-845" aria-hidden="true" tabindex="-1"></a>(including itself), one best match per pair. Find the line pairing</span>
+<span id="cb24-846"><a href="#cb24-846" aria-hidden="true" tabindex="-1"></a><span class="in">`SARS-CoV-2_Wuhan-Hu-1`</span> with <span class="in">`SARS-CoV-1_Tor2`</span>: percent identity at</span>
+<span id="cb24-847"><a href="#cb24-847" aria-hidden="true" tabindex="-1"></a>the **protein** level. Compare it with the same pair's percent identity at the</span>
+<span id="cb24-848"><a href="#cb24-848" aria-hidden="true" tabindex="-1"></a>**nucleotide** level, from block B's deep search (<span class="in">`blast_result_deep.tsv`</span>). Protein</span>
+<span id="cb24-849"><a href="#cb24-849" aria-hidden="true" tabindex="-1"></a>identity comes out a little **higher**. Several different DNA codons can encode the same</span>
+<span id="cb24-850"><a href="#cb24-850" aria-hidden="true" tabindex="-1"></a>amino acid: a nucleotide substitution that lands on one of those "silent" positions</span>
+<span id="cb24-851"><a href="#cb24-851" aria-hidden="true" tabindex="-1"></a>changes the gene without changing the protein. Write this comparison, with both numbers,</span>
+<span id="cb24-852"><a href="#cb24-852" aria-hidden="true" tabindex="-1"></a>in Section 4 of your worksheet.</span>
+<span id="cb24-853"><a href="#cb24-853" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb24-854"><a href="#cb24-854" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-855"><a href="#cb24-855" aria-hidden="true" tabindex="-1"></a><span class="fu">### E. Draft your interpretation; submit on Moodle by Thursday (16:50-17:00)</span></span>
+<span id="cb24-856"><a href="#cb24-856" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-857"><a href="#cb24-857" aria-hidden="true" tabindex="-1"></a>Start this alone, in Section 5 of <span class="in">`WORKSHEET.md`</span>. You now have four required kinds of</span>
+<span id="cb24-858"><a href="#cb24-858" aria-hidden="true" tabindex="-1"></a>evidence about <span class="in">`unknown_sample`</span>: the quick BLAST hit, the deep BLAST table, the alignment</span>
+<span id="cb24-859"><a href="#cb24-859" aria-hidden="true" tabindex="-1"></a>and distance table, and the protein-level check. Block D's 114-tip tree is a fifth, bonus</span>
+<span id="cb24-860"><a href="#cb24-860" aria-hidden="true" tabindex="-1"></a>piece of evidence: <span class="in">`unknown_sample`</span>'s unusually long branch, apart from all 113 real</span>
+<span id="cb24-861"><a href="#cb24-861" aria-hidden="true" tabindex="-1"></a>SARS-CoV-2 genomes, is a strong, independent confirmation, by a completely different</span>
+<span id="cb24-862"><a href="#cb24-862" aria-hidden="true" tabindex="-1"></a>method, of the same conclusion. Citing it strengthens an answer but is not required. Write:</span>
+<span id="cb24-863"><a href="#cb24-863" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-864"><a href="#cb24-864" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>a conclusion answering today's biological question for <span class="in">`unknown_sample`</span>, citing</span>
+<span id="cb24-865"><a href="#cb24-865" aria-hidden="true" tabindex="-1"></a>  evidence from **at least two** of the four required sources by name (block D's tree can</span>
+<span id="cb24-866"><a href="#cb24-866" aria-hidden="true" tabindex="-1"></a>  count as a bonus third or more);</span>
+<span id="cb24-867"><a href="#cb24-867" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>one sentence naming a limitation, uncertainty, or assumption in today's analysis (the</span>
+<span id="cb24-868"><a href="#cb24-868" aria-hidden="true" tabindex="-1"></a>  block B/C disagreement over <span class="in">`MERS-CoV`</span> versus <span class="in">`HCoV-OC43_seasonal`</span> is one honest</span>
+<span id="cb24-869"><a href="#cb24-869" aria-hidden="true" tabindex="-1"></a>  candidate, but not the only one).</span>
+<span id="cb24-870"><a href="#cb24-870" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-871"><a href="#cb24-871" aria-hidden="true" tabindex="-1"></a>Get a complete draft down before you leave; a clear, unrushed final version, in your own</span>
+<span id="cb24-872"><a href="#cb24-872" aria-hidden="true" tabindex="-1"></a>words, is due **on Moodle** by **Thursday**.</span>
+<span id="cb24-873"><a href="#cb24-873" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-874"><a href="#cb24-874" aria-hidden="true" tabindex="-1"></a><span class="fu">### Wrap-up</span></span>
+<span id="cb24-875"><a href="#cb24-875" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-876"><a href="#cb24-876" aria-hidden="true" tabindex="-1"></a>Save your script, confirm <span class="in">`results/`</span> contains both BLAST tables, <span class="in">`blastp_result.tsv`</span>,</span>
+<span id="cb24-877"><a href="#cb24-877" aria-hidden="true" tabindex="-1"></a><span class="in">`sars_variants_tree_mine.nwk`</span>, and your exported tree image. Submit <span class="in">`WORKSHEET.md`</span> plus</span>
+<span id="cb24-878"><a href="#cb24-878" aria-hidden="true" tabindex="-1"></a>the tree image through Moodle by **Thursday**: any file format works for the image (PNG,</span>
+<span id="cb24-879"><a href="#cb24-879" aria-hidden="true" tabindex="-1"></a>JPEG, PDF, SVG, ...), and <span class="in">`WORKSHEET.md`</span> can be submitted as-is (plain text/Markdown) or</span>
+<span id="cb24-880"><a href="#cb24-880" aria-hidden="true" tabindex="-1"></a>converted to PDF or Word first if you prefer — Moodle accepts any of these, there is no</span>
+<span id="cb24-881"><a href="#cb24-881" aria-hidden="true" tabindex="-1"></a>required file type beyond "readable."</span>
+<span id="cb24-882"><a href="#cb24-882" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-883"><a href="#cb24-883" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb24-884"><a href="#cb24-884" aria-hidden="true" tabindex="-1"></a><span class="fu">## How this is graded (10 points)</span></span>
+<span id="cb24-885"><a href="#cb24-885" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-886"><a href="#cb24-886" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Criterion <span class="pp">|</span> Points <span class="pp">|</span> What it looks for <span class="pp">|</span></span>
+<span id="cb24-887"><a href="#cb24-887" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---:|---|</span></span>
+<span id="cb24-888"><a href="#cb24-888" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Reproducible workflow <span class="pp">|</span> 2 <span class="pp">|</span> A clearly named script or command log showing how you got your result. <span class="pp">|</span></span>
+<span id="cb24-889"><a href="#cb24-889" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Working analysis <span class="pp">|</span> 3 <span class="pp">|</span> Both BLAST searches, <span class="in">`blastp`</span>, the live NCBI fetch through FastTree (including ClipKIT), and the R script all ran and produced the expected output. <span class="pp">|</span></span>
+<span id="cb24-890"><a href="#cb24-890" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Required result <span class="pp">|</span> 2 <span class="pp">|</span> The exported, annotated tree image from block D, readable. <span class="pp">|</span></span>
+<span id="cb24-891"><a href="#cb24-891" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Biological interpretation <span class="pp">|</span> 2 <span class="pp">|</span> Your written conclusion about <span class="in">`unknown_sample`</span>, citing evidence from your own result. <span class="pp">|</span></span>
+<span id="cb24-892"><a href="#cb24-892" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Reflection <span class="pp">|</span> 1 <span class="pp">|</span> Your one limitation sentence. <span class="pp">|</span></span>
+<span id="cb24-893"><a href="#cb24-893" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb24-894"><a href="#cb24-894" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-895"><a href="#cb24-895" aria-hidden="true" tabindex="-1"></a>You should leave with:</span>
+<span id="cb24-896"><a href="#cb24-896" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-897"><a href="#cb24-897" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`WORKSHEET.md`</span>, drafted through Section 5;</span>
+<span id="cb24-898"><a href="#cb24-898" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`session_03_commands.sh`</span> (or equivalent) with every command you ran;</span>
+<span id="cb24-899"><a href="#cb24-899" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`bioinfo_course/session_03/results/`</span>, containing <span class="in">`blast_result.tsv`</span>,</span>
+<span id="cb24-900"><a href="#cb24-900" aria-hidden="true" tabindex="-1"></a>  <span class="in">`blast_result_deep.tsv`</span>, <span class="in">`blastp_result.tsv`</span>, <span class="in">`sars_variants_aligned_mine.fasta`</span>,</span>
+<span id="cb24-901"><a href="#cb24-901" aria-hidden="true" tabindex="-1"></a>  <span class="in">`sars_variants_trimmed_mine.fasta`</span>, <span class="in">`sars_variants_tree_mine.nwk`</span>, and your exported</span>
+<span id="cb24-902"><a href="#cb24-902" aria-hidden="true" tabindex="-1"></a>  tree image.</span>
+<span id="cb24-903"><a href="#cb24-903" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-904"><a href="#cb24-904" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb24-905"><a href="#cb24-905" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-906"><a href="#cb24-906" aria-hidden="true" tabindex="-1"></a>You are done when all of the following are true:</span>
+<span id="cb24-907"><a href="#cb24-907" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-908"><a href="#cb24-908" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can say what <span class="in">`pident`</span>, <span class="in">`evalue`</span>, and <span class="in">`bitscore`</span> each roughly mean, and can name a</span>
+<span id="cb24-909"><a href="#cb24-909" aria-hidden="true" tabindex="-1"></a>  real case from today where they did not all agree;</span>
+<span id="cb24-910"><a href="#cb24-910" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you ran a strict and a sensitive BLAST search and can explain why they gave different</span>
+<span id="cb24-911"><a href="#cb24-911" aria-hidden="true" tabindex="-1"></a>  numbers of hits;</span>
+<span id="cb24-912"><a href="#cb24-912" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you built a tree yourself with FastTree and can say what its support values roughly mean;</span>
+<span id="cb24-913"><a href="#cb24-913" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can explain, in your own words, how an alignment turns into a tree, and read a</span>
+<span id="cb24-914"><a href="#cb24-914" aria-hidden="true" tabindex="-1"></a>  distance matrix as a table;</span>
+<span id="cb24-915"><a href="#cb24-915" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you fetched real sequences from NCBI yourself, built a 114-tip tree from them (including</span>
+<span id="cb24-916"><a href="#cb24-916" aria-hidden="true" tabindex="-1"></a>  <span class="in">`unknown_sample`</span>), and can say where the named variants sit relative to Wuhan-Hu-1 and</span>
+<span id="cb24-917"><a href="#cb24-917" aria-hidden="true" tabindex="-1"></a>  to each other;</span>
+<span id="cb24-918"><a href="#cb24-918" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can say where <span class="in">`unknown_sample`</span> sits in that tree, and why that is independent</span>
+<span id="cb24-919"><a href="#cb24-919" aria-hidden="true" tabindex="-1"></a>  confirmation of blocks B-D2's conclusion;</span>
+<span id="cb24-920"><a href="#cb24-920" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you re-rooted that tree on <span class="in">`Wuhan-Hu-1`</span> and can explain both why the named variants'</span>
+<span id="cb24-921"><a href="#cb24-921" aria-hidden="true" tabindex="-1"></a>  groupings did not change, and why that reroot gave a less clean picture than rooting on</span>
+<span id="cb24-922"><a href="#cb24-922" aria-hidden="true" tabindex="-1"></a>  <span class="in">`unknown_sample`</span>;</span>
+<span id="cb24-923"><a href="#cb24-923" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you compared a nucleotide-level and a protein-level percent identity for the same gene</span>
+<span id="cb24-924"><a href="#cb24-924" aria-hidden="true" tabindex="-1"></a>  pair;</span>
+<span id="cb24-925"><a href="#cb24-925" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you have a complete draft interpretation in <span class="in">`WORKSHEET.md`</span>, ready to polish and submit</span>
+<span id="cb24-926"><a href="#cb24-926" aria-hidden="true" tabindex="-1"></a>  by Thursday.</span>
+<span id="cb24-927"><a href="#cb24-927" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-928"><a href="#cb24-928" aria-hidden="true" tabindex="-1"></a><span class="fu">## Optional challenge</span></span>
+<span id="cb24-929"><a href="#cb24-929" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-930"><a href="#cb24-930" aria-hidden="true" tabindex="-1"></a>For your own interest, not graded.</span>
+<span id="cb24-931"><a href="#cb24-931" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-932"><a href="#cb24-932" aria-hidden="true" tabindex="-1"></a>**A. Root on a background tip instead.** In <span class="in">`plot_tree.R`</span>, set <span class="in">`root_on`</span> to one of the</span>
+<span id="cb24-933"><a href="#cb24-933" aria-hidden="true" tabindex="-1"></a>**unlabelled** background accessions instead of <span class="in">`unknown_sample`</span> (`grep "&gt;"</span>
+<span id="cb24-934"><a href="#cb24-934" aria-hidden="true" tabindex="-1"></a>sars_variants.fasta` for options). Does this change the named variants' grouping at all?</span>
+<span id="cb24-935"><a href="#cb24-935" aria-hidden="true" tabindex="-1"></a>Why might rooting on <span class="in">`unknown_sample`</span> (as the script does by default, confirmed as a real</span>
+<span id="cb24-936"><a href="#cb24-936" aria-hidden="true" tabindex="-1"></a>outgroup by its long branch and by blocks B-D2) give a more defensible picture than</span>
+<span id="cb24-937"><a href="#cb24-937" aria-hidden="true" tabindex="-1"></a>rooting on an arbitrary background sequence, even though both are valid trees</span>
+<span id="cb24-938"><a href="#cb24-938" aria-hidden="true" tabindex="-1"></a>mathematically?</span>
+<span id="cb24-939"><a href="#cb24-939" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-940"><a href="#cb24-940" aria-hidden="true" tabindex="-1"></a>**B. A distance correction model.** Today's small tree (blocks B-D2) used **raw** percent</span>
+<span id="cb24-941"><a href="#cb24-941" aria-hidden="true" tabindex="-1"></a>difference as its distance. Try a correction model that accounts for multiple</span>
+<span id="cb24-942"><a href="#cb24-942" aria-hidden="true" tabindex="-1"></a>substitutions at the same site:</span>
+<span id="cb24-943"><a href="#cb24-943" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-944"><a href="#cb24-944" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb24-945"><a href="#cb24-945" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
+<span id="cb24-946"><a href="#cb24-946" aria-hidden="true" tabindex="-1"></a>aln <span class="ot">&lt;-</span> <span class="fu">read.dna</span>(<span class="st">"aligned_spike.fasta"</span>, <span class="at">format =</span> <span class="st">"fasta"</span>)</span>
+<span id="cb24-947"><a href="#cb24-947" aria-hidden="true" tabindex="-1"></a>d_raw <span class="ot">&lt;-</span> <span class="fu">dist.dna</span>(aln, <span class="at">model =</span> <span class="st">"raw"</span>, <span class="at">pairwise.deletion =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-948"><a href="#cb24-948" aria-hidden="true" tabindex="-1"></a>d_jc <span class="ot">&lt;-</span> <span class="fu">dist.dna</span>(aln, <span class="at">model =</span> <span class="st">"JC69"</span>, <span class="at">pairwise.deletion =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-949"><a href="#cb24-949" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">as.matrix</span>(d_raw)[<span class="st">"unknown_sample"</span>, ] <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb24-950"><a href="#cb24-950" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">as.matrix</span>(d_jc)[<span class="st">"unknown_sample"</span>, ] <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb24-951"><a href="#cb24-951" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-952"><a href="#cb24-952" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-953"><a href="#cb24-953" aria-hidden="true" tabindex="-1"></a><span class="fu">## Before the next session</span></span>
-<span id="cb24-954"><a href="#cb24-954" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-955"><a href="#cb24-955" aria-hidden="true" tabindex="-1"></a>Session 4 leaves sequences behind and moves to **tables**: rows, columns, and the kind of</span>
-<span id="cb24-956"><a href="#cb24-956" aria-hidden="true" tabindex="-1"></a>biological data you will spend the rest of the course working with in R. It reuses the</span>
-<span id="cb24-957"><a href="#cb24-957" aria-hidden="true" tabindex="-1"></a>plotting habits you started today.</span>
+<span id="cb24-953"><a href="#cb24-953" aria-hidden="true" tabindex="-1"></a>The closest reference barely moves under the correction; the two most distant ones move a</span>
+<span id="cb24-954"><a href="#cb24-954" aria-hidden="true" tabindex="-1"></a>lot more. Given the "saturation" idea from the theory block, why would correction matter</span>
+<span id="cb24-955"><a href="#cb24-955" aria-hidden="true" tabindex="-1"></a>more for distant pairs than for close ones? (FastTree's own log, printed to the screen</span>
+<span id="cb24-956"><a href="#cb24-956" aria-hidden="true" tabindex="-1"></a>each time you ran it today, names the distance it starts from: look for the word</span>
+<span id="cb24-957"><a href="#cb24-957" aria-hidden="true" tabindex="-1"></a>"Jukes-Cantor" near the top.)</span>
 <span id="cb24-958"><a href="#cb24-958" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-959"><a href="#cb24-959" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb24-959"><a href="#cb24-959" aria-hidden="true" tabindex="-1"></a><span class="fu">## Before the next session</span></span>
 <span id="cb24-960"><a href="#cb24-960" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-961"><a href="#cb24-961" aria-hidden="true" tabindex="-1"></a><span class="fu">## Bonus: a rigorous tree, for real (IQ-TREE) {.unnumbered}</span></span>
-<span id="cb24-962"><a href="#cb24-962" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-963"><a href="#cb24-963" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb24-964"><a href="#cb24-964" aria-hidden="true" tabindex="-1"></a><span class="fu">## Optional, for students who are ahead</span></span>
-<span id="cb24-965"><a href="#cb24-965" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-966"><a href="#cb24-966" aria-hidden="true" tabindex="-1"></a>**This is not part of the course.** No marks depend on it, and no later session assumes</span>
-<span id="cb24-967"><a href="#cb24-967" aria-hidden="true" tabindex="-1"></a>you have done it. It exists because the theory block named two things FastTree</span>
-<span id="cb24-968"><a href="#cb24-968" aria-hidden="true" tabindex="-1"></a>approximates for speed, a proper substitution model and real bootstrap support, and</span>
-<span id="cb24-969"><a href="#cb24-969" aria-hidden="true" tabindex="-1"></a>leaves them "out of scope." This bonus is that scope, on the exact same alignment you</span>
-<span id="cb24-970"><a href="#cb24-970" aria-hidden="true" tabindex="-1"></a>already have.</span>
-<span id="cb24-971"><a href="#cb24-971" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb24-972"><a href="#cb24-972" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-973"><a href="#cb24-973" aria-hidden="true" tabindex="-1"></a>FastTree assumed a simple substitution model (Jukes-Cantor: every base equally likely to</span>
-<span id="cb24-974"><a href="#cb24-974" aria-hidden="true" tabindex="-1"></a>mutate into every other) and estimates support with a fast approximation (SH-like,</span>
-<span id="cb24-975"><a href="#cb24-975" aria-hidden="true" tabindex="-1"></a>roughly "how often does this split survive small random tweaks"). **IQ-TREE** does both</span>
-<span id="cb24-976"><a href="#cb24-976" aria-hidden="true" tabindex="-1"></a>properly, at real computational cost: **ModelFinder** tests dozens of substitution models</span>
-<span id="cb24-977"><a href="#cb24-977" aria-hidden="true" tabindex="-1"></a>(different rules for how often each base swaps for each other one, whether some sites</span>
-<span id="cb24-978"><a href="#cb24-978" aria-hidden="true" tabindex="-1"></a>mutate faster than others) and picks the one that fits your data best by a statistical</span>
-<span id="cb24-979"><a href="#cb24-979" aria-hidden="true" tabindex="-1"></a>criterion, then **ultrafast bootstrap** rebuilds the tree 1,000 times, each time from a</span>
-<span id="cb24-980"><a href="#cb24-980" aria-hidden="true" tabindex="-1"></a>random resample of the alignment's columns, and reports what fraction of those 1,000</span>
-<span id="cb24-981"><a href="#cb24-981" aria-hidden="true" tabindex="-1"></a>trees agree with each split in the final one. That is what a bootstrap support value</span>
-<span id="cb24-982"><a href="#cb24-982" aria-hidden="true" tabindex="-1"></a>(typically written as a percentage, out of 100) actually counts.</span>
-<span id="cb24-983"><a href="#cb24-983" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-984"><a href="#cb24-984" aria-hidden="true" tabindex="-1"></a><span class="fu">### Try it (1-2 minutes to run)</span></span>
-<span id="cb24-985"><a href="#cb24-985" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-986"><a href="#cb24-986" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb24-987"><a href="#cb24-987" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load IQ-TREE</span>
-<span id="cb24-988"><a href="#cb24-988" aria-hidden="true" tabindex="-1"></a><span class="ex">iqtree3</span> <span class="at">-s</span> aligned_spike.fasta <span class="at">-m</span> MFP <span class="at">-B</span> 1000 <span class="at">-T</span> AUTO <span class="at">--prefix</span> ../results/iqtree_bonus</span>
-<span id="cb24-989"><a href="#cb24-989" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-990"><a href="#cb24-990" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-991"><a href="#cb24-991" aria-hidden="true" tabindex="-1"></a><span class="in">`-m MFP`</span> runs ModelFinder before building anything. <span class="in">`-B 1000`</span> requests 1,000 ultrafast</span>
-<span id="cb24-992"><a href="#cb24-992" aria-hidden="true" tabindex="-1"></a>bootstrap replicates. <span class="in">`-T AUTO`</span> lets IQ-TREE pick how many threads to use.</span>
-<span id="cb24-993"><a href="#cb24-993" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-994"><a href="#cb24-994" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb24-995"><a href="#cb24-995" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb24-961"><a href="#cb24-961" aria-hidden="true" tabindex="-1"></a>Session 4 leaves sequences behind and moves to **tables**: rows, columns, and the kind of</span>
+<span id="cb24-962"><a href="#cb24-962" aria-hidden="true" tabindex="-1"></a>biological data you will spend the rest of the course working with in R. It reuses the</span>
+<span id="cb24-963"><a href="#cb24-963" aria-hidden="true" tabindex="-1"></a>plotting habits you started today.</span>
+<span id="cb24-964"><a href="#cb24-964" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-965"><a href="#cb24-965" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb24-966"><a href="#cb24-966" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-967"><a href="#cb24-967" aria-hidden="true" tabindex="-1"></a><span class="fu">## Bonus: a rigorous tree, for real (IQ-TREE) {.unnumbered}</span></span>
+<span id="cb24-968"><a href="#cb24-968" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-969"><a href="#cb24-969" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb24-970"><a href="#cb24-970" aria-hidden="true" tabindex="-1"></a><span class="fu">## Optional, for students who are ahead</span></span>
+<span id="cb24-971"><a href="#cb24-971" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-972"><a href="#cb24-972" aria-hidden="true" tabindex="-1"></a>**This is not part of the course.** No marks depend on it, and no later session assumes</span>
+<span id="cb24-973"><a href="#cb24-973" aria-hidden="true" tabindex="-1"></a>you have done it. It exists because the theory block named two things FastTree</span>
+<span id="cb24-974"><a href="#cb24-974" aria-hidden="true" tabindex="-1"></a>approximates for speed, a proper substitution model and real bootstrap support, and</span>
+<span id="cb24-975"><a href="#cb24-975" aria-hidden="true" tabindex="-1"></a>leaves them "out of scope." This bonus is that scope, on the exact same alignment you</span>
+<span id="cb24-976"><a href="#cb24-976" aria-hidden="true" tabindex="-1"></a>already have.</span>
+<span id="cb24-977"><a href="#cb24-977" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb24-978"><a href="#cb24-978" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-979"><a href="#cb24-979" aria-hidden="true" tabindex="-1"></a>FastTree assumed a simple substitution model (Jukes-Cantor: every base equally likely to</span>
+<span id="cb24-980"><a href="#cb24-980" aria-hidden="true" tabindex="-1"></a>mutate into every other) and estimates support with a fast approximation (SH-like,</span>
+<span id="cb24-981"><a href="#cb24-981" aria-hidden="true" tabindex="-1"></a>roughly "how often does this split survive small random tweaks"). **IQ-TREE** does both</span>
+<span id="cb24-982"><a href="#cb24-982" aria-hidden="true" tabindex="-1"></a>properly, at real computational cost: **ModelFinder** tests dozens of substitution models</span>
+<span id="cb24-983"><a href="#cb24-983" aria-hidden="true" tabindex="-1"></a>(different rules for how often each base swaps for each other one, whether some sites</span>
+<span id="cb24-984"><a href="#cb24-984" aria-hidden="true" tabindex="-1"></a>mutate faster than others) and picks the one that fits your data best by a statistical</span>
+<span id="cb24-985"><a href="#cb24-985" aria-hidden="true" tabindex="-1"></a>criterion, then **ultrafast bootstrap** rebuilds the tree 1,000 times, each time from a</span>
+<span id="cb24-986"><a href="#cb24-986" aria-hidden="true" tabindex="-1"></a>random resample of the alignment's columns, and reports what fraction of those 1,000</span>
+<span id="cb24-987"><a href="#cb24-987" aria-hidden="true" tabindex="-1"></a>trees agree with each split in the final one. That is what a bootstrap support value</span>
+<span id="cb24-988"><a href="#cb24-988" aria-hidden="true" tabindex="-1"></a>(typically written as a percentage, out of 100) actually counts.</span>
+<span id="cb24-989"><a href="#cb24-989" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-990"><a href="#cb24-990" aria-hidden="true" tabindex="-1"></a><span class="fu">### Try it (1-2 minutes to run)</span></span>
+<span id="cb24-991"><a href="#cb24-991" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-992"><a href="#cb24-992" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb24-993"><a href="#cb24-993" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load IQ-TREE</span>
+<span id="cb24-994"><a href="#cb24-994" aria-hidden="true" tabindex="-1"></a><span class="ex">iqtree3</span> <span class="at">-s</span> aligned_spike.fasta <span class="at">-m</span> MFP <span class="at">-B</span> 1000 <span class="at">-T</span> AUTO <span class="at">--prefix</span> ../results/iqtree_bonus</span>
+<span id="cb24-995"><a href="#cb24-995" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-996"><a href="#cb24-996" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-997"><a href="#cb24-997" aria-hidden="true" tabindex="-1"></a>This takes noticeably longer than FastTree, roughly a minute or two on LEGcompute, not</span>
-<span id="cb24-998"><a href="#cb24-998" aria-hidden="true" tabindex="-1"></a>under a second: proper model selection and 1,000 real resamples cost real time. When it</span>
-<span id="cb24-999"><a href="#cb24-999" aria-hidden="true" tabindex="-1"></a>finishes, <span class="in">`../results/iqtree_bonus.iqtree`</span> is a full text report; the one line to find is</span>
-<span id="cb24-1000"><a href="#cb24-1000" aria-hidden="true" tabindex="-1"></a>"Best-fit model according to BIC". <span class="in">`../results/iqtree_bonus.treefile`</span> is the tree itself,</span>
-<span id="cb24-1001"><a href="#cb24-1001" aria-hidden="true" tabindex="-1"></a>in Newick format exactly like FastTree's output, except each internal split is now</span>
-<span id="cb24-1002"><a href="#cb24-1002" aria-hidden="true" tabindex="-1"></a>labelled with a number out of 100 rather than FastTree's 0-1 scale.</span>
-<span id="cb24-1003"><a href="#cb24-1003" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb24-1004"><a href="#cb24-1004" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-1005"><a href="#cb24-1005" aria-hidden="true" tabindex="-1"></a>Open <span class="in">`plot_tree.R`</span>, duplicate the line that reads the tree, and point the copy at</span>
-<span id="cb24-1006"><a href="#cb24-1006" aria-hidden="true" tabindex="-1"></a><span class="in">`"../results/iqtree_bonus.treefile"`</span> instead, to plot this one the same way. Two questions</span>
-<span id="cb24-1007"><a href="#cb24-1007" aria-hidden="true" tabindex="-1"></a>worth answering for yourself, not submitted anywhere:</span>
-<span id="cb24-1008"><a href="#cb24-1008" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-1009"><a href="#cb24-1009" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is the **topology** (which sequences group together) the same as your FastTree tree?</span>
-<span id="cb24-1010"><a href="#cb24-1010" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Are the **bootstrap values** close to FastTree's support values, or different? Given</span>
-<span id="cb24-1011"><a href="#cb24-1011" aria-hidden="true" tabindex="-1"></a>  that one is a fast approximation and the other resamples the data 1,000 times, what</span>
-<span id="cb24-1012"><a href="#cb24-1012" aria-hidden="true" tabindex="-1"></a>  would you expect, and why might a real difference (if you see one) matter more on a</span>
-<span id="cb24-1013"><a href="#cb24-1013" aria-hidden="true" tabindex="-1"></a>  harder dataset than on this one?</span>
+<span id="cb24-997"><a href="#cb24-997" aria-hidden="true" tabindex="-1"></a><span class="in">`-m MFP`</span> runs ModelFinder before building anything. <span class="in">`-B 1000`</span> requests 1,000 ultrafast</span>
+<span id="cb24-998"><a href="#cb24-998" aria-hidden="true" tabindex="-1"></a>bootstrap replicates. <span class="in">`-T AUTO`</span> lets IQ-TREE pick how many threads to use.</span>
+<span id="cb24-999"><a href="#cb24-999" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-1000"><a href="#cb24-1000" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb24-1001"><a href="#cb24-1001" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb24-1002"><a href="#cb24-1002" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-1003"><a href="#cb24-1003" aria-hidden="true" tabindex="-1"></a>This takes noticeably longer than FastTree, roughly a minute or two on LEGcompute, not</span>
+<span id="cb24-1004"><a href="#cb24-1004" aria-hidden="true" tabindex="-1"></a>under a second: proper model selection and 1,000 real resamples cost real time. When it</span>
+<span id="cb24-1005"><a href="#cb24-1005" aria-hidden="true" tabindex="-1"></a>finishes, <span class="in">`../results/iqtree_bonus.iqtree`</span> is a full text report; the one line to find is</span>
+<span id="cb24-1006"><a href="#cb24-1006" aria-hidden="true" tabindex="-1"></a>"Best-fit model according to BIC". <span class="in">`../results/iqtree_bonus.treefile`</span> is the tree itself,</span>
+<span id="cb24-1007"><a href="#cb24-1007" aria-hidden="true" tabindex="-1"></a>in Newick format exactly like FastTree's output, except each internal split is now</span>
+<span id="cb24-1008"><a href="#cb24-1008" aria-hidden="true" tabindex="-1"></a>labelled with a number out of 100 rather than FastTree's 0-1 scale.</span>
+<span id="cb24-1009"><a href="#cb24-1009" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb24-1010"><a href="#cb24-1010" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-1011"><a href="#cb24-1011" aria-hidden="true" tabindex="-1"></a>Open <span class="in">`plot_tree.R`</span>, duplicate the line that reads the tree, and point the copy at</span>
+<span id="cb24-1012"><a href="#cb24-1012" aria-hidden="true" tabindex="-1"></a><span class="in">`"../results/iqtree_bonus.treefile"`</span> instead, to plot this one the same way. Two questions</span>
+<span id="cb24-1013"><a href="#cb24-1013" aria-hidden="true" tabindex="-1"></a>worth answering for yourself, not submitted anywhere:</span>
 <span id="cb24-1014"><a href="#cb24-1014" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-1015"><a href="#cb24-1015" aria-hidden="true" tabindex="-1"></a><span class="fu">### Go further</span></span>
-<span id="cb24-1016"><a href="#cb24-1016" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-1017"><a href="#cb24-1017" aria-hidden="true" tabindex="-1"></a>Open <span class="in">`../results/iqtree_bonus.iqtree`</span> in a text editor and find the "SUBSTITUTION PROCESS"</span>
-<span id="cb24-1018"><a href="#cb24-1018" aria-hidden="true" tabindex="-1"></a>section near the end, where "Rate parameter R" and "State frequencies" sit a few lines</span>
-<span id="cb24-1019"><a href="#cb24-1019" aria-hidden="true" tabindex="-1"></a>below the model name. These are the actual numbers ModelFinder fit to your data: for</span>
-<span id="cb24-1020"><a href="#cb24-1020" aria-hidden="true" tabindex="-1"></a>example, how much more often a transition (A&lt;-&gt;G or C&lt;-&gt;T) happens than a transversion,</span>
-<span id="cb24-1021"><a href="#cb24-1021" aria-hidden="true" tabindex="-1"></a>for these five coronavirus spike genes specifically, rather than assumed equal as</span>
-<span id="cb24-1022"><a href="#cb24-1022" aria-hidden="true" tabindex="-1"></a>FastTree's default model assumes.</span>
-<span id="cb24-1023"><a href="#cb24-1023" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-1024"><a href="#cb24-1024" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb24-1025"><a href="#cb24-1025" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-1026"><a href="#cb24-1026" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb24-1027"><a href="#cb24-1027" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sources and reuse</span></span>
-<span id="cb24-1028"><a href="#cb24-1028" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-1029"><a href="#cb24-1029" aria-hidden="true" tabindex="-1"></a>The four named reference sequences are real NCBI RefSeq records, fetched directly for</span>
-<span id="cb24-1030"><a href="#cb24-1030" aria-hidden="true" tabindex="-1"></a>this course, both as nucleotide CDS and as protein: SARS-CoV-2 (<span class="in">`NC_045512.2`</span>, protein</span>
-<span id="cb24-1031"><a href="#cb24-1031" aria-hidden="true" tabindex="-1"></a><span class="in">`YP_009724390.1`</span>), SARS-CoV-1 (<span class="in">`NC_004718.3`</span>, protein <span class="in">`YP_009825051.1`</span>), MERS-CoV</span>
-<span id="cb24-1032"><a href="#cb24-1032" aria-hidden="true" tabindex="-1"></a>(<span class="in">`NC_019843.3`</span>, protein <span class="in">`YP_009047204.1`</span>), and HCoV-OC43 (<span class="in">`NC_006213.1`</span>, protein</span>
-<span id="cb24-1033"><a href="#cb24-1033" aria-hidden="true" tabindex="-1"></a><span class="in">`YP_009555241.1`</span>). <span class="in">`unknown_sample`</span> is a fifth real NCBI record, also a spike gene; its</span>
-<span id="cb24-1034"><a href="#cb24-1034" aria-hidden="true" tabindex="-1"></a>accession is kept out of this public page on purpose, since it is this session's graded</span>
-<span id="cb24-1035"><a href="#cb24-1035" aria-hidden="true" tabindex="-1"></a>unknown. The alignment was built with MAFFT (<span class="in">`--auto`</span>), precomputed so that the practical</span>
-<span id="cb24-1036"><a href="#cb24-1036" aria-hidden="true" tabindex="-1"></a>starts from a correct result. The SARS-CoV-2 protein accession (<span class="in">`P0DTC2`</span> in UniProt,</span>
-<span id="cb24-1037"><a href="#cb24-1037" aria-hidden="true" tabindex="-1"></a><span class="in">`YP_009724390.1`</span> in NCBI) is the same record included in Session 1's <span class="in">`mystery.fasta`</span>. The</span>
-<span id="cb24-1038"><a href="#cb24-1038" aria-hidden="true" tabindex="-1"></a>bonus section's <span class="in">`iqtree_bonus`</span> run uses IQ-TREE's ModelFinder and ultrafast bootstrap on</span>
-<span id="cb24-1039"><a href="#cb24-1039" aria-hidden="true" tabindex="-1"></a>this same alignment. Block D's 114-tip tree is fetched live from NCBI by students</span>
-<span id="cb24-1040"><a href="#cb24-1040" aria-hidden="true" tabindex="-1"></a>themselves (100 arbitrary SARS-CoV-2 genomes plus 13 named variants, listed in block D,</span>
-<span id="cb24-1041"><a href="#cb24-1041" aria-hidden="true" tabindex="-1"></a>plus <span class="in">`unknown_sample`</span> itself, added back in to check blocks B-D2's conclusion by an</span>
-<span id="cb24-1042"><a href="#cb24-1042" aria-hidden="true" tabindex="-1"></a>independent method); <span class="in">`sars_variants_aligned.fasta`</span> and <span class="in">`sars_variants_tree.nwk`</span> are that</span>
-<span id="cb24-1043"><a href="#cb24-1043" aria-hidden="true" tabindex="-1"></a>same live pipeline (EntrezDirect, MAFFT <span class="in">`--auto`</span>, FastTree <span class="in">`-nt`</span>), run once ahead of time</span>
-<span id="cb24-1044"><a href="#cb24-1044" aria-hidden="true" tabindex="-1"></a>and kept only as a fallback. None of this is authored by this course; see NCBI, UniProt, and the <span class="in">`ape`</span>,</span>
-<span id="cb24-1045"><a href="#cb24-1045" aria-hidden="true" tabindex="-1"></a>MAFFT, FastTree, EntrezDirect, and IQ-TREE documentation for the original data and tools.</span>
-<span id="cb24-1046"><a href="#cb24-1046" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb24-1015"><a href="#cb24-1015" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is the **topology** (which sequences group together) the same as your FastTree tree?</span>
+<span id="cb24-1016"><a href="#cb24-1016" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Are the **bootstrap values** close to FastTree's support values, or different? Given</span>
+<span id="cb24-1017"><a href="#cb24-1017" aria-hidden="true" tabindex="-1"></a>  that one is a fast approximation and the other resamples the data 1,000 times, what</span>
+<span id="cb24-1018"><a href="#cb24-1018" aria-hidden="true" tabindex="-1"></a>  would you expect, and why might a real difference (if you see one) matter more on a</span>
+<span id="cb24-1019"><a href="#cb24-1019" aria-hidden="true" tabindex="-1"></a>  harder dataset than on this one?</span>
+<span id="cb24-1020"><a href="#cb24-1020" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-1021"><a href="#cb24-1021" aria-hidden="true" tabindex="-1"></a><span class="fu">### Go further</span></span>
+<span id="cb24-1022"><a href="#cb24-1022" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-1023"><a href="#cb24-1023" aria-hidden="true" tabindex="-1"></a>Open <span class="in">`../results/iqtree_bonus.iqtree`</span> in a text editor and find the "SUBSTITUTION PROCESS"</span>
+<span id="cb24-1024"><a href="#cb24-1024" aria-hidden="true" tabindex="-1"></a>section near the end, where "Rate parameter R" and "State frequencies" sit a few lines</span>
+<span id="cb24-1025"><a href="#cb24-1025" aria-hidden="true" tabindex="-1"></a>below the model name. These are the actual numbers ModelFinder fit to your data: for</span>
+<span id="cb24-1026"><a href="#cb24-1026" aria-hidden="true" tabindex="-1"></a>example, how much more often a transition (A&lt;-&gt;G or C&lt;-&gt;T) happens than a transversion,</span>
+<span id="cb24-1027"><a href="#cb24-1027" aria-hidden="true" tabindex="-1"></a>for these five coronavirus spike genes specifically, rather than assumed equal as</span>
+<span id="cb24-1028"><a href="#cb24-1028" aria-hidden="true" tabindex="-1"></a>FastTree's default model assumes.</span>
+<span id="cb24-1029"><a href="#cb24-1029" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-1030"><a href="#cb24-1030" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb24-1031"><a href="#cb24-1031" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-1032"><a href="#cb24-1032" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb24-1033"><a href="#cb24-1033" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sources and reuse</span></span>
+<span id="cb24-1034"><a href="#cb24-1034" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-1035"><a href="#cb24-1035" aria-hidden="true" tabindex="-1"></a>The four named reference sequences are real NCBI RefSeq records, fetched directly for</span>
+<span id="cb24-1036"><a href="#cb24-1036" aria-hidden="true" tabindex="-1"></a>this course, both as nucleotide CDS and as protein: SARS-CoV-2 (<span class="in">`NC_045512.2`</span>, protein</span>
+<span id="cb24-1037"><a href="#cb24-1037" aria-hidden="true" tabindex="-1"></a><span class="in">`YP_009724390.1`</span>), SARS-CoV-1 (<span class="in">`NC_004718.3`</span>, protein <span class="in">`YP_009825051.1`</span>), MERS-CoV</span>
+<span id="cb24-1038"><a href="#cb24-1038" aria-hidden="true" tabindex="-1"></a>(<span class="in">`NC_019843.3`</span>, protein <span class="in">`YP_009047204.1`</span>), and HCoV-OC43 (<span class="in">`NC_006213.1`</span>, protein</span>
+<span id="cb24-1039"><a href="#cb24-1039" aria-hidden="true" tabindex="-1"></a><span class="in">`YP_009555241.1`</span>). <span class="in">`unknown_sample`</span> is a fifth real NCBI record, also a spike gene; its</span>
+<span id="cb24-1040"><a href="#cb24-1040" aria-hidden="true" tabindex="-1"></a>accession is kept out of this public page on purpose, since it is this session's graded</span>
+<span id="cb24-1041"><a href="#cb24-1041" aria-hidden="true" tabindex="-1"></a>unknown. The alignment was built with MAFFT (<span class="in">`--auto`</span>), precomputed so that the practical</span>
+<span id="cb24-1042"><a href="#cb24-1042" aria-hidden="true" tabindex="-1"></a>starts from a correct result. The SARS-CoV-2 protein accession (<span class="in">`P0DTC2`</span> in UniProt,</span>
+<span id="cb24-1043"><a href="#cb24-1043" aria-hidden="true" tabindex="-1"></a><span class="in">`YP_009724390.1`</span> in NCBI) is the same record included in Session 1's <span class="in">`mystery.fasta`</span>. The</span>
+<span id="cb24-1044"><a href="#cb24-1044" aria-hidden="true" tabindex="-1"></a>bonus section's <span class="in">`iqtree_bonus`</span> run uses IQ-TREE's ModelFinder and ultrafast bootstrap on</span>
+<span id="cb24-1045"><a href="#cb24-1045" aria-hidden="true" tabindex="-1"></a>this same alignment. Block D's 114-tip tree is fetched live from NCBI by students</span>
+<span id="cb24-1046"><a href="#cb24-1046" aria-hidden="true" tabindex="-1"></a>themselves (100 arbitrary SARS-CoV-2 genomes plus 13 named variants, listed in block D,</span>
+<span id="cb24-1047"><a href="#cb24-1047" aria-hidden="true" tabindex="-1"></a>plus <span class="in">`unknown_sample`</span> itself, added back in to check blocks B-D2's conclusion by an</span>
+<span id="cb24-1048"><a href="#cb24-1048" aria-hidden="true" tabindex="-1"></a>independent method); <span class="in">`sars_variants_aligned.fasta`</span> and <span class="in">`sars_variants_tree.nwk`</span> are that</span>
+<span id="cb24-1049"><a href="#cb24-1049" aria-hidden="true" tabindex="-1"></a>same live pipeline (EntrezDirect, MAFFT <span class="in">`--auto`</span>, FastTree <span class="in">`-nt`</span>), run once ahead of time</span>
+<span id="cb24-1050"><a href="#cb24-1050" aria-hidden="true" tabindex="-1"></a>and kept only as a fallback. None of this is authored by this course; see NCBI, UniProt, and the <span class="in">`ape`</span>,</span>
+<span id="cb24-1051"><a href="#cb24-1051" aria-hidden="true" tabindex="-1"></a>MAFFT, FastTree, EntrezDirect, and IQ-TREE documentation for the original data and tools.</span>
+<span id="cb24-1052"><a href="#cb24-1052" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

@@ -637,9 +637,9 @@ closely everything is related to everything else, the branching pattern itself. 
 branching pattern on its own can be drawn equally validly starting from any point —
 rooting is choosing one tip or node and saying "draw the tree growing out from here."
 Changing the root **never changes which tips are each other's closest relatives**; it
-only changes which one ends up drawn at the top, and how the rest unfolds visually from
-there. This is exactly the `outgroup` idea from the theory block's glossary, now something
-you do yourself instead of just reading a definition: a good root is a sequence you have
+only changes which one ends up treated as the single outlier versus everything else. This
+is exactly the `outgroup` idea from the theory block's glossary, now something you do
+yourself instead of just reading a definition: a good root is a sequence you have
 independent reason to believe sits outside the group you are actually comparing, so that
 everything else is free to arrange itself by real relatedness, undistorted by the choice
 of root. `unknown_sample` is a good root precisely because blocks B-D2 already gave you
@@ -672,14 +672,20 @@ independent evidence it is not a SARS-CoV-2 variant at all.
 ::: callout-note
 ## Checkpoint
 
-The named variants still group with each other exactly as before: rerooting never changes
-who is related to whom, only which tip sits at the very top of the plot. But this
-particular reroot should look messier than the original: `Wuhan-Hu-1` is itself one of
-the 113 SARS-CoV-2 genomes, not a real outgroup, so forcing the tree to start there is a
-weaker choice than rooting on `unknown_sample`, which actually sits outside the group
-being compared. If the plot looks completely unchanged, you likely skipped the save step
-above — check the editor tab for an unsaved-changes dot/asterisk next to the file name.
-Change `root_on` back to `"unknown_sample"` (and save, and re-run) before exporting.
+The named variants still group with each other exactly as before — that part is the
+point, and it holds regardless of what the plot looks like. On this particular tree, the
+**two plots will look almost identical**, close enough that you may need to look twice to
+tell them apart: `Wuhan-Hu-1`'s own branch is nearly zero length (you can check this in
+`../results/sars_variants_tree_mine.nwk`, right next to its name), so it sits
+essentially *at* the point everything else branches from either way — rooting there or
+rooting just outside it, on `unknown_sample`, lands in almost the same place visually.
+That is a real result, not a sign that your edit failed: if `source()` ran with no error
+and the Console shows no leftover red text, the reroot worked, whether or not you can see
+it.
+
+**Change `root_on` back to `"unknown_sample"` now** (edit, save, `source()` again) —
+`unknown_sample` is the correct root and the version you submit; the `MN908947.1` version
+was only for this comparison, not something to export or hand in.
 :::
 
 Export the figure: in the Plots pane, **Export → Save as Image…** (or **Save as PDF…**),
