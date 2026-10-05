@@ -595,6 +595,22 @@ grey, real background diversity rather than something to identify. Open the scri
 Source editor and read it top to bottom before running anything. **Widen the Plots pane
 first** (drag its border, or maximise it): 114 tips need more vertical room than five did.
 
+::: callout-important
+## The Console has its own working directory
+
+Session 1 told you the Console is a different panel from the Terminal; it also has a
+**different working directory**, one that does not follow the `cd` commands you have
+been typing in the Terminal all session. `source("plot_tree.R")` runs in the Console, so
+it looks for `plot_tree.R` wherever the Console currently is, not wherever the Terminal
+is — if that is not your `data` folder, you get `cannot open file 'plot_tree.R': No such
+file or directory`, even though the file is really there.
+
+Fix it once, in the Console: in the **Files** pane (bottom right), click into
+`bioinfo_course/session_03/data`, then **More → Set As Working Directory**. Confirm it
+worked with `getwd()` in the Console — it should print that same path. Then run
+`source("plot_tree.R")` again.
+:::
+
 ```r
 source("plot_tree.R")
 ```
