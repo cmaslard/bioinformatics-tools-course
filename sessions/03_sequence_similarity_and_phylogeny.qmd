@@ -423,6 +423,16 @@ querying around the same time. `esearch -db nucleotide -query "..."` is the actu
 search: `-db nucleotide` says which NCBI database to search, `-query` is the search term,
 the same kind of text you could type into NCBI's website search box.
 
+::: callout-tip
+## Avoid sharing one key with the whole room
+
+Everyone using the same key above means everyone shares its 10-requests-per-second
+allowance, not 10 each. If you want, get your own, free, in under a minute: NCBI account
+→ **Settings → API Key Management → Create an API Key**, then replace the key on the
+first line with yours instead. Entirely optional, but if the fetch feels slow with
+everyone running it at once, this is the first thing to try.
+:::
+
 ::: callout-note
 ## Checkpoint
 
