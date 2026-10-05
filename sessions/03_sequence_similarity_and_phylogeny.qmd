@@ -630,8 +630,44 @@ Gamma, Mu) — consistent with Omicron descending from a single common ancestor.
 Gamma, and Omicron.
 :::
 
-Open the `root_on` line near the top of the script, change it from `"unknown_sample"` to
-`"MN908947.1"` (Wuhan-Hu-1), and run the script again.
+### What rooting actually does, and why this edit matters
+
+FastTree does not know which end of the tree is "the start": it only works out how
+closely everything is related to everything else, the branching pattern itself. That
+branching pattern on its own can be drawn equally validly starting from any point —
+rooting is choosing one tip or node and saying "draw the tree growing out from here."
+Changing the root **never changes which tips are each other's closest relatives**; it
+only changes which one ends up drawn at the top, and how the rest unfolds visually from
+there. This is exactly the `outgroup` idea from the theory block's glossary, now something
+you do yourself instead of just reading a definition: a good root is a sequence you have
+independent reason to believe sits outside the group you are actually comparing, so that
+everything else is free to arrange itself by real relatedness, undistorted by the choice
+of root. `unknown_sample` is a good root precisely because blocks B-D2 already gave you
+independent evidence it is not a SARS-CoV-2 variant at all.
+
+### How to make the edit
+
+1. Open `plot_tree.R` in the **Source editor** (top-left pane): click its tab if it is
+   already open, or double-click the file in the **Files** pane if not.
+2. Find this line, a little below `library(ape)` and the `read.tree(...)` line:
+   ```r
+   root_on <- "unknown_sample"
+   ```
+   `<-` is R's assignment operator ("store the thing on the right in the name on the
+   left"): this line stores the text `"unknown_sample"` in a variable called `root_on`,
+   which the very next line (`tree <- root(tree, outgroup = root_on, ...)`) then uses.
+3. Click right between the quotation marks and retype the accession, so the line reads:
+   ```r
+   root_on <- "MN908947.1"
+   ```
+   Keep the quotation marks: `root_on` holds a piece of text, not a number or a bare word.
+4. **Save the file** (`Ctrl+S` / `Cmd+S`, or the editor's Save icon) before doing anything
+   else. This is the step people most often skip: if you do not save, `source()` below
+   re-runs the *old*, unedited file from disk, and nothing about your plot changes, even
+   though the editor shows your new text.
+5. Switch to the **Console** (bottom-left pane, not the Terminal) and run `source("plot_tree.R")`
+   again, exactly as before — or click the **Source** button at the top of the editor pane,
+   which does the same thing without you needing to type anything in the Console.
 
 ::: callout-note
 ## Checkpoint
@@ -641,7 +677,9 @@ who is related to whom, only which tip sits at the very top of the plot. But thi
 particular reroot should look messier than the original: `Wuhan-Hu-1` is itself one of
 the 113 SARS-CoV-2 genomes, not a real outgroup, so forcing the tree to start there is a
 weaker choice than rooting on `unknown_sample`, which actually sits outside the group
-being compared. Change `root_on` back to `"unknown_sample"` before exporting.
+being compared. If the plot looks completely unchanged, you likely skipped the save step
+above — check the editor tab for an unsaved-changes dot/asterisk next to the file name.
+Change `root_on` back to `"unknown_sample"` (and save, and re-run) before exporting.
 :::
 
 Export the figure: in the Plots pane, **Export → Save as Image…** (or **Save as PDF…**),
