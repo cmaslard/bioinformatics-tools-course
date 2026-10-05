@@ -539,28 +539,28 @@ your own laptop:
 module purge
 module load Python
 python3 -m pip install --user clipkit
-export PATH=$HOME/.local/bin:$PATH
-clipkit ../results/sars_variants_aligned_mine.fasta -m smart-gap -o ../results/sars_variants_trimmed_mine.fasta
+~/.local/bin/clipkit ../results/sars_variants_aligned_mine.fasta -m smart-gap -o ../results/sars_variants_trimmed_mine.fasta
 ```
 
-Five lines, five different jobs. `module purge` unloads MAFFT and everything it pulled
+Four lines, four different jobs. `module purge` unloads MAFFT and everything it pulled
 in, so it cannot clash with the Python module you are about to load — a precaution worth
 taking whenever you switch from one cluster tool to an unrelated one in the same session.
-`module load Python` gives
-you `python3` and, bundled with it, `pip`, Python's own installer (the bare system
-`python3` on LEGcompute does not have `pip`, which is why this module matters).
-`python3 -m pip install --user clipkit` means "run the `pip` module through this Python,
-and install the package named `clipkit`"; `--user` installs it into your own account
-(`~/.local`) instead of a shared system location you do not have permission to write to.
-That creates a new problem the next line solves: the shell only looks for programs in a
-specific list of folders, called `$PATH` (a variable, like the ones you have already set
-today, just one the shell itself reads to decide what `clipkit` even means as a command).
-Your new `~/.local/bin` is not in that list yet, so `export PATH=$HOME/.local/bin:$PATH`
-adds it to the front, keeping everything already in `$PATH` after it — without this line,
-typing `clipkit` would fail with "command not found" even though the program is sitting
-right there on disk. Finally, `clipkit input -m smart-gap -o output`: `-m smart-gap` picks
-the trimming mode described above, `-o` names the output file explicitly instead of
-letting ClipKIT invent one by appending `.clipkit` to the input name.
+`module load Python` gives you `python3` and, bundled with it, `pip`, Python's own
+installer (the bare system `python3` on LEGcompute does not have `pip`, which is why this
+module matters). `python3 -m pip install --user clipkit` means "run the `pip` module
+through this Python, and install the package named `clipkit`"; `--user` installs it into
+your own account (`~/.local/bin`) instead of a shared system location you do not have
+permission to write to. That last part is also why the final line spells out
+`~/.local/bin/clipkit` in full instead of just `clipkit`: the shell only looks for bare
+command names in a specific list of folders, `$PATH`, and your new `~/.local/bin` is not
+on that list — spelling out exactly where the program is sidesteps the question entirely,
+the same way `./script.sh` or a full path works for any program regardless of `$PATH`.
+(If you ever see others fix this with `export PATH=$HOME/.local/bin:$PATH` instead, that
+adds the folder to the search list rather than naming the file directly — same result,
+but only inside that one terminal tab, which is an easy thing to lose track of if you
+switch tabs partway through.) Finally, `clipkit input -m smart-gap -o output`: `-m
+smart-gap` picks the trimming mode described above, `-o` names the output file explicitly
+instead of letting ClipKIT invent one by appending `.clipkit` to the input name.
 
 ::: callout-note
 ## Checkpoint
@@ -744,8 +744,7 @@ mafft --auto --thread 8 sars_named_variants.fasta > sars_named_variants_aligned.
 module purge
 module load Python
 python3 -m pip install --user clipkit
-export PATH=$HOME/.local/bin:$PATH
-clipkit sars_named_variants_aligned.fasta -m smart-gap
+~/.local/bin/clipkit sars_named_variants_aligned.fasta -m smart-gap
 ```
 
 ::: callout-note
