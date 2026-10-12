@@ -3,3 +3,4 @@ DT
 here
 renv
 rmarkdown
+tidyverse

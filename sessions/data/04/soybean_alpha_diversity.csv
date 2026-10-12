@@ -1,0 +1,196 @@
+sample,plant,compartment,genotype,water,heat,richness,shannon,evenness
+20bk,20,Bulk soil,Wendy,watered,normal,457,5.038,0.822
+20rh,20,Rhizosphere,Wendy,watered,normal,545,5.064,0.804
+22lo,22,Phylloplane,Wendy,drought,normal,220,4.462,0.827
+22ro,22,Rhizoplane,Wendy,drought,normal,151,3.204,0.639
+22ri,22,Root endosphere,Wendy,drought,normal,246,2.039,0.37
+24bk,24,Bulk soil,Wendy,drought,normal,485,5.058,0.818
+24rh,24,Rhizosphere,Wendy,drought,normal,571,5.106,0.804
+26bk,26,Bulk soil,Stocata,drought,normal,480,5.076,0.822
+26rh,26,Rhizosphere,Stocata,drought,normal,494,5.025,0.81
+28bk,28,Bulk soil,Stocata,watered,normal,502,5.103,0.821
+28rh,28,Rhizosphere,Stocata,watered,normal,479,5.026,0.814
+32lo,32,Phylloplane,Stocata,watered,normal,490,3.687,0.595
+32ro,32,Rhizoplane,Stocata,watered,normal,212,2.418,0.451
+32ri,32,Root endosphere,Stocata,watered,normal,285,2.718,0.481
+34bk,34,Bulk soil,Wendy,drought,normal,523,5.117,0.817
+34rh,34,Rhizosphere,Wendy,drought,normal,437,4.967,0.817
+36lo,36,Phylloplane,Wendy,watered,normal,441,4.831,0.793
+36ro,36,Rhizoplane,Wendy,watered,normal,303,3.434,0.601
+36ri,36,Root endosphere,Wendy,watered,normal,112,0.707,0.15
+38bk,38,Bulk soil,Stocata,drought,normal,468,5.09,0.828
+38rh,38,Rhizosphere,Stocata,drought,normal,533,4.8,0.764
+40bk,40,Bulk soil,Stocata,watered,normal,533,5.16,0.822
+40rh,40,Rhizosphere,Stocata,watered,normal,513,5.076,0.813
+50lo,50,Phylloplane,Stocata,drought,normal,428,4.475,0.739
+50ro,50,Rhizoplane,Stocata,drought,normal,134,2.921,0.596
+50ri,50,Root endosphere,Stocata,drought,normal,391,3.717,0.623
+56bk,56,Bulk soil,Wendy,watered,normal,515,5.128,0.821
+56rh,56,Rhizosphere,Wendy,watered,normal,565,5.095,0.804
+60lo,60,Phylloplane,Wendy,drought,normal,475,3.948,0.641
+60ro,60,Rhizoplane,Wendy,drought,normal,185,3.519,0.674
+60ri,60,Root endosphere,Wendy,drought,normal,227,3.277,0.604
+62bk,62,Bulk soil,Stocata,drought,normal,510,5.055,0.811
+62rh,62,Rhizosphere,Stocata,drought,normal,521,4.987,0.797
+70lo,70,Phylloplane,Stocata,watered,normal,868,5.53,0.817
+70ro,70,Rhizoplane,Stocata,watered,normal,234,3.306,0.606
+70ri,70,Root endosphere,Stocata,watered,normal,289,2.968,0.524
+72bk,72,Bulk soil,Wendy,drought,normal,431,4.963,0.818
+72rh,72,Rhizosphere,Wendy,drought,normal,475,4.758,0.772
+74lo,74,Phylloplane,Stocata,drought,normal,63,0.482,0.116
+74ro,74,Rhizoplane,Stocata,drought,normal,118,2.517,0.528
+74ri,74,Root endosphere,Stocata,drought,normal,175,2.052,0.397
+78lo,78,Phylloplane,Wendy,drought,normal,107,1.135,0.243
+78ro,78,Rhizoplane,Wendy,drought,normal,140,2.781,0.563
+78ri,78,Root endosphere,Wendy,drought,normal,203,2.736,0.515
+82lo,82,Phylloplane,Stocata,drought,normal,536,3.733,0.594
+82ro,82,Rhizoplane,Stocata,drought,normal,122,2.237,0.466
+82ri,82,Root endosphere,Stocata,drought,normal,98,1.633,0.356
+84bk,84,Bulk soil,Wendy,watered,normal,477,5.03,0.816
+84rh,84,Rhizosphere,Wendy,watered,normal,569,5.115,0.806
+86lo,86,Phylloplane,Stocata,watered,normal,328,3.961,0.684
+86ro,86,Rhizoplane,Stocata,watered,normal,241,3.496,0.637
+86ri,86,Root endosphere,Stocata,watered,normal,269,2.576,0.46
+90lo,90,Phylloplane,Wendy,watered,normal,578,4.693,0.738
+90ro,90,Rhizoplane,Wendy,watered,normal,286,3.318,0.587
+90ri,90,Root endosphere,Wendy,watered,normal,287,2.639,0.466
+92bk,92,Bulk soil,Stocata,drought,normal,491,5.074,0.819
+92rh,92,Rhizosphere,Stocata,drought,normal,566,5.192,0.819
+96lo,96,Phylloplane,Wendy,drought,normal,376,3.011,0.508
+96ro,96,Rhizoplane,Wendy,drought,normal,116,1.905,0.401
+96ri,96,Root endosphere,Wendy,drought,normal,232,3.207,0.589
+100bk,100,Bulk soil,Wendy,drought,normal,436,4.962,0.816
+100rh,100,Rhizosphere,Wendy,drought,normal,592,5.166,0.809
+102lo,102,Phylloplane,Stocata,watered,normal,458,4.042,0.66
+102ro,102,Rhizoplane,Stocata,watered,normal,221,3.492,0.647
+102ri,102,Root endosphere,Stocata,watered,normal,304,2.622,0.459
+104bk,104,Bulk soil,Wendy,drought,normal,487,5.041,0.815
+104rh,104,Rhizosphere,Wendy,drought,normal,467,4.905,0.798
+106bk,106,Bulk soil,Stocata,drought,normal,495,5.048,0.814
+106rh,106,Rhizosphere,Stocata,drought,normal,587,5.097,0.8
+108lo,108,Phylloplane,Stocata,drought,normal,425,3.927,0.649
+108ro,108,Rhizoplane,Stocata,drought,normal,118,2.478,0.52
+108ri,108,Root endosphere,Stocata,drought,normal,247,2.904,0.527
+112bk,112,Bulk soil,Wendy,watered,normal,447,5.005,0.82
+112rh,112,Rhizosphere,Wendy,watered,normal,608,5.196,0.811
+118lo,118,Phylloplane,Wendy,watered,normal,609,4.575,0.714
+118ro,118,Rhizoplane,Wendy,watered,normal,211,2.853,0.533
+118ri,118,Root endosphere,Wendy,watered,normal,66,0.653,0.156
+122lo,122,Phylloplane,Stocata,watered,normal,564,4.957,0.783
+122ro,122,Rhizoplane,Stocata,watered,normal,270,3.557,0.635
+122ri,122,Root endosphere,Stocata,watered,normal,287,3.871,0.684
+124lo,124,Phylloplane,Wendy,drought,normal,357,4.346,0.739
+124ro,124,Rhizoplane,Wendy,drought,normal,129,2.362,0.486
+124ri,124,Root endosphere,Wendy,drought,normal,218,2.693,0.5
+126lo,126,Phylloplane,Wendy,watered,normal,402,4.249,0.709
+126ro,126,Rhizoplane,Wendy,watered,normal,234,3.207,0.588
+126ri,126,Root endosphere,Wendy,watered,normal,168,1.842,0.359
+128bk,128,Bulk soil,Stocata,watered,normal,458,5.031,0.821
+128rh,128,Rhizosphere,Stocata,watered,normal,602,5.17,0.808
+130lo,130,Phylloplane,Stocata,drought,normal,437,3.611,0.594
+130ri,130,Root endosphere,Stocata,drought,normal,176,2.646,0.512
+132bk,132,Bulk soil,Wendy,watered,normal,494,5.077,0.819
+132rh,132,Rhizosphere,Wendy,watered,normal,576,5.17,0.813
+133bk,133,Bulk soil,Stocata,watered,normal,548,5.142,0.815
+133rh,133,Rhizosphere,Stocata,watered,normal,619,5.16,0.803
+140bk,140,Bulk soil,Stocata,watered,normal,497,4.87,0.784
+140rh,140,Rhizosphere,Stocata,watered,normal,598,5.13,0.802
+144lo,144,Phylloplane,Wendy,watered,normal,389,3.486,0.584
+144ro,144,Rhizoplane,Wendy,watered,normal,321,3.789,0.657
+144ri,144,Root endosphere,Wendy,watered,normal,69,0.502,0.119
+1004lo,1004,Phylloplane,Wendy,watered,heatwave,79,3.846,0.88
+1004ro,1004,Rhizoplane,Wendy,watered,heatwave,344,3.885,0.665
+1004ri,1004,Root endosphere,Wendy,watered,heatwave,236,3.643,0.667
+1018bk,1018,Bulk soil,Stocata,watered,heatwave,471,5.013,0.814
+1018rh,1018,Rhizosphere,Stocata,watered,heatwave,558,5.078,0.803
+1020bk,1020,Bulk soil,Wendy,watered,heatwave,498,5.03,0.81
+1020rh,1020,Rhizosphere,Wendy,watered,heatwave,525,4.989,0.796
+1022lo,1022,Phylloplane,Wendy,drought,heatwave,353,4.62,0.787
+1022ro,1022,Rhizoplane,Wendy,drought,heatwave,155,2.49,0.494
+1022ri,1022,Root endosphere,Wendy,drought,heatwave,247,2.819,0.512
+1024bk,1024,Bulk soil,Wendy,drought,heatwave,457,4.968,0.811
+1024rh,1024,Rhizosphere,Wendy,drought,heatwave,480,4.962,0.804
+1026bk,1026,Bulk soil,Stocata,drought,heatwave,449,4.962,0.812
+1026rh,1026,Rhizosphere,Stocata,drought,heatwave,614,5.137,0.8
+1028bk,1028,Bulk soil,Stocata,watered,heatwave,454,4.981,0.814
+1028rh,1028,Rhizosphere,Stocata,watered,heatwave,544,5.029,0.798
+1030bk,1030,Bulk soil,Wendy,watered,heatwave,496,5.019,0.809
+1030rh,1030,Rhizosphere,Wendy,watered,heatwave,547,5.039,0.799
+1032lo,1032,Phylloplane,Stocata,watered,heatwave,58,0.513,0.126
+1032ro,1032,Rhizoplane,Stocata,watered,heatwave,246,3.5,0.636
+1034bk,1034,Bulk soil,Wendy,drought,heatwave,459,4.952,0.808
+1034rh,1034,Rhizosphere,Wendy,drought,heatwave,518,4.971,0.795
+1040bk,1040,Bulk soil,Stocata,watered,heatwave,477,5.062,0.821
+1040rh,1040,Rhizosphere,Stocata,watered,heatwave,565,5.086,0.803
+1046lo,1046,Phylloplane,Stocata,drought,heatwave,15,0.049,0.018
+1046ro,1046,Rhizoplane,Stocata,drought,heatwave,99,1.973,0.429
+1046ri,1046,Root endosphere,Stocata,drought,heatwave,156,1.414,0.28
+1048bk,1048,Bulk soil,Wendy,drought,heatwave,459,4.881,0.796
+1048rh,1048,Rhizosphere,Wendy,drought,heatwave,588,5.095,0.799
+1056bk,1056,Bulk soil,Wendy,watered,heatwave,510,4.855,0.779
+1056rh,1056,Rhizosphere,Wendy,watered,heatwave,553,5.071,0.803
+1058lo,1058,Phylloplane,Stocata,drought,heatwave,178,1.51,0.291
+1058ro,1058,Rhizoplane,Stocata,drought,heatwave,113,1.779,0.376
+1058ri,1058,Root endosphere,Stocata,drought,heatwave,57,1.003,0.248
+1060lo,1060,Phylloplane,Wendy,drought,heatwave,238,2.823,0.516
+1060ro,1060,Rhizoplane,Wendy,drought,heatwave,151,2.329,0.464
+1064lo,1064,Phylloplane,Wendy,watered,heatwave,429,3.976,0.656
+1064ro,1064,Rhizoplane,Wendy,watered,heatwave,235,3.08,0.564
+1064ri,1064,Root endosphere,Wendy,watered,heatwave,193,3.4,0.646
+1070lo,1070,Phylloplane,Stocata,watered,heatwave,58,1.295,0.319
+1070ro,1070,Rhizoplane,Stocata,watered,heatwave,213,3.23,0.602
+1070ri,1070,Root endosphere,Stocata,watered,heatwave,141,2.329,0.471
+1072bk,1072,Bulk soil,Wendy,drought,heatwave,496,4.835,0.779
+1072rh,1072,Rhizosphere,Wendy,drought,heatwave,511,5.006,0.803
+1074lo,1074,Phylloplane,Stocata,drought,heatwave,86,1.716,0.385
+1074ro,1074,Rhizoplane,Stocata,drought,heatwave,160,2.784,0.549
+1074ri,1074,Root endosphere,Stocata,drought,heatwave,52,0.956,0.242
+1076bk,1076,Bulk soil,Stocata,drought,heatwave,501,4.796,0.771
+1076rh,1076,Rhizosphere,Stocata,drought,heatwave,598,5.146,0.805
+1080bk,1080,Bulk soil,Stocata,watered,heatwave,487,4.914,0.794
+1080rh,1080,Rhizosphere,Stocata,watered,heatwave,590,5.064,0.794
+1086lo,1086,Phylloplane,Stocata,watered,heatwave,71,1.612,0.378
+1086ro,1086,Rhizoplane,Stocata,watered,heatwave,240,3.451,0.63
+1086ri,1086,Root endosphere,Stocata,watered,heatwave,185,2.911,0.558
+1088bk,1088,Bulk soil,Wendy,drought,heatwave,474,4.928,0.8
+1088rh,1088,Rhizosphere,Wendy,drought,heatwave,582,5.096,0.8
+1092bk,1092,Bulk soil,Stocata,drought,heatwave,496,4.93,0.794
+1092rh,1092,Rhizosphere,Stocata,drought,heatwave,487,4.948,0.8
+1094bk,1094,Bulk soil,Stocata,watered,heatwave,461,4.923,0.803
+1096lo,1096,Phylloplane,Wendy,drought,heatwave,221,2.629,0.487
+1096ro,1096,Rhizoplane,Wendy,drought,heatwave,136,2.131,0.434
+1096ri,1096,Root endosphere,Wendy,drought,heatwave,65,1.176,0.282
+1098bk,1098,Bulk soil,Wendy,watered,heatwave,511,4.953,0.794
+1098rh,1098,Rhizosphere,Wendy,watered,heatwave,611,5.134,0.8
+1102lo,1102,Phylloplane,Stocata,watered,heatwave,30,0.28,0.082
+1102ro,1102,Rhizoplane,Stocata,watered,heatwave,223,3.194,0.591
+1102ri,1102,Root endosphere,Stocata,watered,heatwave,274,3.57,0.636
+1106bk,1106,Bulk soil,Stocata,drought,heatwave,496,4.896,0.789
+1106rh,1106,Rhizosphere,Stocata,drought,heatwave,515,4.987,0.799
+1107lo,1107,Phylloplane,Stocata,drought,heatwave,134,2.094,0.428
+1107ro,1107,Rhizoplane,Stocata,drought,heatwave,112,1.722,0.365
+1107ri,1107,Root endosphere,Stocata,drought,heatwave,49,0.913,0.235
+1108lo,1108,Phylloplane,Stocata,drought,heatwave,254,3.223,0.582
+1108ro,1108,Rhizoplane,Stocata,drought,heatwave,133,2.033,0.416
+1108ri,1108,Root endosphere,Stocata,drought,heatwave,211,1.046,0.195
+1114lo,1114,Phylloplane,Wendy,drought,heatwave,401,4.494,0.75
+1114ro,1114,Rhizoplane,Wendy,drought,heatwave,123,2.4,0.499
+1114ri,1114,Root endosphere,Wendy,drought,heatwave,285,2.067,0.366
+1118lo,1118,Phylloplane,Wendy,watered,heatwave,604,5.105,0.797
+1118ro,1118,Rhizoplane,Wendy,watered,heatwave,270,3.63,0.648
+1120bk,1120,Bulk soil,Stocata,drought,heatwave,513,4.999,0.801
+1120rh,1120,Rhizosphere,Stocata,drought,heatwave,438,4.824,0.793
+1124lo,1124,Phylloplane,Wendy,drought,heatwave,371,3.197,0.54
+1124ro,1124,Rhizoplane,Wendy,drought,heatwave,108,1.981,0.423
+1124ri,1124,Root endosphere,Wendy,drought,heatwave,217,1.776,0.33
+1126lo,1126,Phylloplane,Wendy,watered,heatwave,393,3.53,0.591
+1126ro,1126,Rhizoplane,Wendy,watered,heatwave,272,3.294,0.588
+1126ri,1126,Root endosphere,Wendy,watered,heatwave,60,0.853,0.208
+1132bk,1132,Bulk soil,Wendy,watered,heatwave,460,4.915,0.802
+1132rh,1132,Rhizosphere,Wendy,watered,heatwave,524,5.008,0.8
+1134lo,1134,Phylloplane,Stocata,watered,heatwave,397,3.661,0.612
+1134ro,1134,Rhizoplane,Stocata,watered,heatwave,238,2.597,0.475
+1134ri,1134,Root endosphere,Stocata,watered,heatwave,128,0.976,0.201
+1144lo,1144,Phylloplane,Wendy,watered,heatwave,393,3.979,0.666
+1144ro,1144,Rhizoplane,Wendy,watered,heatwave,191,1.995,0.38
+1144ri,1144,Root endosphere,Wendy,watered,heatwave,148,1.405,0.281
