@@ -6,6 +6,7 @@ engine: knitr
 ```{r}
 #| label: setup
 #| include: false
+set.seed(2026)   # same jittered points at every render
 library(tidyverse)
 plants <- read_csv("data/04/soybean_plants.csv", show_col_types = FALSE)
 alpha <- read_csv("data/04/soybean_alpha_diversity.csv", show_col_types = FALSE) %>%
@@ -15,6 +16,8 @@ alpha <- read_csv("data/04/soybean_alpha_diversity.csv", show_col_types = FALSE)
 ```
 
 ## Overview
+
+[Download the lecture slides (PDF)](slides/04_lecture_slides.pdf)
 
 ::: callout-tip
 ## Quick poll (Poll Everywhere)
