@@ -1036,6 +1036,133 @@ example, how much more often a transition (A<->G or C<->T) happens than a transv
 for these five coronavirus spike genes specifically, rather than assumed equal as
 FastTree's default model assumes.
 
+## Answers
+
+::: {.callout-note collapse="true"}
+## Open this after you have tried the exercises yourself
+
+Session 3 has now been submitted. Below are the real answers, from the same commands run
+on LEGcompute: use them to check your own reasoning, not to replace it. Numbers that
+depend on live NCBI data (the total count, which 100 background genomes were fetched,
+the trimming percentages) change a little over time and between students: compare the
+pattern, not the last digit.
+
+**Who was `unknown_sample`?** **RaTG13** (`MN996532.2`), a coronavirus found in a
+horseshoe bat (*Rhinolophus affinis*) in China, and the closest known relative of
+SARS-CoV-2 (Zhou et al., *Nature*, 2020). Everything you found points to it: very close
+to SARS-CoV-2, but not one of them.
+
+**Section 1, setup.** All six files present; the path ends in
+`bioinfo_course/session_03/data`.
+
+**Block B, quick search.** One line:
+
+```
+unknown_sample  SARS-CoV-2_Wuhan-Hu-1  92.887  3824  256  5  1  3810  1  3822  0.0  5541
+```
+
+**Block B, deep search.** Four lines:
+
+```
+SARS-CoV-2_Wuhan-Hu-1   92.887  3824  ...  0.0       5671
+SARS-CoV-1_Tor2         74.207  3718  ...  0.0       2345
+MERS-CoV                75.472  106   ...  1.99e-13  68.0
+HCoV-OC43_seasonal      85.714  42    ...  5.35e-08  50.0
+```
+
+MERS-CoV or HCoV-OC43, which is better supported? **MERS-CoV**. HCoV-OC43 has the higher
+`pident` (85.7% vs 75.5%), but on a match more than twice shorter (42 vs 106 bp);
+MERS-CoV has a much smaller `evalue` (1.99e-13 vs 5.35e-08) and a higher `bitscore` (68.0
+vs 50.0). A high percent identity on a very short stretch means little: always read
+`pident` together with `length`, `evalue` and `bitscore`.
+
+**Block C, alignment window and whole-gene distances.**
+
+| Reference | Mismatches out of 60 (window) | % different (whole gene) |
+|---|---:|---:|
+| SARS-CoV-2_Wuhan-Hu-1 | 1 | 6.9% |
+| SARS-CoV-1_Tor2 | 18 | 25.7% |
+| MERS-CoV | 35 | 51.3% |
+| HCoV-OC43_seasonal | 33 | 50.8% |
+
+Do the two methods agree on MERS-CoV vs HCoV-OC43? **No**, this is the one real
+disagreement of the day: the whole-gene distance puts HCoV-OC43 (50.8%) marginally closer
+than MERS-CoV (51.3%), while the deep BLAST `bitscore` favours MERS-CoV. Both are about
+50% different from `unknown_sample`: at that distance, small disagreements between
+methods are expected, and the honest conclusion is "both far, order uncertain".
+
+**Block D, live NCBI fetch and tree.**
+
+- NCBI holds **millions** of SARS-CoV-2 sequences (4,433,380 when tested; it keeps
+  growing).
+- Your fetch: **114** sequences (100 background genomes, 13 named variants,
+  `unknown_sample`).
+- `MN908947.1` (Wuhan-Hu-1) was collected in **China, in December 2019**.
+- ClipKIT on the 114-sequence alignment: **326 of 30,937 sites trimmed (1.05%)**.
+- `unknown_sample` sits **on its own long branch** (about 0.07), 20 to 50 times longer
+  than a typical branch between two SARS-CoV-2 genomes (0.0001 to 0.002).
+- The Omicron sublineages (`BA.1` to `24C`) form **one connected group**, apart from
+  Alpha, Delta, Gamma and Mu.
+- Named variant closest to Wuhan-Hu-1: **Delta**, then Mu, Alpha and Gamma, before the
+  Omicron sublineages branch off.
+- Rerooting on Wuhan-Hu-1: the groupings **do not change** (rerooting never changes who
+  is related to whom), and the two plots look almost identical here, because
+  Wuhan-Hu-1's own branch is almost zero. `unknown_sample` is still the **more
+  defensible root**: it really sits outside the group (long branch, and blocks B to D2),
+  while Wuhan-Hu-1 is itself one of the 113 SARS-CoV-2 genomes.
+- Your background genomes are mostly **very recent** (2026 in our test fetch), much more
+  recent than the named variants.
+
+**Block D, continued (the 13 named variants only).** ClipKIT trims **716 of 30,503 sites
+(2.35%)**, about twice the share trimmed from the 114-sequence alignment: with only 13
+sequences, a few gappy columns weigh much more. In the EBI viewer, the Omicron columns
+look more similar to each other than to `Wuhan_China`'s, as the tree shows.
+
+**Block D2, protein vs nucleotide.** SARS-CoV-2 vs SARS-CoV-1: **75.96%** identity at the
+protein level, **74.21%** at the nucleotide level. The protein is higher: several codons
+code for the same amino acid, so some DNA differences (synonymous substitutions) vanish
+at the protein level.
+
+**Section 5, your interpretation: a complete answer.**
+
+> `unknown_sample` is most similar to SARS-CoV-2_Wuhan-Hu-1 at every level checked: 93%
+> nucleotide identity over nearly the whole spike gene (both BLAST searches) and the
+> smallest whole-gene distance in the alignment table (6.9%). SARS-CoV-1 is a clear
+> second, both by BLAST (74.2% nucleotide, 76.0% protein identity) and by distance
+> (25.7%). MERS-CoV and HCoV-OC43 are both far more distant, around 50% whole-gene
+> difference, and the two methods do not fully agree on which of the two is further
+> away. This pattern suggests that `unknown_sample` shares a recent common ancestor with
+> SARS-CoV-2, closer than its relationship to SARS-CoV-1, and is only distantly related
+> to the other two. In the 114-genome tree, it branches apart from all real SARS-CoV-2
+> genomes on a much longer branch, which confirms the same conclusion by a different
+> method.
+
+Good limitations: the conclusion rests on a single gene; a strict BLAST search alone
+would have missed three of the four references; MERS-CoV and HCoV-OC43 come out in a
+different order depending on the method.
+
+**Optional challenge A.** Rooting on a background genome does not change which variants
+group together, but it makes the tree start *inside* the SARS-CoV-2 group itself: an
+arbitrary choice with no biological reason. `unknown_sample` is a real outgroup (long
+branch, and different by every measure), so the root it gives shows where the group
+actually starts.
+
+**Optional challenge B.** Distance from `unknown_sample`, in %:
+
+| Reference | Raw | JC69 | Change |
+|---|---:|---:|---:|
+| SARS-CoV-2_Wuhan-Hu-1 | 6.9 | 7.2 | +0.3 |
+| SARS-CoV-1_Tor2 | 25.7 | 31.4 | +5.7 |
+| MERS-CoV | 51.3 | 86.3 | +35.0 |
+| HCoV-OC43_seasonal | 50.8 | 84.8 | +34.0 |
+
+Saturation: over a long time, the same site can mutate several times (A to G, then back
+to A). The raw percentage only counts the differences still visible today, so it
+underestimates the real number of changes, and the more so the more distant the two
+sequences. A close pair has had little time for hidden changes: the correction barely
+moves it.
+:::
+
 ---
 
 ::: {.callout-note collapse="true"}
