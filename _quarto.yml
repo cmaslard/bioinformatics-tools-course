@@ -33,6 +33,9 @@ book:
         - sessions/01_diagnostic_and_essential_commands.qmd
         - sessions/02_shell_formats_and_quality_control.qmd
         - sessions/03_sequence_similarity_and_phylogeny.qmd
+    - part: "Data analysis with R"
+      chapters:
+        - sessions/04_biological_tables_and_visualisation.qmd
     - references.qmd
   search:
     type: overlay
