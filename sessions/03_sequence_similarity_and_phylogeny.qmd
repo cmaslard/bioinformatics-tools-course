@@ -1113,6 +1113,12 @@ methods are expected, and the honest conclusion is "both far, order uncertain".
 - Your background genomes are mostly **very recent** (2026 in our test fetch), much more
   recent than the named variants.
 
+Your tree should look roughly like this one, drawn with the same `plot_tree.R` from the
+same pipeline run ahead of class. Yours may differ a little, because your 100 background
+genomes were not necessarily the same ones; what matters is the overall pattern:
+
+![The expected block D tree: `unknown_sample` alone on a very long branch, the named variants near the base in the order Wuhan-Hu-1, Delta, Mu, Alpha, Gamma, then the Omicron sublineages, and the 100 background genomes (unlabelled, in grey) further down.](img/03/expected_tree.png){width=70%}
+
 **Block D, continued (the 13 named variants only).** ClipKIT trims **716 of 30,503 sites
 (2.35%)**, about twice the share trimmed from the 114-sequence alignment: with only 13
 sequences, a few gappy columns weigh much more. In the EBI viewer, the Omicron columns
