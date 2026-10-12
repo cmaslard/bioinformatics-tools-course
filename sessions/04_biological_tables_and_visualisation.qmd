@@ -17,6 +17,261 @@ alpha <- read_csv("data/04/soybean_alpha_diversity.csv", show_col_types = FALSE)
 
 ## Overview
 
+::: {.callout-important collapse="true"}
+## Clearer wording of the workbook questions (click to open)
+
+Some workbook questions were not worded clearly enough. Below, each one is shown as it
+is in your workbook (**before**), then reworded (**after**). They ask exactly the same
+thing: keep answering in your own `WORKBOOK.qmd`, under the same question number.
+
+**A1**
+
+*Before:* How many rows and columns does `plants` have? What does one row represent? Many biomass values are `NA`: what does that mean?
+
+*After:*
+
+a) How many rows and how many columns does the table `plants` have?
+b) What does one row of the table describe?
+c) Many values in the biomass columns are `NA`. What does `NA` mean here?
+
+---
+
+**B1**
+
+*Before:* How many plants had each job? Which job gave the bacteria of the rhizoplane, and which one gave the bacteria of the bulk soil? (See the table in the theory part.)
+
+*After:*
+
+Look at the column `analysis`: it says what each plant was used for.
+
+a) How many plants were used for each type of analysis?
+b) The rhizoplane bacteria were sampled on the plants of one type of analysis, and the
+bulk soil bacteria on the plants of another. Which ones? (Help: the table "each plant
+had one job" in the theory part of the session page.)
+
+---
+
+**B2**
+
+*Before:* Are the watered and drought rhizotubes grouped or mixed? Why would an experimenter mix them on purpose? What do you notice when you compare the two maps?
+
+*After:*
+
+On the map, each coloured square is one rhizotube.
+
+a) Are the drought rhizotubes all together in one area, or mixed with the watered ones?
+b) Why would a scientist mix them on purpose?
+c) Compare the two maps (heatwave and normal). What do you notice?
+
+---
+
+**B4**
+
+*Before:* How many plants were weighed? Copy the four mean biomasses (2 decimals). Which stress weighs more on the plant, drought or the heatwave?
+
+*After:*
+
+a) How many plants were weighed?
+b) Copy the four mean biomasses (2 decimals).
+c) Which stress reduces the biomass of the plant more: drought or the heatwave?
+
+---
+
+**B5**
+
+*Before:* How many rows does `organs` have, and why exactly that number? Under drought, which organ keeps the largest share of its biomass (to be sure, compute the mean per organ and water regime, as in B4), and why could that help a plant that is short of water?
+
+*After:*
+
+a) How many rows does the table `organs` have? Why exactly this number?
+b) Under drought, which organ (leaf, stem or root) loses the smallest percentage of its
+biomass? To be sure, compute the mean biomass per organ and water regime, as in B4.
+c) Why could keeping its roots help a plant that does not have enough water?
+
+---
+
+**C1**
+
+*Before:* Which compartments have fewer than 40 samples, and how many samples are missing in total?
+
+*After:*
+
+a) Which compartments have fewer than 40 samples?
+b) How many samples are missing in total?
+
+---
+
+**C2**
+
+*Before:* Which compartment has the most diverse bacteria, and which the least? According to the Tukey test, which pairs of compartments do **not** differ? Why could the bacteria inside the root be much less diverse than in the soil around it?
+
+*After:*
+
+a) Which compartment has the most diverse bacteria, and which one the least
+diverse?
+b) In the Tukey table, which pairs of compartments are **not** significantly different
+(`p adj` above 0.05)?
+c) Why could the bacteria inside the root be much less diverse than in the soil around
+it?
+
+---
+
+**C3**
+
+*Before:* How many rhizoplane samples are there, and how many per combination?
+
+*After:*
+
+a) How many rhizoplane samples are there?
+b) How many samples are there in each combination of water, heat and genotype?
+
+---
+
+**C4**
+
+*Before:* Before any statistics: which factor (water, heat or genotype) seems to change Shannon diversity the most? Is it the same factor that weighed most on the plant's biomass (B4)?
+
+*After:*
+
+Look at the plot only, before any statistics.
+
+a) Which factor seems to change the Shannon diversity the most: water, heat or genotype?
+b) Is it the same factor that reduced the biomass of the plants the most (B4)?
+
+---
+
+**D1**
+
+*Before:* Mean Shannon diversity (2 decimals) of watered and of drought plants, and the t-test p-value:
+
+*After:*
+
+a) Copy the mean Shannon diversity (2 decimals) of the watered plants and of the
+drought plants.
+b) Copy the p-value of the t-test.
+
+---
+
+**D2**
+
+*Before:* What is the `estimate` of `waterwatered`, and how does it relate to your two means in D1? Compare its `p.value` with the t-test's.
+
+*After:*
+
+In the table, find the row called `waterwatered` (the column `water`, level
+`watered`).
+
+a) What is its `estimate`?
+b) Compute the difference between your two means in D1. What do you notice?
+c) Is its `p.value` the same as the p-value of the t-test?
+
+---
+
+**D3**
+
+*Before:* Which rows of the ANOVA table have a p-value (`Pr(>F)`) below 0.05? Copy the p-value of `water`.
+
+*After:*
+
+a) Which rows of the ANOVA table have a p-value (column `Pr(>F)`) below 0.05?
+b) Copy the p-value of `water`.
+
+---
+
+**D4**
+
+*Before:* What share of the variation (in %) does `water` explain? And the residuals? Was your guess in C4 right?
+
+*After:*
+
+a) What percentage of the variation does `water` explain? And the `Residuals`?
+b) Was your guess in C4 correct?
+
+---
+
+**D5**
+
+*Before:* What does the subtitle of your plot say, exactly? Why is it better to compute it in R than to type the number by hand?
+
+*After:*
+
+a) Copy the subtitle of your plot, exactly.
+b) Why is it better to compute this p-value with R than to type the number by hand?
+
+---
+
+**E1**
+
+*Before:* How many bulk soil samples are there, and how many per combination?
+
+*After:*
+
+a) How many bulk soil samples are there?
+b) How many samples are there in each combination of water, heat and genotype?
+
+---
+
+**E2**
+
+*Before:* Looking only at the plot: which factor moves the means the most, water or heat? Are the two lines roughly parallel, and what would it mean if they were not?
+
+*After:*
+
+Look at the plot only.
+
+a) Which factor changes the mean diversity the most: water (compare left and right on
+the x axis) or heat (compare the two lines)?
+b) Are the two lines more or less parallel?
+c) What would it mean if they were not parallel?
+
+---
+
+**E3**
+
+*Before:* Which factor(s) have a p-value below 0.05 in the bulk soil, and what share of the variation does each explain? Using `bulk_soil_means`, how large is the heatwave effect in Shannon units? Compare it with the drought effect on the rhizoplane (D1).
+
+*After:*
+
+a) Which factor(s) have a p-value below 0.05 in the bulk soil?
+b) What percentage of the variation does each of them explain?
+c) In `bulk_soil_means`, by how much does the heatwave lower the mean Shannon diversity
+(normal minus heatwave)? Compare with the effect of drought on the rhizoplane (D1).
+
+---
+
+**E5 (graded)**
+
+*Before:* Answer today's biological question for the bulk soil, and compare it with the rhizoplane (4-6 sentences). Cite at least one mean, one p-value and one share of variation from your own results. Which factor matters in each compartment, and how much? By what mechanism could drought change the bacteria on the root surface, but not in the soil further from the root? Is the significant effect in the bulk soil also a large one? Refer to your figure with `@fig-bulk`.
+
+*After:*
+
+Answer today's biological question for the bulk soil, and compare it
+with the rhizoplane, in 4-6 sentences. Your answer should:
+
+- say which factor matters in the bulk soil and which one on the rhizoplane, and how
+  much, with at least one mean, one p-value and one percentage of variation from your
+  own results;
+- explain how drought could change the bacteria on the root surface, but not in the
+  soil further from the root (think of what the root releases and takes up);
+- say whether the significant effect in the bulk soil is also a large one;
+- refer to your figure with `@fig-bulk`.
+
+---
+
+**E6 (graded)**
+
+*Before:* One limitation, uncertainty or assumption of today's analysis (think, for example, of the number of plants per group, of what the Shannon index does not tell you, or of the y axis of your plot):
+
+*After:*
+
+Give one limitation of today's analysis: something that makes the
+conclusion less certain. Ideas: the number of plants per group, what the Shannon index
+does not tell you, or the y axis of your plot.
+
+
+
+:::
+
 [Download the lecture slides (PDF)](slides/04_lecture_slides.pdf)
 
 ::: callout-tip
