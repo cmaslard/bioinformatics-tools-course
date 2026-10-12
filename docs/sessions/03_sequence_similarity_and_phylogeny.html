@@ -84,6 +84,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/bootstrap/bootstrap-dark-695dda69a25d09ae5e7d70e737080628.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="../site_libs/bootstrap/bootstrap-2a60771e7ed6aab2ebaee62b14f6e658.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -1521,6 +1524,13 @@ HCoV-OC43_seasonal      85.714  42    ...  5.35e-08  50.0</code></pre>
 <li>Rerooting on Wuhan-Hu-1: the groupings <strong>do not change</strong> (rerooting never changes who is related to whom), and the two plots look almost identical here, because Wuhan-Hu-1’s own branch is almost zero. <code>unknown_sample</code> is still the <strong>more defensible root</strong>: it really sits outside the group (long branch, and blocks B to D2), while Wuhan-Hu-1 is itself one of the 113 SARS-CoV-2 genomes.</li>
 <li>Your background genomes are mostly <strong>very recent</strong> (2026 in our test fetch), much more recent than the named variants.</li>
 </ul>
+<p>Your tree should look roughly like this one, drawn with the same <code>plot_tree.R</code> from the same pipeline run ahead of class. Yours may differ a little, because your 100 background genomes were not necessarily the same ones; what matters is the overall pattern:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/03/expected_tree.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="The expected block D tree: unknown_sample alone on a very long branch, the named variants near the base in the order Wuhan-Hu-1, Delta, Mu, Alpha, Gamma, then the Omicron sublineages, and the 100 background genomes (unlabelled, in grey) further down."><img src="img/03/expected_tree.png" class="img-fluid figure-img" style="width:70.0%" alt="The expected block D tree: unknown_sample alone on a very long branch, the named variants near the base in the order Wuhan-Hu-1, Delta, Mu, Alpha, Gamma, then the Omicron sublineages, and the 100 background genomes (unlabelled, in grey) further down."></a></p>
+<figcaption>The expected block D tree: <code>unknown_sample</code> alone on a very long branch, the named variants near the base in the order Wuhan-Hu-1, Delta, Mu, Alpha, Gamma, then the Omicron sublineages, and the 100 background genomes (unlabelled, in grey) further down.</figcaption>
+</figure>
+</div>
 <p><strong>Block D, continued (the 13 named variants only).</strong> ClipKIT trims <strong>716 of 30,503 sites (2.35%)</strong>, about twice the share trimmed from the 114-sequence alignment: with only 13 sequences, a few gappy columns weigh much more. In the EBI viewer, the Omicron columns look more similar to each other than to <code>Wuhan_China</code>’s, as the tree shows.</p>
 <p><strong>Block D2, protein vs nucleotide.</strong> SARS-CoV-2 vs SARS-CoV-1: <strong>75.96%</strong> identity at the protein level, <strong>74.21%</strong> at the nucleotide level. The protein is higher: several codons code for the same amino acid, so some DNA differences (synonymous substitutions) vanish at the protein level.</p>
 <p><strong>Section 5, your interpretation: a complete answer.</strong></p>
@@ -3185,79 +3195,85 @@ HCoV-OC43_seasonal      85.714  42    ...  5.35e-08  50.0</code></pre>
 <span id="cb26-1113"><a href="#cb26-1113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Your background genomes are mostly **very recent** (2026 in our test fetch), much more</span>
 <span id="cb26-1114"><a href="#cb26-1114" aria-hidden="true" tabindex="-1"></a>  recent than the named variants.</span>
 <span id="cb26-1115"><a href="#cb26-1115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-1116"><a href="#cb26-1116" aria-hidden="true" tabindex="-1"></a>**Block D, continued (the 13 named variants only).** ClipKIT trims **716 of 30,503 sites</span>
-<span id="cb26-1117"><a href="#cb26-1117" aria-hidden="true" tabindex="-1"></a>(2.35%)**, about twice the share trimmed from the 114-sequence alignment: with only 13</span>
-<span id="cb26-1118"><a href="#cb26-1118" aria-hidden="true" tabindex="-1"></a>sequences, a few gappy columns weigh much more. In the EBI viewer, the Omicron columns</span>
-<span id="cb26-1119"><a href="#cb26-1119" aria-hidden="true" tabindex="-1"></a>look more similar to each other than to <span class="in">`Wuhan_China`</span>'s, as the tree shows.</span>
-<span id="cb26-1120"><a href="#cb26-1120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-1121"><a href="#cb26-1121" aria-hidden="true" tabindex="-1"></a>**Block D2, protein vs nucleotide.** SARS-CoV-2 vs SARS-CoV-1: **75.96%** identity at the</span>
-<span id="cb26-1122"><a href="#cb26-1122" aria-hidden="true" tabindex="-1"></a>protein level, **74.21%** at the nucleotide level. The protein is higher: several codons</span>
-<span id="cb26-1123"><a href="#cb26-1123" aria-hidden="true" tabindex="-1"></a>code for the same amino acid, so some DNA differences (synonymous substitutions) vanish</span>
-<span id="cb26-1124"><a href="#cb26-1124" aria-hidden="true" tabindex="-1"></a>at the protein level.</span>
-<span id="cb26-1125"><a href="#cb26-1125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-1126"><a href="#cb26-1126" aria-hidden="true" tabindex="-1"></a>**Section 5, your interpretation: a complete answer.**</span>
-<span id="cb26-1127"><a href="#cb26-1127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-1128"><a href="#cb26-1128" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`unknown_sample`</span><span class="at"> is most similar to SARS-CoV-2_Wuhan-Hu-1 at every level checked: 93%</span></span>
-<span id="cb26-1129"><a href="#cb26-1129" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; nucleotide identity over nearly the whole spike gene (both BLAST searches) and the</span></span>
-<span id="cb26-1130"><a href="#cb26-1130" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; smallest whole-gene distance in the alignment table (6.9%). SARS-CoV-1 is a clear</span></span>
-<span id="cb26-1131"><a href="#cb26-1131" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; second, both by BLAST (74.2% nucleotide, 76.0% protein identity) and by distance</span></span>
-<span id="cb26-1132"><a href="#cb26-1132" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; (25.7%). MERS-CoV and HCoV-OC43 are both far more distant, around 50% whole-gene</span></span>
-<span id="cb26-1133"><a href="#cb26-1133" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; difference, and the two methods do not fully agree on which of the two is further</span></span>
-<span id="cb26-1134"><a href="#cb26-1134" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; away. This pattern suggests that </span><span class="in">`unknown_sample`</span><span class="at"> shares a recent common ancestor with</span></span>
-<span id="cb26-1135"><a href="#cb26-1135" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; SARS-CoV-2, closer than its relationship to SARS-CoV-1, and is only distantly related</span></span>
-<span id="cb26-1136"><a href="#cb26-1136" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; to the other two. In the 114-genome tree, it branches apart from all real SARS-CoV-2</span></span>
-<span id="cb26-1137"><a href="#cb26-1137" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; genomes on a much longer branch, which confirms the same conclusion by a different</span></span>
-<span id="cb26-1138"><a href="#cb26-1138" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; method.</span></span>
-<span id="cb26-1139"><a href="#cb26-1139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-1140"><a href="#cb26-1140" aria-hidden="true" tabindex="-1"></a>Good limitations: the conclusion rests on a single gene; a strict BLAST search alone</span>
-<span id="cb26-1141"><a href="#cb26-1141" aria-hidden="true" tabindex="-1"></a>would have missed three of the four references; MERS-CoV and HCoV-OC43 come out in a</span>
-<span id="cb26-1142"><a href="#cb26-1142" aria-hidden="true" tabindex="-1"></a>different order depending on the method.</span>
-<span id="cb26-1143"><a href="#cb26-1143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-1144"><a href="#cb26-1144" aria-hidden="true" tabindex="-1"></a>**Optional challenge A.** Rooting on a background genome does not change which variants</span>
-<span id="cb26-1145"><a href="#cb26-1145" aria-hidden="true" tabindex="-1"></a>group together, but it makes the tree start *inside* the SARS-CoV-2 group itself: an</span>
-<span id="cb26-1146"><a href="#cb26-1146" aria-hidden="true" tabindex="-1"></a>arbitrary choice with no biological reason. <span class="in">`unknown_sample`</span> is a real outgroup (long</span>
-<span id="cb26-1147"><a href="#cb26-1147" aria-hidden="true" tabindex="-1"></a>branch, and different by every measure), so the root it gives shows where the group</span>
-<span id="cb26-1148"><a href="#cb26-1148" aria-hidden="true" tabindex="-1"></a>actually starts.</span>
+<span id="cb26-1116"><a href="#cb26-1116" aria-hidden="true" tabindex="-1"></a>Your tree should look roughly like this one, drawn with the same <span class="in">`plot_tree.R`</span> from the</span>
+<span id="cb26-1117"><a href="#cb26-1117" aria-hidden="true" tabindex="-1"></a>same pipeline run ahead of class. Yours may differ a little, because your 100 background</span>
+<span id="cb26-1118"><a href="#cb26-1118" aria-hidden="true" tabindex="-1"></a>genomes were not necessarily the same ones; what matters is the overall pattern:</span>
+<span id="cb26-1119"><a href="#cb26-1119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-1120"><a href="#cb26-1120" aria-hidden="true" tabindex="-1"></a><span class="al">![The expected block D tree: `unknown_sample` alone on a very long branch, the named variants near the base in the order Wuhan-Hu-1, Delta, Mu, Alpha, Gamma, then the Omicron sublineages, and the 100 background genomes (unlabelled, in grey) further down.](img/03/expected_tree.png)</span>{width=70%}</span>
+<span id="cb26-1121"><a href="#cb26-1121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-1122"><a href="#cb26-1122" aria-hidden="true" tabindex="-1"></a>**Block D, continued (the 13 named variants only).** ClipKIT trims **716 of 30,503 sites</span>
+<span id="cb26-1123"><a href="#cb26-1123" aria-hidden="true" tabindex="-1"></a>(2.35%)**, about twice the share trimmed from the 114-sequence alignment: with only 13</span>
+<span id="cb26-1124"><a href="#cb26-1124" aria-hidden="true" tabindex="-1"></a>sequences, a few gappy columns weigh much more. In the EBI viewer, the Omicron columns</span>
+<span id="cb26-1125"><a href="#cb26-1125" aria-hidden="true" tabindex="-1"></a>look more similar to each other than to <span class="in">`Wuhan_China`</span>'s, as the tree shows.</span>
+<span id="cb26-1126"><a href="#cb26-1126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-1127"><a href="#cb26-1127" aria-hidden="true" tabindex="-1"></a>**Block D2, protein vs nucleotide.** SARS-CoV-2 vs SARS-CoV-1: **75.96%** identity at the</span>
+<span id="cb26-1128"><a href="#cb26-1128" aria-hidden="true" tabindex="-1"></a>protein level, **74.21%** at the nucleotide level. The protein is higher: several codons</span>
+<span id="cb26-1129"><a href="#cb26-1129" aria-hidden="true" tabindex="-1"></a>code for the same amino acid, so some DNA differences (synonymous substitutions) vanish</span>
+<span id="cb26-1130"><a href="#cb26-1130" aria-hidden="true" tabindex="-1"></a>at the protein level.</span>
+<span id="cb26-1131"><a href="#cb26-1131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-1132"><a href="#cb26-1132" aria-hidden="true" tabindex="-1"></a>**Section 5, your interpretation: a complete answer.**</span>
+<span id="cb26-1133"><a href="#cb26-1133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-1134"><a href="#cb26-1134" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`unknown_sample`</span><span class="at"> is most similar to SARS-CoV-2_Wuhan-Hu-1 at every level checked: 93%</span></span>
+<span id="cb26-1135"><a href="#cb26-1135" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; nucleotide identity over nearly the whole spike gene (both BLAST searches) and the</span></span>
+<span id="cb26-1136"><a href="#cb26-1136" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; smallest whole-gene distance in the alignment table (6.9%). SARS-CoV-1 is a clear</span></span>
+<span id="cb26-1137"><a href="#cb26-1137" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; second, both by BLAST (74.2% nucleotide, 76.0% protein identity) and by distance</span></span>
+<span id="cb26-1138"><a href="#cb26-1138" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; (25.7%). MERS-CoV and HCoV-OC43 are both far more distant, around 50% whole-gene</span></span>
+<span id="cb26-1139"><a href="#cb26-1139" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; difference, and the two methods do not fully agree on which of the two is further</span></span>
+<span id="cb26-1140"><a href="#cb26-1140" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; away. This pattern suggests that </span><span class="in">`unknown_sample`</span><span class="at"> shares a recent common ancestor with</span></span>
+<span id="cb26-1141"><a href="#cb26-1141" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; SARS-CoV-2, closer than its relationship to SARS-CoV-1, and is only distantly related</span></span>
+<span id="cb26-1142"><a href="#cb26-1142" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; to the other two. In the 114-genome tree, it branches apart from all real SARS-CoV-2</span></span>
+<span id="cb26-1143"><a href="#cb26-1143" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; genomes on a much longer branch, which confirms the same conclusion by a different</span></span>
+<span id="cb26-1144"><a href="#cb26-1144" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; method.</span></span>
+<span id="cb26-1145"><a href="#cb26-1145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-1146"><a href="#cb26-1146" aria-hidden="true" tabindex="-1"></a>Good limitations: the conclusion rests on a single gene; a strict BLAST search alone</span>
+<span id="cb26-1147"><a href="#cb26-1147" aria-hidden="true" tabindex="-1"></a>would have missed three of the four references; MERS-CoV and HCoV-OC43 come out in a</span>
+<span id="cb26-1148"><a href="#cb26-1148" aria-hidden="true" tabindex="-1"></a>different order depending on the method.</span>
 <span id="cb26-1149"><a href="#cb26-1149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-1150"><a href="#cb26-1150" aria-hidden="true" tabindex="-1"></a>**Optional challenge B.** Distance from <span class="in">`unknown_sample`</span>, in %:</span>
-<span id="cb26-1151"><a href="#cb26-1151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-1152"><a href="#cb26-1152" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Reference <span class="pp">|</span> Raw <span class="pp">|</span> JC69 <span class="pp">|</span> Change <span class="pp">|</span></span>
-<span id="cb26-1153"><a href="#cb26-1153" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---:|---:|---:|</span></span>
-<span id="cb26-1154"><a href="#cb26-1154" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> SARS-CoV-2_Wuhan-Hu-1 <span class="pp">|</span> 6.9 <span class="pp">|</span> 7.2 <span class="pp">|</span> +0.3 <span class="pp">|</span></span>
-<span id="cb26-1155"><a href="#cb26-1155" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> SARS-CoV-1_Tor2 <span class="pp">|</span> 25.7 <span class="pp">|</span> 31.4 <span class="pp">|</span> +5.7 <span class="pp">|</span></span>
-<span id="cb26-1156"><a href="#cb26-1156" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> MERS-CoV <span class="pp">|</span> 51.3 <span class="pp">|</span> 86.3 <span class="pp">|</span> +35.0 <span class="pp">|</span></span>
-<span id="cb26-1157"><a href="#cb26-1157" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> HCoV-OC43_seasonal <span class="pp">|</span> 50.8 <span class="pp">|</span> 84.8 <span class="pp">|</span> +34.0 <span class="pp">|</span></span>
-<span id="cb26-1158"><a href="#cb26-1158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-1159"><a href="#cb26-1159" aria-hidden="true" tabindex="-1"></a>Saturation: over a long time, the same site can mutate several times (A to G, then back</span>
-<span id="cb26-1160"><a href="#cb26-1160" aria-hidden="true" tabindex="-1"></a>to A). The raw percentage only counts the differences still visible today, so it</span>
-<span id="cb26-1161"><a href="#cb26-1161" aria-hidden="true" tabindex="-1"></a>underestimates the real number of changes, and the more so the more distant the two</span>
-<span id="cb26-1162"><a href="#cb26-1162" aria-hidden="true" tabindex="-1"></a>sequences. A close pair has had little time for hidden changes: the correction barely</span>
-<span id="cb26-1163"><a href="#cb26-1163" aria-hidden="true" tabindex="-1"></a>moves it.</span>
-<span id="cb26-1164"><a href="#cb26-1164" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb26-1165"><a href="#cb26-1165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-1166"><a href="#cb26-1166" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb26-1167"><a href="#cb26-1167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-1168"><a href="#cb26-1168" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb26-1169"><a href="#cb26-1169" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sources and reuse</span></span>
-<span id="cb26-1170"><a href="#cb26-1170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-1171"><a href="#cb26-1171" aria-hidden="true" tabindex="-1"></a>The four named reference sequences are real NCBI RefSeq records, fetched directly for</span>
-<span id="cb26-1172"><a href="#cb26-1172" aria-hidden="true" tabindex="-1"></a>this course, both as nucleotide CDS and as protein: SARS-CoV-2 (<span class="in">`NC_045512.2`</span>, protein</span>
-<span id="cb26-1173"><a href="#cb26-1173" aria-hidden="true" tabindex="-1"></a><span class="in">`YP_009724390.1`</span>), SARS-CoV-1 (<span class="in">`NC_004718.3`</span>, protein <span class="in">`YP_009825051.1`</span>), MERS-CoV</span>
-<span id="cb26-1174"><a href="#cb26-1174" aria-hidden="true" tabindex="-1"></a>(<span class="in">`NC_019843.3`</span>, protein <span class="in">`YP_009047204.1`</span>), and HCoV-OC43 (<span class="in">`NC_006213.1`</span>, protein</span>
-<span id="cb26-1175"><a href="#cb26-1175" aria-hidden="true" tabindex="-1"></a><span class="in">`YP_009555241.1`</span>). <span class="in">`unknown_sample`</span> is a fifth real NCBI record, also a spike gene; its</span>
-<span id="cb26-1176"><a href="#cb26-1176" aria-hidden="true" tabindex="-1"></a>accession is kept out of this public page on purpose, since it is this session's graded</span>
-<span id="cb26-1177"><a href="#cb26-1177" aria-hidden="true" tabindex="-1"></a>unknown. The alignment was built with MAFFT (<span class="in">`--auto`</span>), precomputed so that the practical</span>
-<span id="cb26-1178"><a href="#cb26-1178" aria-hidden="true" tabindex="-1"></a>starts from a correct result. The SARS-CoV-2 protein accession (<span class="in">`P0DTC2`</span> in UniProt,</span>
-<span id="cb26-1179"><a href="#cb26-1179" aria-hidden="true" tabindex="-1"></a><span class="in">`YP_009724390.1`</span> in NCBI) is the same record included in Session 1's <span class="in">`mystery.fasta`</span>. The</span>
-<span id="cb26-1180"><a href="#cb26-1180" aria-hidden="true" tabindex="-1"></a>bonus section's <span class="in">`iqtree_bonus`</span> run uses IQ-TREE's ModelFinder and ultrafast bootstrap on</span>
-<span id="cb26-1181"><a href="#cb26-1181" aria-hidden="true" tabindex="-1"></a>this same alignment. Block D's 114-tip tree is fetched live from NCBI by students</span>
-<span id="cb26-1182"><a href="#cb26-1182" aria-hidden="true" tabindex="-1"></a>themselves (100 arbitrary SARS-CoV-2 genomes plus 13 named variants, listed in block D,</span>
-<span id="cb26-1183"><a href="#cb26-1183" aria-hidden="true" tabindex="-1"></a>plus <span class="in">`unknown_sample`</span> itself, added back in to check blocks B-D2's conclusion by an</span>
-<span id="cb26-1184"><a href="#cb26-1184" aria-hidden="true" tabindex="-1"></a>independent method); <span class="in">`sars_variants_aligned.fasta`</span> and <span class="in">`sars_variants_tree.nwk`</span> are that</span>
-<span id="cb26-1185"><a href="#cb26-1185" aria-hidden="true" tabindex="-1"></a>same live pipeline (EntrezDirect, MAFFT <span class="in">`--auto`</span>, FastTree <span class="in">`-nt`</span>), run once ahead of time</span>
-<span id="cb26-1186"><a href="#cb26-1186" aria-hidden="true" tabindex="-1"></a>and kept only as a fallback. None of this is authored by this course; see NCBI, UniProt, and the <span class="in">`ape`</span>,</span>
-<span id="cb26-1187"><a href="#cb26-1187" aria-hidden="true" tabindex="-1"></a>MAFFT, FastTree, EntrezDirect, and IQ-TREE documentation for the original data and tools.</span>
-<span id="cb26-1188"><a href="#cb26-1188" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb26-1150"><a href="#cb26-1150" aria-hidden="true" tabindex="-1"></a>**Optional challenge A.** Rooting on a background genome does not change which variants</span>
+<span id="cb26-1151"><a href="#cb26-1151" aria-hidden="true" tabindex="-1"></a>group together, but it makes the tree start *inside* the SARS-CoV-2 group itself: an</span>
+<span id="cb26-1152"><a href="#cb26-1152" aria-hidden="true" tabindex="-1"></a>arbitrary choice with no biological reason. <span class="in">`unknown_sample`</span> is a real outgroup (long</span>
+<span id="cb26-1153"><a href="#cb26-1153" aria-hidden="true" tabindex="-1"></a>branch, and different by every measure), so the root it gives shows where the group</span>
+<span id="cb26-1154"><a href="#cb26-1154" aria-hidden="true" tabindex="-1"></a>actually starts.</span>
+<span id="cb26-1155"><a href="#cb26-1155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-1156"><a href="#cb26-1156" aria-hidden="true" tabindex="-1"></a>**Optional challenge B.** Distance from <span class="in">`unknown_sample`</span>, in %:</span>
+<span id="cb26-1157"><a href="#cb26-1157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-1158"><a href="#cb26-1158" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Reference <span class="pp">|</span> Raw <span class="pp">|</span> JC69 <span class="pp">|</span> Change <span class="pp">|</span></span>
+<span id="cb26-1159"><a href="#cb26-1159" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---:|---:|---:|</span></span>
+<span id="cb26-1160"><a href="#cb26-1160" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> SARS-CoV-2_Wuhan-Hu-1 <span class="pp">|</span> 6.9 <span class="pp">|</span> 7.2 <span class="pp">|</span> +0.3 <span class="pp">|</span></span>
+<span id="cb26-1161"><a href="#cb26-1161" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> SARS-CoV-1_Tor2 <span class="pp">|</span> 25.7 <span class="pp">|</span> 31.4 <span class="pp">|</span> +5.7 <span class="pp">|</span></span>
+<span id="cb26-1162"><a href="#cb26-1162" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> MERS-CoV <span class="pp">|</span> 51.3 <span class="pp">|</span> 86.3 <span class="pp">|</span> +35.0 <span class="pp">|</span></span>
+<span id="cb26-1163"><a href="#cb26-1163" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> HCoV-OC43_seasonal <span class="pp">|</span> 50.8 <span class="pp">|</span> 84.8 <span class="pp">|</span> +34.0 <span class="pp">|</span></span>
+<span id="cb26-1164"><a href="#cb26-1164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-1165"><a href="#cb26-1165" aria-hidden="true" tabindex="-1"></a>Saturation: over a long time, the same site can mutate several times (A to G, then back</span>
+<span id="cb26-1166"><a href="#cb26-1166" aria-hidden="true" tabindex="-1"></a>to A). The raw percentage only counts the differences still visible today, so it</span>
+<span id="cb26-1167"><a href="#cb26-1167" aria-hidden="true" tabindex="-1"></a>underestimates the real number of changes, and the more so the more distant the two</span>
+<span id="cb26-1168"><a href="#cb26-1168" aria-hidden="true" tabindex="-1"></a>sequences. A close pair has had little time for hidden changes: the correction barely</span>
+<span id="cb26-1169"><a href="#cb26-1169" aria-hidden="true" tabindex="-1"></a>moves it.</span>
+<span id="cb26-1170"><a href="#cb26-1170" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb26-1171"><a href="#cb26-1171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-1172"><a href="#cb26-1172" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb26-1173"><a href="#cb26-1173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-1174"><a href="#cb26-1174" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb26-1175"><a href="#cb26-1175" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sources and reuse</span></span>
+<span id="cb26-1176"><a href="#cb26-1176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-1177"><a href="#cb26-1177" aria-hidden="true" tabindex="-1"></a>The four named reference sequences are real NCBI RefSeq records, fetched directly for</span>
+<span id="cb26-1178"><a href="#cb26-1178" aria-hidden="true" tabindex="-1"></a>this course, both as nucleotide CDS and as protein: SARS-CoV-2 (<span class="in">`NC_045512.2`</span>, protein</span>
+<span id="cb26-1179"><a href="#cb26-1179" aria-hidden="true" tabindex="-1"></a><span class="in">`YP_009724390.1`</span>), SARS-CoV-1 (<span class="in">`NC_004718.3`</span>, protein <span class="in">`YP_009825051.1`</span>), MERS-CoV</span>
+<span id="cb26-1180"><a href="#cb26-1180" aria-hidden="true" tabindex="-1"></a>(<span class="in">`NC_019843.3`</span>, protein <span class="in">`YP_009047204.1`</span>), and HCoV-OC43 (<span class="in">`NC_006213.1`</span>, protein</span>
+<span id="cb26-1181"><a href="#cb26-1181" aria-hidden="true" tabindex="-1"></a><span class="in">`YP_009555241.1`</span>). <span class="in">`unknown_sample`</span> is a fifth real NCBI record, also a spike gene; its</span>
+<span id="cb26-1182"><a href="#cb26-1182" aria-hidden="true" tabindex="-1"></a>accession is kept out of this public page on purpose, since it is this session's graded</span>
+<span id="cb26-1183"><a href="#cb26-1183" aria-hidden="true" tabindex="-1"></a>unknown. The alignment was built with MAFFT (<span class="in">`--auto`</span>), precomputed so that the practical</span>
+<span id="cb26-1184"><a href="#cb26-1184" aria-hidden="true" tabindex="-1"></a>starts from a correct result. The SARS-CoV-2 protein accession (<span class="in">`P0DTC2`</span> in UniProt,</span>
+<span id="cb26-1185"><a href="#cb26-1185" aria-hidden="true" tabindex="-1"></a><span class="in">`YP_009724390.1`</span> in NCBI) is the same record included in Session 1's <span class="in">`mystery.fasta`</span>. The</span>
+<span id="cb26-1186"><a href="#cb26-1186" aria-hidden="true" tabindex="-1"></a>bonus section's <span class="in">`iqtree_bonus`</span> run uses IQ-TREE's ModelFinder and ultrafast bootstrap on</span>
+<span id="cb26-1187"><a href="#cb26-1187" aria-hidden="true" tabindex="-1"></a>this same alignment. Block D's 114-tip tree is fetched live from NCBI by students</span>
+<span id="cb26-1188"><a href="#cb26-1188" aria-hidden="true" tabindex="-1"></a>themselves (100 arbitrary SARS-CoV-2 genomes plus 13 named variants, listed in block D,</span>
+<span id="cb26-1189"><a href="#cb26-1189" aria-hidden="true" tabindex="-1"></a>plus <span class="in">`unknown_sample`</span> itself, added back in to check blocks B-D2's conclusion by an</span>
+<span id="cb26-1190"><a href="#cb26-1190" aria-hidden="true" tabindex="-1"></a>independent method); <span class="in">`sars_variants_aligned.fasta`</span> and <span class="in">`sars_variants_tree.nwk`</span> are that</span>
+<span id="cb26-1191"><a href="#cb26-1191" aria-hidden="true" tabindex="-1"></a>same live pipeline (EntrezDirect, MAFFT <span class="in">`--auto`</span>, FastTree <span class="in">`-nt`</span>), run once ahead of time</span>
+<span id="cb26-1192"><a href="#cb26-1192" aria-hidden="true" tabindex="-1"></a>and kept only as a fallback. None of this is authored by this course; see NCBI, UniProt, and the <span class="in">`ape`</span>,</span>
+<span id="cb26-1193"><a href="#cb26-1193" aria-hidden="true" tabindex="-1"></a>MAFFT, FastTree, EntrezDirect, and IQ-TREE documentation for the original data and tools.</span>
+<span id="cb26-1194"><a href="#cb26-1194" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
@@ -3340,6 +3356,38 @@ HCoV-OC43_seasonal      85.714  42    ...  5.35e-08  50.0</code></pre>
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"right","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
