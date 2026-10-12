@@ -307,7 +307,8 @@ climate actually matters, and write their results on your plots.
 
 Everything happens in one file, `WORKBOOK.qmd`: your code, your plots and your answers
 together. When you click **Render**, it becomes one HTML page, and that page is what you
-submit. You start the workbook in class and submit it on Moodle **by Thursday**.
+submit. You start the workbook in class and submit it on Moodle **by Sunday evening
+(18 October)**.
 :::
 
 ### Learning outcomes
@@ -346,7 +347,7 @@ By the end of this session, you should be able to:
 | 16:00-16:15 | Practical C | The bacteria: first look, then the rhizoplane. (pairs) |
 | 16:15-16:35 | Practical D | Guided: the statistics, from a t-test to a linear model, and onto the plot. (pairs) |
 | 16:35-16:55 | Practical E | Alone: an interaction plot and its statistics, for the bulk soil. |
-| 16:55-17:00 | Wrap-up | Render, save, finish and submit by Thursday. |
+| 16:55-17:00 | Wrap-up | Render, save, finish at home and submit by Sunday evening (18 October). |
 
 ## Theory (≈45 min)
 
@@ -1179,7 +1180,9 @@ of your plot before you answer.
 
 Click **Render** one last time. Check that `WORKBOOK.html` shows your bulk soil figure and
 your ANOVA table, and that `results/bulk_soil_interaction.png` exists. You can finish the
-written answers at home: submit `WORKBOOK.html` on Moodle **by Thursday**.
+written answers at home: submit `WORKBOOK.html` on Moodle **by Sunday evening
+(18 October)**. Your workbook file still says "Thursday" at the top: the date on this
+page is the right one.
 
 If your workbook refuses to render at the end, do not panic: submit `WORKBOOK.qmd`
 instead, and say in the last section where it fails.
