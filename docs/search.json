@@ -472,7 +472,7 @@
     "href": "sessions/05_pca_and_unsupervised_learning.html",
     "title": "5  Session 5: Many variables at once: PCA, heatmaps and PLS-DA",
     "section": "",
-    "text": "5.1 Overview\nIn Session 4, you analysed one variable at a time: the biomass, then the Shannon diversity. Today, each sample comes with dozens, then thousands of variables at once: the concentrations of 15 to 37 small molecules (metabolites) measured in the root, the stem, the leaf and the root exudates of the same soybean plants, then 2,500 untargeted signals from the exudates. One boxplot per molecule would give you dozens of plots and no overview. You will learn the classic tools to see the whole table at once:",
+    "text": "5.1 Overview\nDownload the lecture slides (PDF)\nIn Session 4, you analysed one variable at a time: the biomass, then the Shannon diversity. Today, each sample comes with dozens, then thousands of variables at once: the concentrations of 15 to 37 small molecules (metabolites) measured in the root, the stem, the leaf and the root exudates of the same soybean plants, then 2,500 untargeted signals from the exudates. One boxplot per molecule would give you dozens of plots and no overview. You will learn the classic tools to see the whole table at once:",
     "crumbs": [
       "Data analysis with R",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Session 5: Many variables at once: PCA, heatmaps and PLS-DA</span>"

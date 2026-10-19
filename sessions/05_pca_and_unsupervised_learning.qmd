@@ -25,6 +25,8 @@ variance <- round(100 * summary(root_pca)$importance[2, ], 1)
 
 ## Overview
 
+[Download the lecture slides (PDF)](slides/05_lecture_slides.pdf)
+
 ::: callout-tip
 ## Quick poll (Poll Everywhere)
 
