@@ -4,3 +4,6 @@ here
 renv
 rmarkdown
 tidyverse
+ggrepel
+mixOmics
+pheatmap
