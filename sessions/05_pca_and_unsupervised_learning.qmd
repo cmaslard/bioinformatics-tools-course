@@ -3,25 +3,6 @@ title: "Session 5: Many variables at once: PCA, heatmaps and PLS-DA"
 engine: knitr
 ---
 
-```{r}
-#| label: setup
-#| include: false
-set.seed(2026)   # same jittered points at every render
-library(mixOmics)
-library(tidyverse)
-library(pheatmap)
-library(ggrepel)
-metabolites <- read_csv("data/05/soybean_metabolites.csv", show_col_types = FALSE)
-root_wide <- metabolites %>%
-  filter(organ == "root") %>%
-  mutate(log_conc = log10(concentration)) %>%
-  select(sample, genotype, water, heat, metabolite, log_conc) %>%
-  pivot_wider(names_from = metabolite, values_from = log_conc)
-root_matrix <- root_wide %>% select(-sample, -genotype, -water, -heat) %>% as.matrix()
-rownames(root_matrix) <- root_wide$sample
-root_pca <- prcomp(root_matrix, scale. = TRUE)
-variance <- round(100 * summary(root_pca)$importance[2, ], 1)
-```
 
 ## Overview
 
@@ -354,8 +335,7 @@ open `WORKBOOK.qmd`, write your name at the top and click **Render** once.
 ## Checkpoint
 
 `WORKBOOK.pdf` appears (RStudio opens it), with the design figure as Figure 1, and the
-first chunk shows
-`Rows: 4,155`, `Columns: 9`: `sample`, `organ`, `genotype`, `water`, `heat`, `panel`,
+first chunk lists the columns `sample`, `organ`, `genotype`, `water`, `heat`, `panel`,
 `metabolite`, `kegg_id`, `concentration`. A few chunks further down show
 `Error: unexpected input`: those are the `___` you will fill.
 :::
@@ -371,16 +351,16 @@ molecule, a common rule in metabolomics.
 **B1. What is in the table?**
 
 ```r
-metabolites %>% distinct(organ, sample) %>% count(organ)
+# how many samples per organ? (count by the column that holds the organ)
+metabolites %>% distinct(organ, sample) %>% count(___)
 metabolites %>% distinct(organ, metabolite) %>% count(organ)
 ```
 
 ::: callout-note
 ## Checkpoint
 
-32 samples in the leaf and the stem, 31 in the root (one root sample had too many
-missing values and was removed), 51 in the exudates (one per plant). 34 metabolites in
-the root, 36 in the stem, 37 in the leaf, 15 in the exudates.
+Two small tables, each with one row per organ: `exudate`, `leaf`, `root`, `stem`. If
+you see one row per sample instead, check what you put in `count()`.
 :::
 
 **B2. The drought hormone.** Abscisic acid (ABA) makes the leaves close their stomata, the
@@ -391,50 +371,43 @@ the exudate list):
 aba <- metabolites %>%
   filter(metabolite == "Abscisic Acid")
 
+# one panel per organ
 ggplot(aba, aes(x = water, y = concentration, colour = heat)) +
   geom_boxplot(outlier.shape = NA) +
   geom_point(position = position_jitterdodge(jitter.width = 0.1)) +
-  facet_wrap(~ organ, scales = "free_y")
+  facet_wrap(~ ___, scales = "free_y")
+
+# the mean per organ and per water regime
+aba %>%
+  group_by(organ, ___) %>%
+  summarise(mean_aba = mean(concentration))
 ```
 
-```{r}
-#| label: fig-b2
-#| echo: false
-#| fig-width: 9
-#| fig-height: 3.5
-#| fig-cap: "Checkpoint B2: abscisic acid in the three organs."
-aba <- metabolites %>% filter(metabolite == "Abscisic Acid")
-ggplot(aba, aes(x = water, y = concentration, colour = heat)) +
-  geom_boxplot(outlier.shape = NA) +
-  geom_point(position = position_jitterdodge(jitter.width = 0.1)) +
-  facet_wrap(~ organ, scales = "free_y")
-```
 
 `scales = "free_y"` gives each organ its own y axis: the levels are very different
-between organs. The workbook also computes the mean per organ and water regime, as in
-Session 4.
+between organs.
 
 **B3. Proline**, a small amino acid that protects cells when water is short. Same plot,
-with one `___` to fill. It was only measured in the leaf and the stem.
+with one `___` to fill.
 
 **B4. Why the log?**
 
 ```r
-range(metabolites$concentration)
+range(metabolites$___)
 
 ggplot(metabolites, aes(x = concentration)) +
   geom_histogram(bins = 50)
 
-ggplot(metabolites, aes(x = log10(concentration))) +
+# the same histogram, on the log10 scale
+ggplot(metabolites, aes(x = log10(___))) +
   geom_histogram(bins = 50)
 ```
 
 ::: callout-note
 ## Checkpoint
 
-The concentrations range from about 0.02 to about 190,000: a factor of about ten
-million. The first histogram is one tall bar near zero; the second one is spread out
-and readable.
+`range()` prints two numbers. The first histogram is one tall bar near zero; the second
+one is spread out and readable.
 :::
 
 ### 15:35-15:45: Short break
@@ -451,24 +424,30 @@ jumps and throws (metres, large is good).
 ```r
 decathlon <- read_csv("data/decathlon.csv")
 glimpse(decathlon)
-decathlon %>% count(competition)
+
+# how many athletes per competition?
+decathlon %>% count(___)
 ```
 
 **W2. Without and with scaling.** The same PCA twice: first with each event in its own
 unit, then with every event scaled.
 
 ```r
+# the 10 events only, as a matrix, with the athletes' names as row names
 events <- decathlon %>%
   select(run_100m:run_1500m) %>%
   as.matrix()
-rownames(events) <- decathlon$athlete
+rownames(events) <- decathlon$___
 
+# how much does each event vary between athletes? (standard deviation, in its own unit)
 decathlon %>% summarise(across(run_100m:run_1500m, sd))
 
+# a PCA WITHOUT scaling: each event keeps its own unit (seconds, metres)
 pca_raw <- prcomp(events, scale. = FALSE)
-round(pca_raw$rotation[, 1], 2)
+round(pca_raw$rotation[, 1], 2)   # the loadings on PC1
 
-decathlon_pca <- prcomp(events, scale. = TRUE)
+# the same PCA WITH scaling: every event gets the same weight
+decathlon_pca <- prcomp(events, scale. = ___)
 decathlon_variance <- round(100 * summary(decathlon_pca)$importance[2, ], 1)
 decathlon_variance
 ```
@@ -480,56 +459,39 @@ decathlon_variance
 **scores** points (one per athlete):
 
 ```r
+# the events: one arrow per event, from 0 to its loadings on PC1 and PC2
 decathlon_loadings <- as_tibble(decathlon_pca$rotation[, 1:2], rownames = "event")
 
 ggplot(decathlon_loadings) +
-  geom_segment(aes(x = 0, y = 0, xend = PC1, yend = PC2),
+  geom_segment(aes(x = 0, y = 0, xend = ___, yend = ___),
                arrow = arrow(length = unit(0.2, "cm"))) +
-  geom_text_repel(aes(x = PC1, y = PC2, label = event)) +
+  geom_text_repel(aes(x = PC1, y = PC2, label = ___)) +
   coord_equal() +
   labs(x = paste0("PC1 (", decathlon_variance[1], "%)"),
        y = paste0("PC2 (", decathlon_variance[2], "%)"))
 
+# the athletes: one point per athlete, coloured by the final score
 decathlon_scores <- as_tibble(decathlon_pca$x[, 1:2]) %>%
   bind_cols(select(decathlon, athlete, competition, points))
 
-ggplot(decathlon_scores, aes(x = PC1, y = PC2, colour = points)) +
+ggplot(decathlon_scores, aes(x = PC1, y = PC2, colour = ___)) +
   geom_point(size = 3) +
   geom_text_repel(aes(label = athlete), size = 3) +
   labs(x = paste0("PC1 (", decathlon_variance[1], "%)"),
-       y = paste0("PC2 (", decathlon_variance[2], "%)"))
+       y = paste0("PC2 (", decathlon_variance[___], "%)"))
 
-cor(decathlon_scores$PC1, decathlon_scores$points)
+# does PC1 follow the final score?
+cor(decathlon_scores$PC1, decathlon_scores$___)
 ```
 
-```{r}
-#| label: fig-w3
-#| echo: false
-#| fig-width: 6.5
-#| fig-height: 5
-#| fig-cap: "Checkpoint W3: the loadings of the decathlon PCA, one arrow per event."
-decathlon <- read_csv("data/05/decathlon.csv", show_col_types = FALSE)
-events <- decathlon %>% select(run_100m:run_1500m) %>% as.matrix()
-rownames(events) <- decathlon$athlete
-decathlon_pca <- prcomp(events, scale. = TRUE)
-decathlon_variance <- round(100 * summary(decathlon_pca)$importance[2, ], 1)
-decathlon_loadings <- as_tibble(decathlon_pca$rotation[, 1:2], rownames = "event")
-ggplot(decathlon_loadings) +
-  geom_segment(aes(x = 0, y = 0, xend = PC1, yend = PC2),
-               arrow = arrow(length = unit(0.2, "cm"))) +
-  geom_text_repel(aes(x = PC1, y = PC2, label = event)) +
-  coord_equal() +
-  labs(x = paste0("PC1 (", decathlon_variance[1], "%)"),
-       y = paste0("PC2 (", decathlon_variance[2], "%)"))
-```
 
 ::: callout-note
 ## Checkpoint
 
-Your arrows look like @fig-w3 (the whole plot may be flipped left-right or up-down: the
-direction of an axis is arbitrary, only the angles between arrows matter). The points
-plot has 41 points; some names appear twice, because 9 athletes competed in both
-meetings.
+Two plots: one with 10 arrows (one per event), one with 41 points. Some names appear
+twice, because 9 athletes competed in both meetings. On another computer, the whole plot
+may be flipped left-right or up-down: the direction of an axis is arbitrary, only the
+angles between arrows matter.
 :::
 
 ### C. Guided: the whole root metabolome, without labels (16:00-16:35, pairs)
@@ -538,29 +500,36 @@ meetings.
 concentration:
 
 ```r
+# one row per sample, one column per metabolite, log10 of the concentration
 root_wide <- metabolites %>%
-  filter(organ == "root") %>%
-  mutate(log_conc = log10(concentration)) %>%
+  filter(organ == ___) %>%
+  mutate(log_conc = ___(concentration)) %>%
   select(sample, genotype, water, heat, metabolite, log_conc) %>%
-  pivot_wider(names_from = metabolite, values_from = log_conc)
+  pivot_wider(names_from = ___, values_from = ___)   # which column gives the new column names? which one fills them?
 
+dim(root_wide)
+
+# the numbers only, as a matrix, with the sample names as row names
 root_matrix <- root_wide %>%
   select(-sample, -genotype, -water, -heat) %>%
   as.matrix()
 rownames(root_matrix) <- root_wide$sample
+
+dim(root_matrix)
 ```
 
 ::: callout-note
 ## Checkpoint
 
-`root_wide`: 31 rows, 38 columns (4 describing the sample + 34 metabolites).
-`root_matrix`: 31 rows, 34 columns, numbers only.
+`dim()` prints two numbers for each table: rows, then columns. `root_matrix[1:3, 1:3]`
+shows numbers only, with the sample names as row names.
 :::
 
 **C2. The PCA.**
 
 ```r
-root_pca <- prcomp(root_matrix, scale. = TRUE)
+# scale. = TRUE or FALSE? (see C2 b)
+root_pca <- prcomp(root_matrix, scale. = ___)
 
 variance <- round(100 * summary(root_pca)$importance[2, ], 1)
 variance
@@ -573,31 +542,20 @@ now, to colour the points.
 root_scores <- as_tibble(root_pca$x[, 1:2]) %>%
   bind_cols(select(root_wide, sample, genotype, water, heat))
 
-ggplot(root_scores, aes(x = PC1, y = PC2, colour = water, shape = heat)) +
+# colour by water regime, shape by heat regime; the variance of each axis in its title
+ggplot(root_scores, aes(x = PC1, y = PC2, colour = ___, shape = ___)) +
   geom_point(size = 3) +
   labs(x = paste0("PC1 (", variance[1], "%)"),
-       y = paste0("PC2 (", variance[2], "%)"))
+       y = paste0("PC2 (", variance[___], "%)"))
 ```
 
-```{r}
-#| label: fig-c3
-#| echo: false
-#| fig-width: 6.5
-#| fig-height: 4
-#| fig-cap: "Checkpoint C3: PCA of the root metabolome."
-root_scores <- as_tibble(root_pca$x[, 1:2]) %>%
-  bind_cols(select(root_wide, sample, genotype, water, heat))
-ggplot(root_scores, aes(x = PC1, y = PC2, colour = water, shape = heat)) +
-  geom_point(size = 3) +
-  labs(x = paste0("PC1 (", variance[1], "%)"),
-       y = paste0("PC2 (", variance[2], "%)"))
-```
 
 **C4. Which molecules drive the axes?**
 
 ```r
+# sort the metabolites by their loading on the first axis
 root_loadings <- as_tibble(root_pca$rotation[, 1:2], rownames = "metabolite") %>%
-  arrange(PC1)
+  arrange(___)
 
 head(root_loadings, 5)   # most negative on PC1
 tail(root_loadings, 5)   # most positive on PC1
@@ -606,58 +564,43 @@ tail(root_loadings, 5)   # most positive on PC1
 **C5. The heatmap.** A small annotation table puts the conditions on top of the heatmap:
 
 ```r
+# a small table: one row per sample (sample names as row names), the two conditions
 annotation <- root_wide %>%
-  select(sample, water, heat) %>%
+  select(sample, ___, ___) %>%
   column_to_rownames("sample")
 
-pheatmap(t(root_matrix), scale = "row", annotation_col = annotation,
+# scale each metabolite (each row) on its own; put the conditions on top
+pheatmap(t(root_matrix), scale = ___, annotation_col = ___,
          show_colnames = FALSE, fontsize_row = 7)
 ```
 
-```{r}
-#| label: fig-c5
-#| echo: false
-#| fig-width: 9
-#| fig-height: 8
-#| fig-cap: "Checkpoint C5: heatmap of the root metabolome, with clustering."
-annotation <- root_wide %>% select(sample, water, heat) %>% column_to_rownames("sample")
-pheatmap(t(root_matrix), scale = "row", annotation_col = annotation,
-         show_colnames = FALSE, fontsize_row = 7)
-```
 
 ### D. Guided: with labels, then one test per molecule (16:35-17:10, pairs)
 
 **D1. PLS-DA with the real labels.**
 
 ```r
-root_plsda <- plsda(root_matrix, root_wide$water, ncomp = 2)
+# the labels to learn: the water regime; 2 components
+root_plsda <- plsda(root_matrix, root_wide$___, ncomp = ___)
 
 plotIndiv(root_plsda, ellipse = TRUE, legend = TRUE,
           title = "Root, PLS-DA with the real labels")
 ```
 
-```{r}
-#| label: fig-d1
-#| echo: false
-#| fig-width: 6
-#| fig-height: 5
-#| fig-cap: "Checkpoint D1: PLS-DA of the root, real labels."
-root_plsda <- plsda(root_matrix, root_wide$water, ncomp = 2)
-plotIndiv(root_plsda, ellipse = TRUE, legend = TRUE,
-          title = "Root, PLS-DA with the real labels")
-```
 
 **D2. The trap.** Now give the PLS-DA labels that mean **nothing**: the same "drought"
 and "watered" labels, mixed at random with `sample()`. Let it use 10 components, then ask
 how well it classifies the samples it learned from:
 
 ```r
+# the trap: the same labels, mixed at random, and 10 components
 set.seed(1)
-shuffled <- sample(root_wide$water)
-root_plsda_shuffled <- plsda(root_matrix, shuffled, ncomp = 10)
+shuffled <- sample(root_wide$___)
+root_plsda_shuffled <- plsda(root_matrix, ___, ncomp = ___)
 
-predicted <- predict(root_plsda_shuffled, root_matrix)$class$max.dist[, 10]
-mean(predicted == shuffled)
+# how often does it predict the shuffled label of the samples it learned from?
+predicted <- predict(root_plsda_shuffled, root_matrix)$class$max.dist[, ___]
+mean(predicted == ___)
 ```
 
 `set.seed(1)` makes the random draw the same for everyone, so that you can compare your
@@ -667,36 +610,42 @@ numbers.
 from:
 
 ```r
+# cross-validation: read the error on the line of the last component of each model
 set.seed(1)
 cv_shuffled <- perf(root_plsda_shuffled, validation = "Mfold", folds = 4, nrepeat = 10)
-1 - cv_shuffled$error.rate$BER[10, "max.dist"]
+1 - cv_shuffled$error.rate$BER[___, "max.dist"]
 
 set.seed(1)
 cv_real <- perf(root_plsda, validation = "Mfold", folds = 4, nrepeat = 10)
-1 - cv_real$error.rate$BER[2, "max.dist"]
+1 - cv_real$error.rate$BER[___, "max.dist"]
 ```
 
 ::: callout-note
 ## Checkpoint
 
-D2: the model learns the **random** labels almost perfectly (more than 90% correct on
-its own data). D3: on samples it did not see, the same model is no better than tossing
-a coin (around 50%), while the model with the real labels stays above 90%. Your exact
-numbers can differ slightly with another version of mixOmics.
+D2 prints one number between 0 and 1 (the share of samples classified correctly), D3
+prints two. `subscript out of bounds` means you asked for a component the model does
+not have: look at `ncomp`. The cross-validation numbers change a little from one run to
+the next: that is normal.
 :::
 
 **D4. One test per molecule.** The t-test of Session 4, run on each metabolite, then the
 correction:
 
 ```r
+# one t-test per metabolite: drought vs watered
 root_tests <- metabolites %>%
   filter(organ == "root") %>%
-  group_by(metabolite, panel) %>%
-  summarise(log2_fold_change = log2(mean(concentration[water == "drought"]) /
-                                    mean(concentration[water == "watered"])),
-            p_value = t.test(log10(concentration) ~ water, var.equal = TRUE)$p.value,
+  group_by(___, panel) %>%
+  summarise(log2_fold_change = log2(mean(concentration[water == ___]) /
+                                    mean(concentration[water == ___])),
+            p_value = t.test(log10(concentration) ~ ___, var.equal = TRUE)$p.value,
             .groups = "drop") %>%
-  mutate(p_adjusted = p.adjust(p_value, method = "BH"))
+  mutate(p_adjusted = p.adjust(p_value, method = ___))   # Benjamini-Hochberg
+
+# how many are significant after the correction?
+sum(root_tests$p_adjusted < ___)
+root_tests %>% arrange(p_adjusted)
 ```
 
 `log2_fold_change`: 1 means twice as high under drought, −1 half as high, 0 no change.
@@ -704,43 +653,23 @@ root_tests <- metabolites %>%
 **D5. The volcano plot.**
 
 ```r
-ggplot(root_tests, aes(x = log2_fold_change, y = -log10(p_adjusted), colour = panel)) +
+# x: the effect, y: the evidence; a dashed line at the 5% level
+ggplot(root_tests, aes(x = ___, y = -log10(___), colour = panel)) +
   geom_point(size = 2) +
-  geom_hline(yintercept = -log10(0.05), linetype = "dashed") +
+  geom_hline(yintercept = -log10(___), linetype = "dashed") +
   geom_vline(xintercept = 0) +
   geom_text_repel(data = slice_min(root_tests, p_adjusted, n = 10),
                   aes(label = metabolite), size = 3, show.legend = FALSE)
 ```
 
-```{r}
-#| label: fig-d5
-#| echo: false
-#| fig-width: 7.5
-#| fig-height: 5
-#| fig-cap: "Checkpoint D5: volcano plot of the root, drought vs watered."
-root_tests <- metabolites %>%
-  filter(organ == "root") %>%
-  group_by(metabolite, panel) %>%
-  summarise(log2_fold_change = log2(mean(concentration[water == "drought"]) /
-                                    mean(concentration[water == "watered"])),
-            p_value = t.test(log10(concentration) ~ water, var.equal = TRUE)$p.value,
-            .groups = "drop") %>%
-  mutate(p_adjusted = p.adjust(p_value, method = "BH"))
-ggplot(root_tests, aes(x = log2_fold_change, y = -log10(p_adjusted), colour = panel)) +
-  geom_point(size = 2) +
-  geom_hline(yintercept = -log10(0.05), linetype = "dashed") +
-  geom_vline(xintercept = 0) +
-  geom_text_repel(data = slice_min(root_tests, p_adjusted, n = 10),
-                  aes(label = metabolite), size = 3, show.legend = FALSE)
-```
 
 ### E. On your own: the leaf
 
 Same reasoning, on the **leaf**: the wide table and the matrix (E1, adapt C1), the PCA
 and its plot, saved and inserted into your report (E2), the PLS-DA
 with its cross-validated accuracy (E3, adapt D1 and D3), and one test per molecule (E4,
-adapt D4). Then compare the leaf with the root (E5). The workbook gives you a skeleton
-for E2; E1, E3 and E4 are yours.
+adapt D4). Then compare the leaf with the root (E5). The workbook gives you the skeleton
+of E1 to E4, with more `___` than in C and D: fill them from your own code.
 
 ```r
 ggsave("results/leaf_pca.png", width = 6, height = 4)
@@ -760,8 +689,7 @@ now, most of the `___` are the choices you made in C and D, so reuse your own co
   `F2500`), read directly in the wide format that metabolomics software produce. Some
   intensities are exactly 0, hence `log10(x + 1)`. Does the PCA tell the same story as the
   targeted list?
-- **F3**, the PLS-DA trap again, with 2,500 variables and only 2 components: this time
-  you can **see** it on the plot.
+- **F3**, the PLS-DA trap again, with 2,500 variables and only 2 components.
 - **F4**, one test per feature: 2,500 tests, so the correction matters even more; then
   the names proposed for the significant features, in
   `soybean_exudates_annotation.csv`, and how much you can trust them; and the volcano
