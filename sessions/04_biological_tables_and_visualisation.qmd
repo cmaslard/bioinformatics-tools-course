@@ -1285,3 +1285,215 @@ Session 5 moves from **one** variable (Shannon diversity) to **hundreds at once*
 metabolomics table, where every column is a molecule. You will keep the same R project
 habits, the same dplyr verbs and ggplot layers, and meet two new kinds of plots to see
 the whole table in one picture.
+
+## Answers
+
+::: {.callout-note collapse="true"}
+## Open this after you have tried the exercises yourself
+
+Session 4 has now been submitted. Below are the real answers, computed with the exact
+workbook code on LEGcompute: use them to check your own reasoning, not to replace it.
+Small rounding differences (second decimal) are normal.
+
+**A1. The plant table.** 240 rows, 12 columns. One row is one plant of the final
+harvest. `NA` in the biomass columns: the plant was not weighed, because it was used for
+another job (omics and soil, plant microbiome), or the measure failed.
+
+**B1. Plants per job.** 66 `physiology`, 53 `exudates`, 75 `omics_and_soil`, 46
+`plant_microbiome`. The rhizoplane bacteria come from the `plant_microbiome` plants; the
+bulk soil bacteria from the soil of the `omics_and_soil` plants.
+
+**B2. The map.** The conditions are mixed: watered and drought rhizotubes, and the two
+cultivars, alternate along the lines. Mixing on purpose (randomisation) prevents a place
+effect (light, draught, the edge of the bench) from being mistaken for a treatment
+effect. The two maps have **exactly the same layout**: the same randomisation plan was
+used for both heat regimes.
+
+**B4. Biomass per climate.** 108 plants weighed.
+
+| water | heat | n | mean_biomass (g) |
+|---|---|---:|---:|
+| drought | heatwave | 25 | 0.32 |
+| drought | normal | 24 | 0.50 |
+| watered | heatwave | 27 | 1.16 |
+| watered | normal | 32 | 1.25 |
+
+Drought weighs far more: it divides the biomass by more than two. The heatwave removes a
+little more on top: about 7% of the biomass of watered plants, but 35% of drought plants
+(see optional challenge E).
+
+**B5. Per organ.** 324 rows = 108 plants × 3 organs. Mean biomass, watered → drought:
+leaf 0.61 → 0.19 g (−68%), stem 0.39 → 0.13 g (−66%), root 0.21 → 0.08 g (−61%). The
+**root** keeps the largest share of its biomass (its share of the total rises from 18%
+to 20%): keeping roots helps the plant explore the soil for the little water left.
+
+**C1. The bacteria table.** Rhizoplane (39), rhizosphere (39) and root endosphere (37)
+have fewer than 40 samples: 5 compartments × 40 plants = 200 expected, 195 present, 5
+missing.
+
+**C2. Diversity per compartment.**
+
+| Compartment | n | mean_shannon | sd_shannon |
+|---|---:|---:|---:|
+| Bulk soil | 40 | 5.00 | 0.088 |
+| Rhizosphere | 39 | 5.05 | 0.104 |
+| Rhizoplane | 39 | 2.83 | 0.631 |
+| Root endosphere | 37 | 2.17 | 0.999 |
+| Phylloplane | 40 | 3.28 | 1.46 |
+
+Most diverse: rhizosphere and bulk soil (about 5). Least: root endosphere (about 2.2).
+Tukey: only two pairs do not differ, `Rhizosphere-Bulk soil` (p adj = 0.9988) and
+`Phylloplane-Rhizoplane` (0.1206); `Root endosphere-Rhizoplane` 0.0072, all the others
+below 0.0001. Why fewer bacteria inside the root: the root is a **filter**. Few soil
+bacteria can cross the root surface and live inside the tissues; the plant's immune
+system and the chemistry inside the root select a small, specialised community.
+
+**C3. The rhizoplane.** 39 samples, 8 combinations, 5 each except drought × normal ×
+Stocata (4).
+
+**C4. Your guess.** Water, the factor that weighed most on biomass: checked in D4.
+
+**D1. t-test.** Watered 3.24, drought 2.40 (a drop of 0.84 Shannon units). t = −5.54,
+df = 37, `p-value = 2.601e-06`.
+
+**D2. The same test as a linear model.** `(Intercept)` 2.40 is the drought mean;
+`waterwatered` 0.839 is the difference between the two means (3.24 − 2.40). Its p-value,
+2.60e-06, is identical to the t-test's: a t-test is a linear model with one factor.
+
+**D3. Three factors at once.** Only `water` is below 0.05: `Pr(>F)` = 4.01e-06. `heat`
+0.060, genotype 0.43, no interaction below 0.2. (If you changed the order of the factors
+in the formula, `heat` can come out at 0.046: with this design, the order matters a
+little.)
+
+**D4. Share of variation.** Water 45.4%, residuals 45.1%, heat 5.5%, water:heat 2.4%,
+everything else below 1% each. Your C4 guess (water) was right.
+
+**D5. The p-value on the plot.** `t-test, drought vs watered: p = 2.6e-06`. Computed in
+R, not typed: no typing error, and it updates by itself if the data or the test change.
+
+**E. The bulk soil, the code.** One way to write it:
+
+```r
+# E1
+bulk_soil <- alpha %>%
+  filter(compartment == "Bulk soil")
+count(bulk_soil, water, heat, genotype)
+
+# E2
+bulk_soil_means <- bulk_soil %>%
+  group_by(water, heat) %>%
+  summarise(mean_shannon = mean(shannon),
+            se = sd(shannon) / sqrt(n()))
+
+plot_bulk_soil <- ggplot(bulk_soil_means,
+                         aes(x = water, y = mean_shannon, colour = heat, group = heat)) +
+  geom_point(size = 3) +
+  geom_line() +
+  geom_errorbar(aes(ymin = mean_shannon - se, ymax = mean_shannon + se), width = 0.1)
+
+# E3
+model_bulk_soil <- lm(shannon ~ water * heat * genotype, data = bulk_soil)
+anova_bulk_soil <- tidy(anova(model_bulk_soil)) %>%
+  mutate(share = sumsq / sum(sumsq))
+
+# E4
+p_heat  <- anova_bulk_soil %>% filter(term == "heat") %>% pull(p.value)
+p_water <- anova_bulk_soil %>% filter(term == "water") %>% pull(p.value)
+
+plot_bulk_soil +
+  labs(title = "Bulk soil",
+       subtitle = paste("ANOVA: heat p =", signif(p_heat, 2),
+                        "| water p =", signif(p_water, 2)),
+       x = "Water regime", y = "Mean Shannon diversity (± SE)", colour = "Heat regime") +
+  theme_bw()
+
+ggsave("results/bulk_soil_interaction.png", width = 6, height = 4)
+```
+
+Then, below the chunk, the image line:
+
+```markdown
+![Bulk soil: mean Shannon diversity (± SE) under the four climates. The heatwave lowers it slightly; drought does not.](results/bulk_soil_interaction.png){#fig-bulk width=80%}
+```
+
+**E1.** 40 samples, 5 per combination (fully balanced).
+
+**E2.** Means: drought × heatwave 4.91, drought × normal 5.05, watered × heatwave 4.97,
+watered × normal 5.06 (SE about 0.02). Heat moves the means the most: the two lines are
+far apart, while each line is almost flat from drought to watered. The lines are roughly
+parallel: no clear interaction. Non-parallel lines would mean that the effect of drought
+depends on the heat regime.
+
+**E3.** Only `heat` is significant: `Pr(>F)` = 1.45e-05, 42.0% of the variation. Water
+3.2% (p = 0.17), genotype 1.1%, no significant interaction (water:heat p = 0.35),
+residuals 51.5%. The heatwave lowers diversity by about 0.1 Shannon units, against 0.84
+for drought on the rhizoplane: about eight times smaller.
+
+**E4.** Your figure should look like this one, and appear as Figure 2:
+
+![The expected E4 figure: the bulk soil interaction plot, four means with their standard errors, one line per heat regime.](img/04/expected_bulk_soil.png){width=70%}
+
+Look at the y axis: it runs from about 4.90 to 5.07. ggplot zooms in, so a difference of
+0.1 looks as large as the 0.84 of the rhizoplane.
+
+**E5. A complete answer.**
+
+> In the bulk soil, drought does not change bacterial diversity (p = 0.17, 3% of the
+> variation), whereas the heatwave lowers it slightly (from about 5.05 to 4.94,
+> p = 1.5e-05, 42% of the variation; Figure 2). On the rhizoplane it is the opposite:
+> drought is the main factor (3.24 to 2.40, p = 4e-06, 45% of the variation) and the
+> heatwave is not significant. Drought probably acts through the plant: a thirsty root
+> changes what it releases and how much water it draws right at its surface, while the
+> soil further away hardly feels it. The bulk soil heatwave effect is highly significant
+> but tiny (about 0.1 Shannon units, against 0.84 for drought on the rhizoplane): bulk
+> soil samples vary so little that even a small difference stands out.
+
+The key idea: **significant is not large**. A very small p-value says the difference is
+unlikely to be chance, not that it matters biologically.
+
+**E6. Good limitations.** The bulk soil effect is significant but very small, and the
+zoomed y axis makes it look large; only 5 plants per combination; Shannon is one number
+and says nothing about *which* bacteria changed; biomass and bacteria come from different
+plants, so no plant-by-plant link is possible; one experiment, one season; the model's
+assumptions were not checked; several compartments and many tests, so some p-values
+below 0.05 can appear by chance.
+
+**Optional challenge A.** The two main factors, compartment by compartment:
+
+| Compartment | water: p (share) | heat: p (share) |
+|---|---|---|
+| Bulk soil | 0.17 (3%) | 1.5e-05 (42%) |
+| Rhizosphere | 0.019 (15%) | 0.49 (1%) |
+| Rhizoplane | 4.0e-06 (45%) | 0.060 (6%) |
+| Root endosphere | 0.65 (0.4%) | 0.074 (6%) |
+| Phylloplane | 0.085 (5%) | 0.0023 (16%) |
+
+A pattern from soil to leaf: drought matters more and more as you come closer to the
+root surface (bulk soil 3%, rhizosphere 15%, rhizoplane 45%), but not inside the root,
+where the plant filters its bacteria. The heatwave matters where the bacteria are exposed
+to the air temperature: the bulk soil and the leaf surface.
+
+**Optional challenge B.** The rhizoplane residuals look acceptable: no clear trend or
+funnel on the first plot, points close to the line on the second (Shapiro test
+p = 0.25), and a similar spread in both water regimes (sd 0.48 under drought, 0.46
+watered).
+
+**Optional challenge C.** 36 of the 40 plants have both a rhizoplane and an endosphere
+sample. In the mixed model, the plant effect has a standard deviation of 0.42, against
+0.66 for the residuals: about 28% of the remaining variation is shared by the two
+compartments of the same plant. Two separate models treat these samples as independent,
+which they are not. The conclusion does not change: drought lowers the rhizoplane (+0.83
+when watered) but hardly the endosphere (the `compartment:water` interaction, −0.70,
+cancels most of it: t = −2.28).
+
+**Optional challenge D.** With one panel per climate, no obvious gradient appears. Added
+after the treatments, `line` p = 0.52 and `position` p = 0.07: no clear place effect.
+Even if position had a small effect, the mixing protects the conclusions: any place
+effect is spread over all conditions instead of piling up on one.
+
+**Optional challenge E.** Raw scale: `water:heat` p = 0.22. Log scale: `water:heat`
+p = 1e-5. From B4, the heatwave removes about 7% of a watered plant's biomass
+(1.25 → 1.16 g) but 35% of a drought plant's (0.50 → 0.32 g). A log scale compares
+ratios, not differences: in relative terms, the two stresses together hurt more than the
+sum of each alone. That is how a plant biologist usually thinks about growth.
+:::
