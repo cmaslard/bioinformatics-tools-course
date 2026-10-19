@@ -36,6 +36,7 @@ book:
     - part: "Data analysis with R"
       chapters:
         - sessions/04_biological_tables_and_visualisation.qmd
+        - sessions/05_pca_and_unsupervised_learning.qmd
     - references.qmd
   search:
     type: overlay
