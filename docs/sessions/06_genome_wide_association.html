@@ -1211,19 +1211,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span> chromosome, <span class="at">scales =</span> <span class="st">"free_x"</span>, <span class="at">space =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
 <span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The genes near the best SNP (10 PCs)"</span>,</span>
 <span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Position (Mb)"</span>, <span class="at">y =</span> <span class="st">"-log10(p)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Your workbook has no such chunk?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>It was added during the session. Open a new R chunk after your answer to E4 (<strong>Insert</strong> → <strong>Code Chunk</strong> → <strong>R</strong>) and paste the code above into it. <strong>Do not copy <code>WORKBOOK.qmd</code> from the course folder again</strong>: it would replace your file and erase your answers.</p>
-</div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2591,113 +2578,105 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb27-764"><a href="#cb27-764" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Position (Mb)"</span>, <span class="at">y =</span> <span class="st">"-log10(p)"</span>)</span>
 <span id="cb27-765"><a href="#cb27-765" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-766"><a href="#cb27-766" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-767"><a href="#cb27-767" aria-hidden="true" tabindex="-1"></a>::: callout-warning</span>
-<span id="cb27-768"><a href="#cb27-768" aria-hidden="true" tabindex="-1"></a><span class="fu">## Your workbook has no such chunk?</span></span>
+<span id="cb27-767"><a href="#cb27-767" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb27-768"><a href="#cb27-768" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
 <span id="cb27-769"><a href="#cb27-769" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-770"><a href="#cb27-770" aria-hidden="true" tabindex="-1"></a>It was added during the session. Open a new R chunk after your answer to E4 (**Insert**</span>
-<span id="cb27-771"><a href="#cb27-771" aria-hidden="true" tabindex="-1"></a>→ **Code Chunk** → **R**) and paste the code above into it. **Do not copy <span class="in">`WORKBOOK.qmd`</span></span>
-<span id="cb27-772"><a href="#cb27-772" aria-hidden="true" tabindex="-1"></a>from the course folder again**: it would replace your file and erase your answers.</span>
-<span id="cb27-773"><a href="#cb27-773" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-774"><a href="#cb27-774" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-775"><a href="#cb27-775" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb27-776"><a href="#cb27-776" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
-<span id="cb27-777"><a href="#cb27-777" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-778"><a href="#cb27-778" aria-hidden="true" tabindex="-1"></a>E3: a count, one number (λ), a Manhattan plot titled "GWAS with 10 PCs", and a QQ plot</span>
-<span id="cb27-779"><a href="#cb27-779" aria-hidden="true" tabindex="-1"></a>with two colours. E4: tables of 4 columns, then a table of genes with <span class="in">`gene_id`</span>,</span>
-<span id="cb27-780"><a href="#cb27-780" aria-hidden="true" tabindex="-1"></a><span class="in">`symbol`</span>, <span class="in">`chromosome`</span>, <span class="in">`start`</span>, <span class="in">`end`</span>, <span class="in">`description`</span>. A <span class="in">`symbol`</span> shown as <span class="in">`NA`</span> means</span>
-<span id="cb27-781"><a href="#cb27-781" aria-hidden="true" tabindex="-1"></a>the gene has no short name. E4, continued: the same Manhattan plot, with one blue point</span>
-<span id="cb27-782"><a href="#cb27-782" aria-hidden="true" tabindex="-1"></a>and a box of gene names next to it.</span>
-<span id="cb27-783"><a href="#cb27-783" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-770"><a href="#cb27-770" aria-hidden="true" tabindex="-1"></a>E3: a count, one number (λ), a Manhattan plot titled "GWAS with 10 PCs", and a QQ plot</span>
+<span id="cb27-771"><a href="#cb27-771" aria-hidden="true" tabindex="-1"></a>with two colours. E4: tables of 4 columns, then a table of genes with <span class="in">`gene_id`</span>,</span>
+<span id="cb27-772"><a href="#cb27-772" aria-hidden="true" tabindex="-1"></a><span class="in">`symbol`</span>, <span class="in">`chromosome`</span>, <span class="in">`start`</span>, <span class="in">`end`</span>, <span class="in">`description`</span>. A <span class="in">`symbol`</span> shown as <span class="in">`NA`</span> means</span>
+<span id="cb27-773"><a href="#cb27-773" aria-hidden="true" tabindex="-1"></a>the gene has no short name. E4, continued: the same Manhattan plot, with one blue point</span>
+<span id="cb27-774"><a href="#cb27-774" aria-hidden="true" tabindex="-1"></a>and a box of gene names next to it.</span>
+<span id="cb27-775"><a href="#cb27-775" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-776"><a href="#cb27-776" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-777"><a href="#cb27-777" aria-hidden="true" tabindex="-1"></a>Then **E5**: summarise the flowering GWAS in a few sentences, with your own numbers.</span>
+<span id="cb27-778"><a href="#cb27-778" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-779"><a href="#cb27-779" aria-hidden="true" tabindex="-1"></a><span class="fu">### F. On your own: leaf sodium</span></span>
+<span id="cb27-780"><a href="#cb27-780" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-781"><a href="#cb27-781" aria-hidden="true" tabindex="-1"></a>The same reasoning, on the **leaf sodium** of about 150 accessions. The workbook gives you the</span>
+<span id="cb27-782"><a href="#cb27-782" aria-hidden="true" tabindex="-1"></a>skeleton, with more <span class="in">`___`</span> than in D and E: by now, most of them are the choices you made</span>
+<span id="cb27-783"><a href="#cb27-783" aria-hidden="true" tabindex="-1"></a>there, so reuse your own code.</span>
 <span id="cb27-784"><a href="#cb27-784" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-785"><a href="#cb27-785" aria-hidden="true" tabindex="-1"></a>Then **E5**: summarise the flowering GWAS in a few sentences, with your own numbers.</span>
-<span id="cb27-786"><a href="#cb27-786" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-787"><a href="#cb27-787" aria-hidden="true" tabindex="-1"></a><span class="fu">### F. On your own: leaf sodium</span></span>
-<span id="cb27-788"><a href="#cb27-788" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-789"><a href="#cb27-789" aria-hidden="true" tabindex="-1"></a>The same reasoning, on the **leaf sodium** of about 150 accessions. The workbook gives you the</span>
-<span id="cb27-790"><a href="#cb27-790" aria-hidden="true" tabindex="-1"></a>skeleton, with more <span class="in">`___`</span> than in D and E: by now, most of them are the choices you made</span>
-<span id="cb27-791"><a href="#cb27-791" aria-hidden="true" tabindex="-1"></a>there, so reuse your own code.</span>
+<span id="cb27-785"><a href="#cb27-785" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**F1**: the distribution of sodium, how much the 3 first PCs explain, and the naive</span>
+<span id="cb27-786"><a href="#cb27-786" aria-hidden="true" tabindex="-1"></a>  scan with its λ. <span class="in">`lm()`</span> leaves out the accessions without a sodium value (<span class="in">`NA`</span>) by</span>
+<span id="cb27-787"><a href="#cb27-787" aria-hidden="true" tabindex="-1"></a>  itself. With 147 plants, 3 PCs are enough: check λ.</span>
+<span id="cb27-788"><a href="#cb27-788" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**F2**: the corrected scan and its Manhattan plot, saved with <span class="in">`ggsave()`</span> and inserted</span>
+<span id="cb27-789"><a href="#cb27-789" aria-hidden="true" tabindex="-1"></a>  into your report, as in Session 5, with your own caption and the label <span class="in">`#fig-sodium`</span>.</span>
+<span id="cb27-790"><a href="#cb27-790" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**F3**: the genes under the best SNP, and the sodium of the plants by allele.</span>
+<span id="cb27-791"><a href="#cb27-791" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**F4**, comparing the two GWAS, and **F5**, one limitation.</span>
 <span id="cb27-792"><a href="#cb27-792" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-793"><a href="#cb27-793" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**F1**: the distribution of sodium, how much the 3 first PCs explain, and the naive</span>
-<span id="cb27-794"><a href="#cb27-794" aria-hidden="true" tabindex="-1"></a>  scan with its λ. <span class="in">`lm()`</span> leaves out the accessions without a sodium value (<span class="in">`NA`</span>) by</span>
-<span id="cb27-795"><a href="#cb27-795" aria-hidden="true" tabindex="-1"></a>  itself. With 147 plants, 3 PCs are enough: check λ.</span>
-<span id="cb27-796"><a href="#cb27-796" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**F2**: the corrected scan and its Manhattan plot, saved with <span class="in">`ggsave()`</span> and inserted</span>
-<span id="cb27-797"><a href="#cb27-797" aria-hidden="true" tabindex="-1"></a>  into your report, as in Session 5, with your own caption and the label <span class="in">`#fig-sodium`</span>.</span>
-<span id="cb27-798"><a href="#cb27-798" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**F3**: the genes under the best SNP, and the sodium of the plants by allele.</span>
-<span id="cb27-799"><a href="#cb27-799" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**F4**, comparing the two GWAS, and **F5**, one limitation.</span>
+<span id="cb27-793"><a href="#cb27-793" aria-hidden="true" tabindex="-1"></a><span class="fu">### Wrap-up (17:10-17:15)</span></span>
+<span id="cb27-794"><a href="#cb27-794" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-795"><a href="#cb27-795" aria-hidden="true" tabindex="-1"></a>Click **Render** (about 1.5 to 2 minutes for the whole workbook). Check that your PDF</span>
+<span id="cb27-796"><a href="#cb27-796" aria-hidden="true" tabindex="-1"></a>shows all the plots of blocks B to E. Block F follows the same logic as D and E. Submit</span>
+<span id="cb27-797"><a href="#cb27-797" aria-hidden="true" tabindex="-1"></a><span class="in">`WORKBOOK.pdf`</span> on Moodle **by Sunday evening (1 November)**. If you see errors in your</span>
+<span id="cb27-798"><a href="#cb27-798" aria-hidden="true" tabindex="-1"></a>PDF, or if it does not render, submit in addition your <span class="in">`WORKBOOK.qmd`</span> and your</span>
+<span id="cb27-799"><a href="#cb27-799" aria-hidden="true" tabindex="-1"></a><span class="in">`results/`</span> folder (your saved plot).</span>
 <span id="cb27-800"><a href="#cb27-800" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-801"><a href="#cb27-801" aria-hidden="true" tabindex="-1"></a><span class="fu">### Wrap-up (17:10-17:15)</span></span>
-<span id="cb27-802"><a href="#cb27-802" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-803"><a href="#cb27-803" aria-hidden="true" tabindex="-1"></a>Click **Render** (about 1.5 to 2 minutes for the whole workbook). Check that your PDF</span>
-<span id="cb27-804"><a href="#cb27-804" aria-hidden="true" tabindex="-1"></a>shows all the plots of blocks B to E. Block F follows the same logic as D and E. Submit</span>
-<span id="cb27-805"><a href="#cb27-805" aria-hidden="true" tabindex="-1"></a><span class="in">`WORKBOOK.pdf`</span> on Moodle **by Sunday evening (1 November)**. If you see errors in your</span>
-<span id="cb27-806"><a href="#cb27-806" aria-hidden="true" tabindex="-1"></a>PDF, or if it does not render, submit in addition your <span class="in">`WORKBOOK.qmd`</span> and your</span>
-<span id="cb27-807"><a href="#cb27-807" aria-hidden="true" tabindex="-1"></a><span class="in">`results/`</span> folder (your saved plot).</span>
-<span id="cb27-808"><a href="#cb27-808" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-809"><a href="#cb27-809" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb27-810"><a href="#cb27-810" aria-hidden="true" tabindex="-1"></a><span class="fu">## How this is graded (10 points)</span></span>
+<span id="cb27-801"><a href="#cb27-801" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb27-802"><a href="#cb27-802" aria-hidden="true" tabindex="-1"></a><span class="fu">## How this is graded (10 points)</span></span>
+<span id="cb27-803"><a href="#cb27-803" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-804"><a href="#cb27-804" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Criterion <span class="pp">|</span> Points <span class="pp">|</span> What it looks for <span class="pp">|</span></span>
+<span id="cb27-805"><a href="#cb27-805" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---:|---|</span></span>
+<span id="cb27-806"><a href="#cb27-806" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Reproducible workflow <span class="pp">|</span> 2 <span class="pp">|</span> The workbook renders (or the code is complete and in order), inside a clean project. <span class="pp">|</span></span>
+<span id="cb27-807"><a href="#cb27-807" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Working analysis <span class="pp">|</span> 3 <span class="pp">|</span> All the code of blocks A to F ran, and all your answers use the right numbers. <span class="pp">|</span></span>
+<span id="cb27-808"><a href="#cb27-808" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Required result <span class="pp">|</span> 2 <span class="pp">|</span> The corrected Manhattan plot of leaf sodium (F2): saved, inserted with a caption and <span class="in">`#fig-sodium`</span>, cited in F4. <span class="pp">|</span></span>
+<span id="cb27-809"><a href="#cb27-809" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Biological interpretation <span class="pp">|</span> 2 <span class="pp">|</span> Your answers on the biology, block by block, and especially E5 and F4, with your own numbers. <span class="pp">|</span></span>
+<span id="cb27-810"><a href="#cb27-810" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Reflection <span class="pp">|</span> 1 <span class="pp">|</span> Your answers on the methods (the order of the accessions, the threshold, the QQ plot, λ, the correction) and your limitation (F5). <span class="pp">|</span></span>
 <span id="cb27-811"><a href="#cb27-811" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-812"><a href="#cb27-812" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Criterion <span class="pp">|</span> Points <span class="pp">|</span> What it looks for <span class="pp">|</span></span>
-<span id="cb27-813"><a href="#cb27-813" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---:|---|</span></span>
-<span id="cb27-814"><a href="#cb27-814" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Reproducible workflow <span class="pp">|</span> 2 <span class="pp">|</span> The workbook renders (or the code is complete and in order), inside a clean project. <span class="pp">|</span></span>
-<span id="cb27-815"><a href="#cb27-815" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Working analysis <span class="pp">|</span> 3 <span class="pp">|</span> All the code of blocks A to F ran, and all your answers use the right numbers. <span class="pp">|</span></span>
-<span id="cb27-816"><a href="#cb27-816" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Required result <span class="pp">|</span> 2 <span class="pp">|</span> The corrected Manhattan plot of leaf sodium (F2): saved, inserted with a caption and <span class="in">`#fig-sodium`</span>, cited in F4. <span class="pp">|</span></span>
-<span id="cb27-817"><a href="#cb27-817" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Biological interpretation <span class="pp">|</span> 2 <span class="pp">|</span> Your answers on the biology, block by block, and especially E5 and F4, with your own numbers. <span class="pp">|</span></span>
-<span id="cb27-818"><a href="#cb27-818" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Reflection <span class="pp">|</span> 1 <span class="pp">|</span> Your answers on the methods (the order of the accessions, the threshold, the QQ plot, λ, the correction) and your limitation (F5). <span class="pp">|</span></span>
-<span id="cb27-819"><a href="#cb27-819" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-820"><a href="#cb27-820" aria-hidden="true" tabindex="-1"></a>Every question counts, except the exit questions.</span>
-<span id="cb27-821"><a href="#cb27-821" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-822"><a href="#cb27-822" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-823"><a href="#cb27-823" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
-<span id="cb27-824"><a href="#cb27-824" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-825"><a href="#cb27-825" aria-hidden="true" tabindex="-1"></a>You are done when all of the following are true:</span>
-<span id="cb27-826"><a href="#cb27-826" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-827"><a href="#cb27-827" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can say what a SNP is and what 0 and 1 mean in the genotype table;</span>
-<span id="cb27-828"><a href="#cb27-828" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you tested one SNP with <span class="in">`lm()`</span>, then all of them with a function and <span class="in">`apply()`</span>;</span>
-<span id="cb27-829"><a href="#cb27-829" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can explain the Bonferroni threshold, and read a Manhattan plot;</span>
-<span id="cb27-830"><a href="#cb27-830" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can read a QQ plot and λ, and say when a scan cannot be trusted;</span>
-<span id="cb27-831"><a href="#cb27-831" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can explain, with the SNP of C3, how population structure creates false</span>
-<span id="cb27-832"><a href="#cb27-832" aria-hidden="true" tabindex="-1"></a>  associations;</span>
-<span id="cb27-833"><a href="#cb27-833" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you ran a PCA of the genotypes, and used its components to correct the GWAS;</span>
-<span id="cb27-834"><a href="#cb27-834" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you found the genes under a peak, and can say why a peak is not a proof;</span>
-<span id="cb27-835"><a href="#cb27-835" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can explain why the structure misleads the GWAS of flowering time much more than</span>
-<span id="cb27-836"><a href="#cb27-836" aria-hidden="true" tabindex="-1"></a>  that of leaf sodium.</span>
-<span id="cb27-837"><a href="#cb27-837" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-838"><a href="#cb27-838" aria-hidden="true" tabindex="-1"></a><span class="fu">## Optional challenge</span></span>
-<span id="cb27-839"><a href="#cb27-839" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-840"><a href="#cb27-840" aria-hidden="true" tabindex="-1"></a>For your own interest, not graded.</span>
+<span id="cb27-812"><a href="#cb27-812" aria-hidden="true" tabindex="-1"></a>Every question counts, except the exit questions.</span>
+<span id="cb27-813"><a href="#cb27-813" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-814"><a href="#cb27-814" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-815"><a href="#cb27-815" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb27-816"><a href="#cb27-816" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-817"><a href="#cb27-817" aria-hidden="true" tabindex="-1"></a>You are done when all of the following are true:</span>
+<span id="cb27-818"><a href="#cb27-818" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-819"><a href="#cb27-819" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can say what a SNP is and what 0 and 1 mean in the genotype table;</span>
+<span id="cb27-820"><a href="#cb27-820" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you tested one SNP with <span class="in">`lm()`</span>, then all of them with a function and <span class="in">`apply()`</span>;</span>
+<span id="cb27-821"><a href="#cb27-821" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can explain the Bonferroni threshold, and read a Manhattan plot;</span>
+<span id="cb27-822"><a href="#cb27-822" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can read a QQ plot and λ, and say when a scan cannot be trusted;</span>
+<span id="cb27-823"><a href="#cb27-823" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can explain, with the SNP of C3, how population structure creates false</span>
+<span id="cb27-824"><a href="#cb27-824" aria-hidden="true" tabindex="-1"></a>  associations;</span>
+<span id="cb27-825"><a href="#cb27-825" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you ran a PCA of the genotypes, and used its components to correct the GWAS;</span>
+<span id="cb27-826"><a href="#cb27-826" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you found the genes under a peak, and can say why a peak is not a proof;</span>
+<span id="cb27-827"><a href="#cb27-827" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>you can explain why the structure misleads the GWAS of flowering time much more than</span>
+<span id="cb27-828"><a href="#cb27-828" aria-hidden="true" tabindex="-1"></a>  that of leaf sodium.</span>
+<span id="cb27-829"><a href="#cb27-829" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-830"><a href="#cb27-830" aria-hidden="true" tabindex="-1"></a><span class="fu">## Optional challenge</span></span>
+<span id="cb27-831"><a href="#cb27-831" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-832"><a href="#cb27-832" aria-hidden="true" tabindex="-1"></a>For your own interest, not graded.</span>
+<span id="cb27-833"><a href="#cb27-833" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-834"><a href="#cb27-834" aria-hidden="true" tabindex="-1"></a>**A. How many PCs?** Redo E3 with 3, then 20 PCs instead of 10. How do λ and the number</span>
+<span id="cb27-835"><a href="#cb27-835" aria-hidden="true" tabindex="-1"></a>of SNPs below the threshold change? Is the best SNP still the same?</span>
+<span id="cb27-836"><a href="#cb27-836" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-837"><a href="#cb27-837" aria-hidden="true" tabindex="-1"></a>**B. *FRIGIDA*.** *FRI* (chromosome 4, around 0.27 Mb) is one of the best-known</span>
+<span id="cb27-838"><a href="#cb27-838" aria-hidden="true" tabindex="-1"></a>flowering genes of *Arabidopsis*. Find the best SNP within 20 kb of it in the naive scan</span>
+<span id="cb27-839"><a href="#cb27-839" aria-hidden="true" tabindex="-1"></a>and in the corrected scan. What happened to it, and why could a correction for ancestry</span>
+<span id="cb27-840"><a href="#cb27-840" aria-hidden="true" tabindex="-1"></a>also hide a real gene?</span>
 <span id="cb27-841"><a href="#cb27-841" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-842"><a href="#cb27-842" aria-hidden="true" tabindex="-1"></a>**A. How many PCs?** Redo E3 with 3, then 20 PCs instead of 10. How do λ and the number</span>
-<span id="cb27-843"><a href="#cb27-843" aria-hidden="true" tabindex="-1"></a>of SNPs below the threshold change? Is the best SNP still the same?</span>
+<span id="cb27-842"><a href="#cb27-842" aria-hidden="true" tabindex="-1"></a>**C. Flowering at 10 °C.** Redo D and E with <span class="in">`flowering_10C`</span>. Is the best peak in the</span>
+<span id="cb27-843"><a href="#cb27-843" aria-hidden="true" tabindex="-1"></a>same place as at 16 °C?</span>
 <span id="cb27-844"><a href="#cb27-844" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-845"><a href="#cb27-845" aria-hidden="true" tabindex="-1"></a>**B. *FRIGIDA*.** *FRI* (chromosome 4, around 0.27 Mb) is one of the best-known</span>
-<span id="cb27-846"><a href="#cb27-846" aria-hidden="true" tabindex="-1"></a>flowering genes of *Arabidopsis*. Find the best SNP within 20 kb of it in the naive scan</span>
-<span id="cb27-847"><a href="#cb27-847" aria-hidden="true" tabindex="-1"></a>and in the corrected scan. What happened to it, and why could a correction for ancestry</span>
-<span id="cb27-848"><a href="#cb27-848" aria-hidden="true" tabindex="-1"></a>also hide a real gene?</span>
+<span id="cb27-845"><a href="#cb27-845" aria-hidden="true" tabindex="-1"></a>**D. A prettier Manhattan plot.** Colour the points by chromosome, and label the best SNP</span>
+<span id="cb27-846"><a href="#cb27-846" aria-hidden="true" tabindex="-1"></a>of each tower with <span class="in">`geom_text_repel()`</span> (package ggrepel, Session 5).</span>
+<span id="cb27-847"><a href="#cb27-847" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-848"><a href="#cb27-848" aria-hidden="true" tabindex="-1"></a><span class="fu">## Going further</span></span>
 <span id="cb27-849"><a href="#cb27-849" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-850"><a href="#cb27-850" aria-hidden="true" tabindex="-1"></a>**C. Flowering at 10 °C.** Redo D and E with <span class="in">`flowering_10C`</span>. Is the best peak in the</span>
-<span id="cb27-851"><a href="#cb27-851" aria-hidden="true" tabindex="-1"></a>same place as at 16 °C?</span>
-<span id="cb27-852"><a href="#cb27-852" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-853"><a href="#cb27-853" aria-hidden="true" tabindex="-1"></a>**D. A prettier Manhattan plot.** Colour the points by chromosome, and label the best SNP</span>
-<span id="cb27-854"><a href="#cb27-854" aria-hidden="true" tabindex="-1"></a>of each tower with <span class="in">`geom_text_repel()`</span> (package ggrepel, Session 5).</span>
-<span id="cb27-855"><a href="#cb27-855" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-856"><a href="#cb27-856" aria-hidden="true" tabindex="-1"></a><span class="fu">## Going further</span></span>
-<span id="cb27-857"><a href="#cb27-857" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-858"><a href="#cb27-858" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Korte A. and Farlow A. (2013). [The advantages and limitations of trait analysis with</span>
-<span id="cb27-859"><a href="#cb27-859" aria-hidden="true" tabindex="-1"></a>  GWAS: a review](https://doi.org/10.1186/1746-4811-9-29). *Plant Methods*. The best</span>
-<span id="cb27-860"><a href="#cb27-860" aria-hidden="true" tabindex="-1"></a>  short review for plant biologists.</span>
-<span id="cb27-861"><a href="#cb27-861" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>1001 Genomes Consortium (2016). [1,135 genomes reveal the global pattern of</span>
-<span id="cb27-862"><a href="#cb27-862" aria-hidden="true" tabindex="-1"></a>  polymorphism in *Arabidopsis thaliana*](https://doi.org/10.1016/j.cell.2016.05.063).</span>
-<span id="cb27-863"><a href="#cb27-863" aria-hidden="true" tabindex="-1"></a>  *Cell*. Where today's SNPs and flowering times come from.</span>
-<span id="cb27-864"><a href="#cb27-864" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">AraGWAS Catalog</span><span class="co">](https://aragwas.1001genomes.org)</span>: published *Arabidopsis* GWAS,</span>
-<span id="cb27-865"><a href="#cb27-865" aria-hidden="true" tabindex="-1"></a>  including flowering time, run with mixed models: compare with your peaks.</span>
-<span id="cb27-866"><a href="#cb27-866" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">AraPheno</span><span class="co">](https://arapheno.1001genomes.org)</span>: hundreds of other traits measured on the</span>
-<span id="cb27-867"><a href="#cb27-867" aria-hidden="true" tabindex="-1"></a>  same accessions.</span>
-<span id="cb27-868"><a href="#cb27-868" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-869"><a href="#cb27-869" aria-hidden="true" tabindex="-1"></a><span class="fu">## Before the next session</span></span>
-<span id="cb27-870"><a href="#cb27-870" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-871"><a href="#cb27-871" aria-hidden="true" tabindex="-1"></a>Session 7 moves from testing to **predicting**: deep learning. You will meet again the</span>
-<span id="cb27-872"><a href="#cb27-872" aria-hidden="true" tabindex="-1"></a>idea behind the cross-validation of Session 5: a model is only judged on data it has</span>
-<span id="cb27-873"><a href="#cb27-873" aria-hidden="true" tabindex="-1"></a>never seen.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb27-850"><a href="#cb27-850" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Korte A. and Farlow A. (2013). [The advantages and limitations of trait analysis with</span>
+<span id="cb27-851"><a href="#cb27-851" aria-hidden="true" tabindex="-1"></a>  GWAS: a review](https://doi.org/10.1186/1746-4811-9-29). *Plant Methods*. The best</span>
+<span id="cb27-852"><a href="#cb27-852" aria-hidden="true" tabindex="-1"></a>  short review for plant biologists.</span>
+<span id="cb27-853"><a href="#cb27-853" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>1001 Genomes Consortium (2016). [1,135 genomes reveal the global pattern of</span>
+<span id="cb27-854"><a href="#cb27-854" aria-hidden="true" tabindex="-1"></a>  polymorphism in *Arabidopsis thaliana*](https://doi.org/10.1016/j.cell.2016.05.063).</span>
+<span id="cb27-855"><a href="#cb27-855" aria-hidden="true" tabindex="-1"></a>  *Cell*. Where today's SNPs and flowering times come from.</span>
+<span id="cb27-856"><a href="#cb27-856" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">AraGWAS Catalog</span><span class="co">](https://aragwas.1001genomes.org)</span>: published *Arabidopsis* GWAS,</span>
+<span id="cb27-857"><a href="#cb27-857" aria-hidden="true" tabindex="-1"></a>  including flowering time, run with mixed models: compare with your peaks.</span>
+<span id="cb27-858"><a href="#cb27-858" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">AraPheno</span><span class="co">](https://arapheno.1001genomes.org)</span>: hundreds of other traits measured on the</span>
+<span id="cb27-859"><a href="#cb27-859" aria-hidden="true" tabindex="-1"></a>  same accessions.</span>
+<span id="cb27-860"><a href="#cb27-860" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-861"><a href="#cb27-861" aria-hidden="true" tabindex="-1"></a><span class="fu">## Before the next session</span></span>
+<span id="cb27-862"><a href="#cb27-862" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-863"><a href="#cb27-863" aria-hidden="true" tabindex="-1"></a>Session 7 moves from testing to **predicting**: deep learning. You will meet again the</span>
+<span id="cb27-864"><a href="#cb27-864" aria-hidden="true" tabindex="-1"></a>idea behind the cross-validation of Session 5: a model is only judged on data it has</span>
+<span id="cb27-865"><a href="#cb27-865" aria-hidden="true" tabindex="-1"></a>never seen.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

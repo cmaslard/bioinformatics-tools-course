@@ -764,14 +764,6 @@ ggplot(gwas_pc, aes(x = position / 1e6, y = -log10(p_value))) +
        x = "Position (Mb)", y = "-log10(p)")
 ```
 
-::: callout-warning
-## Your workbook has no such chunk?
-
-It was added during the session. Open a new R chunk after your answer to E4 (**Insert**
-→ **Code Chunk** → **R**) and paste the code above into it. **Do not copy `WORKBOOK.qmd`
-from the course folder again**: it would replace your file and erase your answers.
-:::
-
 ::: callout-note
 ## Checkpoint
 
