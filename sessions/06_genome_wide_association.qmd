@@ -737,13 +737,49 @@ naive_p_top
 sum(gwas_naive$p_value < naive_p_top)
 ```
 
+**E4, continued: the gene names on the plot.** Nothing to fill: after your answer to E4,
+run this chunk. It draws the Manhattan plot of E3 again, with the best SNP in blue and
+the short names of the genes within 20 kb of it.
+
+```r
+# the short names of the genes within 20 kb of the best SNP (the same genes as above)
+top_genes <- genes %>%
+  filter(chromosome == top_snp$chromosome,
+         end > top_snp$position - 20000,
+         start < top_snp$position + 20000,
+         !is.na(symbol)) %>%
+  mutate(symbol = str_replace_all(symbol, "%3B", ";"))   # the file writes ";" as %3B
+top_label <- top_snp %>%
+  mutate(genes = paste(top_genes$symbol, collapse = "\n"))   # one name per line
+
+# the Manhattan plot of E3, with the best SNP in blue and the names of its genes
+ggplot(gwas_pc, aes(x = position / 1e6, y = -log10(p_value))) +
+  geom_point(size = 0.5, alpha = 0.5) +
+  geom_hline(yintercept = -log10(threshold), colour = "red", linetype = "dashed") +
+  geom_point(data = top_label, colour = "blue", size = 2) +
+  geom_label(data = top_label, aes(label = genes), hjust = 0, vjust = 1, nudge_x = 1,
+             size = 2.5) +
+  facet_grid(~ chromosome, scales = "free_x", space = "free_x") +
+  labs(title = "The genes near the best SNP (10 PCs)",
+       x = "Position (Mb)", y = "-log10(p)")
+```
+
+::: callout-warning
+## Your workbook has no such chunk?
+
+It was added during the session. Open a new R chunk after your answer to E4 (**Insert**
+→ **Code Chunk** → **R**) and paste the code above into it. **Do not copy `WORKBOOK.qmd`
+from the course folder again**: it would replace your file and erase your answers.
+:::
+
 ::: callout-note
 ## Checkpoint
 
 E3: a count, one number (λ), a Manhattan plot titled "GWAS with 10 PCs", and a QQ plot
 with two colours. E4: tables of 4 columns, then a table of genes with `gene_id`,
 `symbol`, `chromosome`, `start`, `end`, `description`. A `symbol` shown as `NA` means
-the gene has no short name.
+the gene has no short name. E4, continued: the same Manhattan plot, with one blue point
+and a box of gene names next to it.
 :::
 
 Then **E5**: summarise the flowering GWAS in a few sentences, with your own numbers.
