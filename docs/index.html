@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Corentin Maslard">
-<meta name="dcterms.date" content="2026-10-19">
+<meta name="dcterms.date" content="2026-10-26">
 
 <title>Bioinformatics Tools</title>
 <style>
@@ -412,6 +412,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Session 5: Many variables at once: PCA, heatmaps and PLS-DA</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sessions/06_genome_wide_association.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Session 6: Genome-wide association: thousands of linear models and one confounder</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -471,7 +477,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 19, 2026</p>
+      <p class="date">October 26, 2026</p>
     </div>
   </div>
   
@@ -566,7 +572,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Sequence similarity and phylogeny</li>
 <li>Biological tables and visualisation with R</li>
 <li>PCA and unsupervised learning</li>
-<li>Supervised machine learning and evaluation</li>
+<li>Genome-wide association (GWAS) in <em>Arabidopsis</em></li>
 <li>Introduction to deep learning</li>
 <li>Guided project: question, script, and first result</li>
 <li>Guided project: correction, interpretation, and presentation</li>
@@ -619,8 +625,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-8cdadc968d8937fa638d" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-8cdadc968d8937fa638d">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["dplyr","DT","here","renv","rmarkdown","tidyverse","ggrepel","mixOmics","pheatmap"],["1.1.4","0.34.0","1.0.2","1.1.7","2.30","2.0.0","0.9.6","6.32.0","1.0.13"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>Package<\/th>\n      <th>Version<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"name":"Package","targets":0},{"name":"Version","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-085a2655219d027871d1" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-085a2655219d027871d1">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["dplyr","DT","here","renv","rmarkdown","tidyverse"],["1.1.4","0.34.0","1.0.2","1.1.7","2.30","2.0.0"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>Package<\/th>\n      <th>Version<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"name":"Package","targets":0},{"name":"Version","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 
@@ -1167,7 +1173,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Sequence similarity and phylogeny</span>
 <span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Biological tables and visualisation with R</span>
 <span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>PCA and unsupervised learning</span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="ss">6.  </span>Supervised machine learning and evaluation</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="ss">6.  </span>Genome-wide association (GWAS) in *Arabidopsis*</span>
 <span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="ss">7.  </span>Introduction to deep learning</span>
 <span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="ss">8.  </span>Guided project: question, script, and first result</span>
 <span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="ss">9.  </span>Guided project: correction, interpretation, and presentation</span>
