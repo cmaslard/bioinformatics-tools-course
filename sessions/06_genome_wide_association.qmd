@@ -6,7 +6,7 @@ engine: knitr
 
 ## Overview
 
-<!-- Add the slides link when the PDF exists: [Download the lecture slides (PDF)](slides/06_lecture_slides.pdf) -->
+[Download the lecture slides (PDF)](slides/06_lecture_slides.pdf)
 
 ::: callout-tip
 ## Quick poll (Poll Everywhere)
