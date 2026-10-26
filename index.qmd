@@ -62,7 +62,7 @@ This site collects the written supports for the **nine sessions** of the course.
 3.  Sequence similarity and phylogeny
 4.  Biological tables and visualisation with R
 5.  PCA and unsupervised learning
-6.  Supervised machine learning and evaluation
+6.  Genome-wide association (GWAS) in *Arabidopsis*
 7.  Introduction to deep learning
 8.  Guided project: question, script, and first result
 9.  Guided project: correction, interpretation, and presentation

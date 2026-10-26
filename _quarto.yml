@@ -37,6 +37,7 @@ book:
       chapters:
         - sessions/04_biological_tables_and_visualisation.qmd
         - sessions/05_pca_and_unsupervised_learning.qmd
+        - sessions/06_genome_wide_association.qmd
     - references.qmd
   search:
     type: overlay
