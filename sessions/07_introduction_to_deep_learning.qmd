@@ -828,6 +828,23 @@ today, with your answers. There is nothing to submit. Finish block G (AlphaFold)
 tour of block H after class: they are the tools you are most likely to use in your own
 work.
 
+### Solution
+
+The complete workbook, with every `___` filled, is on the server, with its PDF (code,
+numbers and written answers) and the plots of each block. In the **Terminal** tab:
+
+```bash
+cd ~/bioinfo_course/session_07
+cp /home/cmaslard/bioinfo_tools_course/session_07/data/* data/
+cp /home/cmaslard/bioinfo_tools_course/session_07/results/WORKBOOK_SOLUTION.qmd .
+cp -r /home/cmaslard/bioinfo_tools_course/session_07/results solution
+```
+
+Your own `WORKBOOK.qmd` and `results/` stay as they are. Open `WORKBOOK_SOLUTION.qmd` and
+click **Render**, or run it block by block with the green arrows. Compare its plots and
+numbers with yours: the PDF and the plots are in `solution/`, named after the question
+(`B3_decision_tree.png`, `G5_FLC_PAE.png`...).
+
 ## Checkpoint
 
 You are done when all of the following are true:
