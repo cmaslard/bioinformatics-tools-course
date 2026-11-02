@@ -1,0 +1,158 @@
+```{=html}
+<style>
+  .molv { border: 1px solid rgba(128, 128, 128, 0.35); border-radius: 8px; padding: 12px; margin: 1em 0; }
+  .molv-controls { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin-bottom: 8px; font-size: 0.9em; }
+  .molv-controls label { display: flex; gap: 6px; align-items: center; }
+  .molv-controls select, .molv-controls button { font-size: 0.95em; padding: 2px 6px; }
+  .molv-stage { position: relative; width: 100%; height: 460px; border-radius: 6px; overflow: hidden; background: #ffffff; }
+  .molv-info { min-height: 1.5em; margin: 8px 0 4px; font-size: 0.9em; }
+  .molv-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.85em; }
+  .molv-legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .molv-legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(0, 0, 0, 0.2); }
+  @media (max-width: 600px) { .molv-stage { height: 340px; } }
+</style>
+
+<div class="molv" id="molv">
+  <div class="molv-controls">
+    <label>Protein
+      <select id="molv-protein">
+        <option value="FLC">FLC, flowering repressor (Session 6)</option>
+        <option value="RBL">RuBisCO large chain, photosynthesis</option>
+        <option value="HKT1">HKT1, sodium transporter (Session 6)</option>
+      </select>
+    </label>
+    <label>Colour
+      <select id="molv-colour">
+        <option value="plddt">AlphaFold confidence (pLDDT)</option>
+        <option value="domains">Domains (UniProt)</option>
+        <option value="rainbow">Start (blue) to end (red) of the chain</option>
+        <option value="chemistry">Chemistry of the amino acids</option>
+      </select>
+    </label>
+    <label>Style
+      <select id="molv-style">
+        <option value="cartoon">Cartoon (helices and strands)</option>
+        <option value="trace">Trace of the alpha carbons</option>
+        <option value="sticks">Every atom (sticks)</option>
+        <option value="surface">Surface</option>
+      </select>
+    </label>
+    <label><input type="checkbox" id="molv-spin"> Spin</label>
+    <button type="button" id="molv-reset">Reset view</button>
+  </div>
+  <div class="molv-stage" id="molv-stage"></div>
+  <div class="molv-info" id="molv-info">Drag to turn, scroll to zoom, hover an amino acid to read it.</div>
+  <div class="molv-legend" id="molv-legend"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.4.0/3Dmol-min.js"></script>
+<script>
+(function () {
+  // AlphaFold DB models v6 (CC BY 4.0), copied next to this page
+  var proteins = {
+    FLC:  { file: "data/07/AF-Q9S7Q7-F1-model_v6.pdb", name: "FLC (UniProt Q9S7Q7)",
+            domains: [{ name: "MADS-box (binds DNA)", start: 1, end: 61, colour: "#1b9e77" },
+                      { name: "K-box", start: 80, end: 170, colour: "#d95f02" }] },
+    RBL:  { file: "data/07/AF-O03042-F1-model_v6.pdb", name: "RuBisCO large chain (UniProt O03042)",
+            domains: [] },
+    HKT1: { file: "data/07/AF-Q84TI7-F1-model_v6.pdb", name: "HKT1 (UniProt Q84TI7)",
+            domains: [] }
+  };
+  // the colours of the AlphaFold website
+  var plddtBands = [{ min: 90, colour: "#0053D6", label: "very high (> 90)" },
+                    { min: 70, colour: "#65CBF3", label: "confident (70-90)" },
+                    { min: 50, colour: "#FFDB13", label: "low (50-70)" },
+                    { min: 0,  colour: "#FF7D45", label: "very low (< 50)" }];
+  var chemistry = {
+    hydrophobic: { colour: "#e6ab02", label: "hydrophobic (A V L I M F W P)", res: ["ALA", "VAL", "LEU", "ILE", "MET", "PHE", "TRP", "PRO"] },
+    positive:    { colour: "#386cb0", label: "positive (K R H)", res: ["LYS", "ARG", "HIS"] },
+    negative:    { colour: "#e7298a", label: "negative (D E)", res: ["ASP", "GLU"] },
+    polar:       { colour: "#66a61e", label: "polar (S T N Q Y C)", res: ["SER", "THR", "ASN", "GLN", "TYR", "CYS"] },
+    glycine:     { colour: "#bdbdbd", label: "glycine (G)", res: ["GLY"] }
+  };
+  var cache = {};
+  var stage = document.getElementById("molv-stage");
+  var info = document.getElementById("molv-info");
+  var legend = document.getElementById("molv-legend");
+  var sel = function (id) { return document.getElementById(id); };
+  if (typeof $3Dmol === "undefined") {
+    info.textContent = "The 3D viewer could not load (no internet?). Open the structure on alphafold.ebi.ac.uk instead.";
+    return;
+  }
+  var viewer = $3Dmol.createViewer(stage, { backgroundColor: "white" });
+
+  function plddtColour(b) {
+    for (var i = 0; i < plddtBands.length; i++) if (b > plddtBands[i].min) return plddtBands[i].colour;
+    return plddtBands[plddtBands.length - 1].colour;
+  }
+  function colourFunction(mode, protein) {
+    if (mode === "plddt") return function (atom) { return plddtColour(atom.b); };
+    if (mode === "domains") return function (atom) {
+      for (var i = 0; i < protein.domains.length; i++) {
+        var d = protein.domains[i];
+        if (atom.resi >= d.start && atom.resi <= d.end) return d.colour;
+      }
+      return "#d9d9d9";
+    };
+    if (mode === "chemistry") return function (atom) {
+      for (var k in chemistry) if (chemistry[k].res.indexOf(atom.resn) >= 0) return chemistry[k].colour;
+      return "#d9d9d9";
+    };
+    return null;   // rainbow: handled by 3Dmol's "spectrum"
+  }
+  function drawLegend(mode, protein) {
+    var items = [];
+    if (mode === "plddt") items = plddtBands.map(function (b) { return [b.colour, b.label]; });
+    if (mode === "domains") {
+      items = protein.domains.map(function (d) { return [d.colour, d.name + " (" + d.start + "-" + d.end + ")"]; });
+      items.push(["#d9d9d9", protein.domains.length ? "outside the domains" : "no domain drawn for this protein"]);
+    }
+    if (mode === "chemistry") for (var k in chemistry) items.push([chemistry[k].colour, chemistry[k].label]);
+    if (mode === "rainbow") items = [["#0000ff", "first amino acid (N-terminus)"], ["#ff0000", "last amino acid (C-terminus)"]];
+    legend.innerHTML = items.map(function (it) { return "<span><i style='background:" + it[0] + "'></i>" + it[1] + "</span>"; }).join("");
+  }
+  function render(keepView) {
+    var key = sel("molv-protein").value, mode = sel("molv-colour").value, style = sel("molv-style").value;
+    var protein = proteins[key];
+    var view = keepView ? viewer.getView() : null;
+    viewer.removeAllModels();
+    viewer.removeAllSurfaces();
+    var model = viewer.addModel(cache[key], "pdb");
+    var fun = colourFunction(mode, protein);
+    var colourSpec = fun ? { colorfunc: fun } : { color: "spectrum" };
+    if (fun) model.setColorByFunction({}, fun);
+    if (style === "cartoon") viewer.setStyle({}, { cartoon: colourSpec });
+    if (style === "trace") viewer.setStyle({}, { cartoon: Object.assign({ style: "trace", thickness: 0.4 }, colourSpec) });
+    if (style === "sticks") viewer.setStyle({}, { stick: Object.assign({ radius: 0.15 }, colourSpec) });
+    if (style === "surface") {
+      viewer.setStyle({}, { cartoon: Object.assign({ opacity: 0.5 }, colourSpec) });
+      viewer.addSurface($3Dmol.SurfaceType.VDW, fun ? { opacity: 0.9, colorfunc: fun } : { opacity: 0.9, colorscheme: { prop: "resi", gradient: "rwb" } });
+    }
+    viewer.setHoverable({}, true, function (atom) {
+      info.innerHTML = "<b>" + protein.name + "</b>: amino acid " + atom.resi + " (" + atom.resn +
+        "), atom " + atom.atom + ", pLDDT " + atom.b.toFixed(1);
+    }, function () {});
+    drawLegend(mode, protein);
+    if (view) viewer.setView(view); else viewer.zoomTo();
+    viewer.render();
+    viewer.spin(sel("molv-spin").checked ? "y" : false);
+  }
+  function load(keepView) {
+    var key = sel("molv-protein").value;
+    if (cache[key]) return render(keepView);
+    info.textContent = "Loading " + proteins[key].name + "...";
+    fetch(proteins[key].file).then(function (r) { return r.text(); }).then(function (text) {
+      cache[key] = text;
+      info.textContent = "Drag to turn, scroll to zoom, hover an amino acid to read it.";
+      render(keepView);
+    }).catch(function () { info.textContent = "Could not load the structure file."; });
+  }
+  sel("molv-protein").addEventListener("change", function () { load(false); });
+  sel("molv-colour").addEventListener("change", function () { render(true); });
+  sel("molv-style").addEventListener("change", function () { render(true); });
+  sel("molv-spin").addEventListener("change", function () { viewer.spin(this.checked ? "y" : false); });
+  sel("molv-reset").addEventListener("click", function () { viewer.zoomTo(); viewer.render(); });
+  load(false);
+})();
+</script>
+```
