@@ -614,11 +614,18 @@ Everything used today comes with R (rpart, nnet) or is already in RStudio Server
 In the **Terminal** tab:
 
 ```bash
-mkdir -p ~/bioinfo_course/session_07/data ~/bioinfo_course/session_07/results
+mkdir -p ~/bioinfo_course/session_07/data ~/bioinfo_course/session_07/results ~/bioinfo_course/session_07/solution
 cp /home/cmaslard/bioinfo_tools_course/session_07/data/* ~/bioinfo_course/session_07/data/
-cp /home/cmaslard/bioinfo_tools_course/session_07/WORKBOOK.qmd ~/bioinfo_course/session_07/
+cp --update=none /home/cmaslard/bioinfo_tools_course/session_07/WORKBOOK.qmd ~/bioinfo_course/session_07/
+cp /home/cmaslard/bioinfo_tools_course/session_07/results/WORKBOOK_SOLUTION.qmd ~/bioinfo_course/session_07/
+cp /home/cmaslard/bioinfo_tools_course/session_07/results/* ~/bioinfo_course/session_07/solution/
 ls -R ~/bioinfo_course/session_07
 ```
+
+This copies everything: the data, your workbook `WORKBOOK.qmd` (with `___` to fill), the
+complete workbook `WORKBOOK_SOLUTION.qmd`, and in `solution/` its PDF and plots. You can run
+these lines again at any time: `--update=none` never overwrites a `WORKBOOK.qmd` you have
+already started.
 
 Then **File → New Project → Existing Directory**, pick `~/bioinfo_course/session_07`, open
 `WORKBOOK.qmd`, write your name at the top and click **Render** once.
@@ -830,17 +837,10 @@ work.
 
 ### Solution
 
-The complete workbook, with every `___` filled, is on the server, with its PDF (code,
-numbers and written answers) and the plots of each block. In the **Terminal** tab:
-
-```bash
-cd ~/bioinfo_course/session_07
-cp /home/cmaslard/bioinfo_tools_course/session_07/data/* data/
-cp /home/cmaslard/bioinfo_tools_course/session_07/results/WORKBOOK_SOLUTION.qmd .
-cp -r /home/cmaslard/bioinfo_tools_course/session_07/results solution
-```
-
-Your own `WORKBOOK.qmd` and `results/` stay as they are. Open `WORKBOOK_SOLUTION.qmd` and
+The complete workbook `WORKBOOK_SOLUTION.qmd`, with every `___` filled, was copied in
+block A, with its PDF (code, numbers and written answers) and the plots of each block in
+`solution/`. Not there? Run the lines of [block A](#a.-setup) again: your own
+`WORKBOOK.qmd` and `results/` stay as they are. Open `WORKBOOK_SOLUTION.qmd` and
 click **Render**, or run it block by block with the green arrows. Compare its plots and
 numbers with yours: the PDF and the plots are in `solution/`, named after the question
 (`B3_decision_tree.png`, `G5_FLC_PAE.png`...).
