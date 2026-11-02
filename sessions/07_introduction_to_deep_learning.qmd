@@ -1,0 +1,931 @@
+---
+title: "Session 7: Artificial intelligence: from rules to machine learning and deep learning"
+engine: knitr
+resources:
+  - "data/07/*.pdb"
+---
+
+## Overview
+
+[Download the lecture slides (PDF)](slides/07_lecture_slides.pdf)
+
+::: callout-tip
+## Quick poll (Poll Everywhere)
+
+Respond at [pe.app/cmaslard6](https://pe.app/cmaslard6)
+:::
+
+::: callout-note
+## Biological question
+
+A camera trap takes thousands of photos, a microscope thousands of cells, a recorder
+hours of bird songs. Nobody can look at all of them. What can a machine learn to see for
+us, how does it learn it, and when should we trust it?
+:::
+
+Everybody talks about artificial intelligence (AI). Today you open the box. You start by
+**annotating photos** yourself, as thousands of volunteers do for research projects; then
+you write rules by hand to recognise penguin species, and let a computer **learn** the same
+rules from examples. You build a **random forest** with your own hands, train a small
+**neural network**, and compute by hand what the first layer of a **deep** network does
+to a camera-trap photo. Finally you read the results of a real deep-learning model trained
+on amphibians crossing a railway. Then you open the most famous AI of biology,
+**AlphaFold**: you download the predicted structure of *FLC* (the flowering gene of
+Session 6), read it as a table, judge how much to trust it, and understand how an alignment
+of related sequences tells AlphaFold which amino acids touch. Finally you explore the AI
+tools biologists use every day.
+
+Since Session 4 you have used models to **explain** (does drought change diversity? which
+SNP is associated with flowering?). Today the goal changes: models that **predict**, and
+the one question that matters for them: how good are they on data they have never seen?
+
+::: callout-important
+## How you work today: nothing is graded
+
+**Today nothing is graded and there is nothing to submit.** Take your time, try things,
+ask questions: the goal is that you understand what artificial intelligence does, because
+you will meet it, use it and judge it during your whole career.
+
+First comes the whole lecture, in four parts, then the practical. The practical follows the
+lecture in the same order: when you start a block, scroll back to its theory part (each
+block says which one). **The code is short on purpose**: a tree is one line, a neural network one line. As in Session 6, you work
+in `WORKBOOK.qmd`; **Render** makes `WORKBOOK.pdf`, your own notes of the day, to keep.
+The day ends with block G, on **AlphaFold**, the most famous AI of biology: start it in
+class, and finish it after. Every chunk runs in a few seconds.
+:::
+
+### Learning outcomes
+
+By the end of this session, you should be able to:
+
+- explain the difference between a program written with rules and a model that learns
+  from examples, and place AI, machine learning and deep learning in each other;
+- use the vocabulary: label, feature, training, validation and test sets, model,
+  prediction, parameter (weight), loss, epoch, overfitting;
+- train and read a decision tree, and explain why a random forest of trees votes better;
+- read a confusion matrix, and compute an accuracy, a recall and a precision;
+- explain what a neuron, a layer, a convolution and a filter are, and why deep learning
+  works on photos where rules fail;
+- say where the labels of a model come from, and why an accuracy can hide a model that is
+  poor on rare species;
+- explain how AlphaFold predicts a structure from a sequence (alignment, coevolution,
+  training on known structures), download a prediction and judge it with its pLDDT and
+  PAE;
+- choose an AI tool for a biological question, and check its answer.
+
+### Session plan
+
+| Order | Part | What happens |
+|---:|---|---|
+| 1 | Retrieval | Session 6 quiz. |
+| 2 | Annotate | Your phone or laptop: annotate photos in AnnoTrain. No explanation yet. |
+| 3 | Lecture, Theory 1 | What is AI? Chihuahua or muffin; rules versus examples; the vocabulary; the confusion matrix. |
+| 4 | Lecture, Theory 2 | Learning or memorising; trees and forests; a neuron is a linear model. |
+| 5 | Lecture, Theory 3 | Deep learning for images; the training curves of a model trained on *your* annotations. |
+| 6 | Lecture, Theory 4 | AlphaFold: from a sequence to a structure. |
+| 7 | Practical A-B | Rules by hand, then a decision tree learns them; accuracy, recall, precision. |
+| 8 | Practical C-D | Overfitting, a random forest by hand, a small neural network. |
+| 9 | Practical E-F | A photo is numbers: one convolution layer by hand; a real model from AnnoTrain. |
+| 10 | Practical G-H | AlphaFold in the Terminal and in R, then the tour of AI tools; finish after class. |
+
+## Before the lecture: annotate
+
+Before any explanation: open the link given by the instructor on your phone or laptop and
+annotate as many photos as you can, carefully. Answers given too fast do not count.
+
+## Theory 1: what is artificial intelligence? {#theory-1}
+
+### Chihuahua or muffin?
+
+In 2016, the artist Karen Zack posted grids of photos where chihuahuas and blueberry
+muffins look almost the same: two dark eyes and a nose, or three blueberries. You see the
+difference in a fraction of a second. Now try to **write the rule**: "if there are three
+dark round spots in a triangle, then...". It does not work: the dog can turn its head, the
+muffin can have four blueberries, the light changes. Computer-vision services were tested
+on these grids ([Chihuahua or muffin? My search for the best computer vision
+API](https://www.freecodecamp.org/news/chihuahua-or-muffin-my-search-for-the-best-computer-vision-api-cbda4d6b425d/),
+2017): they mostly succeed, and nobody wrote their rules.
+
+This is the whole idea of machine learning: **when we cannot write the rules, we give the
+computer examples with the right answer, and it finds the rules itself.**
+
+### AI, machine learning, deep learning
+
+| Term | What it means | Example in biology |
+|---|---|---|
+| **Artificial intelligence** (AI) | Any program that does a task we would call intelligent if a person did it. Includes rules written by people. | An identification key coded as a program. |
+| **Machine learning** (ML) | AI that **learns its rules from examples** instead of being programmed with them. | A decision tree that predicts the species from 4 measures (today, block B). |
+| **Deep learning** (DL) | Machine learning with **neural networks of many layers**, which also learn *what to look at* (the features) from raw data: pixels, sounds, sequences. | A network that finds toads in camera-trap photos (block F); AlphaFold. |
+
+Each is inside the previous one: all deep learning is machine learning, all machine
+learning is AI, not the other way round. **Generative AI** (chatbots such as ChatGPT,
+Claude, Le Chat; image generators) is deep learning trained to *produce* text or images
+rather than to classify them.
+
+### The families of learning
+
+- **Supervised learning**: examples come with the answer (the **label**): photo → "toad".
+  The model learns to predict the label. *Today.*
+- **Unsupervised learning**: no label; the model finds structure by itself. *The PCA and
+  the clustering of Session 5.*
+- **Self-supervised learning**: the model makes its own labels from the data (hide a word
+  and guess it, hide a piece of a protein sequence and guess it). How chatbots and protein
+  language models are trained.
+
+And the main **tasks**, all present in the AnnoTrain projects of the instructor:
+
+| Task | Question | Output | Example |
+|---|---|---|---|
+| Classification | Which class? | One label per photo | Animal or not; which amphibian species |
+| Regression | How much? | A number | Age of a fish from a scale; leaf area |
+| Detection | Where are the objects? | A box around each | Each animal in a camera-trap photo |
+| Segmentation | Which pixels belong to what? | A mask | Roots, shoots and seeds on a plate; each cell of a tissue |
+| Tracking | Where does each object go? | A path per individual | Fish swimming in a video |
+| Generation | Produce something new | Text, image, sequence | A chatbot's answer; a designed protein |
+
+### The vocabulary of supervised learning
+
+- A **dataset** is a table (or a set of photos), one row per **observation** (a penguin,
+  a photo).
+- The **features** are what the model may look at (the measures, the pixels); the
+  **label** is what it must predict (the species).
+- The **model** is the recipe that turns features into a prediction; its **parameters**
+  (for a network: its **weights**) are the numbers it learns. The settings chosen by
+  people before training (the size of a tree, the number of neurons) are
+  **hyperparameters**.
+- **Training** adjusts the parameters so that the predictions match the labels of the
+  **training set**. A **validation set** is used to choose hyperparameters and when to
+  stop; a **test set**, never touched before the end, tells how good the model is.
+- **Inference** (or prediction) is using the trained model on new data.
+
+The golden rule, which you already met with the cross-validation of Session 5: **a model is
+only judged on data it has never seen.**
+
+### Is the model good? The confusion matrix
+
+Rows: the truth. Columns: what the model said. A camera trap, 100 photos, 30 with an
+animal:
+
+| | predicted: animal | predicted: empty |
+|---|---:|---:|
+| **true: animal** | 24 (true positives) | 6 (false negatives: missed) |
+| **true: empty** | 4 (false positives: invented) | 66 (true negatives) |
+
+- **Accuracy** = correct / all = (24 + 66) / 100 = 0.90.
+- **Recall** of "animal" = found / all true animals = 24 / 30 = 0.80. *Did we miss
+  animals?*
+- **Precision** of "animal" = right / all called animal = 24 / 28 = 0.86. *When it says
+  animal, can we believe it?*
+- The **F1 score** combines both: 2 × precision × recall / (precision + recall).
+
+**The accuracy trap.** A model that answers "empty" for every photo, without looking, has
+an accuracy of 70 / 100 = 0.70 here, and a recall of 0 for animals. In real camera-trap
+projects most photos are empty, and most annotated photos belong to a few common species:
+always look at the recall of each class, especially the rare ones.
+
+## Theory 2: learning or memorising? {#theory-2}
+
+### A decision tree
+
+A **decision tree** asks yes/no questions on the features, one after the other. For three
+trees of a park, from their leaves: "leaf longer than 12 cm?" → chestnut; otherwise
+"margin toothed?" → beech if no, hornbeam if yes. To build it, the computer tries every feature and every threshold, and keeps the
+question that separates the labels best; then it does the same in each half, and so on.
+It is a dichotomous identification key, but **learned from examples**. It is easy to read,
+which is its great strength.
+
+### Overfitting
+
+A tree allowed to grow without limit ends with one leaf per training example: it is then
+100% right on the training data, by heart. This is **overfitting**: the model learns the
+noise and the peculiarities of the training examples instead of a rule that generalises.
+The signature: very good on the training set, much worse on the test set. The opposite,
+**underfitting**, is a model too simple to capture the rule (a tree with one question for
+three species). You will see it with shuffled labels (as in Session 5): the tree reaches
+100% on training labels that mean nothing.
+
+### A random forest
+
+One tree is unstable: change a few training examples and it changes. A **random forest**
+(Breiman, 2001) grows hundreds of trees, each on a **bootstrap** sample (the training
+examples drawn again at random, with replacement) and with a random subset of the
+features, then lets them **vote**. Each tree is wrong sometimes, but not on the same
+examples: the errors cancel out in the majority. It is the same idea as asking several
+people to annotate the same photo. Random forests are still among the best models for
+tables of measurements, and the classical pixel classifier of
+[ilastik](https://www.ilastik.org) is one.
+
+### A neuron is a linear model
+
+An artificial **neuron** computes a weighted sum of its inputs plus a constant, then
+passes it through an **activation function**:
+
+$$\text{output} = f(w_1 x_1 + w_2 x_2 + w_3 x_3 + b)$$
+
+The part inside $f$ is exactly the `lm()` of Session 4: weights (slopes) and an intercept.
+The activation $f$ bends it: **ReLU** keeps positive values and sets negative ones to 0; the
+**sigmoid** squeezes the result between 0 and 1, like a probability. A **layer** is many
+neurons side by side; a **network** stacks layers, the outputs of one being the inputs of
+the next. With enough neurons, a network can draw any boundary between classes.
+
+**Training** a network means finding the weights that make the **loss** (the error between
+predictions and labels) as small as possible. The algorithm, **gradient descent**, is a
+walker in the fog going down a hill: at each step it measures the slope of the loss for
+each weight and moves the weights a little downhill. One pass over all the training
+examples is an **epoch**; a network trains for tens of epochs.
+
+## Theory 3: deep learning for images {#theory-3}
+
+### A photo is a table of numbers
+
+A grey photo is a matrix: one number per pixel, from 0 (black) to 255 (white). A colour
+photo is three matrices (red, green, blue). A camera-trap photo of 2,048 × 1,494 pixels is
+9 million numbers. A tree asking "is pixel 15,200 brighter than 120?" is useless: the
+animal can be anywhere, at any size, in any light. What matters are **shapes**, made by
+many pixels together.
+
+### Before deep learning: features designed by people
+
+Until about 2012, image analysis started with **features designed by people**: brightness,
+colour, edges, textures, computed by hand-written formulas, then given to a classifier
+such as a random forest. It works on simple, well-controlled images (the instructor's
+2025 lecture on root images shows this with ilastik), and fails on the variety of the
+real world.
+
+### Convolution: filters that slide over the photo
+
+A **filter** (or kernel) is a small grid of numbers, for example 3 × 3. It slides over the
+photo; at each position, it multiplies the 9 pixels under it by its 9 numbers and adds
+them up. This is a **convolution**. With −1 on the left and +1 on the right, the result is
+large where the photo changes from dark to light: the filter detects vertical edges. You
+will compute it yourself in block E. Then come **ReLU** (keep the positive answers) and
+**pooling** (keep the largest value of each 2 × 2 square, which halves the size of the
+image and keeps what was found).
+
+A **convolutional neural network** (CNN) is a stack of such layers. The key: **the numbers
+of the filters are weights, learned during training.** The first layers learn edges and
+colours, the next ones combine them into textures and corners, the deeper ones into parts
+(an eye, a leg, a leaf margin) and whole objects. Nobody writes the features any more:
+they are learned from annotated examples. See them for yourself in the [Feature
+Visualization](https://distill.pub/2017/feature-visualization/) article.
+
+### Why it took off around 2012
+
+Three things came together: **data** (ImageNet, 14 million annotated photos, built by
+people annotating online), **computing power** (graphics cards, GPUs, which do millions of
+multiplications at once) and better **architectures**. In 2012 a CNN (AlexNet) won the
+ImageNet challenge by a large margin; in 2015, **ResNet** (He et al.) went past 150 layers.
+The ResNet-18 used by AnnoTrain has 18 layers and about 11 million weights.
+
+### Transfer learning: you do not start from zero
+
+Training 11 million weights needs millions of photos. But the first layers of a network
+trained on ImageNet (edges, textures, shapes) are useful for any photo. **Transfer
+learning** (or fine-tuning) starts from such a network and retrains it on a few hundred or
+thousand annotated photos of your own question. This is how AnnoTrain, Teachable Machine
+and most biology tools work.
+
+### Where the labels come from
+
+A supervised model is only as good as its labels. They come from people: experts,
+students, volunteers of citizen-science platforms such as
+[Zooniverse](https://www.zooniverse.org) or [iNaturalist](https://www.inaturalist.org).
+People make mistakes and disagree, so projects ask several people per photo and keep the
+**consensus** (the majority). This "**ground truth**" is never perfectly true. Two classic
+traps: **class imbalance** (a few common species, many rare ones with almost no examples),
+and **domain shift**: a model trained on some cameras or some microscopes is often much
+worse on new ones (Beery et al., 2018).
+
+### AnnoTrain
+
+[AnnoTrain](https://annotrain.cmaslard.xyz) is the instructor's open platform that puts the
+whole chain in one place: a researcher creates a project and shares a link; people
+annotate (open the link, answer, next photo); the platform builds the consensus, checks
+the answers (too-fast answers and people who disagree with reference photos do not
+count), trains a network (ResNet-18 for classification, detectors, U-Net and Cellpose for
+segmentation), and shows its training curves, its confusion matrix and its mistakes. You
+can use it for your Master's project: the goal is to annotate fast, together, and to get
+a first model without writing code.
+
+::: callout-note
+## The whole chain
+
+Raw photos → **annotation** by people → **consensus** (the labels) → **training set /
+validation set** → **training** (epochs, loss) → **evaluation** (confusion matrix, recall
+per class) → **model** → **prediction** on new photos → people check the uncertain ones →
+new labels → a better model.
+:::
+
+## Theory 4: AlphaFold, how a structure is predicted {#theory-4}
+
+### The problem: 50 years old
+
+A protein is a chain of amino acids that folds into a precise 3D shape, and the shape makes
+the function: a pocket that binds a molecule, a surface that grips DNA, a pore that lets
+sodium through. In 1972, Christian Anfinsen received the Nobel Prize for showing that the
+sequence alone contains the information of the fold. But reading it was another matter:
+solving one structure by experiment (X-ray crystallography, cryo-electron microscopy, NMR)
+takes months to years. The Protein Data Bank ([PDB](https://www.rcsb.org)) holds about
+200,000 solved structures, while hundreds of millions of protein sequences are known.
+Since 1994, a blind competition, [CASP](https://predictioncenter.org), asks teams to predict
+structures that have just been solved but not yet published. In 2020, AlphaFold 2 (Google
+DeepMind) predicted most of them with an accuracy close to the experiments. In 2024, Demis
+Hassabis and John Jumper shared the [Nobel Prize in
+Chemistry](https://www.nobelprize.org/prizes/chemistry/2024/summary/) for it (with David
+Baker, for protein design).
+
+### The idea: amino acids that touch evolve together
+
+AlphaFold starts as you did in Session 3: it **searches databases for related sequences**
+(hundreds to thousands, from all living beings) and **aligns them**: a multiple sequence
+alignment (MSA). Two kinds of information come out of it:
+
+- **conservation**: a position that never changes is probably important (the core of the
+  protein, the active site);
+- **coevolution**: if two positions always change *together*, they are probably in
+  contact in 3D. A positive lysine (K) facing a negative glutamate (E) holds the fold; if a
+  mutation turns the K into an E, the protein unfolds, unless the partner also turns into a
+  K. Over millions of years, such pairs leave a signature of correlated changes in the
+  alignment. You will find one in a small made-up alignment (block G6).
+
+### From a sequence to a structure, step by step
+
+```{mermaid}
+%%| echo: false
+flowchart TB
+  A["Step 1: Sequence: MGRKKLEIKR... (196 amino acids)"] --> B["Step 2: Search: related sequences (alignment) and known structures"]
+  B --> C["Step 3: Evoformer x 48: the alignment table and the pair table talk to each other"]
+  C --> D["Step 4: Structure module: the 3D position of every atom"]
+  D -- "Step 5: recycling x 3" --> C
+  D --> E["Step 6: Output: structure + pLDDT + PAE"]
+```
+
+**1. The input** is only the sequence of the protein, the letters you met in the FASTA files
+of Session 1.
+
+**2. The search.** AlphaFold searches huge databases for related sequences: UniProt, but
+also billions of sequences read directly from environmental DNA (soils, oceans, guts:
+metagenomes). It aligns them (a multiple sequence alignment, as with MAFFT in Session 3),
+often thousands of rows. It also looks for related proteins whose structure was solved
+by experiment (**templates**). This step takes most of the computing time of a
+prediction, before any neural network runs.
+
+**3. The Evoformer: two tables that talk to each other.** The network keeps two tables
+and improves them 48 times in a row:
+
+- the **alignment table**: one row per related sequence, one column per position of the
+  protein;
+- the **pair table**: one cell for every pair of positions (196 × 196 for *FLC*), holding
+  the network's current belief about how these two amino acids sit relative to each other
+  in space. Think of it as the contact map you will draw in G4, but richer.
+
+Each block of the Evoformer uses **attention**: every position looks at all the others and
+decides, with learned weights, which ones to listen to, as you would scan a page for the
+words that matter. Information flows both ways: two columns of the alignment that change
+together write "probably close" into the pair table (coevolution); the pair table in turn
+tells the network where to look in the alignment. A special step, the **triangle
+update**, checks every trio of amino acids: if A is close to B and B is close to C, then A
+cannot be 50 Å from C. The network was never taught geometry: it learned these rules from
+the examples.
+
+**4. The structure module.** Each amino acid starts as a small rigid triangle (its
+backbone atoms N, Cα and C) floating at the same point. The module moves and turns every
+triangle, step by step, until their positions agree with the pair table, then places the
+side chains. The result: x, y, z coordinates for every atom, the numbers you will read in
+the PDB file in G1.
+
+**5. Recycling.** The whole structure is fed back into the Evoformer, and everything runs
+again, three times: each pass corrects the previous one.
+
+**6. The confidence scores.** During training, the network also learned to predict **its
+own error**: the pLDDT for each amino acid, the PAE for each pair. That is why AlphaFold
+can say "here, I do not know" (next section).
+
+### How it learned
+
+Like everything today, AlphaFold is **supervised learning**. The examples: about 170,000
+structures of the Protein Data Bank solved by experiment, each with its sequence. The
+label: the experimental 3D structure. The loss: for each amino acid, stand on it, look at
+all the other atoms, and measure how far they are from where they should be. Two more
+tricks:
+
+- **fill in the blanks**: some letters of the alignment are hidden, and the network must
+  guess them, exactly like the `___` of your workbook. To guess a hidden letter, it has to
+  understand which positions depend on which: it learns coevolution by itself;
+- **learning from its own best guesses**: the first version predicted about 350,000
+  proteins of unknown structure; the predictions it was very sure of were added to the
+  training examples.
+
+Training took about two weeks on 128 specialised processors (Google TPUs). A prediction
+then takes minutes to hours: the weights are learned once, and reused for every protein.
+
+### Two scores to judge a prediction
+
+- The **pLDDT** (0-100), for each amino acid: how sure AlphaFold is of the local structure.
+  Above 90 very high, 70-90 confident, 50-70 low, below 50 very low. On the website: dark
+  blue, light blue, yellow, orange. A very low pLDDT often means that this part of the
+  protein is really **disordered** in the cell (it has no fixed shape), which is itself
+  useful information.
+- The **PAE** (predicted aligned error), for each pair of amino acids: if the prediction is
+  superposed on the true structure using amino acid A, how far off (in Å) will amino acid B
+  be? Small inside a domain, large between two domains linked by a flexible piece:
+  AlphaFold can be sure of the shape of each domain and unsure of how they sit together.
+
+### What AlphaFold 2 does not do
+
+- It predicts **one chain alone**, in **one state**: no DNA, no ligand, no partner
+  protein, no movement. (AlphaFold 3, 2024, adds complexes with DNA, RNA and small
+  molecules: try the free [AlphaFold Server](https://alphafoldserver.com).)
+- It needs **relatives**: a protein with few known relatives has a poor alignment, and a
+  poor prediction.
+- It is not reliable to predict the **effect of a single mutation**: the prediction of the
+  mutant usually looks like the normal protein.
+- A prediction is a **hypothesis**, to be checked with experiments, like a GWAS peak.
+
+### See it for yourself
+
+Drag the molecule to turn it, scroll to zoom, hover an amino acid to read its name,
+position and pLDDT. Try:
+
+1. ***FLC*, colour "AlphaFold confidence", style "Cartoon"**: the dark blue part is the
+   MADS-box, which grips DNA; the orange tail floats around (switch the colour to
+   "Domains" to check).
+2. **RuBisCO, colour "Chemistry", style "Surface"**, then "Cartoon": a protein that lives
+   in water hides most of its hydrophobic (yellow) amino acids inside, where water cannot
+   reach them; this is what drives folding. In this model, 46% of the buried amino acids
+   are hydrophobic, but only 31% of those at the surface. The yellow patches left outside
+   are a clue: in the chloroplast, 8 large and 8 small RuBisCO chains assemble into one
+   enzyme, and chains often stick to each other by such patches.
+3. **HKT1, the same**: much more yellow on its surface (41% of its surface amino acids are
+   hydrophobic). It does not live in water but inside the membrane of root cells,
+   surrounded by fatty lipids. Turn it: where would the membrane be?
+4. **Any protein, colour "Start to end"**: follow the chain from blue to red; the two ends
+   of a chain are often far apart in space.
+
+{{< include _mol_viewer.html >}}
+
+Structures from the [AlphaFold Protein Structure Database](https://alphafold.ebi.ac.uk)
+(CC BY 4.0), drawn with [3Dmol.js](https://3dmol.csb.pitt.edu).
+
+## Vocabulary
+
+| Term | In one sentence |
+|---|---|
+| Label | The answer the model must learn to predict (the species). |
+| Feature | What the model looks at to predict (a measure, a pixel). |
+| Training / validation / test set | Data to learn from / to tune and decide when to stop / to judge at the end, never seen before. |
+| Parameter, weight | A number learned during training (a threshold of a tree, a weight of a network). |
+| Hyperparameter | A setting chosen before training (depth of a tree, number of neurons, epochs). |
+| Loss | The error of the model on the training data, which training makes smaller. |
+| Epoch | One pass of training over all the training examples. |
+| Gradient descent | The step-by-step method that moves each weight a little to reduce the loss. |
+| Overfitting | Learning the training examples by heart: good on them, poor on new data. |
+| Underfitting | A model too simple to capture the rule. |
+| Generalisation | Doing well on new data: the real goal. |
+| Confusion matrix | Truth in rows, predictions in columns: where the model is right and how it is wrong. |
+| Accuracy | Share of correct predictions, all classes together. |
+| Recall | Of the true members of a class, the share found. |
+| Precision | Of the predictions of a class, the share that is right. |
+| Class imbalance | Some classes have many more examples than others. |
+| Decision tree | A sequence of yes/no questions on the features, learned from examples. |
+| Random forest | Many trees on random samples, which vote. |
+| Bootstrap | Drawing the examples again at random, with replacement. |
+| Neuron | A weighted sum plus a constant (a linear model), passed through an activation. |
+| Activation (ReLU, sigmoid) | The function that bends the output of a neuron. |
+| Layer, hidden layer | Neurons side by side; hidden = between the input and the output. |
+| Convolution, filter | A small grid of weights that slides over an image and detects a pattern. |
+| Pooling | Shrinking an image by keeping the largest value of each small square. |
+| CNN | A network of convolution layers, for images. |
+| Transfer learning, fine-tuning | Starting from a network trained on other images and retraining it on yours. |
+| Annotation, consensus, ground truth | The labels made by people, the majority answer, and what we take as true. |
+| Inference | Using a trained model on new data. |
+| Domain shift | New data unlike the training data (other cameras, places, microscopes). |
+| Hallucination | A confident but invented answer of a generative model. |
+| Multiple sequence alignment (MSA) | Related sequences aligned position by position (Session 3). |
+| Coevolution | Two positions of a protein that change together during evolution, often because they touch. |
+| pLDDT | AlphaFold's confidence for each amino acid (0-100). |
+| PAE | AlphaFold's expected error of position between two amino acids (Å). |
+| Disordered region | A part of a protein without a fixed 3D shape. |
+| Attention | A layer where each position weighs all the others to decide which ones matter. |
+| Template | A related protein whose structure was solved by experiment. |
+| Hydrophobic core | The water-fearing amino acids packed inside a soluble protein. |
+
+## Your R toolbox
+
+New tools today, on top of those of Sessions 4-6. `rpart` and `nnet` are installed with R:
+nothing to install.
+
+::: panel-tabset
+## Train and test
+
+Keep the test data aside **before** training:
+
+```r
+train <- my_data %>% filter(split == "train")
+test  <- my_data %>% filter(split == "test")
+```
+
+## A decision tree
+
+```r
+library(rpart)
+tree <- rpart(label ~ feature_1 + feature_2, data = train)
+tree                          # the questions, as text
+plot(tree, margin = 0.1)      # the tree as a figure
+text(tree, use.n = TRUE)
+
+predicted <- predict(tree, test, type = "class")
+```
+
+`rpart.control(cp = 0, minsplit = 2)` lets a tree grow without limit.
+
+## Confusion matrix
+
+```r
+table(truth = test$label, predicted = predicted)   # rows = truth, columns = prediction
+mean(predicted == test$label)                       # accuracy
+```
+
+Recall of a class: its diagonal cell divided by the total of its **row**. Precision: the
+diagonal cell divided by the total of its **column**.
+
+## A loop
+
+A `for` loop repeats the same lines for each value of `i`:
+
+```r
+for (i in 1:3) {
+  print(i * 10)
+}
+```
+
+`slice_sample(data, prop = 1, replace = TRUE)` draws a bootstrap sample;
+`sample(x, 2)` draws 2 values of `x` at random.
+
+## A neural network
+
+```r
+library(nnet)
+net <- nnet(factor(label) ~ feature_1 + feature_2, data = train, size = 2, maxit = 500)
+length(net$wts)                              # number of weights learned
+predict(net, test, type = "class")
+```
+
+`size` is the number of neurons in the hidden layer. Scale the features first (mean 0,
+standard deviation 1).
+
+## A structure file
+
+A PDB file is a text file with fixed columns: one `ATOM` line per atom.
+
+```r
+lines <- read_lines("data/my_protein.pdb")
+ca <- lines[str_starts(lines, "ATOM") & substr(lines, 13, 16) == " CA "]   # alpha carbons
+as.numeric(substr(ca, 31, 38))     # x (Å); y is 39-46, z 47-54
+as.numeric(substr(ca, 61, 66))     # in AlphaFold files: the pLDDT
+as.matrix(dist(coordinates))       # distances between all pairs of points
+```
+
+To download from R, the AlphaFold server wants a browser name:
+`options(HTTPUserAgent = "Mozilla/5.0")` first.
+
+## A matrix as an image
+
+```r
+m <- matrix(values, nrow = n_rows, byrow = TRUE)   # fill row by row
+dim(m)
+t(m)                                                # turn by a quarter (transpose)
+m[2:4, 5:7]                                         # rows 2 to 4, columns 5 to 7
+pmax(m, 0)                                          # negative values set to 0 (ReLU)
+```
+:::
+
+## Practical
+
+::: callout-tip
+## Nothing to install
+
+Everything used today comes with R (rpart, nnet) or is already in RStudio Server's R
+(tidyverse). The complete workbook renders in about 10 seconds.
+:::
+
+### A. Setup
+
+In the **Terminal** tab:
+
+```bash
+mkdir -p ~/bioinfo_course/session_07/data ~/bioinfo_course/session_07/results
+cp /home/cmaslard/bioinfo_tools_course/session_07/data/* ~/bioinfo_course/session_07/data/
+cp /home/cmaslard/bioinfo_tools_course/session_07/WORKBOOK.qmd ~/bioinfo_course/session_07/
+ls -R ~/bioinfo_course/session_07
+```
+
+Then **File → New Project → Existing Directory**, pick `~/bioinfo_course/session_07`, open
+`WORKBOOK.qmd`, write your name at the top and click **Render** once.
+
+::: callout-note
+## Checkpoint
+
+`data/` holds ten files: five tables (`penguins.csv`, `camera_trap_pixels.csv`,
+`amphibians_history.csv`, `amphibians_confusion.csv`, `vegetables_versions.csv`), three
+AlphaFold structures (`AF-...-model_v6.pdb`), one AlphaFold error file (`.json`) and
+`toy_alignment.fasta`.
+`WORKBOOK.pdf` appears; its first chunk lists the columns `penguin_id`, `species`,
+`island`, `bill_len`, `bill_dep`, `flipper_len`, `body_mass`, `sex`, `year`, `split`, and
+counts the penguins per species in `train` and `test`.
+:::
+
+### B. Rules by hand, then rules learned (pairs)
+
+*Theory: [Theory 1](#theory-1) (vocabulary, confusion matrix) and the decision tree of
+[Theory 2](#theory-2).*
+
+The [Palmer penguins](https://allisonhorst.github.io/palmerpenguins/) (Gorman et al., 2014):
+three species measured at Palmer Station, Antarctica.
+
+- **B1**: plot two measures, and find by eye what separates the species.
+- **B2**: write your own rules with `case_when()`, and measure their accuracy: this is
+  programming *before* machine learning.
+- **B3**: put the test penguins aside, and let `rpart()` learn the rules from the training
+  penguins. Compare its questions with yours.
+- **B4**: predict the test penguins, read the confusion matrix, and compute a recall and a
+  precision by hand.
+
+::: callout-note
+## Checkpoint
+
+The tree has three leaves, one per species, and its questions use two of the four
+measures. The confusion matrix of B4 is a 3 × 3 table whose numbers add up to the number of
+test penguins.
+:::
+
+### C. Learning or memorising? (pairs)
+
+*Theory: [Theory 2](#theory-2) (overfitting, random forest).*
+
+- **C1**: a tree without limit, compared with the small one, on the training and the test
+  penguins.
+- **C2**: shuffle the species of the training penguins, and train the same tree: what can
+  it learn?
+- **C3**: a random forest built by hand with a `for` loop: 100 trees, each on a bootstrap
+  sample and two random measures, which vote.
+
+::: callout-note
+## Checkpoint
+
+C1 prints a small table with two rows (small tree, deep tree) and their numbers of leaves,
+training and test accuracies. C3 prints the votes of 8 trees for 5 penguins (species
+names), one accuracy for the forest, and a summary of the accuracies of the 100 trees.
+:::
+
+### D. A small neural network (pairs)
+
+*Theory: [Theory 2](#theory-2) (a neuron is a linear model).*
+
+- **D1**: scale the measures, train a network with 2 hidden neurons, watch the loss fall in
+  the Console, count its weights by hand.
+- **D2**: networks of 1, 2, 10 and 100 hidden neurons: more weights, better predictions?
+
+::: callout-note
+## Checkpoint
+
+During D1, the Console prints `initial value`, a few `iter ... value` lines, then
+`converged`. D2 prints a table of four rows: hidden neurons, weights, training and test
+accuracy.
+:::
+
+### E. A photo is a table of numbers (pairs)
+
+*Theory: [Theory 3](#theory-3) (a photo is numbers, convolution).*
+
+A photo from the [Caltech Camera Traps](https://lila.science/datasets/caltech-camera-traps)
+dataset (California, CDLA-Permissive licence), in grey levels.
+
+- **E1**: draw the photo from its table of pixels.
+- **E2**: three 3 × 3 filters (vertical edges, horizontal edges, blur), applied with a
+  convolution written in R.
+- **E3**: filter, ReLU, pooling: one layer of a CNN, computed by hand.
+
+::: callout-note
+## Checkpoint
+
+E1 draws the photo in black and white: a culvert, the ground, and an animal. E2 draws three
+images of almost the same size, each bringing out different structures. In E3, `dim()`
+shows that the image is about half as high and half as wide after the layer.
+:::
+
+### F. Deep learning for real (pairs)
+
+*Theory: [Theory 3](#theory-3) (where the labels come from) and the confusion matrix of
+[Theory 1](#theory-1).*
+
+A ResNet-18 trained in AnnoTrain to recognise the animals photographed by camera traps along
+a railway line: mostly amphibians, 10 classes.
+
+- **F1**: its training curves: the loss on the training and validation photos, epoch after
+  epoch.
+- **F2**: its confusion matrix, its accuracy and the recall of each species.
+- **F3**: three versions of another AnnoTrain model (vegetables), trained on more and more
+  annotated photos.
+- **F4**: your own annotations of the beginning of the session.
+
+::: callout-note
+## Checkpoint
+
+F1 draws two curves over 40 epochs. F2 prints one accuracy, a table of 10 classes sorted by
+their number of photos, and a heatmap with the annotated classes in rows and the predicted
+ones in columns.
+:::
+
+### G. AlphaFold: from a sequence to a structure (then after class)
+
+*Theory: [Theory 4](#theory-4), and its 3D viewer.*
+
+*FLC* (Session 6) has never been solved by experiment: AlphaFold predicted it.
+
+- **G1**, in the **Terminal**: ask the AlphaFold database about *FLC*, download its
+  structure, and look inside with the commands of Session 1:
+
+```bash
+cd ~/bioinfo_course/session_07/data
+curl -s https://alphafold.ebi.ac.uk/api/prediction/Q9S7Q7 | head -c 700
+curl -s -A "Mozilla/5.0" -o FLC_live.pdb https://alphafold.ebi.ac.uk/files/AF-Q9S7Q7-F1-model_v6.pdb
+head -n 4 FLC_live.pdb
+grep "^ATOM" FLC_live.pdb | head -n 3
+grep "^ATOM" FLC_live.pdb | wc -l
+grep "^ATOM" FLC_live.pdb | grep " CA " | wc -l
+```
+
+  (`-A "Mozilla/5.0"` gives a browser name: without it, the server answers `403
+  Forbidden`. If the network fails, the same file is already in `data/`.)
+
+- **G2**: read the structure as a table in R, and plot the confidence (pLDDT) along the
+  sequence, with the two domains of *FLC* described in UniProt.
+- **G3**: draw the structure from its coordinates, then look at it in 3D: in the viewer of
+  Theory 4 ("See it for yourself"), and by opening **your own downloaded file** in
+  [Mol\* Viewer](https://molstar.org/viewer/) (the viewer of the Protein Data Bank and of
+  AlphaFold DB).
+- **G4**: the contact map: which amino acids touch in 3D.
+- **G5**: the PAE: how sure AlphaFold is of the position of each domain relative to the
+  other.
+- **G6**: how coevolution reveals contacts, on a small made-up alignment.
+- **G7**, alone: *FLC*, the RuBisCO of photosynthesis and *HKT1*, the sodium transporter of
+  Session 6: which one is predicted best, and why?
+
+::: callout-note
+## Checkpoint
+
+In G1, the first command prints text starting with `[{"toolUsed":`, and the last one prints
+the number of amino acids of *FLC*. G2 draws one line between 0 and 100 over two shaded
+domains, and counts the amino acids in four bands. G4 and G5 draw two square maps of the
+same size, with a dark diagonal. G6 finds one pair of positions. G7 prints a table of
+three proteins.
+:::
+
+### H. A tour of AI in biology (after class, on your own)
+
+Open at least four of these tools (AlphaFold does not count: you explored it in block G),
+use each one for real, and fill the table of H1. At least one that identifies a living
+being.
+
+| Tool | What it does | Type of AI |
+|---|---|---|
+| [Pl@ntNet](https://identify.plantnet.org) | Identifies a plant from a photo (leaf, flower, bark). | Classification (CNN), labels from botanists and citizens |
+| [iNaturalist](https://www.inaturalist.org) | Suggests the species of any observation; the community confirms ("research grade"). | Classification + human consensus |
+| [Merlin Bird ID](https://merlin.allaboutbirds.org) / [BirdNET](https://birdnet.cornell.edu) | Identifies birds from their song: the sound becomes a spectrogram, an image read by a CNN. | Classification of sounds |
+| [AlphaFold Protein Structure Database](https://alphafold.ebi.ac.uk) / [AlphaFold Server](https://alphafoldserver.com) | Block G. Also try the spike of SARS-CoV-2 ([P0DTC2](https://alphafold.ebi.ac.uk/entry/P0DTC2)) from Session 3, or predict a complex on the Server. | Structure prediction (deep learning) |
+| [ESM Metagenomic Atlas](https://esmatlas.com) | 600 million predicted structures of proteins from environmental DNA, by a protein language model. | Self-supervised language model |
+| [Cellpose](https://www.cellpose.org) | Upload a microscopy image: each cell is outlined. | Segmentation (U-Net style) |
+| [Teachable Machine](https://teachablemachine.withgoogle.com) | Train your own image classifier in the browser with your webcam (two classes: a leaf and a pen, for example), then try to fool it. | Transfer learning |
+| [TensorFlow Playground](https://playground.tensorflow.org) | A neural network you can watch learn: add neurons and layers, add noise, see overfitting. | Neural network |
+| [CNN Explainer](https://poloclub.github.io/cnn-explainer/) | Every convolution of a small CNN, interactive. | CNN |
+| [AnnoTrain](https://annotrain.cmaslard.xyz) | Annotate, see the consensus, the models and their mistakes. | Annotation + classification, detection, segmentation |
+| [Wildlife Insights](https://www.wildlifeinsights.org) / [MegaDetector](https://github.com/agentmorris/MegaDetector) | Camera-trap photos sorted automatically: empty or animal, then species. | Detection + classification |
+| [DeepLabCut](https://www.deeplabcut.org) | Follows the body parts of an animal in a video (behaviour). | Pose estimation |
+| A chatbot (ChatGPT, Claude, Le Chat, Copilot...) | Answers questions, explains and writes code. | Generative AI (large language model) |
+
+### Using AI well as a biologist
+
+- **Use an existing tool first.** Many questions already have a trained model (Pl@ntNet,
+  BirdNET, MegaDetector, Cellpose, AlphaFold). Train your own (AnnoTrain, Teachable Machine)
+  only when none fits.
+- **Check it on your own data.** A model trained elsewhere can fail on your cameras, your
+  region, your microscope (domain shift). Annotate a sample yourself and compute the recall
+  per class before trusting the counts.
+- **Look at more than the accuracy**: the confusion matrix, the recall of the rare classes,
+  the photos where the model is unsure.
+- **Report what you used**: the tool, its version, its settings, and how you checked it.
+- **Chatbots are excellent assistants and unreliable sources.** Ask them to explain an
+  error message or a line of code, to suggest a plot; never trust a number, a reference
+  or a fact without checking it (block G2). They write fluent text even when they invent.
+- **Do not paste** unpublished data, personal data, or confidential documents into an
+  online AI: you remain responsible for them.
+
+### Wrap-up
+
+Click **Render** (about 10 seconds) and keep `WORKBOOK.pdf`: it is your own summary of
+today, with your answers. There is nothing to submit. Finish block G (AlphaFold) and the
+tour of block H after class: they are the tools you are most likely to use in your own
+work.
+
+## Checkpoint
+
+You are done when all of the following are true:
+
+- you can explain, with the chihuahua and the muffin, why machine learning exists;
+- you can place AI, machine learning, deep learning and generative AI in each other;
+- you trained a decision tree and read its questions;
+- you can read a confusion matrix and compute an accuracy, a recall and a precision;
+- you can explain overfitting, and why a model is judged on a test set;
+- you can explain why a forest of trees votes better than one tree;
+- you can say what a neuron, a weight, a loss and an epoch are;
+- you computed a convolution, and can say what the filters of a CNN learn;
+- you can explain why an accuracy of 87% can hide a poor model for rare species;
+- you can explain how an alignment and coevolution let AlphaFold predict a
+  structure, and judge a prediction with its pLDDT and PAE;
+- you used four AI tools for biology, and checked the answer of a chatbot.
+
+## Optional challenge
+
+For your own interest.
+
+**A. A real random forest.** Install the package `randomForest` (`install.packages("randomForest")`,
+about a minute) and run `randomForest(factor(species) ~ bill_len + bill_dep + flipper_len + body_mass, data = train)`.
+Compare its accuracy with your hand-made forest, and look at `importance()`.
+
+**B. A training curve of your own.** Train the network of D1 with `maxit = 1, 2, 5, 10, 20,
+50` (same `set.seed(3)` before each) and plot the training and test accuracy against the
+number of iterations.
+
+**C. Fool Teachable Machine.** Train it on two objects in front of a plain wall, then show
+them in front of a busy background. What did it really learn?
+
+**E. Your own protein.** Pick any protein you care about on [UniProt](https://www.uniprot.org),
+then in R: `options(HTTPUserAgent = "Mozilla/5.0")`,
+`info <- jsonlite::fromJSON("https://alphafold.ebi.ac.uk/api/prediction/ACCESSION")`, and
+`download.file(info$pdbUrl, "data/my_protein.pdb")`. Redo G2-G4 on it.
+
+**D. A live model.** The AnnoTrain models are public: in R,
+`jsonlite::fromJSON("https://annotrain.cmaslard.xyz/api/projects/caltech-test/models")`
+returns every version of the camera-trap model with its metrics. Find the history of the
+latest version and plot its curves.
+
+## Going further
+
+Interactive explanations, all free:
+
+- [MLU-Explain](https://mlu-explain.github.io): beautiful visual articles on [decision
+  trees](https://mlu-explain.github.io/decision-tree/), [random
+  forests](https://mlu-explain.github.io/random-forest/), [precision and
+  recall](https://mlu-explain.github.io/precision-recall/), train/test sets and overfitting.
+- [3Blue1Brown, Neural networks](https://www.3blue1brown.com/topics/neural-networks): the
+  best videos on neurons, weights and gradient descent.
+- [Google Machine Learning Crash Course](https://developers.google.com/machine-learning/crash-course):
+  classification, thresholds, precision and recall.
+- [R2D3, A visual introduction to machine learning](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/):
+  a decision tree explained by scrolling.
+- [Practical Deep Learning for Coders (fast.ai)](https://course.fast.ai): train your first
+  image classifier in a few lines of Python.
+
+Articles:
+
+- Greener J. G. et al. (2021). [A guide to machine learning for
+  biologists](https://doi.org/10.1038/s41580-021-00407-0). *Nature Reviews Molecular Cell
+  Biology*. The best overview for biologists.
+- Christin S., Hervet É. and Lecomte N. (2019). [Applications for deep learning in
+  ecology](https://doi.org/10.1111/2041-210X.13256). *Methods in Ecology and Evolution*.
+- Tuia D. et al. (2022). [Perspectives in machine learning for wildlife
+  conservation](https://doi.org/10.1038/s41467-022-27980-y). *Nature Communications*.
+- Norouzzadeh M. S. et al. (2018). [Automatically identifying, counting, and describing
+  wild animals in camera-trap images with deep
+  learning](https://doi.org/10.1073/pnas.1719367115). *PNAS*. Snapshot Serengeti.
+- Beery S., Van Horn G. and Perona P. (2018). [Recognition in Terra
+  Incognita](https://arxiv.org/abs/1807.04975). *ECCV*. Camera-trap models fail on new
+  places: the Caltech Camera Traps dataset of block E.
+- Kahl S. et al. (2021). [BirdNET: a deep learning solution for avian diversity
+  monitoring](https://doi.org/10.1016/j.ecoinf.2021.101236). *Ecological Informatics*.
+- Stringer C. et al. (2021). [Cellpose: a generalist algorithm for cellular
+  segmentation](https://doi.org/10.1038/s41592-020-01018-x). *Nature Methods*.
+- Jumper J. et al. (2021). [Highly accurate protein structure prediction with
+  AlphaFold](https://doi.org/10.1038/s41586-021-03819-2). *Nature*.
+- Varadi M. et al. (2022). [AlphaFold Protein Structure Database: massively expanding the
+  structural coverage of protein-sequence space with high-accuracy
+  models](https://doi.org/10.1093/nar/gkab1061). *Nucleic Acids Research*.
+- Abramson J. et al. (2024). [Accurate structure prediction of biomolecular interactions
+  with AlphaFold 3](https://doi.org/10.1038/s41586-024-07487-w). *Nature*.
+- Mathis A. et al. (2018). [DeepLabCut: markerless pose estimation of user-defined body
+  parts with deep learning](https://doi.org/10.1038/s41593-018-0209-y). *Nature
+  Neuroscience*.
+- Breiman L. (2001). [Random forests](https://doi.org/10.1023/A:1010933404324). *Machine
+  Learning*.
+- LeCun Y., Bengio Y. and Hinton G. (2015). [Deep
+  learning](https://doi.org/10.1038/nature14539). *Nature*.
+- Gorman K. B., Williams T. D. and Fraser W. R. (2014). [Ecological sexual dimorphism and
+  environmental variability within a community of Antarctic penguins (genus
+  *Pygoscelis*)](https://doi.org/10.1371/journal.pone.0090081). *PLoS ONE*. Where the
+  penguins come from.
+
+## Before the next session
+
+Sessions 8 and 9 are the guided project: in groups, you choose one dataset and one
+question, and you use everything since Session 4, from a plot to a model, to answer it.
