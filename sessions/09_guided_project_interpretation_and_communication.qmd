@@ -1,0 +1,154 @@
+---
+title: "Session 9: Group project II: interpretation and presentation"
+engine: knitr
+---
+
+## Overview
+
+::: callout-note
+## Biological question
+
+What biological conclusion do your results support, how sure are you, and can you
+convince an audience in twelve minutes?
+:::
+
+Between the two sessions, your group ran the analysis of its plan. Today you turn
+results into a conclusion and present it: **12 minutes of talk and 5 minutes of
+questions per group**. A result is not finished when the code runs; it is finished when
+someone else understands what it shows, why you believe it, and where it could be wrong.
+
+::: callout-important
+## How you work and what you hand in
+
+- **Before 15:15**, the host uploads the group's **slides as a PDF** on Moodle (the
+  instructor projects them from there: no laptop changes between talks).
+- **Everyone presents one part** of the talk. The instructor then asks **each member one
+  question**, about any part of the project.
+- **By Thursday 19 November, 23:59**, the host submits the rendered `PROJECT.pdf`,
+  `PROJECT.qmd` and the part files on Moodle (with the `results/` folder if it does not
+  render). The code shows that the analysis is reproducible: it is part of the group
+  grade.
+:::
+
+### Learning outcomes
+
+By the end of this session, you should be able to:
+
+- say what a result shows, and what it does not show;
+- tell a conclusion supported by the data from an interpretation that needs more
+  evidence;
+- name the main limitation of an analysis and what would remove it;
+- build a short scientific talk around one message and a few readable figures;
+- explain and defend any part of a group project.
+
+### Session plan
+
+| Time | Block | What happens |
+|---:|---|---|
+| 14:15-14:20 | Feedback | One common success and one common difficulty of the plans. |
+| 14:20-14:35 | Theory | From a result to a conclusion; what makes a talk clear; how you are graded. |
+| 14:35-15:15 | Practical | Last checks, final figures, one rehearsal with a timer. Upload the slides. |
+| 15:15-15:25 | Break | The instructor loads the slides. |
+| 15:25-17:10 | Presentations | Six groups, 12 min of talk + 5 min of questions each, in the order drawn at 14:35. |
+| 17:10-17:15 | Wrap-up | What the six projects taught us together. |
+
+## Theory (≈15 min)
+
+### 1. From a result to a conclusion
+
+Three questions to ask of every result before it goes on a slide:
+
+1. **Is it real?** Would it survive another threshold, another normalisation, the removal
+   of one outlier, a test set? If you had to choose a threshold, did you choose it
+   before looking?
+2. **Is it what I think?** Could a confounder (ancestry, family, batch, sampling effort)
+   produce the same pattern? Did you put it in the model?
+3. **What does it mean for the organism?** A list of 2,000 genes is a result; "the plant
+   switches on its salicylic-acid defence within 4 hours when it recognises the
+   bacterium" is a conclusion.
+
+Write each conclusion with its strength: "shows", "suggests", "is consistent with", "does
+not allow us to say". An honest "we cannot conclude, because ..." is worth more than an
+overstated claim.
+
+### 2. What makes a talk clear
+
+- **One message.** Before making slides, write the one sentence the audience should
+  remember. Every slide serves it.
+- **A structure.** Question (why it matters) → data (what one row is, how many) → method
+  (one slide, a diagram rather than code) → results (one figure per slide, its message
+  as the slide title) → conclusion → limitation → what you would do next.
+- **Readable figures.** Large text (axis labels readable from the back of the room),
+  units, a legend, no more than two or three colours that mean something. Explain each
+  figure: "on the x-axis ..., each point is ...".
+- **Little text.** Keywords, not paragraphs. No code on the slides (it is in
+  `PROJECT.qmd`).
+- **Time.** About one slide per minute: 10 to 12 slides. Rehearse with a timer: the talk
+  stops at 12 minutes.
+- **Five speakers, one talk.** Hand over with a sentence that links the parts ("Now that
+  we know which genes respond, X shows when they respond").
+
+### 3. Questions
+
+The instructor asks each member one question, chosen at the moment, about any part of
+the project. Typical questions:
+
+- What is one row of your main table, and how many are there?
+- Why this method and not another one from the course?
+- What would your figure look like if your hypothesis were wrong?
+- Which confounder worries you most, and how did you handle it?
+- What is the main limitation, and what data would remove it?
+
+"I don't know, but here is how we could find out" is a good answer.
+
+## How you are graded {#how-you-are-graded}
+
+**Group part (7 points, the same for every member):**
+
+| Criterion | Points | What we look for |
+|---|---:|---|
+| Question and biological context | 1 | A focused question; why it matters; what the data are. |
+| Correct and reproducible analysis | 2 | Appropriate methods from the course, correctly applied; `PROJECT.qmd` renders from the data to the figures. |
+| Clear figures | 1 | Readable, labelled, one message each. |
+| Interpretation supported by the results | 2 | Conclusions that follow from the figures, with their strength; confounders considered. |
+| Relevant limitation | 1 | The main limitation and what would address it. |
+
+**Individual part (3 points, for each member):**
+
+| Criterion | Points | What we look for |
+|---|---:|---|
+| Your part of the talk | 1.5 | Clear, at the right pace, and you master what you present. |
+| Your answer to the question | 1.5 | Correct, and shows that you understand the whole project. |
+
+## Practical (≈40 min)
+
+### A. Last checks (14:35-14:55)
+
+- Does `PROJECT.qmd` render from the start in the host's copy, with every part? Fix the
+  last errors now.
+- For each figure of the talk: is the text large enough? Does the slide title say its
+  message?
+- For each conclusion: which figure supports it? How strong is it?
+- Is the limitation slide there?
+
+### B. Rehearse (14:55-15:15)
+
+Run the whole talk once with a timer, each member in turn. Then upload the slides (PDF)
+on Moodle before 15:15.
+
+::: callout-note
+## Checkpoint
+
+The talk lasts 12 minutes or less; every member can answer, without notes, "what is one
+row of your main table?" and "what is your main conclusion?".
+:::
+
+### C. Presentations (15:25-17:10)
+
+Listen to the other groups: the last discussion compares what the six projects taught
+about the same tools. Each group may ask one question to another group.
+
+## After the session
+
+The host submits `PROJECT.pdf`, `PROJECT.qmd` and the part files (and `results/` if it
+does not render) on Moodle **by Thursday 19 November, 23:59**.

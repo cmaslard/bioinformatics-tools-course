@@ -1,0 +1,635 @@
+---
+title: "Session 8: Group project I: from a dataset to a plan"
+engine: knitr
+---
+
+## Overview
+
+[Download the lecture slides (PDF)](slides/08_lecture_slides.pdf)
+
+::: callout-tip
+## Quick poll (Poll Everywhere)
+
+Respond at [pe.app/cmaslard7](https://pe.app/cmaslard7)
+:::
+
+::: callout-note
+## Biological question
+
+You receive a real dataset, published by researchers, and a broad biological theme.
+Which question can these data answer, which tools from this course answer it, and what
+result would change your mind?
+:::
+
+Since Session 3, every practical gave you the question, the data and the steps. In
+Sessions 8 and 9, **you** decide. In groups of five, you choose one of **seven real
+datasets**: plant immunity, natural variation of gene expression, coral bleaching, ocean
+plankton, bird shapes, plant immune genes across 413 genomes, and species ranges under
+climate change. You find what is important in it and present it in Session 9.
+
+There is no new tool today. Everything you need is already in your toolbox: the shell
+and BLAST of Sessions 2-3, tables and `lm()` of Session 4, PCA and clustering of Session
+5, one model per feature and the confounders of Session 6, trees and test sets of Session
+7. The new skill is the one researchers use most and courses teach least: **turning data
+into a question, and a question into a plan.**
+
+::: callout-important
+## How you work and what you hand in
+
+- **Groups of five, formed by you.** One member, the **host** (who keeps the group's
+  files and submits), registers the group on Moodle (**Group project: registration**):
+  the five names and three projects you prefer, in order.
+  Each group gets a different project: the groups are taken in an order drawn by lot,
+  and each receives the first project of its list that is still free. Projects are
+  announced at 15:05. No group yet? The last groups are completed at 14:15.
+- **Today (Session 8):** explore the data, write the plan. The group submits **one
+  `PLAN.pdf`** on Moodle **by Monday 9 November, 23:59**, and gets feedback on it before
+  Session 9.
+- **Between the two sessions:** each member writes one part of the analysis. Meet as a
+  group at least once.
+- **Session 9 (Monday 16 November):** a **12-minute group presentation** followed by
+  **5 minutes of questions**. **Everyone presents one part**, and the instructor asks
+  **each member one question**, about any part of the project, not only their own.
+  Everyone must be able to explain the whole project.
+- **By Thursday 19 November, 23:59:** the group's analysis (`PROJECT.pdf` and its `.qmd`
+  files).
+:::
+
+### Learning outcomes
+
+By the end of this session, you should be able to:
+
+- explore an unknown dataset (what is one row, which columns, how many samples per group)
+  before any statistics;
+- turn a broad theme into a focused question, with a hypothesis and the result that would
+  refute it;
+- name the response variable, the explanatory variables and the possible confounders of
+  your question;
+- choose, for each step of the analysis, a tool from Sessions 2-7, and justify it;
+- make a first exploratory figure that already says something about the question;
+- split the work in a group so that everyone understands the whole project.
+
+### Session plan
+
+| Time | Block | What happens |
+|---:|---|---|
+| 14:15-14:20 | Retrieval | Session 7 quiz. |
+| 14:20-14:50 | Theory | From data to a question; the anatomy of a plan; the toolbox; the classic traps; how you are graded. |
+| 14:50-15:05 | Project tour | The seven projects in two minutes each; each group registers on Moodle with three projects in order. |
+| 15:05-15:35 | Practical A | Projects announced. Setup, then meet your data without statistics: rows, columns, groups, missing values. |
+| 15:35-15:45 | Break | |
+| 15:45-16:45 | Practical B | The plan: question, hypothesis, variables, method step by step, first figure. |
+| 16:45-17:05 | Practical C | Three minutes with the instructor per group: your plan in one sentence, your first figure. |
+| 17:05-17:15 | Wrap-up | Who writes which part until Session 9; render `PLAN.pdf` (due at 23:59). |
+
+## Theory (≈30 min)
+
+### 1. From data to a question
+
+A dataset is not a question. The soybean tables of Sessions 4 and 5 could answer "which
+bacteria respond to drought?", "do the two genotypes differ?" or "does the root release
+other molecules than the leaf contains?": three different analyses. A good project
+question is:
+
+- **biological**: it is about organisms, not about the data ("which molecules change?"
+  is a step, "does the plant make protective molecules in the root before the leaf?" is a
+  question);
+- **answerable with these data**: the variables it needs are in the table;
+- **focused**: one main question, two or three sub-questions at most;
+- **refutable**: you can say in advance which result would mean "no".
+
+A useful exercise: write your question, then the figure that would answer it (axes,
+colours, panels), then the result you expect on that figure. If you cannot draw the
+figure, the question is not yet precise enough.
+
+### 2. The anatomy of a plan
+
+Your `PLAN.qmd` has seven parts. Each is short:
+
+| Part | What to write | Example (the soybean plants of Sessions 4-5) |
+|---|---|---|
+| Question | One sentence, then two or three sub-questions | Does drought change the chemistry of the root more than that of the leaf? |
+| Hypothesis and refutation | What you expect, and the result that would prove you wrong | More molecules change in the root, which meets the dry soil first; refuted if the leaf has as many or more. |
+| Data | Files, rows, the subset you use, how many samples per group | One row per sample and molecule; root and leaf only; 2 genotypes × 4 conditions × 3-4 plants |
+| Variables | Response, explanatory, possible confounders | Response: concentrations; explanatory: drought, organ; other factors to keep in the model: genotype, heatwave |
+| Method, step by step | Each step and the course tool that does it | 1. log of the concentrations; 2. PCA per organ (Session 5); 3. one `lm()` per molecule with FDR (Sessions 5-6) ... |
+| First figure | One exploratory figure with a caption, and what it already shows | PC1 vs PC2 of each organ, coloured by condition |
+| Risks and roles | What could go wrong, and who does what | Four plants per group is few; X does the PCA, Y the models ... |
+
+### 3. The toolbox: which tool for which question?
+
+| If your question is ... | Tool | Session |
+|---|---|---|
+| How many, how big, per group? | `group_by()`, `summarise()`, `count()` | 4 |
+| Is there a difference between groups? Does it depend on a second factor? | `lm(y ~ a * b)`, `anova()`, boxplot, interaction plot | 4 |
+| What are the main patterns among many variables? Which samples resemble each other? | `prcomp()`, heatmap, clustering | 5 |
+| Which of thousands of features (genes, SNPs, OTUs) are associated with a variable? | one `lm()` per feature with `apply()`, Bonferroni or FDR, Manhattan or volcano plot | 5, 6 |
+| Is an association real, or due to a confounder (ancestry, family, batch)? | add the confounder to `lm()`, or PCs as covariates | 6 |
+| Can a variable be **predicted** from the others, and how well on new data? | decision tree, random forest, train/test split, confusion matrix | 7 |
+| Is this sequence similar to a known one? How are these genes related? | `blastp`, `mafft`, `FastTree` | 3 |
+| Where is it? | a map with `geom_point()` or `geom_tile()` | 4, 6 |
+
+Two rules. **First explore, then test**: a plot of the raw data comes before any model.
+**One question, several tools**: a good project usually chains three or four of them (for
+example: exploration, PCA, one model per gene, then a closer look at the best genes).
+
+### 4. The classic traps
+
+You met each of them in the course; they all come back in real data.
+
+- **The confounder** (Session 6): an association created by a third variable. Accessions
+  from the north flower late *and* share many alleles; in a lake survey, the fish of the
+  deep station are larger *and* older.
+- **The batch**: samples processed on different days, by different people, in different
+  experiments. Check whether it explains your first PC.
+- **Thousands of tests** (Sessions 5-6): with 20,000 genes, 1,000 are "significant" at
+  5% by chance alone.
+- **Unequal sampling**: more observations does not mean more organisms. Ten times more
+  records of a butterfly in 2020 than in 1980 tells you first about the number of
+  observers.
+- **Raw counts are not comparable**: a sample sequenced twice as deep has twice as many
+  reads in every gene. Normalise first (counts per million, then a log).
+- **Overfitting** (Session 7): a model judged on the data it learned from always looks
+  good. Keep a test set.
+- **Correlation is not causation**: the data are observations; say what an experiment
+  would need to show.
+
+### 5. How you are graded
+
+| | Points | What counts |
+|---|---:|---|
+| **Session 8: `PLAN.pdf`** (group) | 10 | Focused question (2), variables and expected result (2), method step by step with the right tools (3), first figure with caption (2), one difficulty or decision (1) |
+| **Session 9: presentation, group part** | 7 of 10 | Question and biological context (1), correct and reproducible analysis (2), clear figures (1), interpretation supported by the results (2), one relevant limitation (1) |
+| **Session 9: presentation, individual part** | 3 of 10 | Your own part of the talk: clear, and you master it (1.5); your answer to the instructor's question (1.5) |
+
+The full rubric is on the [Session 9
+page](09_guided_project_interpretation_and_communication.qmd#how-you-are-graded).
+
+## The seven projects
+
+Each project has its own folder: the data (`data/`, with a `README.md` that gives the
+source and the meaning of every column), and the files the group writes in (`PLAN.qmd`,
+`PROJECT.qmd` and one part file per member). Each project below gives a **starting question** that the whole group
+answers first, then several ways **to go further**: choose at least one, or bring your own
+question if it fits the data. The tools listed are suggestions, not a recipe.
+
+| | Project | Organisms | Data | Folder |
+|---|---|---|---|---|
+| A | How fast does a plant answer a bacterium? | *Arabidopsis*, *Pseudomonas* | RNA-seq, 366 samples, time series × mutants | `A_arabidopsis_pseudomonas` |
+| B | What controls the expression of a gene in nature? | *Arabidopsis*, 649 wild accessions | RNA-seq + the SNPs of Session 6 | `B_arabidopsis_1001_transcriptomes` |
+| C | When does a coral break down under heat? | *Stylophora* coral and its algae | RNA-seq of both partners, 80 samples | `C_coral_heat_stress` |
+| D | What shapes the communities of ocean bacteria? | Marine bacteria and archaea | 16S counts + ocean chemistry, 139 samples | `D_tara_oceans_plankton` |
+| E | What does the shape of a bird tell about its life? | 11,009 bird species | Morphology, ecology, geography | `E_avonet_birds` |
+| F | How many immune genes does a plant need? | 413 plant genomes | Immune receptor genes per genome + sequences | `F_plant_immune_genes` |
+| G | Will species move with the climate? | 8 European species | GBIF observations + climate now and in 2070 | `G_species_ranges_climate` |
+
+### A. How fast does a plant answer a bacterium? {#project-a}
+
+**The biology.** Plants have no immune cells: every cell defends itself. A first layer of
+immunity recognises general bacterial molecules. Bacteria inject **effector** proteins to
+suppress it, and plants evolved **resistance (R) genes** whose products recognise some of
+these effectors and trigger a stronger, faster response, often with cell death at the
+infection site. The strain *Pseudomonas syringae* pv. *tomato* **DC3000** is virulent on
+*Arabidopsis*: no effector is recognised. The same strain carrying the effector
+**AvrRpt2** (recognised by the R protein RPS2) or **AvrRpm1** (recognised by RPM1) is
+avirulent: the plant wins. Several hormones carry the signal: salicylic acid (SA, needs
+the gene *SID2*), and the regulators *PAD4*, *EIN2* (ethylene) and *DDE2* (jasmonate).
+
+**The data.** Leaves of six genotypes were infiltrated with water (mock) or one of the
+three strains and harvested from 1 to 24 hours later, in three independent trials (Mine
+et al. 2018).
+
+| File | One row is | Columns |
+|---|---|---|
+| `pseudomonas_samples.csv` | one sample (366) | `sample`, `genotype` (Col-0 = wild type, `sid2`, `pad4`, `pad4 sid2`, `dde2 ein2 pad4 sid2`, `rpm1 rps2`), `treatment` (`mock`, `DC3000`, `AvrRpt2`, `AvrRpm1`), `time_h`, `trial`, `library_size` |
+| `pseudomonas_counts.csv.gz` | one gene (18,422) | `gene_id`, then one column per sample: the number of reads |
+| `arabidopsis_genes.csv` | one gene | `gene_id`, `symbol`, position, `description` (as in Session 6) |
+
+Not every genotype was tested with every strain at every time: count the samples per
+combination first.
+
+**Starting question.** Does wild-type *Arabidopsis* (Col-0) respond faster to a bacterium
+it recognises (AvrRpt2, AvrRpm1) than to one it does not (DC3000)? How many genes change,
+and when?
+
+**To go further.**
+
+- Which hormone pathway does each mutant lose? Compare the response of the mutants to
+  AvrRpt2 with Col-0, and follow known marker genes (look for *PR1* in the gene table).
+- In `rpm1 rps2`, the plant cannot recognise the effectors any more. Does AvrRpt2 then
+  look like DC3000?
+- Do the response genes fall into a few groups with the same time course (early,
+  transient, late)? What are these genes?
+- Is the **trial** (the day of the experiment) visible in the data?
+
+**Tools.** Normalisation (counts per million, log); PCA (Session 5); for each time point,
+the difference with mock, or one `lm()` per gene (Session 6) with a correction for
+thousands of tests; heatmap and clustering (Session 5).
+
+**Watch out.** Compare each infected sample with the **mock of the same time**: the
+leaves change during the day too. A `trial` is a batch. With 18,000 genes, choose your
+threshold before you look.
+
+### B. What controls the expression of a gene in nature? {#project-b}
+
+**The biology.** In Session 6 you found the genes behind flowering time and leaf sodium
+by comparing 1,003 wild accessions. Here, the "trait" is the **expression of a gene**:
+the leaves of 649 of the same accessions were sequenced (RNA-seq) before flowering, all
+grown in the same chamber (Kawakatsu et al. 2016). An expression level can be controlled
+by a variant **next to the gene** (in *cis*) or by a variant in **another gene** that
+regulates it (in *trans*). A GWAS whose trait is an expression level is called an
+**eQTL** scan.
+
+**The data.**
+
+| File | One row is | Columns |
+|---|---|---|
+| `accessions.csv` | one accession (649) | as in Session 6 (`accession_id`, `name`, `country`, `latitude`, `longitude`, `genetic_group`, `flowering_10C`, `flowering_16C`, `leaf_sodium`), plus the climate of its place of origin (WorldClim, 1970-2000): `annual_mean_temperature`, `min_temperature_coldest_month`, `annual_precipitation` and five more |
+| `accession_expression.csv.gz` | one gene (20,832) | `gene_id`, then one column per accession (`acc_` + `accession_id`, in the order of `accessions.csv`): normalised read counts |
+| `accession_genotypes.csv.gz` | one SNP (22,406) | as in Session 6: `snp_id`, `chromosome`, `position`, then 0/1 per accession, same order |
+| `arabidopsis_genes.csv` | one gene | as in Session 6 |
+
+**Starting question.** The gene *FLC* blocks flowering. Is its expression in the leaves
+associated with flowering time? And which regions of the genome control the expression
+of *FLC*: the region of *FLC* itself, or other regions?
+
+**To go further.**
+
+- Do the accessions group by their expression (PCA) the way they group by their DNA
+  (genetic groups)?
+- Which genes are expressed differently in accessions from cold and warm places? Is it
+  the climate, or the ancestry that goes with it?
+- Choose other genes (another flowering gene, a gene of a pathway you like) and run their
+  eQTL scan: *cis*, *trans* or nothing?
+- Can the expression of a few genes **predict** flowering time better than *FLC* alone
+  (Session 7, with a test set)?
+
+**Tools.** Log of the expression; `lm()` and correlation (Session 4); PCA (Session 5);
+GWAS with `apply()`, Manhattan and QQ plots, PCs as covariates (Session 6); trees and
+test sets (Session 7).
+
+**Watch out.** Population structure (Session 6) is still there. A scan of 22,000 SNPs for
+each of 20,000 genes would be 440 million models: choose a few genes. Climate of origin
+and ancestry are confounded.
+
+### C. When does a coral break down under heat? {#project-c}
+
+**The biology.** A reef-building coral is a partnership: the animal hosts microscopic
+algae (Symbiodiniaceae) inside its cells, which give it most of its food by
+photosynthesis. When the sea gets too warm, the partnership breaks down: the coral loses
+its algae and turns white (**bleaching**), and may starve. Corals of the northern Red Sea
+(Gulf of Aqaba) are unusually heat-tolerant. Savary et al. (2021) exposed fragments of
+five colonies (**genotypes**) of *Stylophora pistillata* to 27 °C (normal), 29.5, 32 and
+34.5 °C, in a **short** experiment (a few hours, as in a heatwave) and a **long** one
+(about a week), and sequenced both partners at the end of the heat and after recovery.
+
+**The data.**
+
+| File | One row is | Columns |
+|---|---|---|
+| `coral_samples.csv` | one sample (80) | `sample`, `experiment` (`short`, `long`), `time` (`end_of_heat`, `recovery`), `temperature`, `genotype`, `coral_reads`, `algae_reads`, `algae_share` |
+| `coral_counts.csv.gz` | one coral gene (19,722) | `gene_id`, then one column per sample: reads |
+| `algae_counts.csv.gz` | one algal gene (32,605) | the same, for the algae |
+| `coral_genes.csv.gz`, `algae_genes.csv.gz` | one gene | `gene_id`, the best match in protein databases (`best_hit_description`, `best_hit_species`, `identity_percent`), `go_terms` |
+
+**Starting question.** At which temperature does the coral switch on a large stress
+response, and does it recover afterwards? Does the answer differ between the short and
+the long experiment?
+
+**To go further.**
+
+- `algae_share` is the share of reads that come from the algae. Can it measure bleaching?
+  When does it drop?
+- Do the algae respond to heat like their host, at the same temperature?
+- What matters more for expression: the genotype of the colony or the temperature (share
+  of variation, Session 4)?
+- Which kinds of genes change (look at the descriptions: heat shock proteins,
+  antioxidants ...)? Are they the same in the short and the long experiment?
+
+**Tools.** Normalisation; PCA (Session 5); `lm()` with several factors and share of
+variation (Session 4); one model per gene with a correction (Sessions 5-6).
+
+**Watch out.** Five genotypes per group: very few. Genotype is a block, as `trial` in
+project A. Gene descriptions come from the best match in other species, often far away
+(mouse, human): a name is a hint, not a proof.
+
+### D. What shapes the communities of ocean bacteria? {#project-d}
+
+**The biology.** One litre of sea water holds about a billion bacteria and archaea; they
+make half of the photosynthesis on Earth and recycle most nutrients. Between 2009 and
+2013, the schooner *Tara* sampled the oceans of the world at three depths: the surface
+(SRF), the deep chlorophyll maximum (DCM, where algae are most abundant, 20-200 m) and
+the dark mesopelagic zone (MES, 200-1,000 m). Sunagawa et al. (2015) sequenced the DNA of
+everything filtered from these waters; here you receive the 16S rRNA reads, grouped into
+taxa (OTUs), as in the soybean microbiome of Session 4.
+
+**The data.**
+
+| File | One row is | Columns |
+|---|---|---|
+| `tara_samples.csv` | one sample (139) | `sample`, `station`, `date`, `latitude`, `longitude`, `layer` (`SRF`, `DCM`, `MES`, `MIX`), `oxygen_minimum_zone`, `size_fraction`, `biome`, `ocean`, `depth_m`, `temperature`, `salinity`, `oxygen`, `nitrate`, `phosphate`, `silicate`, `light_par`, `bacteria_per_ml` |
+| `tara_otus.csv.gz` | one OTU (10,311) | `otu_id`, taxonomy (`domain` to `genus`), then one column per sample: reads |
+| `tara_functions.csv.gz` | one metabolic pathway (515 KEGG modules) | `module`, then one column per sample: abundance of the genes of that pathway |
+
+**Starting question.** Which factor best explains the composition of the bacterial
+community: depth (layer), temperature, or the ocean where it was sampled?
+
+**To go further.**
+
+- Is diversity (Shannon, Session 4) higher in warm or in cold water, at the surface or in
+  the dark?
+- Which taxa follow temperature? Look at the Cyanobacteria (*Prochlorococcus*,
+  *Synechococcus*): what do they need?
+- Do the **functions** (KEGG modules) vary between samples as much as the **taxa**? If
+  not, what could that mean?
+- What is special about the oxygen minimum zones?
+
+**Tools.** Relative abundances, Shannon diversity and `lm()` (Session 4); PCA of the
+communities (Session 5, on transformed relative abundances); maps (Sessions 4, 6).
+
+**Watch out.** Depth, temperature, light and oxygen go together: separating them needs a
+model with several variables. Two size fractions (filters) exist: do not compare them by
+accident. Reads per sample differ: work with relative abundances.
+
+### E. What does the shape of a bird tell about its life? {#project-e}
+
+**The biology.** A bird's body is a toolkit. The beak is shaped by what it eats, the wing
+by how far it flies, the legs by where it moves. AVONET (Tobias et al. 2022) measured
+**90,000 museum and live birds** of almost every species alive (11,009): beak, wing,
+tail, legs and mass, with each species' diet, habitat, migration and geographic range.
+Classic "rules" of ecology can be tested with it, such as **Bergmann's rule**: animals are
+larger in colder climates.
+
+**The data.**
+
+| File | One row is | Columns |
+|---|---|---|
+| `bird_species.csv` | one species (11,009) | `species`, `family`, `order`, `n_individuals`, beak (`beak_length_culmen`, `beak_length_nares`, `beak_width`, `beak_depth`), `tarsus_length`, `wing_length`, `kipps_distance`, `secondary1`, `hand_wing_index` (long, pointed wings are high), `tail_length`, `mass`, `traits_inferred`, `habitat`, `habitat_density`, `migration` (1 sedentary, 2 partial, 3 migratory), `trophic_level`, `trophic_niche`, `primary_lifestyle`, latitudes and `range_size` |
+| `bird_individuals.csv.gz` | one measured bird (90,003) | `species`, `sex`, `specimen_type`, `country`, the same measurements |
+
+All lengths are in mm, mass in g, latitudes in degrees.
+
+**Starting question.** Can you tell what a bird eats from the shape of its body? Which
+measurements separate the diets best?
+
+**To go further.**
+
+- Does a decision tree or a random forest (Session 7) predict the diet on species it has
+  never seen? Which diets does it confuse, and why?
+- Are birds larger closer to the poles (Bergmann's rule)? Does it still hold **within**
+  families?
+- Do migratory birds have longer, more pointed wings (`hand_wing_index`)?
+- Within a species, do males and females differ (`bird_individuals.csv.gz`)? In which
+  families most?
+
+**Tools.** Log of the measurements; PCA (Session 5); `lm()` with a covariate (Sessions 4,
+6); trees, random forest, test set and confusion matrix (Session 7).
+
+**Watch out.** Mass dominates everything: a large bird has a large beak. Think about size
+before shape (ratios, or the PCA). Species are not independent: related species
+resemble each other (as related accessions in Session 6); `family` can enter the model.
+Some trait values were inferred from related species (`traits_inferred`).
+
+### F. How many immune genes does a plant need? {#project-f}
+
+**The biology.** The resistance genes of project A belong to one big family: the
+**NLRs** (nucleotide-binding, leucine-rich repeat receptors), the main intracellular
+immune receptors of plants. Every NLR has a central **NB-ARC** domain. Most also carry
+an N-terminal domain that defines their class: **TIR** (TNLs), a coiled coil (**CNLs**)
+or **RPW8** (RNLs, "helpers" that relay the signal). TNLs need the protein **EDS1** (with
+PAD4, met in project A) to signal. *Arabidopsis* has about 170 NLR genes, rice 350 to 450,
+bread wheat more than 2,000, and some plants almost none.
+
+**The data.** For the reference genome (proteome) of 413 green plants in UniProt, from
+algae and mosses to trees and grasses, the genes whose proteins carry each domain
+(domains detected by Pfam).
+
+| File | One row is | Columns |
+|---|---|---|
+| `plant_proteomes.csv` | one species | `proteome_id`, `species`, `lineage_group` (green algae, bryophytes ..., monocots, eudicots), `order`, `family`, `n_genes`, `busco_complete` (completeness of the genome annotation, %), `nlr_genes` (genes with NB-ARC), `nlr_genes_with_lrr`, `tnl_genes`, `cnl_genes`, `rnl_genes`, `eds1_family_genes`, `lineage` |
+| `nlr_genes.csv.gz` | one NLR gene | `proteome_id`, `species`, `lineage_group`, `gene`, `accession`, `length`, `class` (TNL, RNL, CNL or other), `lrr`, `domains` (all Pfam domains of the protein) |
+| `pfam_domains.csv` | one Pfam domain | the names of the 30 most frequent domains |
+| `nlr_proteins.fasta` | one protein | the NLR proteins of eight species, for BLAST, alignments and trees |
+
+**Starting question.** How many NLR genes do plants have? Does this number follow their
+lineage, the size of their genome, or their way of life?
+
+**To go further.**
+
+- Which lineages have no TNL at all? How many genes of the EDS1 family (EDS1, PAD4,
+  SAG101, the partners TNLs need to signal) do they keep, compared with plants that have
+  TNLs? What would that suggest about how the receptors and their partners evolved?
+- Find aquatic, parasitic or carnivorous plants in the table (search their names): how
+  many NLRs do they keep?
+- Do NLRs appear in algae, mosses, ferns? When did the TIR and RPW8 classes appear?
+- Align the NB-ARC proteins of two species and build a tree (Session 3): do the TNLs and
+  the CNLs form separate groups? Do the genes of one species form clusters (recent
+  duplications)?
+
+**Tools.** Tables, `lm()` with a covariate (Session 4); `blastp`, `mafft`, `FastTree` and
+a tree in R (Session 3); a model per lineage (Session 6 logic of confounders).
+
+**Watch out.** A badly annotated genome "has" fewer genes of every kind: check
+`busco_complete`. Larger gene sets have more of everything: compare shares, or put
+`n_genes` in the model. Species are not independent: lineage is a confounder. A domain
+not found by Pfam is not proof that the gene is absent.
+
+### G. Will species move with the climate? {#project-g}
+
+**The biology.** As the climate warms, many species are expected to shift their range
+towards the poles and up the mountains. Citizen scientists and museums have recorded
+millions of observations, gathered by **GBIF** (Global Biodiversity Information
+Facility). Combined with climate maps (WorldClim), they describe the **climatic niche**
+of a species: the climates where it lives. A model of presence from climate can then be
+projected onto the climate expected in 2061-2080.
+
+**The data.** Observations of eight species in Europe, two periods (1970-1999 and
+2000-2024), on a grid of cells of 10 arc-minutes (about 18 × 12 km in Europe): four
+warm-loving species expanding northwards (praying mantis *Mantis religiosa*, scarlet
+dragonfly *Crocothemis erythraea*, wasp spider *Argiope bruennichi*, scarce swallowtail
+*Iphiclides podalirius*), two cold-adapted butterflies (Apollo *Parnassius apollo*,
+dewy ringlet *Erebia pandrose*) and two trees (beech *Fagus sylvatica*, Norway spruce
+*Picea abies*).
+
+| File | One row is | Columns |
+|---|---|---|
+| `species.csv` | one species | `species`, `common_name`, `group`, and the number of GBIF records per period |
+| `occurrences.csv` | one species × period × cell where it was recorded | `species`, `period`, `longitude`, `latitude` (centre of the cell), `n_records` |
+| `europe_climate.csv.gz` | one land cell of Europe | `longitude`, `latitude`, then each climate variable now (1970-2000) and in 2061-2080 under a medium (`_ssp245`) and a high (`_ssp585`) emission scenario |
+
+**Starting question.** In which part of the European climate does each species live? Has
+the range of the warm-loving species moved north between 1970-1999 and 2000-2024?
+
+**To go further.**
+
+- Train a model that predicts presence from climate (a tree or a random forest, Session
+  7: presences against cells where the species was not recorded). Is it good on cells it
+  has not seen?
+- Project it onto the climate of 2061-2080 and map it (`geom_tile()`, Session 4): which
+  species gain, which lose? Does the scenario matter?
+- Are the cold-adapted species retreating up the mountains or north?
+- Is Norway spruce really living where its "niche" says (think of forestry)?
+
+**Tools.** Tables and maps with `geom_tile()` (Session 4); `lm()`; trees, random forest,
+test set (Session 7).
+
+**Watch out.** **Sampling effort**: there are many more records after 2000, so a species
+seems to "appear" everywhere. Compare with the number of records, or use the edge of the
+range (the 95th percentile of latitude) rather than the number of cells. Not recorded
+does not mean absent. To keep the files small, at most 1,500 records were taken per
+species, period and country. A species is recorded in a few thousand of the 38,004 cells:
+a model may simply answer "absent" everywhere and still be right 86 to 98% of the time (the
+accuracy trap of Session 7); one solution is to take, at random, as many cells without
+record as cells with a presence. Planted trees live outside their natural niche.
+
+## Practical (≈2 h)
+
+::: callout-tip
+## Tested on LEGcompute
+
+Every file reads in a few seconds with `read_csv()`. The largest analyses (a PCA of
+20,000 genes, one model per SNP) take 10 to 60 seconds: test on a subset first.
+:::
+
+### A. Setup, then meet your data (15:05-15:35)
+
+Every member copies the same project folder. In the **Terminal** tab, each member runs
+(replace the folder name with your project's, from the table above):
+
+```bash
+PROJECT=A_arabidopsis_pseudomonas
+mkdir -p ~/bioinfo_course/session_08
+cp -r --update=none /home/cmaslard/bioinfo_tools_course/session_08/$PROJECT ~/bioinfo_course/session_08/
+ls -lh ~/bioinfo_course/session_08/$PROJECT ~/bioinfo_course/session_08/$PROJECT/data
+```
+
+You can run these lines again at any time: `--update=none` never overwrites a file you
+have changed. Then **File → New Project → Existing Directory**, pick
+`~/bioinfo_course/session_08/<your project folder>`, open `data/README.md` and read it
+all: it says what one row is and what every column means.
+
+The folder contains:
+
+| File | What it is for |
+|---|---|
+| `data/` | The tables of the project and their `README.md`. |
+| `PLAN.qmd` | Today's plan, one per group. |
+| `PROJECT.qmd` | The analysis of the group. Its first section, **The data**, reads every table; the group writes it together, and it is the same in every copy. |
+| `part_1.qmd` ... `part_5.qmd` | One part of the analysis per member. `PROJECT.qmd` puts them together. |
+| `results/` | The figures you save with `ggsave()`. |
+
+Choose the **host** of the group now: the member who keeps the group's `PLAN.qmd` and
+`PROJECT.qmd`, collects the parts and submits.
+
+Meet the data before any statistics, as in Sessions 4 and 6. Each member runs the
+section **The data** of `PROJECT.qmd` (it reads every table), then the group answers, in
+a few lines each:
+
+1. What is one row of each table? How many rows and columns?
+2. Which columns describe the samples (or species), and which are measurements?
+3. How many samples per group, for the factors of the starting question? Are some
+   combinations missing?
+4. Are there missing values? Where?
+5. One plot of the raw data, without any model.
+
+```r
+glimpse(___)
+count(___, ___)
+```
+
+::: callout-note
+## Checkpoint
+
+Every member can say, without looking, what one row of the main table is, how many
+there are, and which factor the starting question is about.
+:::
+
+### 15:35-15:45: Short break
+
+### B. The plan (15:45-16:45)
+
+Open `PLAN.qmd` in the host's copy. It has the seven parts of [Theory
+2](#the-anatomy-of-a-plan). Fill them together; split the writing, not the thinking:
+the others explore the data in their own copy and send the code that works to the host.
+
+1. **Question.** Start from the starting question of your project, then add your own
+   sub-questions (at least one from "To go further", or your own idea).
+2. **Hypothesis and refutation.** For each sub-question, what you expect and which result
+   would prove you wrong.
+3. **Data and variables.** The files and the subset you use; the response, the
+   explanatory variables, the possible confounders.
+4. **Method.** Each step, with the tool and the session it comes from (the
+   [toolbox table](#the-toolbox-which-tool-for-which-question)).
+5. **First figure.** Make one exploratory figure that already says something about the
+   question, save it in `results/`, insert it in `PLAN.qmd` with a caption of two or
+   three sentences.
+6. **Risks.** What could go wrong (too few samples, a confounder, a slow step) and what
+   you will do then.
+7. **Roles.** Who writes which part file until Session 9, and who presents what.
+   Everyone leads one part and reads all the others.
+
+::: callout-note
+## Checkpoint
+
+Your question fits in one sentence; you can draw on the board the figure that answers
+it; the first figure is in `PLAN.qmd`.
+:::
+
+### C. Three minutes with the instructor (16:45-17:05)
+
+The instructor visits each group. One member says the question in one sentence, another
+shows the first figure, a third says the first two steps of the method. You leave with
+one piece of advice, written in part 6 of the plan.
+
+### D. Wrap-up (17:05-17:15)
+
+Render `PLAN.qmd` (**Render** makes `PLAN.pdf`). **The host submits `PLAN.pdf` on Moodle
+by Monday 9 November, 23:59**, with the names of all members on its first page. If it
+does not render, submit `PLAN.qmd` and the `results/` folder as well.
+
+## Before Session 9
+
+- Each member writes their part in their own part file, starting from the tables of
+  **The data** only, so that it runs alone. Render `PROJECT.qmd` in your own copy to
+  check it (the other parts are empty there).
+- When a part runs, its author sends the part file to the host: in the **Files** pane,
+  tick it, then **More → Export...** (Session 1). The host puts it in their own folder
+  with **Upload**, replacing the empty one, and renders `PROJECT.qmd`: it must run from
+  the data to the last figure.
+- Do not give labels to the chunks of the part files: two chunks with the same label
+  stop the render.
+- Read the feedback on your plan (Moodle, before the session) and adapt.
+- Meet at least once as a group, and rehearse the talk at least once with a timer.
+- Prepare the slides (PDF): see the [Session 9
+  page](09_guided_project_interpretation_and_communication.qmd).
+
+## References
+
+- Mine A. et al. (2018). [The defense phytohormone signaling network enables rapid,
+  high-amplitude transcriptional reprogramming during effector-triggered
+  immunity](https://doi.org/10.1105/tpc.17.00970). *The Plant Cell* 30: 1199-1219.
+  Project A.
+- Kawakatsu T. et al. (2016). [Epigenomic diversity in a global collection of
+  *Arabidopsis thaliana* accessions](https://doi.org/10.1016/j.cell.2016.06.044). *Cell*
+  166: 492-505. Project B.
+- Savary R. et al. (2021). [Fast and pervasive transcriptomic resilience and acclimation
+  of extremely heat-tolerant coral holobionts from the northern Red
+  Sea](https://doi.org/10.1073/pnas.2023298118). *PNAS* 118: e2023298118. Project C.
+- Sunagawa S. et al. (2015). [Structure and function of the global ocean
+  microbiome](https://doi.org/10.1126/science.1261359). *Science* 348: 1261359. Project D.
+- Tobias J. A. et al. (2022). [AVONET: morphological, ecological and geographical data for
+  all birds](https://doi.org/10.1111/ele.13898). *Ecology Letters* 25: 581-597. Project E.
+- Baggs E. L. et al. (2020). [Convergent loss of an EDS1/PAD4 signaling pathway in several
+  plant lineages reveals coevolved components of plant immunity and drought
+  response](https://doi.org/10.1105/tpc.19.00903). *The Plant Cell* 32: 2158-2177.
+  Project F.
+- The UniProt Consortium (2025). [UniProt: the Universal Protein Knowledgebase in
+  2025](https://doi.org/10.1093/nar/gkae1010). *Nucleic Acids Research* 53: D609-D617.
+  Project F.
+- Fick S. E. and Hijmans R. J. (2017). [WorldClim 2: new 1-km spatial resolution climate
+  surfaces for global land areas](https://doi.org/10.1002/joc.5086). *International
+  Journal of Climatology* 37: 4302-4315. Projects B and G.
+- Elith J. and Leathwick J. R. (2009). [Species distribution models: ecological
+  explanation and prediction across space and
+  time](https://doi.org/10.1146/annurev.ecolsys.110308.120159). *Annual Review of
+  Ecology, Evolution, and Systematics* 40: 677-697. Project G.
