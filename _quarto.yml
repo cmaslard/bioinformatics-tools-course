@@ -41,6 +41,10 @@ book:
     - part: "Machine learning"
       chapters:
         - sessions/07_introduction_to_deep_learning.qmd
+    - part: "Guided project"
+      chapters:
+        - sessions/08_guided_project_question_and_analysis.qmd
+        - sessions/09_guided_project_interpretation_and_communication.qmd
     - references.qmd
   search:
     type: overlay
