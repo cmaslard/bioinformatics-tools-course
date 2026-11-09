@@ -36,12 +36,13 @@ into a question, and a question into a plan.**
 ::: callout-important
 ## How you work and what you hand in
 
-- **Groups of five, formed by you.** One member, the **host** (who keeps the group's
-  files and submits), registers the group on Moodle (**Group project: registration**):
-  the five names and three projects you prefer, in order.
-  Each group gets a different project: the groups are taken in an order drawn by lot,
-  and each receives the first project of its list that is still free. Projects are
-  announced at 15:05. No group yet? The last groups are completed at 14:15.
+- **Groups of five, formed by you, and a project chosen by you.** Read the seven projects,
+  agree on one in your group, then **every member** chooses it on Moodle:
+  [**Group project: choose your project**](https://moodle.unine.ch/mod/choicegroup/view.php?id=597543).
+  Each project is taken by one group only: first come, first served. When a project is
+  full, choose another one. Choose at the latest at 15:05, after the project tour. No
+  group yet? The last groups are completed at 14:15.
+- **The host:** one member keeps the group's files and submits for the group.
 - **Today (Session 8):** explore the data, write the plan. The group submits **one
   `PLAN.pdf`** on Moodle **by Monday 9 November, 23:59**, and gets feedback on it before
   Session 9.
@@ -75,8 +76,8 @@ By the end of this session, you should be able to:
 |---:|---|---|
 | 14:15-14:20 | Retrieval | Session 7 quiz. |
 | 14:20-14:50 | Theory | From data to a question; the anatomy of a plan; the toolbox; the classic traps; how you are graded. |
-| 14:50-15:05 | Project tour | The seven projects in two minutes each; each group registers on Moodle with three projects in order. |
-| 15:05-15:35 | Practical A | Projects announced. Setup, then meet your data without statistics: rows, columns, groups, missing values. |
+| 14:50-15:05 | Project tour | The seven projects in two minutes each; every member chooses the group's project on Moodle. |
+| 15:05-15:35 | Practical A | Setup, then meet your data without statistics: rows, columns, groups, missing values. |
 | 15:35-15:45 | Break | |
 | 15:45-16:45 | Practical B | The plan: question, hypothesis, variables, method step by step, first figure. |
 | 16:45-17:05 | Practical C | Three minutes with the instructor per group: your plan in one sentence, your first figure. |
@@ -133,6 +134,11 @@ Two rules. **First explore, then test**: a plot of the raw data comes before any
 **One question, several tools**: a good project usually chains three or four of them (for
 example: exploration, PCA, one model per gene, then a closer look at the best genes).
 
+**Your workbooks are your code library.** Your files of Sessions 3 to 7 (in
+`~/bioinfo_course/session_03/` to `session_07/`) hold working code for every tool of this
+table. Copy a block that works and adapt it to your tables, rather than starting from an
+empty chunk.
+
 ### 4. The classic traps
 
 You met each of them in the course; they all come back in real data.
@@ -182,6 +188,12 @@ question if it fits the data. The tools listed are suggestions, not a recipe.
 | E | What does the shape of a bird tell about its life? | 11,009 bird species | Morphology, ecology, geography | `E_avonet_birds` |
 | F | How many immune genes does a plant need? | 413 plant genomes | Immune receptor genes per genome + sequences | `F_plant_immune_genes` |
 | G | Will species move with the climate? | 8 European species | GBIF observations + climate now and in 2070 | `G_species_ranges_climate` |
+
+**What each project asks of you.** All seven lead to a good project, but not by the same
+road. **A and C ask more code** before the first result: count tables of many samples, to
+normalise and to average per condition. **E, F and G ask more reasoning** on tidy tables
+(one row per species or per gene). **B and D are in between.** Choose with your group in
+mind.
 
 ### A. How fast does a plant answer a bacterium? {#project-a}
 
@@ -562,7 +574,9 @@ the others explore the data in their own copy and send the code that works to th
    [toolbox table](#the-toolbox-which-tool-for-which-question)).
 5. **First figure.** Make one exploratory figure that already says something about the
    question, save it in `results/`, insert it in `PLAN.qmd` with a caption of two or
-   three sentences.
+   three sentences. If your data need a long preparation before the first result (count
+   tables to normalise, as in A and C), a figure of the **experimental design** is fine
+   for tonight: for example the number of samples per genotype, treatment and time.
 6. **Risks.** What could go wrong (too few samples, a confounder, a slow step) and what
    you will do then.
 7. **Roles.** Who writes which part file until Session 9, and who presents what.
