@@ -175,9 +175,10 @@ page](09_guided_project_interpretation_and_communication.qmd#how-you-are-graded)
 
 Each project has its own folder: the data (`data/`, with a `README.md` that gives the
 source and the meaning of every column), and the files the group writes in (`PLAN.qmd`,
-`PROJECT.qmd` and one part file per member). Each project below gives a **starting question** that the whole group
-answers first, then several ways **to go further**: choose at least one, or bring your own
-question if it fits the data. The tools listed are suggestions, not a recipe.
+`PROJECT.qmd` and one part file per member). Each project below gives a **starting
+question**: a way into the data, checked to work. **Your group's big question is yours**:
+the starting question, or another biological question that these data can answer. The
+ideas **to go further** are suggestions, as are the tools listed, not a recipe.
 
 | | Project | Organisms | Data | Folder |
 |---|---|---|---|---|
@@ -564,8 +565,9 @@ Open `PLAN.qmd` in the host's copy. It has the seven parts of [Theory
 2](#the-anatomy-of-a-plan). Fill them together; split the writing, not the thinking:
 the others explore the data in their own copy and send the code that works to the host.
 
-1. **Question.** Start from the starting question of your project, then add your own
-   sub-questions (at least one from "To go further", or your own idea).
+1. **Question.** Your big biological question, in one sentence: the starting question
+   of your project, or your own if these data can answer it. Then cut it into
+   sub-questions, one per part (ideas in "To go further").
 2. **Hypothesis and refutation.** For each sub-question, what you expect and which result
    would prove you wrong.
 3. **Data and variables.** The files and the subset you use; the response, the
@@ -585,10 +587,11 @@ the others explore the data in their own copy and send the code that works to th
 ::: callout-tip
 ## How to cut the project into parts
 
-- **One part = one sub-question**, answered by one figure (or table) and two or three
-  sentences. Not "the introduction" or "the slides": everyone analyses.
-- **Part 1 is the starting question** (explored together today). Parts 2 to 5: one
-  sub-question each, from "To go further" or your own.
+- **One part = one sub-question of your big question**, answered by one figure (or
+  table) and two or three sentences. Not "the introduction" or "the slides": everyone
+  analyses.
+- **The starting question**, if you keep it, makes a good first part: it is checked to
+  work with these data.
 - **A step that several parts need** (normalising counts, filtering samples, joining two
   tables) goes **once** in the `shared-steps` chunk of **The data** in `PROJECT.qmd`,
   written together and identical in every copy. Each part starts from there and uses
