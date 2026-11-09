@@ -582,6 +582,23 @@ the others explore the data in their own copy and send the code that works to th
 7. **Roles.** Who writes which part file until Session 9, and who presents what.
    Everyone leads one part and reads all the others.
 
+::: callout-tip
+## How to cut the project into parts
+
+- **One part = one sub-question**, answered by one figure (or table) and two or three
+  sentences. Not "the introduction" or "the slides": everyone analyses.
+- **Part 1 is the starting question** (explored together today). Parts 2 to 5: one
+  sub-question each, from "To go further" or your own.
+- **A step that several parts need** (normalising counts, filtering samples, joining two
+  tables) goes **once** in the `shared-steps` chunk of **The data** in `PROJECT.qmd`,
+  written together and identical in every copy. Each part starts from there and uses
+  nothing created in another part.
+- **Give the hardest parts to the strongest coders**, and read all the other parts: on
+  16 November you will be asked about a part you did not present.
+
+Check: each member can name the figure they will make. If one cannot, cut again.
+:::
+
 ::: callout-note
 ## Checkpoint
 

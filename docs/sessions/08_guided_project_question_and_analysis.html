@@ -1324,6 +1324,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Risks.</strong> What could go wrong (too few samples, a confounder, a slow step) and what you will do then.</li>
 <li><strong>Roles.</strong> Who writes which part file until Session 9, and who presents what. Everyone leads one part and reads all the others.</li>
 </ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>How to cut the project into parts
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>One part = one sub-question</strong>, answered by one figure (or table) and two or three sentences. Not “the introduction” or “the slides”: everyone analyses.</li>
+<li><strong>Part 1 is the starting question</strong> (explored together today). Parts 2 to 5: one sub-question each, from “To go further” or your own.</li>
+<li><strong>A step that several parts need</strong> (normalising counts, filtering samples, joining two tables) goes <strong>once</strong> in the <code>shared-steps</code> chunk of <strong>The data</strong> in <code>PROJECT.qmd</code>, written together and identical in every copy. Each part starts from there and uses nothing created in another part.</li>
+<li><strong>Give the hardest parts to the strongest coders</strong>, and read all the other parts: on 16 November you will be asked about a part you did not present.</li>
+</ul>
+<p>Check: each member can name the figure they will make. If one cannot, cut again.</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2438,71 +2457,88 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-582"><a href="#cb3-582" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>**Roles.** Who writes which part file until Session 9, and who presents what.</span>
 <span id="cb3-583"><a href="#cb3-583" aria-hidden="true" tabindex="-1"></a>   Everyone leads one part and reads all the others.</span>
 <span id="cb3-584"><a href="#cb3-584" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-585"><a href="#cb3-585" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb3-586"><a href="#cb3-586" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb3-585"><a href="#cb3-585" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb3-586"><a href="#cb3-586" aria-hidden="true" tabindex="-1"></a><span class="fu">## How to cut the project into parts</span></span>
 <span id="cb3-587"><a href="#cb3-587" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-588"><a href="#cb3-588" aria-hidden="true" tabindex="-1"></a>Your question fits in one sentence; you can draw on the board the figure that answers</span>
-<span id="cb3-589"><a href="#cb3-589" aria-hidden="true" tabindex="-1"></a>it; the first figure is in <span class="in">`PLAN.qmd`</span>.</span>
-<span id="cb3-590"><a href="#cb3-590" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-591"><a href="#cb3-591" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-592"><a href="#cb3-592" aria-hidden="true" tabindex="-1"></a><span class="fu">### C. Three minutes with the instructor (16:45-17:05)</span></span>
-<span id="cb3-593"><a href="#cb3-593" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-594"><a href="#cb3-594" aria-hidden="true" tabindex="-1"></a>The instructor visits each group. One member says the question in one sentence, another</span>
-<span id="cb3-595"><a href="#cb3-595" aria-hidden="true" tabindex="-1"></a>shows the first figure, a third says the first two steps of the method. You leave with</span>
-<span id="cb3-596"><a href="#cb3-596" aria-hidden="true" tabindex="-1"></a>one piece of advice, written in part 6 of the plan.</span>
-<span id="cb3-597"><a href="#cb3-597" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-598"><a href="#cb3-598" aria-hidden="true" tabindex="-1"></a><span class="fu">### D. Wrap-up (17:05-17:15)</span></span>
-<span id="cb3-599"><a href="#cb3-599" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-600"><a href="#cb3-600" aria-hidden="true" tabindex="-1"></a>Render <span class="in">`PLAN.qmd`</span> (**Render** makes <span class="in">`PLAN.pdf`</span>). **The host submits <span class="in">`PLAN.pdf`</span> on Moodle</span>
-<span id="cb3-601"><a href="#cb3-601" aria-hidden="true" tabindex="-1"></a>by Monday 9 November, 23:59**, with the names of all members on its first page. If it</span>
-<span id="cb3-602"><a href="#cb3-602" aria-hidden="true" tabindex="-1"></a>does not render, submit <span class="in">`PLAN.qmd`</span> and the <span class="in">`results/`</span> folder as well.</span>
-<span id="cb3-603"><a href="#cb3-603" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-604"><a href="#cb3-604" aria-hidden="true" tabindex="-1"></a><span class="fu">## Before Session 9</span></span>
-<span id="cb3-605"><a href="#cb3-605" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-606"><a href="#cb3-606" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Each member writes their part in their own part file, starting from the tables of</span>
-<span id="cb3-607"><a href="#cb3-607" aria-hidden="true" tabindex="-1"></a>  **The data** only, so that it runs alone. Render <span class="in">`PROJECT.qmd`</span> in your own copy to</span>
-<span id="cb3-608"><a href="#cb3-608" aria-hidden="true" tabindex="-1"></a>  check it (the other parts are empty there).</span>
-<span id="cb3-609"><a href="#cb3-609" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When a part runs, its author sends the part file to the host: in the **Files** pane,</span>
-<span id="cb3-610"><a href="#cb3-610" aria-hidden="true" tabindex="-1"></a>  tick it, then **More → Export...** (Session 1). The host puts it in their own folder</span>
-<span id="cb3-611"><a href="#cb3-611" aria-hidden="true" tabindex="-1"></a>  with **Upload**, replacing the empty one, and renders <span class="in">`PROJECT.qmd`</span>: it must run from</span>
-<span id="cb3-612"><a href="#cb3-612" aria-hidden="true" tabindex="-1"></a>  the data to the last figure.</span>
-<span id="cb3-613"><a href="#cb3-613" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Do not give labels to the chunks of the part files: two chunks with the same label</span>
-<span id="cb3-614"><a href="#cb3-614" aria-hidden="true" tabindex="-1"></a>  stop the render.</span>
-<span id="cb3-615"><a href="#cb3-615" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Read the feedback on your plan (Moodle, before the session) and adapt.</span>
-<span id="cb3-616"><a href="#cb3-616" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Meet at least once as a group, and rehearse the talk at least once with a timer.</span>
-<span id="cb3-617"><a href="#cb3-617" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Prepare the slides (PDF): see the [Session 9</span>
-<span id="cb3-618"><a href="#cb3-618" aria-hidden="true" tabindex="-1"></a>  page](09_guided_project_interpretation_and_communication.qmd).</span>
-<span id="cb3-619"><a href="#cb3-619" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-620"><a href="#cb3-620" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
-<span id="cb3-621"><a href="#cb3-621" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-622"><a href="#cb3-622" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mine A. et al. (2018). [The defense phytohormone signaling network enables rapid,</span>
-<span id="cb3-623"><a href="#cb3-623" aria-hidden="true" tabindex="-1"></a>  high-amplitude transcriptional reprogramming during effector-triggered</span>
-<span id="cb3-624"><a href="#cb3-624" aria-hidden="true" tabindex="-1"></a>  immunity](https://doi.org/10.1105/tpc.17.00970). *The Plant Cell* 30: 1199-1219.</span>
-<span id="cb3-625"><a href="#cb3-625" aria-hidden="true" tabindex="-1"></a>  Project A.</span>
-<span id="cb3-626"><a href="#cb3-626" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Kawakatsu T. et al. (2016). [Epigenomic diversity in a global collection of</span>
-<span id="cb3-627"><a href="#cb3-627" aria-hidden="true" tabindex="-1"></a>  *Arabidopsis thaliana* accessions](https://doi.org/10.1016/j.cell.2016.06.044). *Cell*</span>
-<span id="cb3-628"><a href="#cb3-628" aria-hidden="true" tabindex="-1"></a>  166: 492-505. Project B.</span>
-<span id="cb3-629"><a href="#cb3-629" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Savary R. et al. (2021). [Fast and pervasive transcriptomic resilience and acclimation</span>
-<span id="cb3-630"><a href="#cb3-630" aria-hidden="true" tabindex="-1"></a>  of extremely heat-tolerant coral holobionts from the northern Red</span>
-<span id="cb3-631"><a href="#cb3-631" aria-hidden="true" tabindex="-1"></a>  Sea](https://doi.org/10.1073/pnas.2023298118). *PNAS* 118: e2023298118. Project C.</span>
-<span id="cb3-632"><a href="#cb3-632" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sunagawa S. et al. (2015). [Structure and function of the global ocean</span>
-<span id="cb3-633"><a href="#cb3-633" aria-hidden="true" tabindex="-1"></a>  microbiome](https://doi.org/10.1126/science.1261359). *Science* 348: 1261359. Project D.</span>
-<span id="cb3-634"><a href="#cb3-634" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tobias J. A. et al. (2022). [AVONET: morphological, ecological and geographical data for</span>
-<span id="cb3-635"><a href="#cb3-635" aria-hidden="true" tabindex="-1"></a>  all birds](https://doi.org/10.1111/ele.13898). *Ecology Letters* 25: 581-597. Project E.</span>
-<span id="cb3-636"><a href="#cb3-636" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Baggs E. L. et al. (2020). [Convergent loss of an EDS1/PAD4 signaling pathway in several</span>
-<span id="cb3-637"><a href="#cb3-637" aria-hidden="true" tabindex="-1"></a>  plant lineages reveals coevolved components of plant immunity and drought</span>
-<span id="cb3-638"><a href="#cb3-638" aria-hidden="true" tabindex="-1"></a>  response](https://doi.org/10.1105/tpc.19.00903). *The Plant Cell* 32: 2158-2177.</span>
-<span id="cb3-639"><a href="#cb3-639" aria-hidden="true" tabindex="-1"></a>  Project F.</span>
-<span id="cb3-640"><a href="#cb3-640" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The UniProt Consortium (2025). [UniProt: the Universal Protein Knowledgebase in</span>
-<span id="cb3-641"><a href="#cb3-641" aria-hidden="true" tabindex="-1"></a>  2025](https://doi.org/10.1093/nar/gkae1010). *Nucleic Acids Research* 53: D609-D617.</span>
-<span id="cb3-642"><a href="#cb3-642" aria-hidden="true" tabindex="-1"></a>  Project F.</span>
-<span id="cb3-643"><a href="#cb3-643" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fick S. E. and Hijmans R. J. (2017). [WorldClim 2: new 1-km spatial resolution climate</span>
-<span id="cb3-644"><a href="#cb3-644" aria-hidden="true" tabindex="-1"></a>  surfaces for global land areas](https://doi.org/10.1002/joc.5086). *International</span>
-<span id="cb3-645"><a href="#cb3-645" aria-hidden="true" tabindex="-1"></a>  Journal of Climatology* 37: 4302-4315. Projects B and G.</span>
-<span id="cb3-646"><a href="#cb3-646" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Elith J. and Leathwick J. R. (2009). [Species distribution models: ecological</span>
-<span id="cb3-647"><a href="#cb3-647" aria-hidden="true" tabindex="-1"></a>  explanation and prediction across space and</span>
-<span id="cb3-648"><a href="#cb3-648" aria-hidden="true" tabindex="-1"></a>  time](https://doi.org/10.1146/annurev.ecolsys.110308.120159). *Annual Review of</span>
-<span id="cb3-649"><a href="#cb3-649" aria-hidden="true" tabindex="-1"></a>  Ecology, Evolution, and Systematics* 40: 677-697. Project G.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb3-588"><a href="#cb3-588" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**One part = one sub-question**, answered by one figure (or table) and two or three</span>
+<span id="cb3-589"><a href="#cb3-589" aria-hidden="true" tabindex="-1"></a>  sentences. Not "the introduction" or "the slides": everyone analyses.</span>
+<span id="cb3-590"><a href="#cb3-590" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Part 1 is the starting question** (explored together today). Parts 2 to 5: one</span>
+<span id="cb3-591"><a href="#cb3-591" aria-hidden="true" tabindex="-1"></a>  sub-question each, from "To go further" or your own.</span>
+<span id="cb3-592"><a href="#cb3-592" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**A step that several parts need** (normalising counts, filtering samples, joining two</span>
+<span id="cb3-593"><a href="#cb3-593" aria-hidden="true" tabindex="-1"></a>  tables) goes **once** in the `shared-steps` chunk of **The data** in <span class="in">`PROJECT.qmd`</span>,</span>
+<span id="cb3-594"><a href="#cb3-594" aria-hidden="true" tabindex="-1"></a>  written together and identical in every copy. Each part starts from there and uses</span>
+<span id="cb3-595"><a href="#cb3-595" aria-hidden="true" tabindex="-1"></a>  nothing created in another part.</span>
+<span id="cb3-596"><a href="#cb3-596" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Give the hardest parts to the strongest coders**, and read all the other parts: on</span>
+<span id="cb3-597"><a href="#cb3-597" aria-hidden="true" tabindex="-1"></a>  16 November you will be asked about a part you did not present.</span>
+<span id="cb3-598"><a href="#cb3-598" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-599"><a href="#cb3-599" aria-hidden="true" tabindex="-1"></a>Check: each member can name the figure they will make. If one cannot, cut again.</span>
+<span id="cb3-600"><a href="#cb3-600" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-601"><a href="#cb3-601" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-602"><a href="#cb3-602" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb3-603"><a href="#cb3-603" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb3-604"><a href="#cb3-604" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-605"><a href="#cb3-605" aria-hidden="true" tabindex="-1"></a>Your question fits in one sentence; you can draw on the board the figure that answers</span>
+<span id="cb3-606"><a href="#cb3-606" aria-hidden="true" tabindex="-1"></a>it; the first figure is in <span class="in">`PLAN.qmd`</span>.</span>
+<span id="cb3-607"><a href="#cb3-607" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-608"><a href="#cb3-608" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-609"><a href="#cb3-609" aria-hidden="true" tabindex="-1"></a><span class="fu">### C. Three minutes with the instructor (16:45-17:05)</span></span>
+<span id="cb3-610"><a href="#cb3-610" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-611"><a href="#cb3-611" aria-hidden="true" tabindex="-1"></a>The instructor visits each group. One member says the question in one sentence, another</span>
+<span id="cb3-612"><a href="#cb3-612" aria-hidden="true" tabindex="-1"></a>shows the first figure, a third says the first two steps of the method. You leave with</span>
+<span id="cb3-613"><a href="#cb3-613" aria-hidden="true" tabindex="-1"></a>one piece of advice, written in part 6 of the plan.</span>
+<span id="cb3-614"><a href="#cb3-614" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-615"><a href="#cb3-615" aria-hidden="true" tabindex="-1"></a><span class="fu">### D. Wrap-up (17:05-17:15)</span></span>
+<span id="cb3-616"><a href="#cb3-616" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-617"><a href="#cb3-617" aria-hidden="true" tabindex="-1"></a>Render <span class="in">`PLAN.qmd`</span> (**Render** makes <span class="in">`PLAN.pdf`</span>). **The host submits <span class="in">`PLAN.pdf`</span> on Moodle</span>
+<span id="cb3-618"><a href="#cb3-618" aria-hidden="true" tabindex="-1"></a>by Monday 9 November, 23:59**, with the names of all members on its first page. If it</span>
+<span id="cb3-619"><a href="#cb3-619" aria-hidden="true" tabindex="-1"></a>does not render, submit <span class="in">`PLAN.qmd`</span> and the <span class="in">`results/`</span> folder as well.</span>
+<span id="cb3-620"><a href="#cb3-620" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-621"><a href="#cb3-621" aria-hidden="true" tabindex="-1"></a><span class="fu">## Before Session 9</span></span>
+<span id="cb3-622"><a href="#cb3-622" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-623"><a href="#cb3-623" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Each member writes their part in their own part file, starting from the tables of</span>
+<span id="cb3-624"><a href="#cb3-624" aria-hidden="true" tabindex="-1"></a>  **The data** only, so that it runs alone. Render <span class="in">`PROJECT.qmd`</span> in your own copy to</span>
+<span id="cb3-625"><a href="#cb3-625" aria-hidden="true" tabindex="-1"></a>  check it (the other parts are empty there).</span>
+<span id="cb3-626"><a href="#cb3-626" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When a part runs, its author sends the part file to the host: in the **Files** pane,</span>
+<span id="cb3-627"><a href="#cb3-627" aria-hidden="true" tabindex="-1"></a>  tick it, then **More → Export...** (Session 1). The host puts it in their own folder</span>
+<span id="cb3-628"><a href="#cb3-628" aria-hidden="true" tabindex="-1"></a>  with **Upload**, replacing the empty one, and renders <span class="in">`PROJECT.qmd`</span>: it must run from</span>
+<span id="cb3-629"><a href="#cb3-629" aria-hidden="true" tabindex="-1"></a>  the data to the last figure.</span>
+<span id="cb3-630"><a href="#cb3-630" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Do not give labels to the chunks of the part files: two chunks with the same label</span>
+<span id="cb3-631"><a href="#cb3-631" aria-hidden="true" tabindex="-1"></a>  stop the render.</span>
+<span id="cb3-632"><a href="#cb3-632" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Read the feedback on your plan (Moodle, before the session) and adapt.</span>
+<span id="cb3-633"><a href="#cb3-633" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Meet at least once as a group, and rehearse the talk at least once with a timer.</span>
+<span id="cb3-634"><a href="#cb3-634" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Prepare the slides (PDF): see the [Session 9</span>
+<span id="cb3-635"><a href="#cb3-635" aria-hidden="true" tabindex="-1"></a>  page](09_guided_project_interpretation_and_communication.qmd).</span>
+<span id="cb3-636"><a href="#cb3-636" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-637"><a href="#cb3-637" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb3-638"><a href="#cb3-638" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-639"><a href="#cb3-639" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mine A. et al. (2018). [The defense phytohormone signaling network enables rapid,</span>
+<span id="cb3-640"><a href="#cb3-640" aria-hidden="true" tabindex="-1"></a>  high-amplitude transcriptional reprogramming during effector-triggered</span>
+<span id="cb3-641"><a href="#cb3-641" aria-hidden="true" tabindex="-1"></a>  immunity](https://doi.org/10.1105/tpc.17.00970). *The Plant Cell* 30: 1199-1219.</span>
+<span id="cb3-642"><a href="#cb3-642" aria-hidden="true" tabindex="-1"></a>  Project A.</span>
+<span id="cb3-643"><a href="#cb3-643" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Kawakatsu T. et al. (2016). [Epigenomic diversity in a global collection of</span>
+<span id="cb3-644"><a href="#cb3-644" aria-hidden="true" tabindex="-1"></a>  *Arabidopsis thaliana* accessions](https://doi.org/10.1016/j.cell.2016.06.044). *Cell*</span>
+<span id="cb3-645"><a href="#cb3-645" aria-hidden="true" tabindex="-1"></a>  166: 492-505. Project B.</span>
+<span id="cb3-646"><a href="#cb3-646" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Savary R. et al. (2021). [Fast and pervasive transcriptomic resilience and acclimation</span>
+<span id="cb3-647"><a href="#cb3-647" aria-hidden="true" tabindex="-1"></a>  of extremely heat-tolerant coral holobionts from the northern Red</span>
+<span id="cb3-648"><a href="#cb3-648" aria-hidden="true" tabindex="-1"></a>  Sea](https://doi.org/10.1073/pnas.2023298118). *PNAS* 118: e2023298118. Project C.</span>
+<span id="cb3-649"><a href="#cb3-649" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sunagawa S. et al. (2015). [Structure and function of the global ocean</span>
+<span id="cb3-650"><a href="#cb3-650" aria-hidden="true" tabindex="-1"></a>  microbiome](https://doi.org/10.1126/science.1261359). *Science* 348: 1261359. Project D.</span>
+<span id="cb3-651"><a href="#cb3-651" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tobias J. A. et al. (2022). [AVONET: morphological, ecological and geographical data for</span>
+<span id="cb3-652"><a href="#cb3-652" aria-hidden="true" tabindex="-1"></a>  all birds](https://doi.org/10.1111/ele.13898). *Ecology Letters* 25: 581-597. Project E.</span>
+<span id="cb3-653"><a href="#cb3-653" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Baggs E. L. et al. (2020). [Convergent loss of an EDS1/PAD4 signaling pathway in several</span>
+<span id="cb3-654"><a href="#cb3-654" aria-hidden="true" tabindex="-1"></a>  plant lineages reveals coevolved components of plant immunity and drought</span>
+<span id="cb3-655"><a href="#cb3-655" aria-hidden="true" tabindex="-1"></a>  response](https://doi.org/10.1105/tpc.19.00903). *The Plant Cell* 32: 2158-2177.</span>
+<span id="cb3-656"><a href="#cb3-656" aria-hidden="true" tabindex="-1"></a>  Project F.</span>
+<span id="cb3-657"><a href="#cb3-657" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The UniProt Consortium (2025). [UniProt: the Universal Protein Knowledgebase in</span>
+<span id="cb3-658"><a href="#cb3-658" aria-hidden="true" tabindex="-1"></a>  2025](https://doi.org/10.1093/nar/gkae1010). *Nucleic Acids Research* 53: D609-D617.</span>
+<span id="cb3-659"><a href="#cb3-659" aria-hidden="true" tabindex="-1"></a>  Project F.</span>
+<span id="cb3-660"><a href="#cb3-660" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fick S. E. and Hijmans R. J. (2017). [WorldClim 2: new 1-km spatial resolution climate</span>
+<span id="cb3-661"><a href="#cb3-661" aria-hidden="true" tabindex="-1"></a>  surfaces for global land areas](https://doi.org/10.1002/joc.5086). *International</span>
+<span id="cb3-662"><a href="#cb3-662" aria-hidden="true" tabindex="-1"></a>  Journal of Climatology* 37: 4302-4315. Projects B and G.</span>
+<span id="cb3-663"><a href="#cb3-663" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Elith J. and Leathwick J. R. (2009). [Species distribution models: ecological</span>
+<span id="cb3-664"><a href="#cb3-664" aria-hidden="true" tabindex="-1"></a>  explanation and prediction across space and</span>
+<span id="cb3-665"><a href="#cb3-665" aria-hidden="true" tabindex="-1"></a>  time](https://doi.org/10.1146/annurev.ecolsys.110308.120159). *Annual Review of</span>
+<span id="cb3-666"><a href="#cb3-666" aria-hidden="true" tabindex="-1"></a>  Ecology, Evolution, and Systematics* 40: 677-697. Project G.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
