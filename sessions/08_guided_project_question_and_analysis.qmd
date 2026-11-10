@@ -495,6 +495,59 @@ a model may simply answer "absent" everywhere and still be right 86 to 98% of th
 accuracy trap of Session 7); one solution is to take, at random, as many cells without
 record as cells with a presence. Planted trees live outside their natural niche.
 
+::: {.callout-tip collapse="true"}
+## Help for project G: from the past to the future
+
+**Three periods, not two.** The climate called `_now` is the **average of 1970-2000**: it
+matches your old observations (1970-1999), not today. There is no climate map for
+2000-2024, when Europe was already warmer. The future (`_ssp245`, `_ssp585`) is
+2061-2080. Say which period each figure is about.
+
+**What links the periods: the climatic niche.** The whole project assumes that a species
+keeps the same niche and moves to follow it. Your story can go: has it already moved
+(past to present), and where will its climate be (present to future)?
+
+**Past to present: has the range moved?**
+
+- The **northern edge** of a range is the latitude below which most of the occupied cells
+  lie, for example 95% of them (the 95th percentile of latitude). Why not the
+  northernmost cell? One lost individual or one typing error would move it.
+- More records after 2000 means more cells, everywhere. Before concluding, check that the
+  edge still moves when you give both periods the same number of cells (draw the recent
+  cells at random).
+- The 1970-2000 climate can serve as a fixed reference map: in the recent period, does
+  the species live in cells that used to be too cold for it?
+
+**A model of presence (Session 7).**
+
+- One row per cell: present, or not recorded (not "absent").
+- Balance the two classes before training. What does a model that always says "absent"
+  score?
+- Keep test cells aside; the model never sees them.
+- Use the climate variables only, not longitude and latitude: with the coordinates the
+  tree learns *where* the species is, not *which climate* it likes.
+- Which observations do you train on? The old ones match the `_now` climate in time; the
+  recent ones are more numerous. Choose, and say why.
+- Judge it on the test cells: confusion matrix, accuracy (what does chance give with
+  balanced classes?), recall of the presences. Read the tree: is its first split
+  biologically sensible?
+
+**Present to future: projecting the model.**
+
+- The tree knows the climate variables by their `_now` names. To give it the climate of
+  2061-2080, make a table where the `_ssp245` (or `_ssp585`) columns carry the `_now`
+  names. Otherwise `predict()` cannot find them, or uses the present climate without
+  telling you.
+- Compare, for now, the medium and the high scenario: how many cells are suitable, and
+  where (their median latitude)? Maps side by side: `geom_tile()`, one facet per period.
+- Does the movement you measured between 1970 and 2024 go the same way as the one the
+  model predicts for 2070?
+
+**Limits worth a slide.** A suitable climate is not a presence (dispersal, habitat, host
+plants, history); cells "not recorded" were used as absences; sampling effort changed a
+lot; the niche may not stay the same; there is no climate map of 2000-2024.
+:::
+
 ## Practical (≈2 h)
 
 ::: callout-tip

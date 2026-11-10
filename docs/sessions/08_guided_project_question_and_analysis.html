@@ -1224,6 +1224,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p><strong>Tools.</strong> Tables and maps with <code>geom_tile()</code> (Session 4); <code>lm()</code>; trees, random forest, test set (Session 7).</p>
 <p><strong>Watch out.</strong> <strong>Sampling effort</strong>: there are many more records after 2000, so a species seems to “appear” everywhere. Compare with the number of records, or use the edge of the range (the 95th percentile of latitude) rather than the number of cells. Not recorded does not mean absent. To keep the files small, at most 1,500 records were taken per species, period and country. A species is recorded in a few thousand of the 38,004 cells: a model may simply answer “absent” everywhere and still be right 86 to 98% of the time (the accuracy trap of Session 7); one solution is to take, at random, as many cells without record as cells with a presence. Planted trees live outside their natural niche.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Help for project G: from the past to the future
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Three periods, not two.</strong> The climate called <code>_now</code> is the <strong>average of 1970-2000</strong>: it matches your old observations (1970-1999), not today. There is no climate map for 2000-2024, when Europe was already warmer. The future (<code>_ssp245</code>, <code>_ssp585</code>) is 2061-2080. Say which period each figure is about.</p>
+<p><strong>What links the periods: the climatic niche.</strong> The whole project assumes that a species keeps the same niche and moves to follow it. Your story can go: has it already moved (past to present), and where will its climate be (present to future)?</p>
+<p><strong>Past to present: has the range moved?</strong></p>
+<ul>
+<li>The <strong>northern edge</strong> of a range is the latitude below which most of the occupied cells lie, for example 95% of them (the 95th percentile of latitude). Why not the northernmost cell? One lost individual or one typing error would move it.</li>
+<li>More records after 2000 means more cells, everywhere. Before concluding, check that the edge still moves when you give both periods the same number of cells (draw the recent cells at random).</li>
+<li>The 1970-2000 climate can serve as a fixed reference map: in the recent period, does the species live in cells that used to be too cold for it?</li>
+</ul>
+<p><strong>A model of presence (Session 7).</strong></p>
+<ul>
+<li>One row per cell: present, or not recorded (not “absent”).</li>
+<li>Balance the two classes before training. What does a model that always says “absent” score?</li>
+<li>Keep test cells aside; the model never sees them.</li>
+<li>Use the climate variables only, not longitude and latitude: with the coordinates the tree learns <em>where</em> the species is, not <em>which climate</em> it likes.</li>
+<li>Which observations do you train on? The old ones match the <code>_now</code> climate in time; the recent ones are more numerous. Choose, and say why.</li>
+<li>Judge it on the test cells: confusion matrix, accuracy (what does chance give with balanced classes?), recall of the presences. Read the tree: is its first split biologically sensible?</li>
+</ul>
+<p><strong>Present to future: projecting the model.</strong></p>
+<ul>
+<li>The tree knows the climate variables by their <code>_now</code> names. To give it the climate of 2061-2080, make a table where the <code>_ssp245</code> (or <code>_ssp585</code>) columns carry the <code>_now</code> names. Otherwise <code>predict()</code> cannot find them, or uses the present climate without telling you.</li>
+<li>Compare, for now, the medium and the high scenario: how many cells are suitable, and where (their median latitude)? Maps side by side: <code>geom_tile()</code>, one facet per period.</li>
+<li>Does the movement you measured between 1970 and 2024 go the same way as the one the model predicts for 2070?</li>
+</ul>
+<p><strong>Limits worth a slide.</strong> A suitable climate is not a presence (dispersal, habitat, host plants, history); cells “not recorded” were used as absences; sampling effort changed a lot; the niche may not stay the same; there is no climate map of 2000-2024.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="practical-2-h" class="level2" data-number="8.4">
@@ -2370,178 +2409,231 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-495"><a href="#cb3-495" aria-hidden="true" tabindex="-1"></a>accuracy trap of Session 7); one solution is to take, at random, as many cells without</span>
 <span id="cb3-496"><a href="#cb3-496" aria-hidden="true" tabindex="-1"></a>record as cells with a presence. Planted trees live outside their natural niche.</span>
 <span id="cb3-497"><a href="#cb3-497" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-498"><a href="#cb3-498" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practical (≈2 h)</span></span>
-<span id="cb3-499"><a href="#cb3-499" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-500"><a href="#cb3-500" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb3-501"><a href="#cb3-501" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tested on LEGcompute</span></span>
-<span id="cb3-502"><a href="#cb3-502" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-503"><a href="#cb3-503" aria-hidden="true" tabindex="-1"></a>Every file reads in a few seconds with <span class="in">`read_csv()`</span>. The largest analyses (a PCA of</span>
-<span id="cb3-504"><a href="#cb3-504" aria-hidden="true" tabindex="-1"></a>20,000 genes, one model per SNP) take 10 to 60 seconds: test on a subset first.</span>
-<span id="cb3-505"><a href="#cb3-505" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-506"><a href="#cb3-506" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-507"><a href="#cb3-507" aria-hidden="true" tabindex="-1"></a><span class="fu">### A. Setup, then meet your data (15:05-15:35)</span></span>
-<span id="cb3-508"><a href="#cb3-508" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-509"><a href="#cb3-509" aria-hidden="true" tabindex="-1"></a>Every member copies the same project folder. In the **Terminal** tab, each member runs</span>
-<span id="cb3-510"><a href="#cb3-510" aria-hidden="true" tabindex="-1"></a>(replace the folder name with your project's, from the table above):</span>
+<span id="cb3-498"><a href="#cb3-498" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip collapse="true"}</span>
+<span id="cb3-499"><a href="#cb3-499" aria-hidden="true" tabindex="-1"></a><span class="fu">## Help for project G: from the past to the future</span></span>
+<span id="cb3-500"><a href="#cb3-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-501"><a href="#cb3-501" aria-hidden="true" tabindex="-1"></a>**Three periods, not two.** The climate called `_now` is the **average of 1970-2000**: it</span>
+<span id="cb3-502"><a href="#cb3-502" aria-hidden="true" tabindex="-1"></a>matches your old observations (1970-1999), not today. There is no climate map for</span>
+<span id="cb3-503"><a href="#cb3-503" aria-hidden="true" tabindex="-1"></a>2000-2024, when Europe was already warmer. The future (<span class="in">`_ssp245`</span>, <span class="in">`_ssp585`</span>) is</span>
+<span id="cb3-504"><a href="#cb3-504" aria-hidden="true" tabindex="-1"></a>2061-2080. Say which period each figure is about.</span>
+<span id="cb3-505"><a href="#cb3-505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-506"><a href="#cb3-506" aria-hidden="true" tabindex="-1"></a>**What links the periods: the climatic niche.** The whole project assumes that a species</span>
+<span id="cb3-507"><a href="#cb3-507" aria-hidden="true" tabindex="-1"></a>keeps the same niche and moves to follow it. Your story can go: has it already moved</span>
+<span id="cb3-508"><a href="#cb3-508" aria-hidden="true" tabindex="-1"></a>(past to present), and where will its climate be (present to future)?</span>
+<span id="cb3-509"><a href="#cb3-509" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-510"><a href="#cb3-510" aria-hidden="true" tabindex="-1"></a>**Past to present: has the range moved?**</span>
 <span id="cb3-511"><a href="#cb3-511" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-512"><a href="#cb3-512" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb3-513"><a href="#cb3-513" aria-hidden="true" tabindex="-1"></a><span class="va">PROJECT</span><span class="op">=</span>A_arabidopsis_pseudomonas</span>
-<span id="cb3-514"><a href="#cb3-514" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/bioinfo_course/session_08</span>
-<span id="cb3-515"><a href="#cb3-515" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> <span class="at">--update</span><span class="op">=</span>none /home/cmaslard/bioinfo_tools_course/session_08/<span class="va">$PROJECT</span> ~/bioinfo_course/session_08/</span>
-<span id="cb3-516"><a href="#cb3-516" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> ~/bioinfo_course/session_08/<span class="va">$PROJECT</span> ~/bioinfo_course/session_08/<span class="va">$PROJECT</span>/data</span>
-<span id="cb3-517"><a href="#cb3-517" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-518"><a href="#cb3-518" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-519"><a href="#cb3-519" aria-hidden="true" tabindex="-1"></a>You can run these lines again at any time: <span class="in">`--update=none`</span> never overwrites a file you</span>
-<span id="cb3-520"><a href="#cb3-520" aria-hidden="true" tabindex="-1"></a>have changed. Then **File → New Project → Existing Directory**, pick</span>
-<span id="cb3-521"><a href="#cb3-521" aria-hidden="true" tabindex="-1"></a><span class="in">`~/bioinfo_course/session_08/&lt;your project folder&gt;`</span>, open <span class="in">`data/README.md`</span> and read it</span>
-<span id="cb3-522"><a href="#cb3-522" aria-hidden="true" tabindex="-1"></a>all: it says what one row is and what every column means.</span>
-<span id="cb3-523"><a href="#cb3-523" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-524"><a href="#cb3-524" aria-hidden="true" tabindex="-1"></a>The folder contains:</span>
-<span id="cb3-525"><a href="#cb3-525" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-526"><a href="#cb3-526" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> File <span class="pp">|</span> What it is for <span class="pp">|</span></span>
-<span id="cb3-527"><a href="#cb3-527" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
-<span id="cb3-528"><a href="#cb3-528" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`data/`</span> <span class="pp">|</span> The tables of the project and their <span class="in">`README.md`</span>. <span class="pp">|</span></span>
-<span id="cb3-529"><a href="#cb3-529" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`PLAN.qmd`</span> <span class="pp">|</span> Today's plan, one per group. <span class="pp">|</span></span>
-<span id="cb3-530"><a href="#cb3-530" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`PROJECT.qmd`</span> <span class="pp">|</span> The analysis of the group. Its first section, **The data**, reads every table; the group writes it together, and it is the same in every copy. <span class="pp">|</span></span>
-<span id="cb3-531"><a href="#cb3-531" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`part_1.qmd`</span> ... <span class="in">`part_5.qmd`</span> <span class="pp">|</span> One part of the analysis per member. <span class="in">`PROJECT.qmd`</span> puts them together. <span class="pp">|</span></span>
-<span id="cb3-532"><a href="#cb3-532" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`results/`</span> <span class="pp">|</span> The figures you save with <span class="in">`ggsave()`</span>. <span class="pp">|</span></span>
-<span id="cb3-533"><a href="#cb3-533" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-534"><a href="#cb3-534" aria-hidden="true" tabindex="-1"></a>Choose the **host** of the group now: the member who keeps the group's <span class="in">`PLAN.qmd`</span> and</span>
-<span id="cb3-535"><a href="#cb3-535" aria-hidden="true" tabindex="-1"></a><span class="in">`PROJECT.qmd`</span>, collects the parts and submits.</span>
+<span id="cb3-512"><a href="#cb3-512" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The **northern edge** of a range is the latitude below which most of the occupied cells</span>
+<span id="cb3-513"><a href="#cb3-513" aria-hidden="true" tabindex="-1"></a>  lie, for example 95% of them (the 95th percentile of latitude). Why not the</span>
+<span id="cb3-514"><a href="#cb3-514" aria-hidden="true" tabindex="-1"></a>  northernmost cell? One lost individual or one typing error would move it.</span>
+<span id="cb3-515"><a href="#cb3-515" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>More records after 2000 means more cells, everywhere. Before concluding, check that the</span>
+<span id="cb3-516"><a href="#cb3-516" aria-hidden="true" tabindex="-1"></a>  edge still moves when you give both periods the same number of cells (draw the recent</span>
+<span id="cb3-517"><a href="#cb3-517" aria-hidden="true" tabindex="-1"></a>  cells at random).</span>
+<span id="cb3-518"><a href="#cb3-518" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The 1970-2000 climate can serve as a fixed reference map: in the recent period, does</span>
+<span id="cb3-519"><a href="#cb3-519" aria-hidden="true" tabindex="-1"></a>  the species live in cells that used to be too cold for it?</span>
+<span id="cb3-520"><a href="#cb3-520" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-521"><a href="#cb3-521" aria-hidden="true" tabindex="-1"></a>**A model of presence (Session 7).**</span>
+<span id="cb3-522"><a href="#cb3-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-523"><a href="#cb3-523" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>One row per cell: present, or not recorded (not "absent").</span>
+<span id="cb3-524"><a href="#cb3-524" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Balance the two classes before training. What does a model that always says "absent"</span>
+<span id="cb3-525"><a href="#cb3-525" aria-hidden="true" tabindex="-1"></a>  score?</span>
+<span id="cb3-526"><a href="#cb3-526" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Keep test cells aside; the model never sees them.</span>
+<span id="cb3-527"><a href="#cb3-527" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use the climate variables only, not longitude and latitude: with the coordinates the</span>
+<span id="cb3-528"><a href="#cb3-528" aria-hidden="true" tabindex="-1"></a>  tree learns *where* the species is, not *which climate* it likes.</span>
+<span id="cb3-529"><a href="#cb3-529" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Which observations do you train on? The old ones match the <span class="in">`_now`</span> climate in time; the</span>
+<span id="cb3-530"><a href="#cb3-530" aria-hidden="true" tabindex="-1"></a>  recent ones are more numerous. Choose, and say why.</span>
+<span id="cb3-531"><a href="#cb3-531" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Judge it on the test cells: confusion matrix, accuracy (what does chance give with</span>
+<span id="cb3-532"><a href="#cb3-532" aria-hidden="true" tabindex="-1"></a>  balanced classes?), recall of the presences. Read the tree: is its first split</span>
+<span id="cb3-533"><a href="#cb3-533" aria-hidden="true" tabindex="-1"></a>  biologically sensible?</span>
+<span id="cb3-534"><a href="#cb3-534" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-535"><a href="#cb3-535" aria-hidden="true" tabindex="-1"></a>**Present to future: projecting the model.**</span>
 <span id="cb3-536"><a href="#cb3-536" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-537"><a href="#cb3-537" aria-hidden="true" tabindex="-1"></a>Meet the data before any statistics, as in Sessions 4 and 6. Each member runs the</span>
-<span id="cb3-538"><a href="#cb3-538" aria-hidden="true" tabindex="-1"></a>section **The data** of <span class="in">`PROJECT.qmd`</span> (it reads every table), then the group answers, in</span>
-<span id="cb3-539"><a href="#cb3-539" aria-hidden="true" tabindex="-1"></a>a few lines each:</span>
-<span id="cb3-540"><a href="#cb3-540" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-541"><a href="#cb3-541" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>What is one row of each table? How many rows and columns?</span>
-<span id="cb3-542"><a href="#cb3-542" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Which columns describe the samples (or species), and which are measurements?</span>
-<span id="cb3-543"><a href="#cb3-543" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>How many samples per group, for the factors of the starting question? Are some</span>
-<span id="cb3-544"><a href="#cb3-544" aria-hidden="true" tabindex="-1"></a>   combinations missing?</span>
-<span id="cb3-545"><a href="#cb3-545" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Are there missing values? Where?</span>
-<span id="cb3-546"><a href="#cb3-546" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>One plot of the raw data, without any model.</span>
-<span id="cb3-547"><a href="#cb3-547" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-548"><a href="#cb3-548" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb3-549"><a href="#cb3-549" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(___)</span>
-<span id="cb3-550"><a href="#cb3-550" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(___, ___)</span>
-<span id="cb3-551"><a href="#cb3-551" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-537"><a href="#cb3-537" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The tree knows the climate variables by their <span class="in">`_now`</span> names. To give it the climate of</span>
+<span id="cb3-538"><a href="#cb3-538" aria-hidden="true" tabindex="-1"></a>  2061-2080, make a table where the <span class="in">`_ssp245`</span> (or <span class="in">`_ssp585`</span>) columns carry the <span class="in">`_now`</span></span>
+<span id="cb3-539"><a href="#cb3-539" aria-hidden="true" tabindex="-1"></a>  names. Otherwise <span class="in">`predict()`</span> cannot find them, or uses the present climate without</span>
+<span id="cb3-540"><a href="#cb3-540" aria-hidden="true" tabindex="-1"></a>  telling you.</span>
+<span id="cb3-541"><a href="#cb3-541" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compare, for now, the medium and the high scenario: how many cells are suitable, and</span>
+<span id="cb3-542"><a href="#cb3-542" aria-hidden="true" tabindex="-1"></a>  where (their median latitude)? Maps side by side: <span class="in">`geom_tile()`</span>, one facet per period.</span>
+<span id="cb3-543"><a href="#cb3-543" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Does the movement you measured between 1970 and 2024 go the same way as the one the</span>
+<span id="cb3-544"><a href="#cb3-544" aria-hidden="true" tabindex="-1"></a>  model predicts for 2070?</span>
+<span id="cb3-545"><a href="#cb3-545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-546"><a href="#cb3-546" aria-hidden="true" tabindex="-1"></a>**Limits worth a slide.** A suitable climate is not a presence (dispersal, habitat, host</span>
+<span id="cb3-547"><a href="#cb3-547" aria-hidden="true" tabindex="-1"></a>plants, history); cells "not recorded" were used as absences; sampling effort changed a</span>
+<span id="cb3-548"><a href="#cb3-548" aria-hidden="true" tabindex="-1"></a>lot; the niche may not stay the same; there is no climate map of 2000-2024.</span>
+<span id="cb3-549"><a href="#cb3-549" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-550"><a href="#cb3-550" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-551"><a href="#cb3-551" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practical (≈2 h)</span></span>
 <span id="cb3-552"><a href="#cb3-552" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-553"><a href="#cb3-553" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb3-554"><a href="#cb3-554" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb3-553"><a href="#cb3-553" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb3-554"><a href="#cb3-554" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tested on LEGcompute</span></span>
 <span id="cb3-555"><a href="#cb3-555" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-556"><a href="#cb3-556" aria-hidden="true" tabindex="-1"></a>Every member can say, without looking, what one row of the main table is, how many</span>
-<span id="cb3-557"><a href="#cb3-557" aria-hidden="true" tabindex="-1"></a>there are, and which factor the starting question is about.</span>
+<span id="cb3-556"><a href="#cb3-556" aria-hidden="true" tabindex="-1"></a>Every file reads in a few seconds with <span class="in">`read_csv()`</span>. The largest analyses (a PCA of</span>
+<span id="cb3-557"><a href="#cb3-557" aria-hidden="true" tabindex="-1"></a>20,000 genes, one model per SNP) take 10 to 60 seconds: test on a subset first.</span>
 <span id="cb3-558"><a href="#cb3-558" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb3-559"><a href="#cb3-559" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-560"><a href="#cb3-560" aria-hidden="true" tabindex="-1"></a><span class="fu">### 15:35-15:45: Short break</span></span>
+<span id="cb3-560"><a href="#cb3-560" aria-hidden="true" tabindex="-1"></a><span class="fu">### A. Setup, then meet your data (15:05-15:35)</span></span>
 <span id="cb3-561"><a href="#cb3-561" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-562"><a href="#cb3-562" aria-hidden="true" tabindex="-1"></a><span class="fu">### B. The plan (15:45-16:45)</span></span>
-<span id="cb3-563"><a href="#cb3-563" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-564"><a href="#cb3-564" aria-hidden="true" tabindex="-1"></a>Open <span class="in">`PLAN.qmd`</span> in the host's copy. It has the seven parts of [Theory</span>
-<span id="cb3-565"><a href="#cb3-565" aria-hidden="true" tabindex="-1"></a>2](#the-anatomy-of-a-plan). Fill them together; split the writing, not the thinking:</span>
-<span id="cb3-566"><a href="#cb3-566" aria-hidden="true" tabindex="-1"></a>the others explore the data in their own copy and send the code that works to the host.</span>
-<span id="cb3-567"><a href="#cb3-567" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-568"><a href="#cb3-568" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Question.** Your big biological question, in one sentence: the starting question</span>
-<span id="cb3-569"><a href="#cb3-569" aria-hidden="true" tabindex="-1"></a>   of your project, or your own if these data can answer it. Then cut it into</span>
-<span id="cb3-570"><a href="#cb3-570" aria-hidden="true" tabindex="-1"></a>   sub-questions, one per part (ideas in "To go further").</span>
-<span id="cb3-571"><a href="#cb3-571" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Hypothesis and refutation.** For each sub-question, what you expect and which result</span>
-<span id="cb3-572"><a href="#cb3-572" aria-hidden="true" tabindex="-1"></a>   would prove you wrong.</span>
-<span id="cb3-573"><a href="#cb3-573" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Data and variables.** The files and the subset you use; the response, the</span>
-<span id="cb3-574"><a href="#cb3-574" aria-hidden="true" tabindex="-1"></a>   explanatory variables, the possible confounders.</span>
-<span id="cb3-575"><a href="#cb3-575" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Method.** Each step, with the tool and the session it comes from (the</span>
-<span id="cb3-576"><a href="#cb3-576" aria-hidden="true" tabindex="-1"></a>   <span class="co">[</span><span class="ot">toolbox table</span><span class="co">](#the-toolbox-which-tool-for-which-question)</span>).</span>
-<span id="cb3-577"><a href="#cb3-577" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**First figure.** Make one exploratory figure that already says something about the</span>
-<span id="cb3-578"><a href="#cb3-578" aria-hidden="true" tabindex="-1"></a>   question, save it in <span class="in">`results/`</span>, insert it in <span class="in">`PLAN.qmd`</span> with a caption of two or</span>
-<span id="cb3-579"><a href="#cb3-579" aria-hidden="true" tabindex="-1"></a>   three sentences. If your data need a long preparation before the first result (count</span>
-<span id="cb3-580"><a href="#cb3-580" aria-hidden="true" tabindex="-1"></a>   tables to normalise, as in A and C), a figure of the **experimental design** is fine</span>
-<span id="cb3-581"><a href="#cb3-581" aria-hidden="true" tabindex="-1"></a>   for tonight: for example the number of samples per genotype, treatment and time.</span>
-<span id="cb3-582"><a href="#cb3-582" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Risks.** What could go wrong (too few samples, a confounder, a slow step) and what</span>
-<span id="cb3-583"><a href="#cb3-583" aria-hidden="true" tabindex="-1"></a>   you will do then.</span>
-<span id="cb3-584"><a href="#cb3-584" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>**Roles.** Who writes which part file until Session 9, and who presents what.</span>
-<span id="cb3-585"><a href="#cb3-585" aria-hidden="true" tabindex="-1"></a>   Everyone leads one part and reads all the others.</span>
+<span id="cb3-562"><a href="#cb3-562" aria-hidden="true" tabindex="-1"></a>Every member copies the same project folder. In the **Terminal** tab, each member runs</span>
+<span id="cb3-563"><a href="#cb3-563" aria-hidden="true" tabindex="-1"></a>(replace the folder name with your project's, from the table above):</span>
+<span id="cb3-564"><a href="#cb3-564" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-565"><a href="#cb3-565" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb3-566"><a href="#cb3-566" aria-hidden="true" tabindex="-1"></a><span class="va">PROJECT</span><span class="op">=</span>A_arabidopsis_pseudomonas</span>
+<span id="cb3-567"><a href="#cb3-567" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/bioinfo_course/session_08</span>
+<span id="cb3-568"><a href="#cb3-568" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> <span class="at">--update</span><span class="op">=</span>none /home/cmaslard/bioinfo_tools_course/session_08/<span class="va">$PROJECT</span> ~/bioinfo_course/session_08/</span>
+<span id="cb3-569"><a href="#cb3-569" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> ~/bioinfo_course/session_08/<span class="va">$PROJECT</span> ~/bioinfo_course/session_08/<span class="va">$PROJECT</span>/data</span>
+<span id="cb3-570"><a href="#cb3-570" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-571"><a href="#cb3-571" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-572"><a href="#cb3-572" aria-hidden="true" tabindex="-1"></a>You can run these lines again at any time: <span class="in">`--update=none`</span> never overwrites a file you</span>
+<span id="cb3-573"><a href="#cb3-573" aria-hidden="true" tabindex="-1"></a>have changed. Then **File → New Project → Existing Directory**, pick</span>
+<span id="cb3-574"><a href="#cb3-574" aria-hidden="true" tabindex="-1"></a><span class="in">`~/bioinfo_course/session_08/&lt;your project folder&gt;`</span>, open <span class="in">`data/README.md`</span> and read it</span>
+<span id="cb3-575"><a href="#cb3-575" aria-hidden="true" tabindex="-1"></a>all: it says what one row is and what every column means.</span>
+<span id="cb3-576"><a href="#cb3-576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-577"><a href="#cb3-577" aria-hidden="true" tabindex="-1"></a>The folder contains:</span>
+<span id="cb3-578"><a href="#cb3-578" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-579"><a href="#cb3-579" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> File <span class="pp">|</span> What it is for <span class="pp">|</span></span>
+<span id="cb3-580"><a href="#cb3-580" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
+<span id="cb3-581"><a href="#cb3-581" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`data/`</span> <span class="pp">|</span> The tables of the project and their <span class="in">`README.md`</span>. <span class="pp">|</span></span>
+<span id="cb3-582"><a href="#cb3-582" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`PLAN.qmd`</span> <span class="pp">|</span> Today's plan, one per group. <span class="pp">|</span></span>
+<span id="cb3-583"><a href="#cb3-583" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`PROJECT.qmd`</span> <span class="pp">|</span> The analysis of the group. Its first section, **The data**, reads every table; the group writes it together, and it is the same in every copy. <span class="pp">|</span></span>
+<span id="cb3-584"><a href="#cb3-584" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`part_1.qmd`</span> ... <span class="in">`part_5.qmd`</span> <span class="pp">|</span> One part of the analysis per member. <span class="in">`PROJECT.qmd`</span> puts them together. <span class="pp">|</span></span>
+<span id="cb3-585"><a href="#cb3-585" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`results/`</span> <span class="pp">|</span> The figures you save with <span class="in">`ggsave()`</span>. <span class="pp">|</span></span>
 <span id="cb3-586"><a href="#cb3-586" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-587"><a href="#cb3-587" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb3-588"><a href="#cb3-588" aria-hidden="true" tabindex="-1"></a><span class="fu">## How to cut the project into parts</span></span>
+<span id="cb3-587"><a href="#cb3-587" aria-hidden="true" tabindex="-1"></a>Choose the **host** of the group now: the member who keeps the group's <span class="in">`PLAN.qmd`</span> and</span>
+<span id="cb3-588"><a href="#cb3-588" aria-hidden="true" tabindex="-1"></a><span class="in">`PROJECT.qmd`</span>, collects the parts and submits.</span>
 <span id="cb3-589"><a href="#cb3-589" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-590"><a href="#cb3-590" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**One part = one sub-question of your big question**, answered by one figure (or</span>
-<span id="cb3-591"><a href="#cb3-591" aria-hidden="true" tabindex="-1"></a>  table) and two or three sentences. Not "the introduction" or "the slides": everyone</span>
-<span id="cb3-592"><a href="#cb3-592" aria-hidden="true" tabindex="-1"></a>  analyses.</span>
-<span id="cb3-593"><a href="#cb3-593" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**The starting question**, if you keep it, makes a good first part: it is checked to</span>
-<span id="cb3-594"><a href="#cb3-594" aria-hidden="true" tabindex="-1"></a>  work with these data.</span>
-<span id="cb3-595"><a href="#cb3-595" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**A step that several parts need** (normalising counts, filtering samples, joining two</span>
-<span id="cb3-596"><a href="#cb3-596" aria-hidden="true" tabindex="-1"></a>  tables) goes **once** in the `shared-steps` chunk of **The data** in <span class="in">`PROJECT.qmd`</span>,</span>
-<span id="cb3-597"><a href="#cb3-597" aria-hidden="true" tabindex="-1"></a>  written together and identical in every copy. Each part starts from there and uses</span>
-<span id="cb3-598"><a href="#cb3-598" aria-hidden="true" tabindex="-1"></a>  nothing created in another part.</span>
-<span id="cb3-599"><a href="#cb3-599" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Give the hardest parts to the strongest coders**, and read all the other parts: on</span>
-<span id="cb3-600"><a href="#cb3-600" aria-hidden="true" tabindex="-1"></a>  16 November you will be asked about a part you did not present.</span>
-<span id="cb3-601"><a href="#cb3-601" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-602"><a href="#cb3-602" aria-hidden="true" tabindex="-1"></a>Check: each member can name the figure they will make. If one cannot, cut again.</span>
-<span id="cb3-603"><a href="#cb3-603" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-604"><a href="#cb3-604" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-605"><a href="#cb3-605" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb3-606"><a href="#cb3-606" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
-<span id="cb3-607"><a href="#cb3-607" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-608"><a href="#cb3-608" aria-hidden="true" tabindex="-1"></a>Your question fits in one sentence; you can draw on the board the figure that answers</span>
-<span id="cb3-609"><a href="#cb3-609" aria-hidden="true" tabindex="-1"></a>it; the first figure is in <span class="in">`PLAN.qmd`</span>.</span>
-<span id="cb3-610"><a href="#cb3-610" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-611"><a href="#cb3-611" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-612"><a href="#cb3-612" aria-hidden="true" tabindex="-1"></a><span class="fu">### C. Three minutes with the instructor (16:45-17:05)</span></span>
-<span id="cb3-613"><a href="#cb3-613" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-614"><a href="#cb3-614" aria-hidden="true" tabindex="-1"></a>The instructor visits each group. One member says the question in one sentence, another</span>
-<span id="cb3-615"><a href="#cb3-615" aria-hidden="true" tabindex="-1"></a>shows the first figure, a third says the first two steps of the method. You leave with</span>
-<span id="cb3-616"><a href="#cb3-616" aria-hidden="true" tabindex="-1"></a>one piece of advice, written in part 6 of the plan.</span>
-<span id="cb3-617"><a href="#cb3-617" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-618"><a href="#cb3-618" aria-hidden="true" tabindex="-1"></a><span class="fu">### D. Wrap-up (17:05-17:15)</span></span>
-<span id="cb3-619"><a href="#cb3-619" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-620"><a href="#cb3-620" aria-hidden="true" tabindex="-1"></a>Render <span class="in">`PLAN.qmd`</span> (**Render** makes <span class="in">`PLAN.pdf`</span>). **The host submits <span class="in">`PLAN.pdf`</span> on Moodle</span>
-<span id="cb3-621"><a href="#cb3-621" aria-hidden="true" tabindex="-1"></a>by Monday 9 November, 23:59**, with the names of all members on its first page. If it</span>
-<span id="cb3-622"><a href="#cb3-622" aria-hidden="true" tabindex="-1"></a>does not render, submit <span class="in">`PLAN.qmd`</span> and the <span class="in">`results/`</span> folder as well.</span>
-<span id="cb3-623"><a href="#cb3-623" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-624"><a href="#cb3-624" aria-hidden="true" tabindex="-1"></a><span class="fu">## Before Session 9</span></span>
-<span id="cb3-625"><a href="#cb3-625" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-626"><a href="#cb3-626" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Each member writes their part in their own part file, starting from the tables of</span>
-<span id="cb3-627"><a href="#cb3-627" aria-hidden="true" tabindex="-1"></a>  **The data** only, so that it runs alone. Render <span class="in">`PROJECT.qmd`</span> in your own copy to</span>
-<span id="cb3-628"><a href="#cb3-628" aria-hidden="true" tabindex="-1"></a>  check it (the other parts are empty there).</span>
-<span id="cb3-629"><a href="#cb3-629" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When a part runs, its author sends the part file to the host: in the **Files** pane,</span>
-<span id="cb3-630"><a href="#cb3-630" aria-hidden="true" tabindex="-1"></a>  tick it, then **More → Export...** (Session 1). The host puts it in their own folder</span>
-<span id="cb3-631"><a href="#cb3-631" aria-hidden="true" tabindex="-1"></a>  with **Upload**, replacing the empty one, and renders <span class="in">`PROJECT.qmd`</span>: it must run from</span>
-<span id="cb3-632"><a href="#cb3-632" aria-hidden="true" tabindex="-1"></a>  the data to the last figure.</span>
-<span id="cb3-633"><a href="#cb3-633" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Do not give labels to the chunks of the part files: two chunks with the same label</span>
-<span id="cb3-634"><a href="#cb3-634" aria-hidden="true" tabindex="-1"></a>  stop the render.</span>
-<span id="cb3-635"><a href="#cb3-635" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Read the feedback on your plan (Moodle, before the session) and adapt.</span>
-<span id="cb3-636"><a href="#cb3-636" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Meet at least once as a group, and rehearse the talk at least once with a timer.</span>
-<span id="cb3-637"><a href="#cb3-637" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Prepare the slides (PDF): see the [Session 9</span>
-<span id="cb3-638"><a href="#cb3-638" aria-hidden="true" tabindex="-1"></a>  page](09_guided_project_interpretation_and_communication.qmd).</span>
+<span id="cb3-590"><a href="#cb3-590" aria-hidden="true" tabindex="-1"></a>Meet the data before any statistics, as in Sessions 4 and 6. Each member runs the</span>
+<span id="cb3-591"><a href="#cb3-591" aria-hidden="true" tabindex="-1"></a>section **The data** of <span class="in">`PROJECT.qmd`</span> (it reads every table), then the group answers, in</span>
+<span id="cb3-592"><a href="#cb3-592" aria-hidden="true" tabindex="-1"></a>a few lines each:</span>
+<span id="cb3-593"><a href="#cb3-593" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-594"><a href="#cb3-594" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>What is one row of each table? How many rows and columns?</span>
+<span id="cb3-595"><a href="#cb3-595" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Which columns describe the samples (or species), and which are measurements?</span>
+<span id="cb3-596"><a href="#cb3-596" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>How many samples per group, for the factors of the starting question? Are some</span>
+<span id="cb3-597"><a href="#cb3-597" aria-hidden="true" tabindex="-1"></a>   combinations missing?</span>
+<span id="cb3-598"><a href="#cb3-598" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Are there missing values? Where?</span>
+<span id="cb3-599"><a href="#cb3-599" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>One plot of the raw data, without any model.</span>
+<span id="cb3-600"><a href="#cb3-600" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-601"><a href="#cb3-601" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb3-602"><a href="#cb3-602" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(___)</span>
+<span id="cb3-603"><a href="#cb3-603" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(___, ___)</span>
+<span id="cb3-604"><a href="#cb3-604" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-605"><a href="#cb3-605" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-606"><a href="#cb3-606" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb3-607"><a href="#cb3-607" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb3-608"><a href="#cb3-608" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-609"><a href="#cb3-609" aria-hidden="true" tabindex="-1"></a>Every member can say, without looking, what one row of the main table is, how many</span>
+<span id="cb3-610"><a href="#cb3-610" aria-hidden="true" tabindex="-1"></a>there are, and which factor the starting question is about.</span>
+<span id="cb3-611"><a href="#cb3-611" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-612"><a href="#cb3-612" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-613"><a href="#cb3-613" aria-hidden="true" tabindex="-1"></a><span class="fu">### 15:35-15:45: Short break</span></span>
+<span id="cb3-614"><a href="#cb3-614" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-615"><a href="#cb3-615" aria-hidden="true" tabindex="-1"></a><span class="fu">### B. The plan (15:45-16:45)</span></span>
+<span id="cb3-616"><a href="#cb3-616" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-617"><a href="#cb3-617" aria-hidden="true" tabindex="-1"></a>Open <span class="in">`PLAN.qmd`</span> in the host's copy. It has the seven parts of [Theory</span>
+<span id="cb3-618"><a href="#cb3-618" aria-hidden="true" tabindex="-1"></a>2](#the-anatomy-of-a-plan). Fill them together; split the writing, not the thinking:</span>
+<span id="cb3-619"><a href="#cb3-619" aria-hidden="true" tabindex="-1"></a>the others explore the data in their own copy and send the code that works to the host.</span>
+<span id="cb3-620"><a href="#cb3-620" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-621"><a href="#cb3-621" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Question.** Your big biological question, in one sentence: the starting question</span>
+<span id="cb3-622"><a href="#cb3-622" aria-hidden="true" tabindex="-1"></a>   of your project, or your own if these data can answer it. Then cut it into</span>
+<span id="cb3-623"><a href="#cb3-623" aria-hidden="true" tabindex="-1"></a>   sub-questions, one per part (ideas in "To go further").</span>
+<span id="cb3-624"><a href="#cb3-624" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Hypothesis and refutation.** For each sub-question, what you expect and which result</span>
+<span id="cb3-625"><a href="#cb3-625" aria-hidden="true" tabindex="-1"></a>   would prove you wrong.</span>
+<span id="cb3-626"><a href="#cb3-626" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Data and variables.** The files and the subset you use; the response, the</span>
+<span id="cb3-627"><a href="#cb3-627" aria-hidden="true" tabindex="-1"></a>   explanatory variables, the possible confounders.</span>
+<span id="cb3-628"><a href="#cb3-628" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Method.** Each step, with the tool and the session it comes from (the</span>
+<span id="cb3-629"><a href="#cb3-629" aria-hidden="true" tabindex="-1"></a>   <span class="co">[</span><span class="ot">toolbox table</span><span class="co">](#the-toolbox-which-tool-for-which-question)</span>).</span>
+<span id="cb3-630"><a href="#cb3-630" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**First figure.** Make one exploratory figure that already says something about the</span>
+<span id="cb3-631"><a href="#cb3-631" aria-hidden="true" tabindex="-1"></a>   question, save it in <span class="in">`results/`</span>, insert it in <span class="in">`PLAN.qmd`</span> with a caption of two or</span>
+<span id="cb3-632"><a href="#cb3-632" aria-hidden="true" tabindex="-1"></a>   three sentences. If your data need a long preparation before the first result (count</span>
+<span id="cb3-633"><a href="#cb3-633" aria-hidden="true" tabindex="-1"></a>   tables to normalise, as in A and C), a figure of the **experimental design** is fine</span>
+<span id="cb3-634"><a href="#cb3-634" aria-hidden="true" tabindex="-1"></a>   for tonight: for example the number of samples per genotype, treatment and time.</span>
+<span id="cb3-635"><a href="#cb3-635" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Risks.** What could go wrong (too few samples, a confounder, a slow step) and what</span>
+<span id="cb3-636"><a href="#cb3-636" aria-hidden="true" tabindex="-1"></a>   you will do then.</span>
+<span id="cb3-637"><a href="#cb3-637" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>**Roles.** Who writes which part file until Session 9, and who presents what.</span>
+<span id="cb3-638"><a href="#cb3-638" aria-hidden="true" tabindex="-1"></a>   Everyone leads one part and reads all the others.</span>
 <span id="cb3-639"><a href="#cb3-639" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-640"><a href="#cb3-640" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
-<span id="cb3-641"><a href="#cb3-641" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-642"><a href="#cb3-642" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mine A. et al. (2018). [The defense phytohormone signaling network enables rapid,</span>
-<span id="cb3-643"><a href="#cb3-643" aria-hidden="true" tabindex="-1"></a>  high-amplitude transcriptional reprogramming during effector-triggered</span>
-<span id="cb3-644"><a href="#cb3-644" aria-hidden="true" tabindex="-1"></a>  immunity](https://doi.org/10.1105/tpc.17.00970). *The Plant Cell* 30: 1199-1219.</span>
-<span id="cb3-645"><a href="#cb3-645" aria-hidden="true" tabindex="-1"></a>  Project A.</span>
-<span id="cb3-646"><a href="#cb3-646" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Kawakatsu T. et al. (2016). [Epigenomic diversity in a global collection of</span>
-<span id="cb3-647"><a href="#cb3-647" aria-hidden="true" tabindex="-1"></a>  *Arabidopsis thaliana* accessions](https://doi.org/10.1016/j.cell.2016.06.044). *Cell*</span>
-<span id="cb3-648"><a href="#cb3-648" aria-hidden="true" tabindex="-1"></a>  166: 492-505. Project B.</span>
-<span id="cb3-649"><a href="#cb3-649" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Savary R. et al. (2021). [Fast and pervasive transcriptomic resilience and acclimation</span>
-<span id="cb3-650"><a href="#cb3-650" aria-hidden="true" tabindex="-1"></a>  of extremely heat-tolerant coral holobionts from the northern Red</span>
-<span id="cb3-651"><a href="#cb3-651" aria-hidden="true" tabindex="-1"></a>  Sea](https://doi.org/10.1073/pnas.2023298118). *PNAS* 118: e2023298118. Project C.</span>
-<span id="cb3-652"><a href="#cb3-652" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sunagawa S. et al. (2015). [Structure and function of the global ocean</span>
-<span id="cb3-653"><a href="#cb3-653" aria-hidden="true" tabindex="-1"></a>  microbiome](https://doi.org/10.1126/science.1261359). *Science* 348: 1261359. Project D.</span>
-<span id="cb3-654"><a href="#cb3-654" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tobias J. A. et al. (2022). [AVONET: morphological, ecological and geographical data for</span>
-<span id="cb3-655"><a href="#cb3-655" aria-hidden="true" tabindex="-1"></a>  all birds](https://doi.org/10.1111/ele.13898). *Ecology Letters* 25: 581-597. Project E.</span>
-<span id="cb3-656"><a href="#cb3-656" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Baggs E. L. et al. (2020). [Convergent loss of an EDS1/PAD4 signaling pathway in several</span>
-<span id="cb3-657"><a href="#cb3-657" aria-hidden="true" tabindex="-1"></a>  plant lineages reveals coevolved components of plant immunity and drought</span>
-<span id="cb3-658"><a href="#cb3-658" aria-hidden="true" tabindex="-1"></a>  response](https://doi.org/10.1105/tpc.19.00903). *The Plant Cell* 32: 2158-2177.</span>
-<span id="cb3-659"><a href="#cb3-659" aria-hidden="true" tabindex="-1"></a>  Project F.</span>
-<span id="cb3-660"><a href="#cb3-660" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The UniProt Consortium (2025). [UniProt: the Universal Protein Knowledgebase in</span>
-<span id="cb3-661"><a href="#cb3-661" aria-hidden="true" tabindex="-1"></a>  2025](https://doi.org/10.1093/nar/gkae1010). *Nucleic Acids Research* 53: D609-D617.</span>
-<span id="cb3-662"><a href="#cb3-662" aria-hidden="true" tabindex="-1"></a>  Project F.</span>
-<span id="cb3-663"><a href="#cb3-663" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fick S. E. and Hijmans R. J. (2017). [WorldClim 2: new 1-km spatial resolution climate</span>
-<span id="cb3-664"><a href="#cb3-664" aria-hidden="true" tabindex="-1"></a>  surfaces for global land areas](https://doi.org/10.1002/joc.5086). *International</span>
-<span id="cb3-665"><a href="#cb3-665" aria-hidden="true" tabindex="-1"></a>  Journal of Climatology* 37: 4302-4315. Projects B and G.</span>
-<span id="cb3-666"><a href="#cb3-666" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Elith J. and Leathwick J. R. (2009). [Species distribution models: ecological</span>
-<span id="cb3-667"><a href="#cb3-667" aria-hidden="true" tabindex="-1"></a>  explanation and prediction across space and</span>
-<span id="cb3-668"><a href="#cb3-668" aria-hidden="true" tabindex="-1"></a>  time](https://doi.org/10.1146/annurev.ecolsys.110308.120159). *Annual Review of</span>
-<span id="cb3-669"><a href="#cb3-669" aria-hidden="true" tabindex="-1"></a>  Ecology, Evolution, and Systematics* 40: 677-697. Project G.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb3-640"><a href="#cb3-640" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb3-641"><a href="#cb3-641" aria-hidden="true" tabindex="-1"></a><span class="fu">## How to cut the project into parts</span></span>
+<span id="cb3-642"><a href="#cb3-642" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-643"><a href="#cb3-643" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**One part = one sub-question of your big question**, answered by one figure (or</span>
+<span id="cb3-644"><a href="#cb3-644" aria-hidden="true" tabindex="-1"></a>  table) and two or three sentences. Not "the introduction" or "the slides": everyone</span>
+<span id="cb3-645"><a href="#cb3-645" aria-hidden="true" tabindex="-1"></a>  analyses.</span>
+<span id="cb3-646"><a href="#cb3-646" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**The starting question**, if you keep it, makes a good first part: it is checked to</span>
+<span id="cb3-647"><a href="#cb3-647" aria-hidden="true" tabindex="-1"></a>  work with these data.</span>
+<span id="cb3-648"><a href="#cb3-648" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**A step that several parts need** (normalising counts, filtering samples, joining two</span>
+<span id="cb3-649"><a href="#cb3-649" aria-hidden="true" tabindex="-1"></a>  tables) goes **once** in the `shared-steps` chunk of **The data** in <span class="in">`PROJECT.qmd`</span>,</span>
+<span id="cb3-650"><a href="#cb3-650" aria-hidden="true" tabindex="-1"></a>  written together and identical in every copy. Each part starts from there and uses</span>
+<span id="cb3-651"><a href="#cb3-651" aria-hidden="true" tabindex="-1"></a>  nothing created in another part.</span>
+<span id="cb3-652"><a href="#cb3-652" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Give the hardest parts to the strongest coders**, and read all the other parts: on</span>
+<span id="cb3-653"><a href="#cb3-653" aria-hidden="true" tabindex="-1"></a>  16 November you will be asked about a part you did not present.</span>
+<span id="cb3-654"><a href="#cb3-654" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-655"><a href="#cb3-655" aria-hidden="true" tabindex="-1"></a>Check: each member can name the figure they will make. If one cannot, cut again.</span>
+<span id="cb3-656"><a href="#cb3-656" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-657"><a href="#cb3-657" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-658"><a href="#cb3-658" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb3-659"><a href="#cb3-659" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checkpoint</span></span>
+<span id="cb3-660"><a href="#cb3-660" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-661"><a href="#cb3-661" aria-hidden="true" tabindex="-1"></a>Your question fits in one sentence; you can draw on the board the figure that answers</span>
+<span id="cb3-662"><a href="#cb3-662" aria-hidden="true" tabindex="-1"></a>it; the first figure is in <span class="in">`PLAN.qmd`</span>.</span>
+<span id="cb3-663"><a href="#cb3-663" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-664"><a href="#cb3-664" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-665"><a href="#cb3-665" aria-hidden="true" tabindex="-1"></a><span class="fu">### C. Three minutes with the instructor (16:45-17:05)</span></span>
+<span id="cb3-666"><a href="#cb3-666" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-667"><a href="#cb3-667" aria-hidden="true" tabindex="-1"></a>The instructor visits each group. One member says the question in one sentence, another</span>
+<span id="cb3-668"><a href="#cb3-668" aria-hidden="true" tabindex="-1"></a>shows the first figure, a third says the first two steps of the method. You leave with</span>
+<span id="cb3-669"><a href="#cb3-669" aria-hidden="true" tabindex="-1"></a>one piece of advice, written in part 6 of the plan.</span>
+<span id="cb3-670"><a href="#cb3-670" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-671"><a href="#cb3-671" aria-hidden="true" tabindex="-1"></a><span class="fu">### D. Wrap-up (17:05-17:15)</span></span>
+<span id="cb3-672"><a href="#cb3-672" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-673"><a href="#cb3-673" aria-hidden="true" tabindex="-1"></a>Render <span class="in">`PLAN.qmd`</span> (**Render** makes <span class="in">`PLAN.pdf`</span>). **The host submits <span class="in">`PLAN.pdf`</span> on Moodle</span>
+<span id="cb3-674"><a href="#cb3-674" aria-hidden="true" tabindex="-1"></a>by Monday 9 November, 23:59**, with the names of all members on its first page. If it</span>
+<span id="cb3-675"><a href="#cb3-675" aria-hidden="true" tabindex="-1"></a>does not render, submit <span class="in">`PLAN.qmd`</span> and the <span class="in">`results/`</span> folder as well.</span>
+<span id="cb3-676"><a href="#cb3-676" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-677"><a href="#cb3-677" aria-hidden="true" tabindex="-1"></a><span class="fu">## Before Session 9</span></span>
+<span id="cb3-678"><a href="#cb3-678" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-679"><a href="#cb3-679" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Each member writes their part in their own part file, starting from the tables of</span>
+<span id="cb3-680"><a href="#cb3-680" aria-hidden="true" tabindex="-1"></a>  **The data** only, so that it runs alone. Render <span class="in">`PROJECT.qmd`</span> in your own copy to</span>
+<span id="cb3-681"><a href="#cb3-681" aria-hidden="true" tabindex="-1"></a>  check it (the other parts are empty there).</span>
+<span id="cb3-682"><a href="#cb3-682" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When a part runs, its author sends the part file to the host: in the **Files** pane,</span>
+<span id="cb3-683"><a href="#cb3-683" aria-hidden="true" tabindex="-1"></a>  tick it, then **More → Export...** (Session 1). The host puts it in their own folder</span>
+<span id="cb3-684"><a href="#cb3-684" aria-hidden="true" tabindex="-1"></a>  with **Upload**, replacing the empty one, and renders <span class="in">`PROJECT.qmd`</span>: it must run from</span>
+<span id="cb3-685"><a href="#cb3-685" aria-hidden="true" tabindex="-1"></a>  the data to the last figure.</span>
+<span id="cb3-686"><a href="#cb3-686" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Do not give labels to the chunks of the part files: two chunks with the same label</span>
+<span id="cb3-687"><a href="#cb3-687" aria-hidden="true" tabindex="-1"></a>  stop the render.</span>
+<span id="cb3-688"><a href="#cb3-688" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Read the feedback on your plan (Moodle, before the session) and adapt.</span>
+<span id="cb3-689"><a href="#cb3-689" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Meet at least once as a group, and rehearse the talk at least once with a timer.</span>
+<span id="cb3-690"><a href="#cb3-690" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Prepare the slides (PDF): see the [Session 9</span>
+<span id="cb3-691"><a href="#cb3-691" aria-hidden="true" tabindex="-1"></a>  page](09_guided_project_interpretation_and_communication.qmd).</span>
+<span id="cb3-692"><a href="#cb3-692" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-693"><a href="#cb3-693" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb3-694"><a href="#cb3-694" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-695"><a href="#cb3-695" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mine A. et al. (2018). [The defense phytohormone signaling network enables rapid,</span>
+<span id="cb3-696"><a href="#cb3-696" aria-hidden="true" tabindex="-1"></a>  high-amplitude transcriptional reprogramming during effector-triggered</span>
+<span id="cb3-697"><a href="#cb3-697" aria-hidden="true" tabindex="-1"></a>  immunity](https://doi.org/10.1105/tpc.17.00970). *The Plant Cell* 30: 1199-1219.</span>
+<span id="cb3-698"><a href="#cb3-698" aria-hidden="true" tabindex="-1"></a>  Project A.</span>
+<span id="cb3-699"><a href="#cb3-699" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Kawakatsu T. et al. (2016). [Epigenomic diversity in a global collection of</span>
+<span id="cb3-700"><a href="#cb3-700" aria-hidden="true" tabindex="-1"></a>  *Arabidopsis thaliana* accessions](https://doi.org/10.1016/j.cell.2016.06.044). *Cell*</span>
+<span id="cb3-701"><a href="#cb3-701" aria-hidden="true" tabindex="-1"></a>  166: 492-505. Project B.</span>
+<span id="cb3-702"><a href="#cb3-702" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Savary R. et al. (2021). [Fast and pervasive transcriptomic resilience and acclimation</span>
+<span id="cb3-703"><a href="#cb3-703" aria-hidden="true" tabindex="-1"></a>  of extremely heat-tolerant coral holobionts from the northern Red</span>
+<span id="cb3-704"><a href="#cb3-704" aria-hidden="true" tabindex="-1"></a>  Sea](https://doi.org/10.1073/pnas.2023298118). *PNAS* 118: e2023298118. Project C.</span>
+<span id="cb3-705"><a href="#cb3-705" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sunagawa S. et al. (2015). [Structure and function of the global ocean</span>
+<span id="cb3-706"><a href="#cb3-706" aria-hidden="true" tabindex="-1"></a>  microbiome](https://doi.org/10.1126/science.1261359). *Science* 348: 1261359. Project D.</span>
+<span id="cb3-707"><a href="#cb3-707" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tobias J. A. et al. (2022). [AVONET: morphological, ecological and geographical data for</span>
+<span id="cb3-708"><a href="#cb3-708" aria-hidden="true" tabindex="-1"></a>  all birds](https://doi.org/10.1111/ele.13898). *Ecology Letters* 25: 581-597. Project E.</span>
+<span id="cb3-709"><a href="#cb3-709" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Baggs E. L. et al. (2020). [Convergent loss of an EDS1/PAD4 signaling pathway in several</span>
+<span id="cb3-710"><a href="#cb3-710" aria-hidden="true" tabindex="-1"></a>  plant lineages reveals coevolved components of plant immunity and drought</span>
+<span id="cb3-711"><a href="#cb3-711" aria-hidden="true" tabindex="-1"></a>  response](https://doi.org/10.1105/tpc.19.00903). *The Plant Cell* 32: 2158-2177.</span>
+<span id="cb3-712"><a href="#cb3-712" aria-hidden="true" tabindex="-1"></a>  Project F.</span>
+<span id="cb3-713"><a href="#cb3-713" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The UniProt Consortium (2025). [UniProt: the Universal Protein Knowledgebase in</span>
+<span id="cb3-714"><a href="#cb3-714" aria-hidden="true" tabindex="-1"></a>  2025](https://doi.org/10.1093/nar/gkae1010). *Nucleic Acids Research* 53: D609-D617.</span>
+<span id="cb3-715"><a href="#cb3-715" aria-hidden="true" tabindex="-1"></a>  Project F.</span>
+<span id="cb3-716"><a href="#cb3-716" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fick S. E. and Hijmans R. J. (2017). [WorldClim 2: new 1-km spatial resolution climate</span>
+<span id="cb3-717"><a href="#cb3-717" aria-hidden="true" tabindex="-1"></a>  surfaces for global land areas](https://doi.org/10.1002/joc.5086). *International</span>
+<span id="cb3-718"><a href="#cb3-718" aria-hidden="true" tabindex="-1"></a>  Journal of Climatology* 37: 4302-4315. Projects B and G.</span>
+<span id="cb3-719"><a href="#cb3-719" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Elith J. and Leathwick J. R. (2009). [Species distribution models: ecological</span>
+<span id="cb3-720"><a href="#cb3-720" aria-hidden="true" tabindex="-1"></a>  explanation and prediction across space and</span>
+<span id="cb3-721"><a href="#cb3-721" aria-hidden="true" tabindex="-1"></a>  time](https://doi.org/10.1146/annurev.ecolsys.110308.120159). *Annual Review of</span>
+<span id="cb3-722"><a href="#cb3-722" aria-hidden="true" tabindex="-1"></a>  Ecology, Evolution, and Systematics* 40: 677-697. Project G.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
