@@ -447,6 +447,46 @@ a tree in R (Session 3); a model per lineage (Session 6 logic of confounders).
 `n_genes` in the model. Species are not independent: lineage is a confounder. A domain
 not found by Pfam is not proof that the gene is absent.
 
+::: {.callout-tip collapse="true"}
+## Help for project F: does a lineage lack TNLs, or has it lost them?
+
+**"Lack" is what the table shows; "lost" is a story about the past.** `tnl_genes == 0`
+tells you that a species has no TNL today. To say that its lineage *lost* them, you need
+to know that its ancestors had them, and the table does not say that by itself. Ask your
+question with "lack", and come back to "lost" in the interpretation, with the order in
+which the lineages branched off.
+
+![The nine values of `lineage_group`, in the order in which they branched off
+(simplified after the One Thousand Plant Transcriptomes Initiative, 2019), with their
+number of species in `plant_proteomes.csv`. Two of them are not single branches: land
+plants arose from within the charophytes, and "early angiosperms and magnoliids" groups
+the first branches of the flowering plants.](img/08/F_lineage_groups_tree.png){width=85%}
+
+![A toy example, not your data. In both trees, two species lack the trait. The simplest
+story (the fewest changes) is a gain in the first tree and a loss in the second: what
+decides is which of the lineages that branched off earlier, and which close relatives,
+have the trait.](img/08/F_lack_or_lost.png){width=100%}
+
+**Before you call a species "without TNL".**
+
+- A species with no NLR at all also has `tnl_genes == 0`: keep the two cases apart.
+- A genome with a low `busco_complete` misses genes of every kind: an absence there is
+  weak evidence. Show these species apart, or set a threshold, and say it.
+- A lineage is rarely all or nothing: count the species with and without TNL in each
+  `lineage_group` (`count()`, Session 4). With 2 species, say "in our 2 species", not
+  "in the lineage". Within the flowering plants, `order` (or a word of `lineage`, found
+  with `str_detect()`) gives smaller groups.
+
+**The partners.** `eds1_family_genes` counts three different genes together (EDS1, PAD4
+and SAG101). Before you look, write what you expect in the plants without TNL: none of
+them, or fewer? Then compare them with the plants that have TNLs (`geom_boxplot()`,
+Session 4), within the flowering plants, then within the eudicots alone: the lineage is
+a confounder (Session 6).
+
+**Reading.** Baggs et al. (2020), in the references below, asks the same question on
+many more genomes: read its figures after you have made yours.
+:::
+
 ### G. Will species move with the climate? {#project-g}
 
 **The biology.** As the climate warms, many species are expected to shift their range
