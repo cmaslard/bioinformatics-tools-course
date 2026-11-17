@@ -119,7 +119,7 @@ computer examples with the right answer, and it finds the rules itself.**
 
 Each is inside the previous one: all deep learning is machine learning, all machine
 learning is AI, not the other way round. **Generative AI** (chatbots such as ChatGPT,
-Claude, Le Chat; image generators) is deep learning trained to *produce* text or images
+Le Chat; image generators) is deep learning trained to *produce* text or images
 rather than to classify them.
 
 ### The families of learning
@@ -809,7 +809,7 @@ being.
 | [AnnoTrain](https://annotrain.cmaslard.xyz) | Annotate, see the consensus, the models and their mistakes. | Annotation + classification, detection, segmentation |
 | [Wildlife Insights](https://www.wildlifeinsights.org) / [MegaDetector](https://github.com/agentmorris/MegaDetector) | Camera-trap photos sorted automatically: empty or animal, then species. | Detection + classification |
 | [DeepLabCut](https://www.deeplabcut.org) | Follows the body parts of an animal in a video (behaviour). | Pose estimation |
-| A chatbot (ChatGPT, Claude, Le Chat, Copilot...) | Answers questions, explains and writes code. | Generative AI (large language model) |
+| A chatbot (ChatGPT, Le Chat, Copilot...) | Answers questions, explains and writes code. | Generative AI (large language model) |
 
 ### Using AI well as a biologist
 
